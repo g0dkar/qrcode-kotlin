@@ -28,10 +28,12 @@ internal object QRMath {
         }
 
         for (i in 8..255) {
-            EXP_TABLE[i] = (EXP_TABLE[i - 4]
-                xor EXP_TABLE[i - 5]
-                xor EXP_TABLE[i - 6]
-                xor EXP_TABLE[i - 8])
+            EXP_TABLE[i] = (
+                EXP_TABLE[i - 4]
+                    xor EXP_TABLE[i - 5]
+                    xor EXP_TABLE[i - 6]
+                    xor EXP_TABLE[i - 8]
+                )
         }
 
         for (i in 0..254) {

@@ -1,6 +1,5 @@
 package io.github.g0dkar.qrcode
 
-import io.github.g0dkar.qrcode.Mode.*
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -52,10 +51,10 @@ class QRCode(
         val mode = QRUtil.getMode(data)
 
         qrCodeData = when (mode) {
-            MODE_NUMBER -> QRNumber(data)
-            MODE_ALPHA_NUM -> QRAlphaNum(data)
-            MODE_8BIT_BYTE -> QR8BitByte(data)
-            MODE_KANJI -> QRKanji(data)
+            Mode.MODE_NUMBER -> QRNumber(data)
+            Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
+            Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
+            Mode.MODE_KANJI -> QRKanji(data)
         }
 
         val dataLength = qrCodeData.length()
@@ -118,9 +117,8 @@ class QRCode(
                     continue
                 }
 
-                modules[row + r][col + c] = (r in 0..6 && (c == 0 || c == 6)
-                    || c in 0..6 && (r == 0 || r == 6)
-                    || r in 2..4 && 2 <= c && c <= 4)
+                modules[row + r][col + c] =
+                    (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4)
             }
         }
     }
@@ -214,7 +212,7 @@ class QRCode(
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
-            throw IllegalArgumentException("Code length overflow (${buffer.lengthInBits} > ${totalDataCount})")
+            throw IllegalArgumentException("Code length overflow (${buffer.lengthInBits} > $totalDataCount)")
         }
 
         if (buffer.lengthInBits + 4 <= totalDataCount) {

@@ -317,12 +317,18 @@ internal object QRUtil {
             throw RuntimeException(e.message)
         }
 
-    private const val G15 = (1 shl 10 or (1 shl 8) or (1 shl 5)
-        or (1 shl 4) or (1 shl 2) or (1 shl 1) or (1 shl 0))
-    private const val G18 = (1 shl 12 or (1 shl 11) or (1 shl 10)
-        or (1 shl 9) or (1 shl 8) or (1 shl 5) or (1 shl 2) or (1 shl 0))
-    private const val G15_MASK = (1 shl 14 or (1 shl 12) or (1 shl 10)
-        or (1 shl 4) or (1 shl 1))
+    private const val G15 = (
+        1 shl 10 or (1 shl 8) or (1 shl 5)
+            or (1 shl 4) or (1 shl 2) or (1 shl 1) or (1 shl 0)
+        )
+    private const val G18 = (
+        1 shl 12 or (1 shl 11) or (1 shl 10)
+            or (1 shl 9) or (1 shl 8) or (1 shl 5) or (1 shl 2) or (1 shl 0)
+        )
+    private const val G15_MASK = (
+        1 shl 14 or (1 shl 12) or (1 shl 10)
+            or (1 shl 4) or (1 shl 1)
+        )
 
     fun getBCHTypeInfo(data: Int): Int {
         var d = data shl 10
