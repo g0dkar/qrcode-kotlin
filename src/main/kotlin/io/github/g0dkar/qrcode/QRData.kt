@@ -1,4 +1,4 @@
-package min.immo.qrcode
+package io.github.g0dkar.qrcode
 
 import java.io.UnsupportedEncodingException
 import java.lang.Integer.parseInt

@@ -1,7 +1,7 @@
-package min.immo.qrcode
+package io.github.g0dkar.qrcode
 
-import min.immo.qrcode.QRMath.gexp
-import min.immo.qrcode.QRMath.glog
+import io.github.g0dkar.qrcode.QRMath.gexp
+import io.github.g0dkar.qrcode.QRMath.glog
 
 /**
  * Rewritten in Kotlin :)

@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.5.31"
 }
 
-group = "min.immo"
+group = "io.github.g0dkar"
 version = "1.0"
 
 repositories {
@@ -10,5 +10,5 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
 }

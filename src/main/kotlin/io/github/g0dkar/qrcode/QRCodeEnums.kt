@@ -1,4 +1,4 @@
-package min.immo.qrcode
+package io.github.g0dkar.qrcode
 
 /**
  * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/ErrorCorrectionLevel.java)

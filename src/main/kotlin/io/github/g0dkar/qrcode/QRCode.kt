@@ -1,6 +1,6 @@
-package min.immo.qrcode
+package io.github.g0dkar.qrcode
 
-import min.immo.qrcode.Mode.*
+import io.github.g0dkar.qrcode.Mode.*
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -37,8 +37,8 @@ import javax.imageio.ImageIO
  * @see ErrorCorrectionLevel
  */
 class QRCode(
-    val data: String,
-    val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
+    private val data: String,
+    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
 ) {
     companion object {
         private const val PAD0 = 0xEC
@@ -102,12 +102,12 @@ class QRCode(
     fun render(
         cellSize: Int,
         margin: Int = 0,
-        maskPattern: MaskPattern = MaskPattern.PATTERN000,
+        data: Pair<Int, Array<Array<Boolean?>>> = encode(),
         brightColor: Int = Color.WHITE.rgb,
         darkColor: Int = Color.BLACK.rgb,
         marginColor: Int = Color.WHITE.rgb,
     ): BufferedImage =
-        encode(maskPattern).let { (moduleCount, modules) ->
+        data.let { (moduleCount, modules) ->
             createImage(cellSize, margin, moduleCount, modules, brightColor, darkColor, marginColor)
         }
 

@@ -1,4 +1,4 @@
-package min.immo.qrcode
+package io.github.g0dkar.qrcode
 
 /**
  * Rewritten in Kotlin :)
