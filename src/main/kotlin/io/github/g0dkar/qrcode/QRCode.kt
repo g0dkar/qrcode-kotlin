@@ -94,26 +94,106 @@ class QRCode(
     }
 
     /**
+     * Renders a QR Code image based on its [computed data][encode].
+     *
+     * _Tip: for the "traditional" look-and-feel QR Code, try using `margin = cellSize`!_
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
+     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
+     * @param brightColor [Color] to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     * @param darkColor [Color] to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Color.BLACK].
+     * @param marginColor [Color] to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     *
+     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see [renderShaded]
+     */
+    fun render(
+        cellSize: Int = 25,
+        margin: Int = 0,
+        rawData: Array<Array<Boolean?>> = encode(),
+        brightColor: Color = Color.WHITE,
+        darkColor: Color = Color.BLACK,
+        marginColor: Color = Color.WHITE,
+    ) =
+        renderShaded(
+            cellSize,
+            margin,
+            rawData,
+        ) { _, _, cellData ->
+            cellData?.let {
+                if (it.first) {
+                    darkColor.rgb
+                }
+                else {
+                    brightColor.rgb
+                }
+            }
+                ?: marginColor.rgb
+        }
+
+    /**
+     * Renders a QR Code image based on its [computed data][encode].
+     *
+     * This function provides a way to implement more artistic QRCodes. The [shader] is a mapping function that maps a
+     * pixel to a color.
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`. _Tip: for the "traditional look-and-feel" QR Code, set this equal to [cellSize]._
+     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
+     * @param shader Mapping function that maps a pixel to a "bright" color. `(x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     *
+     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     */
+    fun renderShaded(
+        cellSize: Int = 25,
+        margin: Int = 0,
+        rawData: Array<Array<Boolean?>> = encode(),
+        shader: (Int, Int, Triple<Boolean, Int, Int>?) -> Int
+    ): BufferedImage {
+        val moduleCount = rawData[0].size
+        val imageSize: Int = moduleCount * cellSize + margin * 2
+        val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
+
+        for (y in 0 until imageSize) {
+            for (x in 0 until imageSize) {
+                val pixelColor = if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
+                    val col = (x - margin) / cellSize
+                    val row = (y - margin) / cellSize
+                    shader(x, y, Triple(isDark(row, col, rawData), row, col))
+                } else {
+                    shader(x, y, null)
+                }
+
+                image.setRGB(x, y, pixelColor)
+            }
+        }
+
+        return image
+    }
+
+    /**
      * Computes and encodes the [data] of this object into a QR Code. This method returns the raw data of the QR Code.
      *
-     * If you just want to render (create) a QR Code image, you are probably looking for the [render] method.
+     * If you just want to render (create) a QR Code image, you are probably looking for the [renderShaded] method.
      *
      * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
      * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
      * @param maskPattern Mask Pattern to apply to the final QR Code. Basically changes how the QR Code looks at the end.
      * Read more about it [here][MaskPattern]. Defaults to [MaskPattern.PATTERN000].
      *
-     * @return A [Pair] with `moduleCount`, and the byte matrix of the QRCode.
+     * @return The byte matrix of the encoded QRCode.
      *
      * @see typeForDataAndECL
      * @see ErrorCorrectionLevel
      * @see MaskPattern
-     * @see render
+     * @see renderShaded
      */
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
-    ): Pair<Int, Array<Array<Boolean?>>> {
+    ): Array<Array<Boolean?>> {
         val moduleCount = type * 4 + 17
         val modules: Array<Array<Boolean?>> = Array(moduleCount) { Array(moduleCount) { null } }
 
@@ -132,32 +212,8 @@ class QRCode(
         val data = createData(type)
         applyMaskPattern(data, maskPattern, moduleCount, modules)
 
-        return Pair(moduleCount, modules)
+        return modules
     }
-
-    /**
-     * Renders a QR Code image based on its [computed data][encode].
-     *
-     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Tip: for a better looking QR Code, set this as a multiple of [cellSize] (like `1 * cellSize`). Defaults to `0`.
-     * @param rawData The computed [Pair] of `moduleCount` and the data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param brightColor [Color] to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
-     * @param darkColor [Color] to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Color.BLACK].
-     * @param marginColor [Color] to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
-     *
-     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
-     */
-    fun render(
-        cellSize: Int = 25,
-        margin: Int = 0,
-        rawData: Pair<Int, Array<Array<Boolean?>>> = encode(),
-        brightColor: Int = Color.WHITE.rgb,
-        darkColor: Int = Color.BLACK.rgb,
-        marginColor: Int = Color.WHITE.rgb,
-    ): BufferedImage =
-        rawData.let { (moduleCount, modules) ->
-            createImage(cellSize, margin, moduleCount, modules, brightColor, darkColor, marginColor)
-        }
 
     private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<Boolean?>>) {
         for (r in -1..7) {
@@ -392,37 +448,6 @@ class QRCode(
         }
 
         return data
-    }
-
-    private fun createImage(
-        cellSize: Int,
-        margin: Int,
-        moduleCount: Int,
-        modules: Array<Array<Boolean?>>,
-        brightColor: Int = Color.WHITE.rgb,
-        darkColor: Int = Color.BLACK.rgb,
-        marginColor: Int = Color(255, 255, 255, 0).rgb,
-    ): BufferedImage {
-        val imageSize: Int = moduleCount * cellSize + margin * 2
-        val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
-
-        for (y in 0 until imageSize) {
-            for (x in 0 until imageSize) {
-                if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
-                    val col = (x - margin) / cellSize
-                    val row = (y - margin) / cellSize
-                    if (isDark(row, col, modules)) {
-                        image.setRGB(x, y, darkColor)
-                    } else {
-                        image.setRGB(x, y, brightColor)
-                    }
-                } else {
-                    image.setRGB(x, y, marginColor)
-                }
-            }
-        }
-
-        return image
     }
 
     private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
