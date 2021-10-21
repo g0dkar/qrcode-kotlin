@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
 /**
- * A Library that helps encode data as QR Code images without any external dependencies.
+ * A Class/Library that helps encode data as QR Code images without any external dependencies.
  *
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRCode.java).
  *
@@ -55,41 +55,65 @@ class QRCode(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
 ) {
+    private val qrCodeData: QRData = when (QRUtil.getMode(data)) {
+        Mode.MODE_NUMBER -> QRNumber(data)
+        Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
+        Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
+        Mode.MODE_KANJI -> QRKanji(data)
+    }
+
     companion object {
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
-    }
 
-    private val qrCodeData: QRData
-    private val type: Int
-
-    init {
-        val mode = QRUtil.getMode(data)
-
-        qrCodeData = when (mode) {
-            Mode.MODE_NUMBER -> QRNumber(data)
-            Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
-            Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
-            Mode.MODE_KANJI -> QRKanji(data)
-        }
-
-        val dataLength = qrCodeData.length()
-        var typeNumber: Int = errorCorrectionLevel.maxTypeNum
-
-        for (typeNum in 1 until errorCorrectionLevel.maxTypeNum) {
-            if (dataLength <= QRUtil.getMaxLength(typeNum, mode, errorCorrectionLevel)) {
-                typeNumber = typeNum
-                break
+        /**
+         * Calculates a suitable value for the [type] field for your
+         */
+        @JvmStatic
+        fun typeForDataAndECL(
+            data: String,
+            errorCorrectionLevel: ErrorCorrectionLevel
+        ): Int {
+            val mode = QRUtil.getMode(data)
+            val qrCodeData = when (mode) {
+                Mode.MODE_NUMBER -> QRNumber(data)
+                Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
+                Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
+                Mode.MODE_KANJI -> QRKanji(data)
             }
-        }
+            val dataLength = qrCodeData.length()
 
-        type = typeNumber
+            for (typeNum in 1 until errorCorrectionLevel.maxTypeNum) {
+                if (dataLength <= QRUtil.getMaxLength(typeNum, mode, errorCorrectionLevel)) {
+                    return typeNum
+                }
+            }
+
+            return 40
+        }
     }
 
     /**
-     * asd
+     * Computes and encodes the [data] of this object into a QR Code. This method returns the raw data of the QR Code.
+     *
+     * If you just want to render (create) a QR Code image, you are probably looking for the [render] method.
+     *
+     * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
+     * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
+     * @param maskPattern Mask Pattern to apply to the final QR Code. Basically changes how the QR Code looks at the end.
+     * Read more about it [here][MaskPattern]. Defaults to [MaskPattern.PATTERN000].
+     *
+     * @return A [Pair] with `moduleCount`, and the byte matrix of the QRCode.
+     *
+     * @see typeForDataAndECL
+     * @see ErrorCorrectionLevel
+     * @see MaskPattern
+     * @see render
      */
-    fun encode(maskPattern: MaskPattern = MaskPattern.PATTERN000): Pair<Int, Array<Array<Boolean?>>> {
+    fun encode(
+        type: Int = typeForDataAndECL(data, errorCorrectionLevel),
+        maskPattern: MaskPattern = MaskPattern.PATTERN000
+    ): Pair<Int, Array<Array<Boolean?>>> {
         val moduleCount = type * 4 + 17
         val modules: Array<Array<Boolean?>> = Array(moduleCount) { Array(moduleCount) { null } }
 
@@ -97,32 +121,41 @@ class QRCode(
         setupPositionProbePattern(moduleCount - 7, 0, moduleCount, modules)
         setupPositionProbePattern(0, moduleCount - 7, moduleCount, modules)
 
-        setupPositionAdjustPattern(modules)
+        setupPositionAdjustPattern(type, modules)
         setupTimingPattern(moduleCount, modules)
         setupTypeInfo(maskPattern, moduleCount, modules)
 
         if (type >= 7) {
-            setupTypeNumber(moduleCount, modules)
+            setupTypeNumber(type, moduleCount, modules)
         }
 
-        val data = createData()
+        val data = createData(type)
         applyMaskPattern(data, maskPattern, moduleCount, modules)
 
         return Pair(moduleCount, modules)
     }
 
     /**
-     * asd
+     * Renders a QR Code image based on its [computed data][encode].
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Tip: for a better looking QR Code, set this as a multiple of [cellSize] (like `1 * cellSize`). Defaults to `0`.
+     * @param rawData The computed [Pair] of `moduleCount` and the data matrix of the QR Code. Defaults to [this.encode()][encode].
+     * @param brightColor [Color] to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     * @param darkColor [Color] to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Color.BLACK].
+     * @param marginColor [Color] to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     *
+     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      */
     fun render(
-        cellSize: Int,
+        cellSize: Int = 25,
         margin: Int = 0,
-        data: Pair<Int, Array<Array<Boolean?>>> = encode(),
+        rawData: Pair<Int, Array<Array<Boolean?>>> = encode(),
         brightColor: Int = Color.WHITE.rgb,
         darkColor: Int = Color.BLACK.rgb,
         marginColor: Int = Color.WHITE.rgb,
     ): BufferedImage =
-        data.let { (moduleCount, modules) ->
+        rawData.let { (moduleCount, modules) ->
             createImage(cellSize, margin, moduleCount, modules, brightColor, darkColor, marginColor)
         }
 
@@ -139,7 +172,7 @@ class QRCode(
         }
     }
 
-    private fun setupPositionAdjustPattern(modules: Array<Array<Boolean?>>) {
+    private fun setupPositionAdjustPattern(type: Int, modules: Array<Array<Boolean?>>) {
         val pos = QRUtil.getPatternPosition(type)
         for (i in pos.indices) {
             for (j in pos.indices) {
@@ -205,7 +238,7 @@ class QRCode(
         modules[moduleCount - 8][8] = true
     }
 
-    private fun setupTypeNumber(moduleCount: Int, modules: Array<Array<Boolean?>>) {
+    private fun setupTypeNumber(type: Int, moduleCount: Int, modules: Array<Array<Boolean?>>) {
         val bits = QRUtil.getBCHTypeNumber(type)
         for (i in 0..17) {
             val mod = bits shr i and 1 == 1
@@ -217,7 +250,7 @@ class QRCode(
         }
     }
 
-    private fun createData(): IntArray {
+    private fun createData(type: Int): IntArray {
         val rsBlocks = RSBlock.getRSBlocks(type, errorCorrectionLevel)
         val buffer = BitBuffer()
 
