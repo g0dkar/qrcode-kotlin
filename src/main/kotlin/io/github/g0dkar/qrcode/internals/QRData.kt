@@ -1,11 +1,13 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
 
-import java.io.UnsupportedEncodingException
+import io.github.g0dkar.qrcode.Mode
 import java.lang.Integer.parseInt
+import java.lang.Integer.toHexString
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRData.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRData.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal abstract class QRData(val mode: Mode, val data: String) {
@@ -36,38 +38,32 @@ internal abstract class QRData(val mode: Mode, val data: String) {
                 Mode.MODE_KANJI -> 12
             }
         } else {
-            throw IllegalArgumentException("type:$type")
+            throw IllegalArgumentException("'type' must be greater than 0 and cannot be greater than 40: $type")
         }
 }
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QR8BitByte.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QR8BitByte.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal class QR8BitByte(data: String) : QRData(Mode.MODE_8BIT_BYTE, data) {
     override fun write(buffer: BitBuffer) {
-        try {
-            val data = data.toByteArray(charset(QRUtil.jISEncoding))
-            for (i in data.indices) {
-                buffer.put(data[i].toInt(), 8)
-            }
-        } catch (e: UnsupportedEncodingException) {
-            throw RuntimeException(e.message)
+        val data = data.toByteArray(charset(QRUtil.jISEncoding))
+        for (i in data.indices) {
+            buffer.put(data[i].toInt(), 8)
         }
     }
 
     override fun length(): Int =
-        try {
-            data.toByteArray(charset(QRUtil.jISEncoding)).size
-        } catch (e: UnsupportedEncodingException) {
-            throw RuntimeException(e.message)
-        }
+        data.toByteArray(charset(QRUtil.jISEncoding)).size
 }
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRAlphaNum.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRAlphaNum.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
@@ -104,52 +100,47 @@ internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
                     '.' -> 42
                     '/' -> 43
                     ':' -> 44
-                    else -> throw java.lang.IllegalArgumentException("illegal char :$c")
+                    else -> throw IllegalArgumentException("Illegal char: $c")
                 }
             }
         }
 }
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRKanji.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRKanji.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
     override fun write(buffer: BitBuffer) {
-        try {
-            val data = data.toByteArray(charset(QRUtil.jISEncoding))
-            var i = 0
-            while (i + 1 < data.size) {
-                var c = 0xff and data[i].toInt() shl 8 or (0xff and data[i + 1].toInt())
-                c -= when (c) {
-                    in 0x8140..0x9FFC -> 0x8140
-                    in 0xE040..0xEBBF -> 0xC140
-                    else -> throw java.lang.IllegalArgumentException(
-                        "illegal char at " + (i + 1) + "/" + Integer.toHexString(c)
-                    )
-                }
-                c = (c ushr 8 and 0xff) * 0xC0 + (c and 0xff)
-                buffer.put(c, 13)
-                i += 2
+        val data = data.toByteArray(charset(QRUtil.jISEncoding))
+        var i = 0
+        while (i + 1 < data.size) {
+            var c = 0xff and data[i].toInt() shl 8 or (0xff and data[i + 1].toInt())
+
+            c -= when (c) {
+                in 0x8140..0x9FFC -> 0x8140
+                in 0xE040..0xEBBF -> 0xC140
+                else -> throw IllegalArgumentException("Illegal char at ${(i + 1)}/${toHexString(c)}")
             }
-            require(i >= data.size) { "illegal char at " + (i + 1) }
-        } catch (e: UnsupportedEncodingException) {
-            throw RuntimeException(e.message)
+
+            c = (c ushr 8 and 0xff) * 0xC0 + (c and 0xff)
+            buffer.put(c, 13)
+            i += 2
         }
+
+        require(i >= data.size) { "Illegal char at ${(i + 1)}" }
     }
 
     override fun length(): Int =
-        try {
-            data.toByteArray(charset(QRUtil.jISEncoding)).size / 2
-        } catch (e: UnsupportedEncodingException) {
-            throw RuntimeException(e.message)
-        }
+        data.toByteArray(charset(QRUtil.jISEncoding)).size / 2
 }
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRNumber.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRNumber.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal class QRNumber(data: String) : QRData(Mode.MODE_NUMBER, data) {

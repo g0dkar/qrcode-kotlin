@@ -1,8 +1,9 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRMath.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRMath.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal object QRMath {

@@ -1,8 +1,11 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
+
+import io.github.g0dkar.qrcode.ErrorCorrectionLevel
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal class RSBlock private constructor(val totalCount: Int, val dataCount: Int) {

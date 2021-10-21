@@ -1,30 +1,46 @@
 package io.github.g0dkar.qrcode
 
+import io.github.g0dkar.qrcode.internals.BitBuffer
+import io.github.g0dkar.qrcode.internals.Polynomial
+import io.github.g0dkar.qrcode.internals.QR8BitByte
+import io.github.g0dkar.qrcode.internals.QRAlphaNum
+import io.github.g0dkar.qrcode.internals.QRData
+import io.github.g0dkar.qrcode.internals.QRKanji
+import io.github.g0dkar.qrcode.internals.QRNumber
+import io.github.g0dkar.qrcode.internals.QRUtil
+import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
 /**
- * A Class/Library that helps encode data as QR Code images without any external dependencies.
+ * A Library that helps encode data as QR Code images without any external dependencies.
  *
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRCode.java).
  *
  * To create a QR Code you can simply do the following:
  *
  * ```kotlin
- * val dataToEncode = "Hello QRCode, from Kotlin with love!"
+ * val dataToEncode = "Hello QRCode!"
  * val eachQRCodeSquareSize = 10 // In Pixels!
  * val imageData = QRCode(dataToEncode).render(eachQRCodeSquareSize)
  * ```
  *
- * You can now encode `imageData` however you want using Java's [ImageIO] API.
+ * You can now encode `imageData` however you want using Java's [ImageIO] API!
  *
  * For example, to save it as a PNG file:
  *
  * ```kotlin
- * val fileName = "qrcode.png"
- * val imageBytes = ByteArrayOutputStream().also { ImageIO.write(imageData, "PNG", it) }.toByteArray()
- * File(fileName).writeBytes(imageBytes)
+ * val qrCodeFile = File("qrcode.png")
+ * ImageIO.write(imageData, "PNG", qrCodeFile)
+ * ```
+ *
+ * Or maybe have it as a byte array, to be sent as a response to a server request:
+ *
+ * ```kotlin
+ * val imageBytes = ByteArrayOutputStream()
+ *     .also { ImageIO.write(imageData, "PNG", it) }
+ *     .toByteArray()
  * ```
  *
  * @param data String that will be encoded in the QR Code.
@@ -296,8 +312,8 @@ class QRCode(
         var maxDcCount = 0
         var maxEcCount = 0
         var totalCodeCount = 0
-        val dcData = Array(rsBlocks.size) { emptyArray<Int>() }
-        val ecData = Array(rsBlocks.size) { emptyArray<Int>() }
+        val dcData = Array(rsBlocks.size) { IntArray(0) }
+        val ecData = Array(rsBlocks.size) { IntArray(0) }
 
         rsBlocks.forEachIndexed { i, it ->
             val dcCount = it.dataCount
@@ -308,7 +324,7 @@ class QRCode(
             maxEcCount = maxEcCount.coerceAtLeast(ecCount)
 
             // Init dcData[i]
-            dcData[i] = Array(dcCount) { idx -> 0xff and buffer.buffer[idx + offset] }
+            dcData[i] = IntArray(dcCount) { idx -> 0xff and buffer.buffer[idx + offset] }
             offset += dcCount
 
             // Init ecData[i]
@@ -317,7 +333,7 @@ class QRCode(
             val modPoly = rawPoly.mod(rsPoly)
             val ecDataSize = rsPoly.len() - 1
 
-            ecData[i] = Array(ecDataSize) { idx ->
+            ecData[i] = IntArray(ecDataSize) { idx ->
                 val modIndex = idx + modPoly.len() - ecDataSize
                 if ((modIndex >= 0)) modPoly[modIndex] else 0
             }

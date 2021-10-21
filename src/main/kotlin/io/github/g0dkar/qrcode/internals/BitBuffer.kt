@@ -1,12 +1,10 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
 
 /**
- * Rewritten in Kotlin :)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/BitBuffer.java)
  *
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/BitBuffer.java)
- *
- * @author Kazuhiko Arase
  * @author Rafael Lins
+ * @author Kazuhiko Arase
  */
 internal class BitBuffer {
     var buffer: IntArray

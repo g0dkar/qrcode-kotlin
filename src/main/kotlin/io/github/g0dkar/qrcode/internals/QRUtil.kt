@@ -1,10 +1,22 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
 
+import io.github.g0dkar.qrcode.ErrorCorrectionLevel
+import io.github.g0dkar.qrcode.MaskPattern
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN000
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN001
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN010
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN011
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN100
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN101
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN110
+import io.github.g0dkar.qrcode.MaskPattern.PATTERN111
+import io.github.g0dkar.qrcode.Mode
 import java.io.UnsupportedEncodingException
 
 /**
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
  *
+ * @author Rafael Lins
  * @author Kazuhiko Arase
  */
 internal object QRUtil {
@@ -266,23 +278,26 @@ internal object QRUtil {
         MAX_LENGTH[typeNumber - 1][errorCorrectionLevel.ordinal][mode.ordinal]
 
     fun getErrorCorrectPolynomial(errorCorrectLength: Int): Polynomial {
-        var a = Polynomial(arrayOf(1))
+        var a = Polynomial(intArrayOf(1))
         for (i in 0 until errorCorrectLength) {
-            a = a.multiply(Polynomial(arrayOf(1, QRMath.gexp(i))))
+            a = a.multiply(Polynomial(intArrayOf(1, QRMath.gexp(i))))
         }
         return a
     }
 
+    /**
+     * Each Mask Pattern [applies a different formula](https://www.thonky.com/qr-code-tutorial/mask-patterns).
+     */
     fun getMask(maskPattern: MaskPattern, i: Int, j: Int): Boolean =
         when (maskPattern) {
-            MaskPattern.PATTERN000 -> (i + j) % 2 == 0
-            MaskPattern.PATTERN001 -> i % 2 == 0
-            MaskPattern.PATTERN010 -> j % 3 == 0
-            MaskPattern.PATTERN011 -> (i + j) % 3 == 0
-            MaskPattern.PATTERN100 -> (i / 2 + j / 3) % 2 == 0
-            MaskPattern.PATTERN101 -> i * j % 2 + i * j % 3 == 0
-            MaskPattern.PATTERN110 -> (i * j % 2 + i * j % 3) % 2 == 0
-            MaskPattern.PATTERN111 -> (i * j % 3 + (i + j) % 2) % 2 == 0
+            PATTERN000 -> (i + j) % 2 == 0
+            PATTERN001 -> i % 2 == 0
+            PATTERN010 -> j % 3 == 0
+            PATTERN011 -> (i + j) % 3 == 0
+            PATTERN100 -> (i / 2 + j / 3) % 2 == 0
+            PATTERN101 -> i * j % 2 + i * j % 3 == 0
+            PATTERN110 -> (i * j % 2 + i * j % 3) % 2 == 0
+            PATTERN111 -> (i * j % 3 + (i + j) % 2) % 2 == 0
         }
 
     fun getMode(s: String): Mode =

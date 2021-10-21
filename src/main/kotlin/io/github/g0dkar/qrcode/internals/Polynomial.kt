@@ -1,22 +1,20 @@
-package io.github.g0dkar.qrcode
+package io.github.g0dkar.qrcode.internals
 
-import io.github.g0dkar.qrcode.QRMath.gexp
-import io.github.g0dkar.qrcode.QRMath.glog
+import io.github.g0dkar.qrcode.internals.QRMath.gexp
+import io.github.g0dkar.qrcode.internals.QRMath.glog
 
 /**
- * Rewritten in Kotlin :)
+ * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/Polynomial.java)
  *
- * [Original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/Polynomial.java)
- *
- * @author Kazuhiko Arase
  * @author Rafael Lins
+ * @author Kazuhiko Arase
  */
-internal class Polynomial(num: Array<Int>, shift: Int = 0) {
-    private val num: Array<Int>
+internal class Polynomial(num: IntArray, shift: Int = 0) {
+    private val num: IntArray
 
     init {
         val offset = num.indexOfFirst { it == 0 } + 1
-        this.num = Array(num.size - offset + shift) { 0 }
+        this.num = IntArray(num.size - offset + shift)
         System.arraycopy(num, offset, this.num, 0, num.size - offset)
     }
 
@@ -24,7 +22,7 @@ internal class Polynomial(num: Array<Int>, shift: Int = 0) {
     fun len(): Int = num.size
 
     fun multiply(other: Polynomial): Polynomial {
-        val result = Array(len() + other.len() - 1) { 0 }
+        val result = IntArray(len() + other.len() - 1) { 0 }
 
         for (i in num.indices) {
             for (j in other.num.indices) {
