@@ -1,5 +1,4 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.kotlin.cli.jvm.main
 
 plugins {
     signing
