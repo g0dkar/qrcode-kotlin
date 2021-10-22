@@ -1,12 +1,6 @@
 language: java
-
-jdk:
-  - openjdk11
-
-os:
-  - linux
-
-install: gradle wrapper --gradle-version=7.2
+jdk: openjdk11
+os: linux
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

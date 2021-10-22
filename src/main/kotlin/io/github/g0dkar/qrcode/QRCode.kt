@@ -11,7 +11,6 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.io.File
 import javax.imageio.ImageIO
 
 /**

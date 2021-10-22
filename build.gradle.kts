@@ -12,13 +12,7 @@ plugins {
 group = "io.github.g0dkar"
 version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-val dokkaHtml by tasks.getting(DokkaTask::class)
-val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
-    dependsOn(dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaHtml.outputDirectory)
-}
+java.targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -53,19 +47,30 @@ tasks {
     }
 }
 
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
 ktlint {
-    outputToConsole.set(true)
     coloredOutput.set(true)
+    outputToConsole.set(true)
     additionalEditorconfigFile.set(file("${project.projectDir}/../.editorconfig"))
 
     filter {
         exclude("**.gradle.kts")
     }
+}
+
+/* **************** */
+/* Publishing       */
+/* **************** */
+
+val dokkaHtml by tasks.getting(DokkaTask::class)
+val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
+    dependsOn(dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaHtml.outputDirectory)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {

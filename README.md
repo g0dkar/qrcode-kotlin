@@ -4,6 +4,8 @@
 ![Travis (.com)](https://img.shields.io/travis/com/g0dkar/qrcode-kotlin)
 [![Coverage Status](https://coveralls.io/repos/github/g0dkar/qrcode-kotlin/badge.svg?branch=main)](https://coveralls.io/github/g0dkar/qrcode-kotlin?branch=main)
 
+[_**[pt] :brazil: Disponível em português**_](#asd)
+
 QRCode Generator implemented in pure Kotlin.
 
 _[en] Still setting up everything. Please, wait :P_
