@@ -6,9 +6,7 @@ jdk:
 os:
   - linux
 
-before_script:
-  - chmod +x ./gradle/wrapper/gradle-wrapper.jar
-  - chmod +x ./gradlew
+install: gradle wrapper
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
