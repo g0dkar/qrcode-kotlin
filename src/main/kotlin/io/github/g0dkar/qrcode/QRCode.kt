@@ -149,7 +149,7 @@ class QRCode(
      * ```kotlin
      * QRCode("example").renderShaded { image, x, y, cellData ->
      *     cellData?.let { (foreground, cellRow, cellCol) ->
-     *         if (dark) {
+     *         if (foreground) {
      *             if (y >= image.height / 2) { Color.RED.rgb } // Lower half is red
      *             else { Color.BLUE.rgb }                      // Upper half is blue
      *         }
@@ -158,10 +158,12 @@ class QRCode(
      * }
      * ```
      *
+     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
+     *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`. _Tip: for the "traditional look-and-feel" QR Code, set this equal to [cellSize]._
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param shader Mapping function that maps a pixel to a "bright" color. `(x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     * @param shader Mapping function that maps a pixel to a "bright" color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
      *
      * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      */
