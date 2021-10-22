@@ -71,39 +71,15 @@ internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
         val c = data.toCharArray()
         var i = 0
         while (i + 1 < c.size) {
-            buffer.put(getCode(c[i]) * 45 + getCode(c[i + 1]), 11)
+            buffer.put(c[i].code * 45 + c[i + 1].code, 11)
             i += 2
         }
         if (i < c.size) {
-            buffer.put(getCode(c[i]), 6)
+            buffer.put(c[i].code, 6)
         }
     }
 
     override fun length(): Int = data.length
-
-    private fun getCode(c: Char): Int =
-        when (c) {
-            in '0'..'9' -> {
-                c - '0'
-            }
-            in 'A'..'Z' -> {
-                c - 'A' + 10
-            }
-            else -> {
-                when (c) {
-                    ' ' -> 36
-                    '$' -> 37
-                    '%' -> 38
-                    '*' -> 39
-                    '+' -> 40
-                    '-' -> 41
-                    '.' -> 42
-                    '/' -> 43
-                    ':' -> 44
-                    else -> throw IllegalArgumentException("Illegal char: $c")
-                }
-            }
-        }
 }
 
 /**
@@ -147,16 +123,16 @@ internal class QRNumber(data: String) : QRData(Mode.MODE_NUMBER, data) {
     override fun write(buffer: BitBuffer) {
         var i = 0
         while (i + 2 < data.length) {
-            val num = parseInt(data.substring(i, i + 3))
+            val num = parseInt(data.substring(i..i + 3))
             buffer.put(num, 10)
             i += 3
         }
         if (i < data.length) {
             if (data.length - i == 1) {
-                val num = parseInt(data.substring(i, i + 1))
+                val num = parseInt(data.substring(i..i + 1))
                 buffer.put(num, 4)
             } else if (data.length - i == 2) {
-                val num = parseInt(data.substring(i, i + 2))
+                val num = parseInt(data.substring(i..i + 2))
                 buffer.put(num, 7)
             }
         }

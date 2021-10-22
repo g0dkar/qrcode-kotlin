@@ -11,6 +11,7 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.io.File
 import javax.imageio.ImageIO
 
 /**
@@ -121,12 +122,11 @@ class QRCode(
             cellSize,
             margin,
             rawData,
-        ) { _, _, cellData ->
+        ) { _, _, _, cellData ->
             cellData?.let {
                 if (it.first) {
                     darkColor.rgb
-                }
-                else {
+                } else {
                     brightColor.rgb
                 }
             }
@@ -137,7 +137,26 @@ class QRCode(
      * Renders a QR Code image based on its [computed data][encode].
      *
      * This function provides a way to implement more artistic QRCodes. The [shader] is a mapping function that maps a
-     * pixel to a color.
+     * pixel to a color. It receives 4 parameters: `image`, `x`, `y` and a nullable [Triple] with a [Boolean] and 2
+     * [Int]s.
+     *
+     * The [Triple] holds information about the current cell being painted: the [Boolean] is whether it is a bright or
+     * dark cell and the [Int]s are its `row` and `column` coordinates. **If the [Triple] is null this means this pixel
+     * belongs to the margin.**
+     *
+     * To show this, here's a shader that makes a QR Code that is half [blue][Color.BLUE] and half [red][Color.RED]:
+     *
+     * ```kotlin
+     * QRCode("example").renderShaded() { image, x, y, cellData ->
+     *     cellData?.let { (foreground, cellRow, cellCol) ->
+     *         if (dark) {
+     *             if (y >= image.height / 2) { Color.RED.rgb } // Lower half is red
+     *             else { Color.BLUE.rgb }                      // Upper half is blue
+     *         }
+     *         else { Color.WHITE.rgb } // Background is white
+     *     } ?: Color.WHITE.rgb         // Margin is white
+     * }
+     * ```
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`. _Tip: for the "traditional look-and-feel" QR Code, set this equal to [cellSize]._
@@ -150,7 +169,7 @@ class QRCode(
         cellSize: Int = 25,
         margin: Int = 0,
         rawData: Array<Array<Boolean?>> = encode(),
-        shader: (Int, Int, Triple<Boolean, Int, Int>?) -> Int
+        shader: (BufferedImage, Int, Int, Triple<Boolean, Int, Int>?) -> Int
     ): BufferedImage {
         val moduleCount = rawData[0].size
         val imageSize: Int = moduleCount * cellSize + margin * 2
@@ -161,9 +180,9 @@ class QRCode(
                 val pixelColor = if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
                     val col = (x - margin) / cellSize
                     val row = (y - margin) / cellSize
-                    shader(x, y, Triple(isDark(row, col, rawData), row, col))
+                    shader(image, x, y, Triple(isDark(row, col, rawData), row, col))
                 } else {
-                    shader(x, y, null)
+                    shader(image, x, y, null)
                 }
 
                 image.setRGB(x, y, pixelColor)
@@ -452,4 +471,16 @@ class QRCode(
 
     private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
         modules[row][col] ?: false
+}
+
+fun main() {
+    QRCode("example").renderShaded { image, x, y, cellData ->
+cellData?.let { (dark, cellRow, cellCol) ->
+    if (dark) {
+        if (y >= image.height / 2) { Color.RED.rgb }
+        else { Color.BLUE.rgb }
+    }
+    else { Color.WHITE.rgb }
+} ?: Color.WHITE.rgb
+    }.also { ImageIO.write(it, "PNG", File("E:\\dev\\qrcode-rb.png")) }
 }
