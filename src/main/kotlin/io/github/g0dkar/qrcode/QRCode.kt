@@ -147,7 +147,7 @@ class QRCode(
      * To show this, here's a shader that makes a QR Code that is half [blue][Color.BLUE] and half [red][Color.RED]:
      *
      * ```kotlin
-     * QRCode("example").renderShaded() { image, x, y, cellData ->
+     * QRCode("example").renderShaded { image, x, y, cellData ->
      *     cellData?.let { (foreground, cellRow, cellCol) ->
      *         if (dark) {
      *             if (y >= image.height / 2) { Color.RED.rgb } // Lower half is red
