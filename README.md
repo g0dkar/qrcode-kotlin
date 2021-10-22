@@ -1,5 +1,9 @@
 # qrcode-kotlin
 
+![Travis (.org)](https://img.shields.io/travis/g0dkar/qrcode-kotlin)
+[![Coverage Status](https://coveralls.io/repos/github/g0dkar/qrcode-kotlin/badge.svg?branch=main)](https://coveralls.io/github/g0dkar/qrcode-kotlin?branch=main)
+[![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
+
 QRCode Generator implemented in pure Kotlin.
 
 _[en] Still setting up everything. Please, wait :P_

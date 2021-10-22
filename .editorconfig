@@ -5,15 +5,13 @@ charset = utf-8
 trim_trailing_whitespace = true
 end_of_line = lf
 
-[*.{java,js,jsp,kt,kts,md,properties,sh,sql,yml,yaml,html,css}]
+[*.{kt,kts,md}]
 indent_size = 4
 continuation_indent_size = 4
 ij_continuation_indent_size = 4
+disabled_rules = import-ordering
 indent_style = space
 insert_final_newline = true
-
-[*.{kt,kts}]
-disabled_rules = import-ordering
 
 [**/test/**.kt]
 ktlint_ignore_back_ticked_identifier = true
