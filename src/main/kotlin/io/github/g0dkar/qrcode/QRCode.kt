@@ -97,7 +97,7 @@ class QRCode(
     /**
      * Renders a QR Code image based on its [computed data][encode].
      *
-     * _Tip: for the "traditional" look-and-feel QR Code, try using `margin = cellSize`!_
+     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
@@ -473,16 +473,4 @@ class QRCode(
 
     private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
         modules[row][col] ?: false
-}
-
-fun main() {
-    QRCode("example").renderShaded { image, x, y, cellData ->
-cellData?.let { (dark, cellRow, cellCol) ->
-    if (dark) {
-        if (y >= image.height / 2) { Color.RED.rgb }
-        else { Color.BLUE.rgb }
-    }
-    else { Color.WHITE.rgb }
-} ?: Color.WHITE.rgb
-    }.also { ImageIO.write(it, "PNG", File("E:\\dev\\qrcode-rb.png")) }
 }
