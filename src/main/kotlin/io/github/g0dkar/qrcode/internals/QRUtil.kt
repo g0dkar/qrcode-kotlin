@@ -11,7 +11,6 @@ import io.github.g0dkar.qrcode.MaskPattern.PATTERN101
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN110
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN111
 import io.github.g0dkar.qrcode.Mode
-import java.io.UnsupportedEncodingException
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
@@ -315,22 +314,19 @@ internal object QRUtil {
 
     private fun isNumber(s: String) = s.matches(Regex("^\\d+$"))
     private fun isAlphaNum(s: String) = s.matches(Regex("^\\p{Alnum}+$"))
-    private fun isKanji(s: String): Boolean =
-        try {
-            var result: Boolean? = null
-            val data = s.toByteArray(charset(jISEncoding))
-            var i = 0
-            while (i + 1 < data.size) {
-                val c = 0xff and data[i].toInt() shl 8 or (0xff and data[i + 1].toInt())
-                if (c !in 0x8140..0x9FFC && c !in 0xE040..0xEBBF) {
-                    result = false
-                }
-                i += 2
+    private fun isKanji(s: String): Boolean {
+        var result: Boolean? = null
+        val data = s.toByteArray(charset(jISEncoding))
+        var i = 0
+        while (i + 1 < data.size) {
+            val c = 0xff and data[i].toInt() shl 8 or (0xff and data[i + 1].toInt())
+            if (c !in 0x8140..0x9FFC && c !in 0xE040..0xEBBF) {
+                result = false
             }
-            result ?: (i >= data.size)
-        } catch (e: UnsupportedEncodingException) {
-            throw RuntimeException(e.message)
+            i += 2
         }
+        return result ?: (i >= data.size)
+    }
 
     private const val G15 = (
         1 shl 10 or (1 shl 8) or (1 shl 5)
