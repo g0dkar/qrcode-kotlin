@@ -100,7 +100,8 @@ To have one of these nice looking and spaced QRCode, try doing this:
 
 ```kotlin
 val cellSize = 30 // pixels
-val imageData = QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize, margin = cellSize)
+val imageData = QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(cellSize, margin = cellSize)
 
 ImageIO.write(imageData, "PNG", File("example03.png"))
 ```
@@ -108,8 +109,9 @@ ImageIO.write(imageData, "PNG", File("example03.png"))
 In Java:
 
 ```java
-int cellSize=30; // pixels
-BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize, cellSize);
+int cellSize = 30; // pixels
+BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(cellSize, cellSize);
 
 ImageIO.write(imageData, "PNG", new File("example03-java.png"));
 ```
@@ -287,7 +289,8 @@ Para se ter um desses QRCodes bem espaçados, tente fazer o seguinte:
 
 ```kotlin
 val tamanhoCelula = 30 // pixels
-val dadosImagem = QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula, margin = tamanhoCelula)
+val dadosImagem = QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(tamanhoCelula, margin = tamanhoCelula)
 
 ImageIO.write(dadosImagem, "PNG", File("exemplo03.png"))
 ```
@@ -296,7 +299,8 @@ Em Java:
 
 ```java
 int tamanhoCelula = 30; // pixels
-BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula, tamanhoCelula);
+BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(tamanhoCelula, tamanhoCelula);
 
 ImageIO.write(dadosImagem, "PNG", new File("exemplo03-java.png"));
 ```
