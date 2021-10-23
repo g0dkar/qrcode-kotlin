@@ -190,7 +190,7 @@ If you enjoyed the library and want to get me some coffee, use the button below 
 
 ### Documentação em Português (Brasil)
 
-[_:us: **Available in English**_](#)
+[_:us: **Available in English**_](#qrcode-kotlin)
 
 Criar QRCodes em Kotlin e Java é mais difícil do que deveria. O QRCode-Kotlin tenta trazer uma forma simples, direta e
 personalizável de se criar QRCodes para o domínio da JVM, especialmente no backend.
