@@ -37,7 +37,7 @@ any other:
 
 **If you're using Gradle:**
 
-```
+```groovy
 // Kotlin ❤️
 implementation("io.github.g0dkar:qrcode-kotlin:1.0.0")
 
@@ -223,7 +223,7 @@ como qualquer outra dependência:
 
 **Se você utiliza Gradle:**
 
-```text
+```groovy
 // Kotlin ❤️
 implementation("io.github.g0dkar:qrcode-kotlin:1.0.0")
 
