@@ -11,19 +11,23 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Advantages of QRCode-Kotlin
 
-* **Pure Kotlin:** Reimplemented on pure Kotlin from a reference implementation of the QRCode spec by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
+* **Pure Kotlin:** Reimplemented on pure Kotlin from a reference implementation of the QRCode spec
+  by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
 * **Lightweight:** No dependencies, `~42KB` and it does what it says on the tin.
 * **Easy to use:** Instantiate an object, invoke a method, and you're done :)
-* **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate QRCodes)
+* **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate
+  QRCodes)
 * **Customizable output:** Want to make a colorful QRCode? We got you!
 
 ## Installation
 
-This library is available from [Maven Central](#) so you can add QRCode-Kotlin to your project as a dependency like any other:
+This library is available from [Maven Central](#) so you can add `QRCode-Kotlin` to your project as a dependency like
+any other:
 
 **If you're using Maven - pom.xml:**
 
 ```xml
+
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
@@ -60,10 +64,10 @@ ImageIO.write(imageData, "PNG", File("example01.png"))
 Same code as above, but in Java:
 
 ```java
-BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
+BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
 
 // Save it as a PNG File:
-ImageIO.write(imageData, "PNG", new File("example01-java.png"));
+    ImageIO.write(imageData,"PNG",new File("example01-java.png"));
 ```
 
 ### A QRCode, but bigger
@@ -80,9 +84,9 @@ ImageIO.write(imageData, "PNG", File("example02.png"))
 In Java:
 
 ```java
-BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
+BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
 
-ImageIO.write(imageData, "PNG", new File("example02-java.png"));
+    ImageIO.write(imageData,"PNG",new File("example02-java.png"));
 ```
 
 ### Just like Google's ZXing one!
@@ -104,10 +108,10 @@ ImageIO.write(imageData, "PNG", File("example03.png"))
 In Java:
 
 ```java
-int cellSize = 30; // pixels
-BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize, cellSize);
+int cellSize=30; // pixels
+    BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize,cellSize);
 
-ImageIO.write(imageData, "PNG", new File("example03-java.png"));
+    ImageIO.write(imageData,"PNG",new File("example03-java.png"));
 ```
 
 ### A splash of Color
@@ -134,13 +138,13 @@ ImageIO.write(imageData, "PNG", File("example04.png"))
 In Java:
 
 ```java
-Color background = new Color(13, 17, 23);
-Color foreground = new Color(139, 148, 158);
+Color background=new Color(13,17,23);
+    Color foreground=new Color(139,148,158);
 
-QRCode qrCode = new QRCode("https://github.com/g0dkar/qrcode-kotlin");
-BufferedImage imageData = qrCode.render(25, 0, qrCode.encode(), background, foreground, background);
+    QRCode qrCode=new QRCode("https://github.com/g0dkar/qrcode-kotlin");
+    BufferedImage imageData=qrCode.render(25,0,qrCode.encode(),background,foreground,background);
 
-ImageIO.write(imageData, "PNG", File("example04-java.png"));
+    ImageIO.write(imageData,"PNG",File("example04-java.png"));
 ```
 
 ### Spring Framework and/or Spring Boot
@@ -171,8 +175,12 @@ Copyright 2021 Rafael M. Lins, Licensed under the [MIT License](LICENSE).
 
 ## Support and Links
 
-* If you found any bugs, please [open an Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=) 😁
-* Have any suggestions? You can [make them](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=) as well!
+* If you found any bugs,
+  please [open an Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=)
+  😁
+* Have any suggestions? You
+  can [make them](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
+  as well!
 
 If you enjoyed the library and want to get me some coffee, use the button below :love_you_gesture:
 
@@ -189,10 +197,12 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Vantagens do QRCode-Kotlin
 
-* **Kotlin Puro:** Reimplementação em puro Kotlin a partir da implementação de referência da especificação do QRCode por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
+* **Kotlin Puro:** Reimplementação em puro Kotlin a partir da implementação de referência da especificação do QRCode
+  por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
 * **Leve:** Sem dependencias, `~42KB` e faz exatamente o que promete fazer.
 * **Fácil de usar:** Instancie um objeto, chame um método e pronto :)
-* **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que gerar QRCodes)
+* **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que
+  gerar QRCodes)
 * **Saída Personalizada:** Quer um QRCode colorido? Nós temos!
 
 ## Instalação
@@ -203,6 +213,7 @@ como qualquer outra dependência:
 **Se você utiliza Maven - pom.xml:**
 
 ```xml
+
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
@@ -239,10 +250,10 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo01.png"))
 O mesmo que o código acima, em Java:
 
 ```java
-BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
+BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
 
 // Salvar como um arquivo PNG:
-ImageIO.write(dadosImagem, "PNG", new File("exemplo01-java.png"));
+    ImageIO.write(dadosImagem,"PNG",new File("exemplo01-java.png"));
 ```
 
 ### Um QRCode, mas maior
@@ -259,9 +270,9 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo02.png"))
 Em Java:
 
 ```java
-BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
+BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
 
-ImageIO.write(dadosImagem, "PNG", new File("exemplo02-java.png"));
+    ImageIO.write(dadosImagem,"PNG",new File("exemplo02-java.png"));
 ```
 
 ### Igual ao Google ZXing!
@@ -269,7 +280,8 @@ ImageIO.write(dadosImagem, "PNG", new File("exemplo02-java.png"));
 No momento da escrita desta documentação, a [biblioteca Google ZXing](https://github.com/zxing/zxing) é amplamente
 utilizada para se gerar QRCodes. Seus resultados normalmente incluem uma "borda" _(também chamada de "margem")_ ao redor
 do QRCode, geralmente com 1 célula de tamanho. A função `render()` também pode receber um parâmetro `margin` com a
-quantidade de pixels que queremos ter como margem ao redor do QRCode. **Por padrão, o parâmetro `margin` é igual a `0`.**
+quantidade de pixels que queremos ter como margem ao redor do QRCode. **Por padrão, o parâmetro `margin` é igual a `0`
+.**
 
 Para se ter um desses QRCodes bem espaçados, tente fazer o seguinte:
 
@@ -283,10 +295,10 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo03.png"))
 Em Java:
 
 ```java
-int tamanhoCelula = 30; // pixels
-BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula, tamanhoCelula);
+int tamanhoCelula=30; // pixels
+    BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula,tamanhoCelula);
 
-ImageIO.write(dadosImagem, "PNG", new File("exemplo03-java.png"));
+    ImageIO.write(dadosImagem,"PNG",new File("exemplo03-java.png"));
 ```
 
 ### Um toque de Cor
@@ -313,13 +325,13 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo04.png"))
 Em Java:
 
 ```java
-Color fundo = new Color(13, 17, 23);
-Color principal = new Color(139, 148, 158);
+Color fundo=new Color(13,17,23);
+    Color principal=new Color(139,148,158);
 
-QRCode qrCode = new QRCode("https://github.com/g0dkar/qrcode-kotlin");
-BufferedImage dadosImagem = qrCode.render(25, 0, qrCode.encode(), fundo, principal, fundo);
+    QRCode qrCode=new QRCode("https://github.com/g0dkar/qrcode-kotlin");
+    BufferedImage dadosImagem=qrCode.render(25,0,qrCode.encode(),fundo,principal,fundo);
 
-ImageIO.write(dadosImagem, "PNG", File("exemplo04-java.png"));
+    ImageIO.write(dadosImagem,"PNG",File("exemplo04-java.png"));
 ```
 
 ### Spring Framework e/ou Spring Boot
@@ -350,8 +362,12 @@ Direito Autoral 2021 Rafael M. Lins, Licenciado pela [Licença MIT (texto em ing
 
 ## Suporte e Links
 
-* Se encontrou bugs, por favor [abra uma Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=) 😁
-* Tem sugestões? Você [pode fazê-las](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=) também!
+* Se encontrou bugs, por
+  favor [abra uma Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=)
+  😁
+* Tem sugestões?
+  Você [pode fazê-las](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
+  também!
 
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
