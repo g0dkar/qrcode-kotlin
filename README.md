@@ -64,10 +64,10 @@ ImageIO.write(imageData, "PNG", File("example01.png"))
 Same code as above, but in Java:
 
 ```java
-BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
+BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
 
 // Save it as a PNG File:
-    ImageIO.write(imageData,"PNG",new File("example01-java.png"));
+ImageIO.write(imageData, "PNG", new File("example01-java.png"));
 ```
 
 ### A QRCode, but bigger
@@ -84,9 +84,9 @@ ImageIO.write(imageData, "PNG", File("example02.png"))
 In Java:
 
 ```java
-BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
+BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
 
-    ImageIO.write(imageData,"PNG",new File("example02-java.png"));
+ImageIO.write(imageData, "PNG", new File("example02-java.png"));
 ```
 
 ### Just like Google's ZXing one!
@@ -109,9 +109,9 @@ In Java:
 
 ```java
 int cellSize=30; // pixels
-    BufferedImage imageData=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize,cellSize);
+BufferedImage imageData = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(cellSize, cellSize);
 
-    ImageIO.write(imageData,"PNG",new File("example03-java.png"));
+ImageIO.write(imageData, "PNG", new File("example03-java.png"));
 ```
 
 ### A splash of Color
@@ -138,13 +138,13 @@ ImageIO.write(imageData, "PNG", File("example04.png"))
 In Java:
 
 ```java
-Color background=new Color(13,17,23);
-    Color foreground=new Color(139,148,158);
+Color background = new Color(13, 17, 23);
+Color foreground = new Color(139, 148, 158);
 
-    QRCode qrCode=new QRCode("https://github.com/g0dkar/qrcode-kotlin");
-    BufferedImage imageData=qrCode.render(25,0,qrCode.encode(),background,foreground,background);
+QRCode qrCode = new QRCode("https://github.com/g0dkar/qrcode-kotlin");
+BufferedImage imageData = qrCode.render(25, 0, qrCode.encode(), background, foreground, background);
 
-    ImageIO.write(imageData,"PNG",File("example04-java.png"));
+ImageIO.write(imageData, "PNG", new File("example04-java.png"));
 ```
 
 ### Spring Framework and/or Spring Boot
@@ -223,7 +223,7 @@ como qualquer outra dependência:
 
 **Se você utiliza Gradle:**
 
-```
+```text
 // Kotlin ❤️
 implementation("io.github.g0dkar:qrcode-kotlin:1.0.0")
 
@@ -250,10 +250,10 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo01.png"))
 O mesmo que o código acima, em Java:
 
 ```java
-BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
+BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render();
 
 // Salvar como um arquivo PNG:
-    ImageIO.write(dadosImagem,"PNG",new File("exemplo01-java.png"));
+ImageIO.write(dadosImagem, "PNG", new File("exemplo01-java.png"));
 ```
 
 ### Um QRCode, mas maior
@@ -270,9 +270,9 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo02.png"))
 Em Java:
 
 ```java
-BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
+BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(50);
 
-    ImageIO.write(dadosImagem,"PNG",new File("exemplo02-java.png"));
+ImageIO.write(dadosImagem, "PNG", new File("exemplo02-java.png"));
 ```
 
 ### Igual ao Google ZXing!
@@ -295,10 +295,10 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo03.png"))
 Em Java:
 
 ```java
-int tamanhoCelula=30; // pixels
-    BufferedImage dadosImagem=new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula,tamanhoCelula);
+int tamanhoCelula = 30; // pixels
+BufferedImage dadosImagem = new QRCode("https://github.com/g0dkar/qrcode-kotlin").render(tamanhoCelula, tamanhoCelula);
 
-    ImageIO.write(dadosImagem,"PNG",new File("exemplo03-java.png"));
+ImageIO.write(dadosImagem, "PNG", new File("exemplo03-java.png"));
 ```
 
 ### Um toque de Cor
@@ -325,13 +325,13 @@ ImageIO.write(dadosImagem, "PNG", File("exemplo04.png"))
 Em Java:
 
 ```java
-Color fundo=new Color(13,17,23);
-    Color principal=new Color(139,148,158);
+Color fundo = new Color(13, 17, 23);
+Color principal = new Color(139, 148, 158);
 
-    QRCode qrCode=new QRCode("https://github.com/g0dkar/qrcode-kotlin");
-    BufferedImage dadosImagem=qrCode.render(25,0,qrCode.encode(),fundo,principal,fundo);
+QRCode qrCode = new QRCode("https://github.com/g0dkar/qrcode-kotlin");
+BufferedImage dadosImagem = qrCode.render(25, 0, qrCode.encode(), fundo, principal, fundo);
 
-    ImageIO.write(dadosImagem,"PNG",File("exemplo04-java.png"));
+ImageIO.write(dadosImagem, "PNG", new File("exemplo04-java.png"));
 ```
 
 ### Spring Framework e/ou Spring Boot
