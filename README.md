@@ -18,6 +18,8 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 * **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate
   QRCodes)
 * **Customizable output:** Want to make a colorful QRCode? We got you!
+* **Server friendly:** This isn't a library for Mobile applications. This is a library thought by backend developers for
+  backend developers.
 
 ## Installation
 
@@ -206,6 +208,8 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 * **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que
   gerar QRCodes)
 * **Saída Personalizada:** Quer um QRCode colorido? Nós temos!
+* **Amigável aos Servidores:** Esta não é uma biblioteca para aplicações Mobile. Esta biblioteca foi pensada por devs
+  backend para devs backend.
 
 ## Instalação
 
