@@ -23,8 +23,8 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](#) so you can add `QRCode-Kotlin` to your project as a dependency like
-any other:
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.0/qrcode-kotlin)
+so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
 
@@ -213,8 +213,8 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](#), então basta adicionar o `QRCode-Kotlin` a seu projeto
-como qualquer outra dependência:
+Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.0/qrcode-kotlin),
+então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 **Se você utiliza Maven - pom.xml:**
 
