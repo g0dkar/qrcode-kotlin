@@ -29,7 +29,6 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 **If you're using Maven - pom.xml:**
 
 ```xml
-
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
@@ -219,7 +218,6 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 **Se você utiliza Maven - pom.xml:**
 
 ```xml
-
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
