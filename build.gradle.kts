@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.dokka") version "1.5.31"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("io.github.gradle-nexus.publish-plugin").version("1.0.0")
 }
 
 group = "io.github.g0dkar"
@@ -73,12 +74,24 @@ java {
     withJavadocJar()
 }
 
+nexusPublishing {
+    repositories {
+        sonatype {
+            val ossrhUsername: String? by properties
+            val ossrhPassword: String? by properties
+
+            username.set(ossrhUsername ?: System.getenv("OSSRH_USER") ?: return@sonatype)
+            password.set(ossrhPassword ?: System.getenv("OSSRH_PASSWORD") ?: return@sonatype)
+        }
+    }
+}
+
 publishing {
     val ossrhUsername: String? by properties
     val ossrhPassword: String? by properties
 
     publications {
-        create<MavenPublication>("sonatype") {
+        create<MavenPublication>("main") {
             from(components["java"])
             pom {
                 val projectGitUrl = "https://github.com/g0dkar/qrcode-kotlin"
@@ -127,8 +140,10 @@ publishing {
 }
 
 signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKey, signingPassword)
+    val signingKey: String? by properties
+    val signingPassword: String? by properties
+    val key = signingKey ?: System.getenv("SIGNING_KEY") ?: return@signing
+    val password = signingPassword ?: System.getenv("SIGNING_PASSWORD") ?: return@signing
+    useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
