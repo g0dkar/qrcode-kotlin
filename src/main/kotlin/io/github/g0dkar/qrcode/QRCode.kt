@@ -51,7 +51,7 @@ import javax.imageio.ImageIO
  *
  * @see ErrorCorrectionLevel
  */
-class QRCode(
+class QRCode @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
 ) {
@@ -109,6 +109,7 @@ class QRCode(
      *
      * @see [renderShaded]
      */
+    @JvmOverloads
     fun render(
         cellSize: Int = 25,
         margin: Int = 0,
@@ -166,6 +167,7 @@ class QRCode(
      *
      * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      */
+    @JvmOverloads
     fun renderShaded(
         cellSize: Int = 25,
         margin: Int = 0,
@@ -210,6 +212,7 @@ class QRCode(
      * @see MaskPattern
      * @see renderShaded
      */
+    @JvmOverloads
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
