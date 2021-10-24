@@ -7,11 +7,11 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.dokka") version "1.5.31"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
-    id("io.github.gradle-nexus.publish-plugin").version("1.0.0")
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 group = "io.github.g0dkar"
-version = "1.0.0"
+version = "1.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -77,6 +77,9 @@ java {
 nexusPublishing {
     repositories {
         sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+
             val ossrhUsername: String? by properties
             val ossrhPassword: String? by properties
 
