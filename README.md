@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 ![Travis (.com)](https://img.shields.io/travis/com/g0dkar/qrcode-kotlin)
 [![Coverage Status](https://coveralls.io/repos/github/g0dkar/qrcode-kotlin/badge.svg?branch=main)](https://coveralls.io/github/g0dkar/qrcode-kotlin?branch=main)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
 
 [_:brazil: **Disponível em Português (Brasil)**_](#documenta%C3%A7%C3%A3o-em-portugu%C3%AAs-brasil)
 
