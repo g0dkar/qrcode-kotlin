@@ -8,5 +8,4 @@ repositories {
 
 dependencies {
     implementation("io.github.g0dkar:qrcode-kotlin:1.0.1")
-    implementation("info.picocli:picocli:4.6.1")
 }

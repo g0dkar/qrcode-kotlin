@@ -127,8 +127,8 @@ plain, (very) old `java.awt.Color` values in the RGBA space.
 For fun, this will make a QRCode with GitHub's Dark Mode colors:
 
 ```kotlin
-val background = Color(13, 17, 23)
-val foreground = Color(139, 148, 158)
+val background = Color(139, 148, 158)
+val foreground = Color(13, 17, 23)
 
 val imageData = QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
     brightColor = background, // Background

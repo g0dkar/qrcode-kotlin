@@ -1,15 +1,15 @@
 import io.github.g0dkar.qrcode.QRCode
-import picocli.CommandLine.Command
-import util.QRCodeGeneratorCommand
-import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 
-@Command(
-    name = "simple",
-    version = ["1.0.1 (Kotlin)"],
-    mixinStandardHelpOptions = true,
-    description = ["Create a QRCode for the input String."]
-)
-internal class SimpleQRCode : QRCodeGeneratorCommand() {
-    override fun createQRCode(content: String): BufferedImage =
-        QRCode(content, ecl).render(cellSize, margin)
+class SimpleQRCode {
+    fun createQRCode(content: String) {
+        val imageData = QRCode(content).render()
+        ImageIO.write(imageData, "PNG", File("qrcode-simple.png"))
+    }
+}
+
+fun main() {
+    SimpleQRCode()
+        .createQRCode("Hello, world!")
 }
