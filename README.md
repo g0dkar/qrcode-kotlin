@@ -385,5 +385,3 @@ QR Code é marca registrada de Denso Wave, inc.
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee over at Ko-fi!")](https://ko-fi.com/g0dkar)
-
-## Etcetera
