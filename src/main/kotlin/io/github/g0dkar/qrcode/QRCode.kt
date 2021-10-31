@@ -11,6 +11,7 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.util.function.Function
 import javax.imageio.ImageIO
 
 /**
@@ -122,15 +123,14 @@ class QRCode @JvmOverloads constructor(
             cellSize,
             margin,
             rawData,
-        ) { _, _, _, cellData ->
-            cellData?.let {
-                if (it.first) {
-                    darkColor.rgb
-                } else {
-                    brightColor.rgb
-                }
+        ) { pixelData ->
+            if (pixelData.isDark) {
+                darkColor
+            } else if (pixelData.isMargin) {
+                marginColor
+            } else {
+                brightColor
             }
-                ?: marginColor.rgb
         }
 
     /**
@@ -147,18 +147,18 @@ class QRCode @JvmOverloads constructor(
      * To show this, here's a shader that makes a QR Code that is half [blue][Color.BLUE] and half [red][Color.RED]:
      *
      * ```kotlin
-     * QRCode("example").renderShaded { image, x, y, cellData ->
-     *     cellData?.let { (foreground, cellRow, cellCol) ->
-     *         if (foreground) {
-     *             if (y >= image.height / 2) { Color.RED.rgb } // Lower half is red
-     *             else { Color.BLUE.rgb }                      // Upper half is blue
+     * QRCode("example").renderShaded { pixelData ->
+     *     if (!pixelData.isMargin) {
+     *         if (pixelData.isDark) {
+     *             if (pixelData.y >= pixelData.image.height / 2) { Color.RED } // Lower half is red
+     *             else { Color.blue } // Upper half is blue
      *         }
-     *         else { Color.WHITE.rgb } // Background is white
-     *     } ?: Color.WHITE.rgb         // Margin is white
+     *         else { Color.white } // Background is white
+     *     } else { Color.white } // Margin is white
      * }
      * ```
      *
-     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
+     * _Tip: for the "traditional look-and-feel" QR Code, try setting [margin] equal to [cellSize]._
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
@@ -172,23 +172,38 @@ class QRCode @JvmOverloads constructor(
         cellSize: Int = 25,
         margin: Int = 0,
         rawData: Array<Array<Boolean?>> = encode(),
-        shader: (BufferedImage, Int, Int, Triple<Boolean, Int, Int>?) -> Int
+        shader: Function<QRCodePixelData, Color> // To keep Java Interop w/o any extra dependencies
     ): BufferedImage {
         val moduleCount = rawData[0].size
         val imageSize: Int = moduleCount * cellSize + margin * 2
         val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
+        val currentPixelData = QRCodePixelData(image, 0, 0, 0, 0, false, false)
 
         for (y in 0 until imageSize) {
             for (x in 0 until imageSize) {
+                currentPixelData.x = x
+                currentPixelData.y = y
+
                 val pixelColor = if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
                     val col = (x - margin) / cellSize
                     val row = (y - margin) / cellSize
-                    shader(image, x, y, Triple(isDark(row, col, rawData), row, col))
+
+                    currentPixelData.row = row
+                    currentPixelData.col = col
+                    currentPixelData.isDark = isDark(row, col, rawData)
+                    currentPixelData.isMargin = false
+
+                    shader.apply(currentPixelData)
                 } else {
-                    shader(image, x, y, null)
+                    currentPixelData.row = -1
+                    currentPixelData.col = -1
+                    currentPixelData.isDark = false
+                    currentPixelData.isMargin = true
+
+                    shader.apply(currentPixelData)
                 }
 
-                image.setRGB(x, y, pixelColor)
+                image.setRGB(x, y, pixelColor.rgb)
             }
         }
 

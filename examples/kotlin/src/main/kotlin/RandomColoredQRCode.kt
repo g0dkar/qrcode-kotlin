@@ -21,7 +21,7 @@ class RandomColoredQRCode {
                 }
             } ?: backgroundColor.rgb
         }
-        ImageIO.write(imageData, "PNG", File("qrcode-random-colored.png"))
+        ImageIO.write(imageData, "PNG", File("kotlin-random-colored.png"))
     }
 }
 

@@ -5,7 +5,7 @@ import javax.imageio.ImageIO
 class SimpleQRCode {
     fun createQRCode(content: String) {
         val imageData = QRCode(content).render()
-        ImageIO.write(imageData, "PNG", File("qrcode-simple.png"))
+        ImageIO.write(imageData, "PNG", File("kotlin-simple.png"))
     }
 }
 

@@ -35,7 +35,7 @@ class GradientColorQRCode(
                 ?: Color.white.rgb
         }
 
-        ImageIO.write(imageData, "PNG", File("qrcode-gradient.png"))
+        ImageIO.write(imageData, "PNG", File("kotlin-gradient.png"))
     }
 }
 

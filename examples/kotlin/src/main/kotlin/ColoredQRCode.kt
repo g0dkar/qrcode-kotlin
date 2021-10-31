@@ -9,7 +9,7 @@ class ColoredQRCode {
         content: String,
         squareColor: Color,
         backgroundColor: Color,
-        filename: String = "qrcode-colored.png"
+        filename: String = "kotlin-colored.png"
     ) {
         val imageData = QRCode(content).render(darkColor = squareColor, brightColor = backgroundColor)
         ImageIO.write(imageData, "PNG", File(filename))

@@ -24,7 +24,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.1/qrcode-kotlin)
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.3/qrcode-kotlin)
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
@@ -33,7 +33,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -41,10 +41,10 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.0.1")
+implementation("io.github.g0dkar:qrcode-kotlin:1.0.3")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.0.1'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.0.3'
 ```
 
 ## Examples and Usage
@@ -177,6 +177,8 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
 
 Copyright 2021 Rafael M. Lins, Licensed under the [MIT License](LICENSE).
 
+QR Code is trademarked by Denso Wave, inc.
+
 ## Support and Links
 
 * If you found any bugs,
@@ -213,7 +215,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.1/qrcode-kotlin),
+Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.0.3/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 **Se você utiliza Maven - pom.xml:**
@@ -222,7 +224,7 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -230,10 +232,10 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.0.1")
+implementation("io.github.g0dkar:qrcode-kotlin:1.0.3")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.0.1'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.0.3'
 ```
 
 ## Exemplos e Usos
@@ -367,6 +369,8 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
 
 Direito Autoral 2021 Rafael M. Lins, Licenciado pela [Licença MIT (texto em inglês)](LICENSE).
 
+QR Code é marca registrada de Denso Wave, inc.
+
 ## Suporte e Links
 
 * Se encontrou bugs, por
@@ -379,3 +383,5 @@ Direito Autoral 2021 Rafael M. Lins, Licenciado pela [Licença MIT (texto em ing
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee over at Ko-fi!")](https://ko-fi.com/g0dkar)
+
+## Etcetera

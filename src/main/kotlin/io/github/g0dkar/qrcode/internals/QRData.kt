@@ -49,15 +49,16 @@ internal abstract class QRData(val mode: Mode, val data: String) {
  * @author Kazuhiko Arase
  */
 internal class QR8BitByte(data: String) : QRData(Mode.MODE_8BIT_BYTE, data) {
+    private val dataBytes = data.toByteArray(Charsets.UTF_8)
+
     override fun write(buffer: BitBuffer) {
-        val data = data.toByteArray(charset(QRUtil.jISEncoding))
-        for (i in data.indices) {
-            buffer.put(data[i].toInt(), 8)
+        for (i in dataBytes.indices) {
+            buffer.put(dataBytes[i].toInt(), 8)
         }
     }
 
     override fun length(): Int =
-        data.toByteArray(charset(QRUtil.jISEncoding)).size
+        dataBytes.size
 }
 
 /**
@@ -89,11 +90,12 @@ internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
  * @author Kazuhiko Arase
  */
 internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
+    private val dataBytes = data.toByteArray(charset(QRUtil.jISEncoding))
+
     override fun write(buffer: BitBuffer) {
-        val data = data.toByteArray(charset(QRUtil.jISEncoding))
         var i = 0
-        while (i + 1 < data.size) {
-            var c = 0xff and data[i].toInt() shl 8 or (0xff and data[i + 1].toInt())
+        while (i + 1 < dataBytes.size) {
+            var c = 0xff and dataBytes[i].toInt() shl 8 or (0xff and dataBytes[i + 1].toInt())
 
             c -= when (c) {
                 in 0x8140..0x9FFC -> 0x8140
@@ -106,11 +108,11 @@ internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
             i += 2
         }
 
-        require(i >= data.size) { "Illegal char at ${(i + 1)}" }
+        require(i >= dataBytes.size) { "Illegal char at ${(i + 1)}" }
     }
 
     override fun length(): Int =
-        data.toByteArray(charset(QRUtil.jISEncoding)).size / 2
+        dataBytes.size / 2
 }
 
 /**
