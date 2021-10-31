@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:1.0.1")
+    implementation("io.github.g0dkar:qrcode-kotlin:1.1.0")
 }

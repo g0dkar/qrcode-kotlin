@@ -30,21 +30,21 @@ public class GradientColoredQRCode {
         Color startColor,
         Color endColor
     ) throws IOException {
-        BufferedImage imageData = new QRCode(content).renderShaded((image, x, y, cellData) -> {
-            if (cellData != null) {
-                if (Boolean.TRUE.equals(cellData.getFirst())) {
-                    double topBottomPct = pct(x, y, image.getWidth(), image.getHeight());
+        BufferedImage imageData = new QRCode(content).renderShaded(pixelData -> {
+            if (!pixelData.isMargin()) {
+                if (pixelData.isDark()) {
+                    double topBottomPct = pct(pixelData.getX(), pixelData.getY(), pixelData.getImage().getWidth(), pixelData.getImage().getHeight());
                     double bottomTopPct = 1 - topBottomPct;
                     return new Color(
                         (int) (startColor.getRed() * topBottomPct + endColor.getRed() * bottomTopPct),
                         (int) (startColor.getGreen() * topBottomPct + endColor.getGreen() * bottomTopPct),
                         (int) (startColor.getBlue() * topBottomPct + endColor.getBlue() * bottomTopPct)
-                    ).getRGB();
+                    );
                 } else {
-                    return Color.white.getRGB();
+                    return Color.white;
                 }
             } else {
-                return Color.white.getRGB();
+                return Color.white;
             }
         });
         ImageIO.write(imageData, "PNG", new File("java-gradient.png"));

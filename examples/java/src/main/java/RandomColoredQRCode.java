@@ -18,21 +18,19 @@ public class RandomColoredQRCode {
         Color backgroundColor
     ) throws IOException {
         HashMap<Point, Color> colorMap = new HashMap<>();
-        BufferedImage imageData = new QRCode(content).renderShaded((image, x, y, cellData) -> {
-            if (cellData != null) {
-                Integer row = cellData.getSecond();
-                Integer col = cellData.getThird();
-                Point point = new Point(row, col);
+        BufferedImage imageData = new QRCode(content).renderShaded(pixelData -> {
+            if (!pixelData.isMargin()) {
+                Point point = new Point(pixelData.getRow(), pixelData.getCol());
 
-                if (Boolean.TRUE.equals(cellData.getFirst())) {
-                    return colorMap.computeIfAbsent(point, p -> colors.get(new Random().nextInt(colors.size()))).getRGB();
+                if (pixelData.isDark()) {
+                    return colorMap.computeIfAbsent(point, p -> colors.get(new Random().nextInt(colors.size())));
                 }
                 else {
-                    return backgroundColor.getRGB();
+                    return backgroundColor;
                 }
             }
             else {
-                return backgroundColor.getRGB();
+                return backgroundColor;
             }
         });
         ImageIO.write(imageData, "PNG", new File("java-random-colored.png"));

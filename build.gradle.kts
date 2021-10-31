@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.0.3"
+version = "1.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 

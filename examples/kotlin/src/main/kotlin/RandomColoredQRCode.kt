@@ -12,14 +12,21 @@ class RandomColoredQRCode {
         backgroundColor: Color
     ) {
         val colorMap = mutableMapOf<Point, Color>()
-        val imageData = QRCode(content).renderShaded { _, _, _, cellData ->
-            cellData?.let { (isDark, row, col) ->
-                if (isDark) {
-                    colorMap.computeIfAbsent(Point(row, col)) { colors[Random().nextInt(colors.size)] }.rgb
+        val imageData = QRCode(content).renderShaded { pixelData ->
+            if (pixelData.isMargin) {
+                if (pixelData.isDark) {
+                    colorMap.computeIfAbsent(
+                        Point(
+                            pixelData.row,
+                            pixelData.col
+                        )
+                    ) { colors[Random().nextInt(colors.size)] }
                 } else {
-                    backgroundColor.rgb
+                    backgroundColor
                 }
-            } ?: backgroundColor.rgb
+            } else {
+                backgroundColor
+            }
         }
         ImageIO.write(imageData, "PNG", File("kotlin-random-colored.png"))
     }

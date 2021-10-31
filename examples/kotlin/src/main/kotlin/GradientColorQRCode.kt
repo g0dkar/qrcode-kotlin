@@ -18,21 +18,22 @@ class GradientColorQRCode(
         startColor: Color,
         endColor: Color,
     ) {
-        val imageData = QRCode(content).renderShaded { image, x, y, cellData ->
-            cellData?.let { (isDark, _, _) ->
-                if (isDark) {
-                    val topBottomPct = pct(x, y, image.width, image.height)
+        val imageData = QRCode(content).renderShaded { pixelData ->
+            if (!pixelData.isMargin) {
+                if (pixelData.isDark) {
+                    val topBottomPct = pct(pixelData.x, pixelData.y, pixelData.image.width, pixelData.image.height)
                     val bottomTopPct = 1 - topBottomPct
                     Color(
                         (startColor.red * topBottomPct + endColor.red * bottomTopPct).toInt(),
                         (startColor.green * topBottomPct + endColor.green * bottomTopPct).toInt(),
                         (startColor.blue * topBottomPct + endColor.blue * bottomTopPct).toInt()
-                    ).rgb
+                    )
                 } else {
-                    Color.white.rgb
+                    Color.white
                 }
+            } else {
+                Color.white
             }
-                ?: Color.white.rgb
         }
 
         ImageIO.write(imageData, "PNG", File("kotlin-gradient.png"))
