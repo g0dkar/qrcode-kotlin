@@ -62,6 +62,9 @@ ktlint {
 /* Publishing       */
 /* **************** */
 
+val ossrhUsername: String? = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
+val ossrhPassword: String? = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+
 val dokkaHtml by tasks.getting(DokkaTask::class)
 val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
     dependsOn(dokkaHtml)
@@ -80,19 +83,13 @@ nexusPublishing {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
 
-            val ossrhUsername: String? by properties
-            val ossrhPassword: String? by properties
-
-            username.set(ossrhUsername ?: System.getenv("OSSRH_USER") ?: return@sonatype)
-            password.set(ossrhPassword ?: System.getenv("OSSRH_PASSWORD") ?: return@sonatype)
+            username.set(ossrhUsername ?: return@sonatype)
+            password.set(ossrhPassword ?: return@sonatype)
         }
     }
 }
 
 publishing {
-    val ossrhUsername: String? by properties
-    val ossrhPassword: String? by properties
-
     publications {
         create<MavenPublication>("main") {
             from(components["java"])
@@ -143,10 +140,8 @@ publishing {
 }
 
 signing {
-    val signingKey: String? by properties
-    val signingPassword: String? by properties
-    val key = signingKey ?: System.getenv("SIGNING_KEY") ?: return@signing
-    val password = signingPassword ?: System.getenv("SIGNING_PASSWORD") ?: return@signing
+    val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
+    val password = properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
