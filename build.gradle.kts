@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.1.0"
+version = "1.1.1"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -66,7 +66,7 @@ ktlint {
 val ossrhUsername: String? = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword: String? = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
 
-val dokkaHtml by tasks.getting(DokkaTask::class)
+ val dokkaHtml by tasks.getting(DokkaTask::class)
 val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
     dependsOn(dokkaHtml)
     archiveClassifier.set("javadoc")
@@ -143,6 +143,7 @@ publishing {
 signing {
     val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
     val password = properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
