@@ -373,9 +373,6 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        println(testBuffer.buffer.joinToString())
-        println(testBuffer.lengthInBits)
-
         assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
         assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
     }
