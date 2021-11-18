@@ -124,17 +124,20 @@ internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
 internal class QRNumber(data: String) : QRData(Mode.MODE_NUMBER, data) {
     override fun write(buffer: BitBuffer) {
         var i = 0
-        while (i + 2 < data.length) {
-            val num = parseInt(data.substring(i..i + 3))
+        val len = length()
+
+        while (i + 2 < len) {
+            val num = parseInt(data.substring(i, i + 3))
             buffer.put(num, 10)
             i += 3
         }
-        if (i < data.length) {
-            if (data.length - i == 1) {
-                val num = parseInt(data.substring(i..i + 1))
+
+        if (i < len) {
+            if (len - i == 1) {
+                val num = parseInt(data.substring(i, i + 1))
                 buffer.put(num, 4)
-            } else if (data.length - i == 2) {
-                val num = parseInt(data.substring(i..i + 2))
+            } else if (len - i == 2) {
+                val num = parseInt(data.substring(i, i + 2))
                 buffer.put(num, 7)
             }
         }

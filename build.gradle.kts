@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.1.0"
+version = "1.1.1"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -22,6 +22,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
@@ -141,7 +142,9 @@ publishing {
 
 signing {
     val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
-    val password = properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+    val password =
+        properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
