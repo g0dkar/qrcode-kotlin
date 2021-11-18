@@ -181,6 +181,13 @@ Copyright 2021 Rafael M. Lins, Licensed under the [MIT License](LICENSE).
 
 QR Code is trademarked by Denso Wave, inc.
 
+## Thanks and Acknowledgements
+
+First of all, thanks to [Kazuhiko Arase](https://github.com/kazuhikoarase) for his reference implementation!
+
+Also, thanks for [Paul Varry](https://github.com/pvarry) for opening the first few issues on the repo and helping making
+the library even better for everyone! :grin:
+
 ## Support and Links
 
 * If you found any bugs,
@@ -372,6 +379,13 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
 Direito Autoral 2021 Rafael M. Lins, Licenciado pela [Licença MIT (texto em inglês)](LICENSE).
 
 QR Code é marca registrada de Denso Wave, inc.
+
+## Agradecimentos e Reconhecimentos
+
+Primeiro de tudo, obrigado a [Kazuhiko Arase](https://github.com/kazuhikoarase) por sua implementação de referência!
+
+Além disso, obrigado a [Paul Varry](https://github.com/pvarry) por abrir as primeiras issues no repositório e ajudar a
+fazer a biblioteca melhor para todo o mundo! :grin:
 
 ## Suporte e Links
 
