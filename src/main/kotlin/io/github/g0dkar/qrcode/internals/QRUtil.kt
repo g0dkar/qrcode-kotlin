@@ -10,7 +10,7 @@ import io.github.g0dkar.qrcode.MaskPattern.PATTERN100
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN101
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN110
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN111
-import io.github.g0dkar.qrcode.Mode
+import io.github.g0dkar.qrcode.QRCodeDataType
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
@@ -273,8 +273,8 @@ internal object QRUtil {
         ),
     )
 
-    fun getMaxLength(typeNumber: Int, mode: Mode, errorCorrectionLevel: ErrorCorrectionLevel): Int =
-        MAX_LENGTH[typeNumber - 1][errorCorrectionLevel.ordinal][mode.ordinal]
+    fun getMaxLength(typeNumber: Int, dataType: QRCodeDataType, errorCorrectionLevel: ErrorCorrectionLevel): Int =
+        MAX_LENGTH[typeNumber - 1][errorCorrectionLevel.ordinal][dataType.ordinal]
 
     fun getErrorCorrectPolynomial(errorCorrectLength: Int): Polynomial {
         var a = Polynomial(intArrayOf(1))
@@ -299,17 +299,17 @@ internal object QRUtil {
             PATTERN111 -> (i * j % 3 + (i + j) % 2) % 2 == 0
         }
 
-    fun getMode(s: String): Mode =
+    fun getDataType(s: String): QRCodeDataType =
         if (isAlphaNum(s)) {
             if (isNumber(s)) {
-                Mode.MODE_NUMBER
+                QRCodeDataType.NUMBERS
             } else {
-                Mode.MODE_ALPHA_NUM
+                QRCodeDataType.ALPHA_NUM
             }
         } else if (isKanji(s)) {
-            Mode.MODE_KANJI
+            QRCodeDataType.KANJI
         } else {
-            Mode.MODE_8BIT_BYTE
+            QRCodeDataType.BYTES
         }
 
     private fun isNumber(s: String) = s.matches(Regex("^\\d+$"))

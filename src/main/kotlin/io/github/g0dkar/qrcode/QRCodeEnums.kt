@@ -9,7 +9,7 @@ package io.github.g0dkar.qrcode
  * you'll be able to encode.
  *
  * Please consult [Kazuhiko's Online Demo](https://kazuhikoarase.github.io/qrcode-generator/js/demo/) where at the time
- * of writing a handy table showed how many bytes can be encoded given a data type ([Mode]) and Error Correction Level.
+ * of writing a handy table showed how many bytes can be encoded given a data type ([QRCodeDataType]) and Error Correction Level.
  *
  * This library automatically tries to fit ~2048 bytes into the QR Code regardless of error correction level. That is
  * the reason and meaning of [maxTypeNum].
@@ -57,9 +57,9 @@ enum class MaskPattern {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-enum class Mode(val value: Int) {
-    MODE_NUMBER(1 shl 0),
-    MODE_ALPHA_NUM(1 shl 1),
-    MODE_8BIT_BYTE(1 shl 2),
-    MODE_KANJI(1 shl 3)
+enum class QRCodeDataType(val value: Int) {
+    NUMBERS(1 shl 0),
+    ALPHA_NUM(1 shl 1),
+    BYTES(1 shl 2),
+    KANJI(1 shl 3)
 }

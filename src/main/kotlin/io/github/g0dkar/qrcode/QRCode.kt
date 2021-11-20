@@ -46,6 +46,7 @@ import javax.imageio.ImageIO
  *
  * @param data String that will be encoded in the QR Code.
  * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M].
+ * @param dataType One of the available [QRCodeDataType]. By default, the code tries to guess which one is the best fitting one from your input data.
  *
  * @author Rafael Lins
  * @author Kazuhiko Arase
@@ -54,13 +55,14 @@ import javax.imageio.ImageIO
  */
 class QRCode @JvmOverloads constructor(
     private val data: String,
-    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
+    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
+    dataType: QRCodeDataType = QRUtil.getDataType(data),
 ) {
-    private val qrCodeData: QRData = when (QRUtil.getMode(data)) {
-        Mode.MODE_NUMBER -> QRNumber(data)
-        Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
-        Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
-        Mode.MODE_KANJI -> QRKanji(data)
+    private val qrCodeData: QRData = when (dataType) {
+        QRCodeDataType.NUMBERS -> QRNumber(data)
+        QRCodeDataType.ALPHA_NUM -> QRAlphaNum(data)
+        QRCodeDataType.BYTES -> QR8BitByte(data)
+        QRCodeDataType.KANJI -> QRKanji(data)
     }
 
     companion object {
@@ -71,21 +73,22 @@ class QRCode @JvmOverloads constructor(
          * Calculates a suitable value for the [type] field for your
          */
         @JvmStatic
+        @JvmOverloads
         fun typeForDataAndECL(
             data: String,
-            errorCorrectionLevel: ErrorCorrectionLevel
+            errorCorrectionLevel: ErrorCorrectionLevel,
+            dataType: QRCodeDataType = QRUtil.getDataType(data),
         ): Int {
-            val mode = QRUtil.getMode(data)
-            val qrCodeData = when (mode) {
-                Mode.MODE_NUMBER -> QRNumber(data)
-                Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
-                Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
-                Mode.MODE_KANJI -> QRKanji(data)
+            val qrCodeData = when (dataType) {
+                QRCodeDataType.NUMBERS -> QRNumber(data)
+                QRCodeDataType.ALPHA_NUM -> QRAlphaNum(data)
+                QRCodeDataType.BYTES -> QR8BitByte(data)
+                QRCodeDataType.KANJI -> QRKanji(data)
             }
             val dataLength = qrCodeData.length()
 
             for (typeNum in 1 until errorCorrectionLevel.maxTypeNum) {
-                if (dataLength <= QRUtil.getMaxLength(typeNum, mode, errorCorrectionLevel)) {
+                if (dataLength <= QRUtil.getMaxLength(typeNum, dataType, errorCorrectionLevel)) {
                     return typeNum
                 }
             }
@@ -348,7 +351,7 @@ class QRCode @JvmOverloads constructor(
         val rsBlocks = RSBlock.getRSBlocks(type, errorCorrectionLevel)
         val buffer = BitBuffer()
 
-        buffer.put(qrCodeData.mode.value, 4)
+        buffer.put(qrCodeData.dataType.value, 4)
         buffer.put(qrCodeData.length(), qrCodeData.getLengthInBits(type))
         qrCodeData.write(buffer)
 

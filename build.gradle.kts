@@ -1,19 +1,30 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
+    id("idea")
     signing
     `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.6.0"
     id("org.jetbrains.dokka") version "1.5.31"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 group = "io.github.g0dkar"
-version = "1.1.1"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
+version = "1.1.2"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+idea {
+    module {
+        isDownloadJavadoc = false
+        isDownloadSources = true
+    }
+}
 
 repositories {
     mavenCentral()
@@ -25,15 +36,21 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    // testImplementation("io.kotest:kotest-assertions:4.0.7")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.0.0.RC")
 }
 
 tasks {
     test { useJUnitPlatform() }
 
+    compileTestJava {
+        options.encoding = "UTF-8"
+    }
+
     compileKotlin {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xjsr305=strict")
         }
     }
 
