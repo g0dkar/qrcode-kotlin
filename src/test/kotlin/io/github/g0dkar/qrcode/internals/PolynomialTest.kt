@@ -5,13 +5,29 @@ import org.junit.jupiter.api.Test
 
 internal class PolynomialTest {
     @Test
-    fun `write - negative numbers - multiple digits 2`() {
+    fun `polynomial - creation - simple`() {
+        val input = intArrayOf(1, 2, 3)
+        val expected = listOf(1, 2, 3)
+
+        val result = Polynomial(input)
+
+        result.toList() shouldContainExactly expected
     }
 
     @Test
-    fun `polynomial - creation - simple`() {
-        val input = inputArray(0, 43, 139, 206, 78, 43, 239, 123, 206, 214, 147, 24, 99, 150, 39, 243, 163, 136)
-        val expected = listOf(1, 119, 66, 83, 120, 119, 22, 197, 83, 249, 41, 143, 134, 85, 53, 125, 99, 79)
+    fun `polynomial - creation - simple with 0`() {
+        val input = intArrayOf(0, 1, 2)
+        val expected = listOf(1, 2)
+
+        val result = Polynomial(input)
+
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - creation - only zeroes`() {
+        val input = intArrayOf(0, 0, 0)
+        val expected = listOf(0, 0, 0)
 
         val result = Polynomial(input)
 
