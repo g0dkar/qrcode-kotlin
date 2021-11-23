@@ -4,9 +4,9 @@ package com.d_project.qrcode;
  * Polynomial
  * @author Kazuhiko Arase
  */
-class Polynomial {
+public class Polynomial {
 
-  private final int[] num;
+  public final int[] num;
 
   public Polynomial(int[] num) {
     this(num, 0);

@@ -9,16 +9,17 @@ import io.github.g0dkar.qrcode.internals.QRMath.glog
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class Polynomial(num: IntArray, shift: Int = 0) {
+internal class Polynomial(num: IntArray, shift: Int = 0) : Iterable<Int> {
     private val num: IntArray
 
     init {
-        val offset = num.indexOfFirst { it == 0 } + 1
-        this.num = IntArray(num.size - offset + shift)
+        val offset = num.indexOfFirst { it != 0 }.coerceAtLeast(0)
+        this.num = IntArray(num.size - offset + shift) { 0 }
         System.arraycopy(num, offset, this.num, 0, num.size - offset)
     }
 
     operator fun get(i: Int) = num[i]
+
     fun len(): Int = num.size
 
     fun multiply(other: Polynomial): Polynomial {
@@ -26,7 +27,7 @@ internal class Polynomial(num: IntArray, shift: Int = 0) {
 
         for (i in num.indices) {
             for (j in other.num.indices) {
-                result[i + j] = result[i + j] xor gexp(glog(num[i]) + glog(other.num[j]))
+                result[i + j] = result[i + j] xor gexp(glog(this[i]) + glog(other[j]))
             }
         }
 
@@ -37,13 +38,16 @@ internal class Polynomial(num: IntArray, shift: Int = 0) {
         if (len() - other.len() < 0) {
             this
         } else {
-            val ratio = glog(num[0]) - glog(other.num[0])
+            val ratio = glog(this[0]) - glog(other[0])
             val result = num.copyOf()
 
-            other.num.forEachIndexed { i, it ->
+            other.forEachIndexed { i, it ->
                 result[i] = result[i] xor gexp(glog(it) + ratio)
             }
 
             Polynomial(result).mod(other)
         }
+
+    override fun iterator(): Iterator<Int> =
+        num.iterator()
 }

@@ -1,9 +1,17 @@
 package com.d_project.qrcode;
 
+import io.github.g0dkar.qrcode.internals.Helper;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * QRコード.
@@ -154,6 +162,14 @@ public void addData(String data) {
     return moduleCount;
   }
 
+  public Boolean[][] getModules() {
+    return modules;
+  }
+
+  public List<QRData> getQrDataList() {
+    return qrDataList;
+  }
+
   /**
    * QRコードを作成する。
    */
@@ -184,31 +200,44 @@ public void addData(String data) {
   /**
    *
    */
-  private void make(boolean test, int maskPattern) {
+  public void make(boolean test, int maskPattern) {
 
     // モジュール初期化
     moduleCount = typeNumber * 4 + 17;
     modules = new Boolean[moduleCount][moduleCount];
 
+    Helper.saveState("test-01B", modules, 25);
+
     // 位置検出パターン及び分離パターンを設定
     setupPositionProbePattern(0, 0);
+    Helper.saveState("test-02B", modules, 25);
     setupPositionProbePattern(moduleCount - 7, 0);
+    Helper.saveState("test-03B", modules, 25);
     setupPositionProbePattern(0, moduleCount - 7);
+    Helper.saveState("test-04B", modules, 25);
 
     setupPositionAdjustPattern();
+    Helper.saveState("test-05B", modules, 25);
     setupTimingPattern();
+    Helper.saveState("test-06B", modules, 25);
 
     setupTypeInfo(test, maskPattern);
+    Helper.saveState("test-07B", modules, 25);
 
     if (typeNumber >= 7) {
       setupTypeNumber(test);
     }
+    Helper.saveState("test-08B", modules, 25);
 
-    QRData[] dataArray = qrDataList.toArray(new QRData[qrDataList.size()]);
+    QRData[] dataArray = qrDataList.toArray(new QRData[0]);
 
     byte[] data = createData(typeNumber, errorCorrectionLevel, dataArray);
 
+    Helper.saveState("test-09B", modules, 25);
+
     mapData(data, maskPattern);
+
+    Helper.saveState("test-10B", modules, 25);
   }
 
   private void mapData(byte[] data, int maskPattern) {
@@ -410,6 +439,7 @@ public void addData(String data) {
       data.write(buffer);
     }
 
+
     // 最大データ数を計算
     int totalDataCount = 0;
     for (int i = 0; i < rsBlocks.length; i++) {
@@ -576,5 +606,16 @@ public void addData(String data) {
     }
 
     return image;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", QRCode.class.getSimpleName() + "[", "]")
+            .add("typeNumber=" + typeNumber)
+            .add("modules=" + modules.length + "x" + modules[0].length)
+            .add("moduleCount=" + moduleCount)
+            .add("errorCorrectionLevel=" + errorCorrectionLevel)
+            .add("qrDataList=" + qrDataList)
+            .toString();
   }
 }

@@ -8,7 +8,7 @@ import io.github.g0dkar.qrcode.ErrorCorrectionLevel
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class RSBlock private constructor(val totalCount: Int, val dataCount: Int) {
+internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
     companion object {
         private val RS_BLOCK_TABLE = arrayOf(
             intArrayOf(1, 26, 19),
@@ -173,30 +173,18 @@ internal class RSBlock private constructor(val totalCount: Int, val dataCount: I
             intArrayOf(20, 45, 15, 61, 46, 16)
         )
 
-        fun getRSBlocks(typeNumber: Int, errorCorrectionLevel: ErrorCorrectionLevel): List<RSBlock> {
-            val rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel)
-            val length = rsBlock.size / 3
-            val list = mutableListOf<RSBlock>()
-
-            for (i in 0 until length) {
-                val count = rsBlock[i * 3]
-                val totalCount = rsBlock[i * 3 + 1]
-                val dataCount = rsBlock[i * 3 + 2]
-
-                for (j in 0 until count) {
-                    list.add(RSBlock(totalCount, dataCount))
+        fun getRSBlocks(typeNumber: Int, errorCorrectionLevel: ErrorCorrectionLevel): List<RSBlock> =
+            RS_BLOCK_TABLE[(typeNumber - 1) * 4 + errorCorrectionLevel.ordinal]
+                .let { rsBlock ->
+                    mutableListOf<RSBlock>()
+                        .apply {
+                            for (i in rsBlock.indices step 3) {
+                                val currentRSBlock = RSBlock(rsBlock[i + 1], rsBlock[i + 2])
+                                repeat(rsBlock[i]) {
+                                    add(currentRSBlock)
+                                }
+                            }
+                        }
                 }
-            }
-
-            return list
-        }
-
-        private fun getRsBlockTable(type: Int, errorCorrectionLevel: ErrorCorrectionLevel): IntArray =
-            when (errorCorrectionLevel) {
-                ErrorCorrectionLevel.L -> RS_BLOCK_TABLE[(type - 1) * 4]
-                ErrorCorrectionLevel.M -> RS_BLOCK_TABLE[(type - 1) * 4 + 1]
-                ErrorCorrectionLevel.Q -> RS_BLOCK_TABLE[(type - 1) * 4 + 2]
-                ErrorCorrectionLevel.H -> RS_BLOCK_TABLE[(type - 1) * 4 + 3]
-            }
     }
 }

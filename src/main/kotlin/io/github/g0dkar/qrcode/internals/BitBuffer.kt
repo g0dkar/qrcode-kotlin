@@ -36,4 +36,12 @@ internal class BitBuffer {
         buffer = IntArray(increments)
         lengthInBits = 0
     }
+
+    override fun toString(): String {
+        val buffer = StringBuilder()
+        for (i in 0 until lengthInBits) {
+            buffer.append(if (get(i)) '1' else '0')
+        }
+        return buffer.toString()
+    }
 }

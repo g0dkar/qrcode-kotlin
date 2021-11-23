@@ -1,5 +1,7 @@
 package com.d_project.qrcode;
 
+import java.util.Arrays;
+
 /**
  * BitBuffer
  * @author Kazuhiko Arase

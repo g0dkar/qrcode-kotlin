@@ -294,9 +294,9 @@ internal object QRUtil {
             PATTERN010 -> j % 3 == 0
             PATTERN011 -> (i + j) % 3 == 0
             PATTERN100 -> (i / 2 + j / 3) % 2 == 0
-            PATTERN101 -> i * j % 2 + i * j % 3 == 0
-            PATTERN110 -> (i * j % 2 + i * j % 3) % 2 == 0
-            PATTERN111 -> (i * j % 3 + (i + j) % 2) % 2 == 0
+            PATTERN101 -> (i * j) % 2 + (i * j) % 3 == 0
+            PATTERN110 -> ((i * j) % 2 + (i * j) % 3) % 2 == 0
+            PATTERN111 -> ((i * j) % 3 + (i + j) % 2) % 2 == 0
         }
 
     fun getDataType(s: String): QRCodeDataType =

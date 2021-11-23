@@ -1,6 +1,12 @@
 package io.github.g0dkar.qrcode
 
+import io.github.g0dkar.qrcode.QRCodeDataType.ALPHA_NUM
+import io.github.g0dkar.qrcode.QRCodeDataType.BYTES
+import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
+import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
 import io.github.g0dkar.qrcode.internals.BitBuffer
+import io.github.g0dkar.qrcode.internals.Helper
+import io.github.g0dkar.qrcode.internals.Helper.saveState
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
 import io.github.g0dkar.qrcode.internals.QRAlphaNum
@@ -11,6 +17,7 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.util.StringJoiner
 import java.util.function.Function
 import javax.imageio.ImageIO
 
@@ -56,13 +63,13 @@ import javax.imageio.ImageIO
 class QRCode @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
-    dataType: QRCodeDataType = QRUtil.getDataType(data),
+    private val dataType: QRCodeDataType = QRUtil.getDataType(data),
 ) {
     private val qrCodeData: QRData = when (dataType) {
-        QRCodeDataType.NUMBERS -> QRNumber(data)
-        QRCodeDataType.ALPHA_NUM -> QRAlphaNum(data)
-        QRCodeDataType.BYTES -> QR8BitByte(data)
-        QRCodeDataType.KANJI -> QRKanji(data)
+        NUMBERS -> QRNumber(data)
+        ALPHA_NUM -> QRAlphaNum(data)
+        BYTES -> QR8BitByte(data)
+        KANJI -> QRKanji(data)
     }
 
     companion object {
@@ -80,10 +87,10 @@ class QRCode @JvmOverloads constructor(
             dataType: QRCodeDataType = QRUtil.getDataType(data),
         ): Int {
             val qrCodeData = when (dataType) {
-                QRCodeDataType.NUMBERS -> QRNumber(data)
-                QRCodeDataType.ALPHA_NUM -> QRAlphaNum(data)
-                QRCodeDataType.BYTES -> QR8BitByte(data)
-                QRCodeDataType.KANJI -> QRKanji(data)
+                NUMBERS -> QRNumber(data)
+                ALPHA_NUM -> QRAlphaNum(data)
+                BYTES -> QR8BitByte(data)
+                KANJI -> QRKanji(data)
             }
             val dataLength = qrCodeData.length()
 
@@ -237,21 +244,38 @@ class QRCode @JvmOverloads constructor(
     ): Array<Array<Boolean?>> {
         val moduleCount = type * 4 + 17
         val modules: Array<Array<Boolean?>> = Array(moduleCount) { Array(moduleCount) { null } }
+        saveState("test-01A", modules)
 
         setupPositionProbePattern(0, 0, moduleCount, modules)
+        saveState("test-02A", modules)
         setupPositionProbePattern(moduleCount - 7, 0, moduleCount, modules)
+        saveState("test-03A", modules)
         setupPositionProbePattern(0, moduleCount - 7, moduleCount, modules)
+        saveState("test-04A", modules)
 
         setupPositionAdjustPattern(type, modules)
+        saveState("test-05A", modules)
         setupTimingPattern(moduleCount, modules)
+        saveState("test-06A", modules)
         setupTypeInfo(maskPattern, moduleCount, modules)
+        saveState("test-07A", modules)
 
         if (type >= 7) {
             setupTypeNumber(type, moduleCount, modules)
         }
+        saveState("test-08A", modules)
 
         val data = createData(type)
+        val data2 = data.copyOf()
+        val modules2 = modules.copyOf()
+
+        saveState("test-09A", modules)
+
         applyMaskPattern(data, maskPattern, moduleCount, modules)
+        saveState("test-10A", modules)
+
+        mapData(data2, maskPattern, modules2)
+        saveState("test-10AA", modules2)
 
         return modules
     }
@@ -355,6 +379,7 @@ class QRCode @JvmOverloads constructor(
         buffer.put(qrCodeData.length(), qrCodeData.getLengthInBits(type))
         qrCodeData.write(buffer)
 
+
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
@@ -408,7 +433,7 @@ class QRCode @JvmOverloads constructor(
                     if (modules[row][col - c] == null) {
                         var dark = false
                         if (byteIndex < data.size) {
-                            dark = data[byteIndex] ushr bitIndex and 1 == 1
+                            dark = (data[byteIndex] ushr bitIndex) and 1 == 1
                         }
 
                         val mask = QRUtil.getMask(maskPattern, row, col - c)
@@ -437,6 +462,63 @@ class QRCode @JvmOverloads constructor(
         }
     }
 
+    private fun mapData(
+        data: IntArray,
+        maskPattern: MaskPattern,
+        modules: Array<Array<Boolean?>>,
+        moduleCount: Int = modules.size,
+    ) {
+        var inc = -1
+        var row = modules[0].size - 1
+        var bitIndex = 7
+        var byteIndex = 0
+
+        var col = modules[0].size - 1
+
+        while (col > 0) {
+            if (col == 6) {
+                col--
+            }
+
+            while (true) {
+                for (c in 0..1) {
+                    if (modules[row][col - c] == null) {
+                        modules[row][col - c] = if (byteIndex < data.size) {
+                            (data[byteIndex] ushr bitIndex) and 1 == 1
+                        }
+                        else {
+                            false
+                        }.let {
+                            if (QRUtil.getMask(maskPattern, row, col - c)) {
+                                !it
+                            }
+                            else {
+                                it
+                            }
+                        }
+
+                        bitIndex--
+
+                        if (bitIndex == -1) {
+                            byteIndex++
+                            bitIndex = 7
+                        }
+                    }
+                }
+
+                row += inc
+
+                if (row < 0 || moduleCount <= row) {
+                    row -= inc
+                    inc = -inc
+                    break
+                }
+            }
+
+            col -= 2
+        }
+    }
+
     private fun createBytes(buffer: BitBuffer, rsBlocks: List<RSBlock>): IntArray {
         var offset = 0
         var maxDcCount = 0
@@ -444,6 +526,9 @@ class QRCode @JvmOverloads constructor(
         var totalCodeCount = 0
         val dcData = Array(rsBlocks.size) { IntArray(0) }
         val ecData = Array(rsBlocks.size) { IntArray(0) }
+
+        println("[kotlin] rsBlocks=$rsBlocks")
+        println("[kotlin] buffer=$buffer")
 
         rsBlocks.forEachIndexed { i, it ->
             val dcCount = it.dataCount
@@ -493,4 +578,12 @@ class QRCode @JvmOverloads constructor(
 
     private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
         modules[row][col] ?: false
+
+    override fun toString(): String =
+        StringJoiner(", ", QRCode.javaClass.simpleName + "[", "]")
+            .add("data=$data")
+            .add("dataType=$dataType")
+            .add("qrCodeData=$qrCodeData")
+            .add("errorCorrectionLevel=$errorCorrectionLevel")
+            .toString()
 }

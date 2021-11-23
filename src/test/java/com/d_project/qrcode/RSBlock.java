@@ -1,6 +1,7 @@
 package com.d_project.qrcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -278,6 +279,8 @@ class RSBlock {
     int[] rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
     int length = rsBlock.length / 3;
 
+    System.out.println("RSBlock Length = " + length);
+    System.out.println("RSBlock = " + Arrays.toString(rsBlock));
 
     List<RSBlock> list = new ArrayList<RSBlock>();
 
@@ -296,7 +299,7 @@ class RSBlock {
   }
 
   private static int[] getRsBlockTable(int typeNumber, int errorCorrectionLevel) {
-
+    System.out.println("getRsBlockTable -> typeNumber=" + typeNumber + ", errorCorrectionLevel=" + errorCorrectionLevel);
     try {
 
       switch(errorCorrectionLevel) {

@@ -12,7 +12,7 @@ class QRUtil {
   }
 
   public static String getJISEncoding() {
-        return "SJIS";
+        return "UTF-8";
   }
 
   public static int[] getPatternPosition(int typeNumber) {
