@@ -22,17 +22,17 @@ internal class Polynomial(num: IntArray, shift: Int = 0) : Iterable<Int> {
 
     fun len(): Int = num.size
 
-    fun multiply(other: Polynomial): Polynomial {
-        val result = IntArray(len() + other.len() - 1) { 0 }
+    fun multiply(other: Polynomial): Polynomial =
+        IntArray(len() + other.len() - 1) { 0 }
+            .let {
+                for (i in 0 until len()) {
+                    for (j in 0 until other.len()) {
+                        it[i + j] = it[i + j] xor gexp(glog(this[i]) + glog(other[j]))
+                    }
+                }
 
-        for (i in num.indices) {
-            for (j in other.num.indices) {
-                result[i + j] = result[i + j] xor gexp(glog(this[i]) + glog(other[j]))
+                Polynomial(it)
             }
-        }
-
-        return Polynomial(result)
-    }
 
     fun mod(other: Polynomial): Polynomial =
         if (len() - other.len() < 0) {

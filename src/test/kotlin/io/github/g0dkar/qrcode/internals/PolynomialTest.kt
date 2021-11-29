@@ -1,7 +1,9 @@
 package io.github.g0dkar.qrcode.internals
 
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 
 internal class PolynomialTest {
     @Test
@@ -9,7 +11,7 @@ internal class PolynomialTest {
         val input = intArrayOf(1, 2, 3)
         val expected = listOf(1, 2, 3)
 
-        val result = Polynomial(input)
+        val result = assertDoesNotThrow { Polynomial(input) }
 
         result.toList() shouldContainExactly expected
     }
@@ -19,7 +21,7 @@ internal class PolynomialTest {
         val input = intArrayOf(0, 1, 2)
         val expected = listOf(1, 2)
 
-        val result = Polynomial(input)
+        val result = assertDoesNotThrow { Polynomial(input) }
 
         result.toList() shouldContainExactly expected
     }
@@ -29,87 +31,94 @@ internal class PolynomialTest {
         val input = intArrayOf(0, 0, 0)
         val expected = listOf(0, 0, 0)
 
-        val result = Polynomial(input)
+        val result = assertDoesNotThrow { Polynomial(input) }
 
         result.toList() shouldContainExactly expected
     }
 
     @Test
     fun `polynomial - creation - shifted 1`() {
-        val input = inputArray(0, 43, 139, 206, 78, 43, 239, 123, 206, 214, 147, 24, 99, 150, 39, 243, 163, 136)
-        val expected = MutableList(25) { 0 }
-        val data = intArrayOf(32, 65, 205, 69, 41, 220, 46, 128, 236)
-            .also { it.forEachIndexed { i, value -> expected[i] = value } }
-        val polynomial = Polynomial(input)
+        val input = intArrayOf(1, 2, 3)
+        val shift = 1
+        val expected = listOf(1, 2, 3, 0)
 
-        val result = Polynomial(data, polynomial.len() - 1)
-        val wtf = com.d_project.qrcode.Polynomial(data, polynomial.len() - 1)
+        val result = assertDoesNotThrow { Polynomial(input, shift) }
 
-        wtf.num.toList() shouldContainExactly expected
         result.toList() shouldContainExactly expected
-
-        // val rs = intArrayOf(0, 43, 139, 206, 78, 43, 239, 123, 206, 214, 147, 24, 99, 150, 39, 243, 163, 136)
-        // for (i in rs.indices) {
-        //     rs[i] = QRMath.gexp(rs[i])
-        // }
-        //
-        // val data = intArrayOf(32, 65, 205, 69, 41, 220, 46, 128, 236)
-        // val e = Polynomial(rs)
-        // val e2 = Polynomial(data, e.getLength() - 1)
-        // assertEquals(
-        //     intArrayOf(
-        //         32,
-        //         65,
-        //         205,
-        //         69,
-        //         41,
-        //         220,
-        //         46,
-        //         128,
-        //         236,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0,
-        //         0
-        //     ), e2
-        // )
-        // assertEquals(intArrayOf(1, 119, 66, 83, 120, 119, 22, 197, 83, 249, 41, 143, 134, 85, 53, 125, 99, 79), e)
-        // assertEquals(
-        //     intArrayOf(42, 159, 74, 221, 244, 169, 239, 150, 138, 70, 237, 85, 224, 96, 74, 219, 61),
-        //     e2.mod(e)
-        // )
     }
 
     @Test
-    fun test2() {
-        // var a = com.d_project.qrcode.Polynomial(intArrayOf(1), 0)
-        // for (i in 0..6) {
-        //     a = a.multiply(com.d_project.qrcode.Polynomial(intArrayOf(1, QRMath.gexp(i)), 0))
-        // }
-        // val log = intArrayOf(0, 87, 229, 146, 149, 238, 102, 21)
-        // Assert.assertEquals(log.size, a.getLength())
-        // for (i in 0 until a.getLength()) {
-        //     Assert.assertEquals(log[i], QRMath.glog(a.get(i)))
-        // }
+    fun `polynomial - creation - shifted 3`() {
+        val input = intArrayOf(1, 2, 3)
+        val shift = 3
+        val expected = listOf(1, 2, 3, 0, 0, 0)
+
+        val result = assertDoesNotThrow { Polynomial(input, shift) }
+
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - creation - shifted 1 with zero`() {
+        val input = intArrayOf(0, 1, 2)
+        val shift = 1
+        val expected = listOf(1, 2, 0)
+
+        val result = assertDoesNotThrow { Polynomial(input, shift) }
+
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - creation - shifted 5 with zero`() {
+        val input = intArrayOf(0, 1, 2)
+        val shift = 5
+        val expected = listOf(1, 2, 0, 0, 0, 0, 0)
+
+        val result = assertDoesNotThrow { Polynomial(input, shift) }
+
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - creation - shifted 2, input with many zeroes`() {
+        val input = intArrayOf(0, 0, 1)
+        val shift = 2
+        val expected = listOf(1, 0, 0)
+
+        val result = assertDoesNotThrow { Polynomial(input, shift) }
+
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - operations - mod`() {
+        val input = inputArray(0, 43, 139, 206, 78, 43, 239, 123, 206, 214, 147, 24, 99, 150, 39, 243, 163, 136)
+        val inputPolynomial = Polynomial(input)
+
+        val data = intArrayOf(32, 65, 205, 69, 41, 220, 46, 128, 236)
+        val dataPolynomial = Polynomial(data, input.size - 1)
+        val expected = listOf(42, 159, 74, 221, 244, 169, 239, 150, 138, 70, 237, 85, 224, 96, 74, 219, 61)
+
+        val result = dataPolynomial.mod(inputPolynomial)
+
+        result shouldNotBeSameInstanceAs dataPolynomial
+        result shouldNotBeSameInstanceAs inputPolynomial
+        result.toList() shouldContainExactly expected
+    }
+
+    @Test
+    fun `polynomial - operations - multiply`() {
+        val expected = listOf(1, 127, 122, 154, 164, 11, 68, 117)
+        var result = Polynomial(intArrayOf(1))
+
+        for (i in 0..6) {
+            result = result.multiply(Polynomial(intArrayOf(1, QRMath.gexp(i))))
+        }
+
+        result.toList() shouldContainExactly expected
     }
 
     private fun inputArray(vararg values: Int): IntArray =
-        intArrayOf(*values).also {
-            for (i in it.indices) {
-                it[i] = QRMath.gexp(it[i])
-            }
-        }
+        IntArray(values.size) { QRMath.gexp(values[it]) }
 }
