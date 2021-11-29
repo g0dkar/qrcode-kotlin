@@ -78,18 +78,38 @@ internal class QR8BitByte(data: String) : QRData(BYTES, data) {
  */
 internal class QRAlphaNum(data: String) : QRData(ALPHA_NUM, data) {
     override fun write(buffer: BitBuffer) {
-        val c = data.toCharArray()
         var i = 0
-        while (i + 1 < c.size) {
-            buffer.put(c[i].code * 45 + c[i + 1].code, 11)
+        val dataLength = data.length
+        while (i + 1 < dataLength) {
+            buffer.put(charCode(data[i]) * 45 + charCode(data[i + 1]), 11)
             i += 2
         }
-        if (i < c.size) {
-            buffer.put(c[i].code, 6)
+        if (i < dataLength) {
+            buffer.put(charCode(data[i]), 6)
         }
     }
 
     override fun length(): Int = data.length
+
+    private fun charCode(c: Char): Int =
+        when (c) {
+            in '0'..'9' -> c - '0'
+            in 'A'..'Z' -> c - 'A' + 10
+            else -> {
+                when (c) {
+                    ' ' -> 36
+                    '$' -> 37
+                    '%' -> 38
+                    '*' -> 39
+                    '+' -> 40
+                    '-' -> 41
+                    '.' -> 42
+                    '/' -> 43
+                    ':' -> 44
+                    else -> throw IllegalArgumentException("Illegal character: $c")
+                }
+            }
+        }
 }
 
 /**

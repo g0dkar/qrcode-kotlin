@@ -1,5 +1,6 @@
 package io.github.g0dkar.qrcode
 
+import com.d_project.qrcode.Mode
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
@@ -12,6 +13,22 @@ internal class QRCodeTest {
         val expectedImage = javaQRCode.createImage(25, 0)
 
         val underTest = QRCode(input)
+
+        val result = assertDoesNotThrow {
+            underTest.render()
+        }
+
+        result shouldHaveSameDimensionsAs expectedImage
+        result shouldBeSameImageAs expectedImage
+    }
+
+    @Test
+    fun `render - numbers - as string`() {
+        val input = "123456"
+        val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_ALPHA_NUM)
+        val expectedImage = javaQRCode.createImage(25, 0)
+
+        val underTest = QRCode(input, dataType = QRCodeDataType.ALPHA_NUM)
 
         val result = assertDoesNotThrow {
             underTest.render()

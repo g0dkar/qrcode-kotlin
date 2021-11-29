@@ -58,8 +58,12 @@ enum class MaskPattern {
  * @author Kazuhiko Arase
  */
 enum class QRCodeDataType(val value: Int) {
+    /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
     NUMBERS(1 shl 0),
+    /** Represents Alphanumerical data. This is the basic "String" type. */
     ALPHA_NUM(1 shl 1),
+    /** This can be any kind of data. You can encode images, files, anything. */
     BYTES(1 shl 2),
+    /** A special type for encoding Japanese Text (Kanji Characters). */
     KANJI(1 shl 3)
 }
