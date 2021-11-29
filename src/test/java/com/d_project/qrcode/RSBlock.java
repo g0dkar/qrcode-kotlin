@@ -279,9 +279,6 @@ class RSBlock {
     int[] rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
     int length = rsBlock.length / 3;
 
-    System.out.println("RSBlock Length = " + length);
-    System.out.println("RSBlock = " + Arrays.toString(rsBlock));
-
     List<RSBlock> list = new ArrayList<RSBlock>();
 
     for (int i = 0; i < length; i++) {
@@ -299,7 +296,6 @@ class RSBlock {
   }
 
   private static int[] getRsBlockTable(int typeNumber, int errorCorrectionLevel) {
-    System.out.println("getRsBlockTable -> typeNumber=" + typeNumber + ", errorCorrectionLevel=" + errorCorrectionLevel);
     try {
 
       switch(errorCorrectionLevel) {

@@ -13,23 +13,9 @@ internal class QRCodeTest {
 
         val underTest = QRCode(input)
 
-        val (result, encoding) = assertDoesNotThrow {
-            val encode = underTest.encode()
-            Pair(underTest.render(), encode)
+        val result = assertDoesNotThrow {
+            underTest.render()
         }
-
-        // println("-[ Our Matrix ]----------------")
-        // printMatrix(encoding)
-        // println("-[ Ref Matrix ]----------------")
-        // printMatrix(javaQRCode.modules)
-
-        println("------------------------------------------------------------------")
-
-        println(javaQRCode.qrDataList)
-
-        println("------------------------------------------------------------------")
-        println(javaQRCode)
-        println(underTest)
 
         result shouldHaveSameDimensionsAs expectedImage
         result shouldBeSameImageAs expectedImage
@@ -47,18 +33,4 @@ internal class QRCodeTest {
             addData(data, mode)
             make(false, 0)
         }
-
-    private fun printMatrix(matrix: Array<Array<Boolean?>>) {
-        matrix.forEach { rowArray ->
-            rowArray.forEach {
-                when (it) {
-                    true -> print("1")
-                    false -> print("0")
-                    null -> print(" ")
-                }
-            }
-
-            println()
-        }
-    }
 }

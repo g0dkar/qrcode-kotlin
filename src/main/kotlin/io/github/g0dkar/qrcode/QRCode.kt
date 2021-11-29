@@ -527,9 +527,6 @@ class QRCode @JvmOverloads constructor(
         val dcData = Array(rsBlocks.size) { IntArray(0) }
         val ecData = Array(rsBlocks.size) { IntArray(0) }
 
-        println("[kotlin] rsBlocks=$rsBlocks")
-        println("[kotlin] buffer=$buffer")
-
         rsBlocks.forEachIndexed { i, it ->
             val dcCount = it.dataCount
             val ecCount = it.totalCount - dcCount
