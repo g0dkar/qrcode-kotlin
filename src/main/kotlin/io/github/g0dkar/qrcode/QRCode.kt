@@ -1,5 +1,9 @@
 package io.github.g0dkar.qrcode
 
+import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
+import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
+import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import io.github.g0dkar.qrcode.internals.BitBuffer
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
@@ -46,6 +50,7 @@ import javax.imageio.ImageIO
  *
  * @param data String that will be encoded in the QR Code.
  * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M].
+ * @param dataType One of the available [QRCodeDataType]. By default, the code tries to guess which one is the best fitting one from your input data.
  *
  * @author Rafael Lins
  * @author Kazuhiko Arase
@@ -54,13 +59,14 @@ import javax.imageio.ImageIO
  */
 class QRCode @JvmOverloads constructor(
     private val data: String,
-    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M
+    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
+    private val dataType: QRCodeDataType = QRUtil.getDataType(data),
 ) {
-    private val qrCodeData: QRData = when (QRUtil.getMode(data)) {
-        Mode.MODE_NUMBER -> QRNumber(data)
-        Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
-        Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
-        Mode.MODE_KANJI -> QRKanji(data)
+    private val qrCodeData: QRData = when (dataType) {
+        NUMBERS -> QRNumber(data)
+        UPPER_ALPHA_NUM -> QRAlphaNum(data)
+        DEFAULT -> QR8BitByte(data)
+        KANJI -> QRKanji(data)
     }
 
     companion object {
@@ -71,21 +77,22 @@ class QRCode @JvmOverloads constructor(
          * Calculates a suitable value for the [type] field for your
          */
         @JvmStatic
+        @JvmOverloads
         fun typeForDataAndECL(
             data: String,
-            errorCorrectionLevel: ErrorCorrectionLevel
+            errorCorrectionLevel: ErrorCorrectionLevel,
+            dataType: QRCodeDataType = QRUtil.getDataType(data),
         ): Int {
-            val mode = QRUtil.getMode(data)
-            val qrCodeData = when (mode) {
-                Mode.MODE_NUMBER -> QRNumber(data)
-                Mode.MODE_ALPHA_NUM -> QRAlphaNum(data)
-                Mode.MODE_8BIT_BYTE -> QR8BitByte(data)
-                Mode.MODE_KANJI -> QRKanji(data)
+            val qrCodeData = when (dataType) {
+                NUMBERS -> QRNumber(data)
+                UPPER_ALPHA_NUM -> QRAlphaNum(data)
+                DEFAULT -> QR8BitByte(data)
+                KANJI -> QRKanji(data)
             }
             val dataLength = qrCodeData.length()
 
             for (typeNum in 1 until errorCorrectionLevel.maxTypeNum) {
-                if (dataLength <= QRUtil.getMaxLength(typeNum, mode, errorCorrectionLevel)) {
+                if (dataLength <= QRUtil.getMaxLength(typeNum, dataType, errorCorrectionLevel)) {
                     return typeNum
                 }
             }
@@ -248,7 +255,11 @@ class QRCode @JvmOverloads constructor(
         }
 
         val data = createData(type)
+        val data2 = data.copyOf()
+        val modules2 = modules.copyOf()
+
         applyMaskPattern(data, maskPattern, moduleCount, modules)
+        mapData(data2, maskPattern, modules2)
 
         return modules
     }
@@ -348,7 +359,7 @@ class QRCode @JvmOverloads constructor(
         val rsBlocks = RSBlock.getRSBlocks(type, errorCorrectionLevel)
         val buffer = BitBuffer()
 
-        buffer.put(qrCodeData.mode.value, 4)
+        buffer.put(qrCodeData.dataType.value, 4)
         buffer.put(qrCodeData.length(), qrCodeData.getLengthInBits(type))
         qrCodeData.write(buffer)
 
@@ -405,7 +416,7 @@ class QRCode @JvmOverloads constructor(
                     if (modules[row][col - c] == null) {
                         var dark = false
                         if (byteIndex < data.size) {
-                            dark = data[byteIndex] ushr bitIndex and 1 == 1
+                            dark = (data[byteIndex] ushr bitIndex) and 1 == 1
                         }
 
                         val mask = QRUtil.getMask(maskPattern, row, col - c)
@@ -423,6 +434,61 @@ class QRCode @JvmOverloads constructor(
                 }
 
                 row += inc
+                if (row < 0 || moduleCount <= row) {
+                    row -= inc
+                    inc = -inc
+                    break
+                }
+            }
+
+            col -= 2
+        }
+    }
+
+    private fun mapData(
+        data: IntArray,
+        maskPattern: MaskPattern,
+        modules: Array<Array<Boolean?>>,
+        moduleCount: Int = modules.size,
+    ) {
+        var inc = -1
+        var row = modules[0].size - 1
+        var bitIndex = 7
+        var byteIndex = 0
+
+        var col = modules[0].size - 1
+
+        while (col > 0) {
+            if (col == 6) {
+                col--
+            }
+
+            while (true) {
+                for (c in 0..1) {
+                    if (modules[row][col - c] == null) {
+                        modules[row][col - c] = if (byteIndex < data.size) {
+                            (data[byteIndex] ushr bitIndex) and 1 == 1
+                        } else {
+                            false
+                        }.let {
+                            if (QRUtil.getMask(maskPattern, row, col - c)) {
+                                !it
+                            } else {
+                                it
+                            }
+                        }
+
+                        bitIndex--
+
+                        if (bitIndex == -1) {
+                            byteIndex++
+                            bitIndex = 7
+                        }
+                    }
+                }
+
+                row += inc
+
                 if (row < 0 || moduleCount <= row) {
                     row -= inc
                     inc = -inc

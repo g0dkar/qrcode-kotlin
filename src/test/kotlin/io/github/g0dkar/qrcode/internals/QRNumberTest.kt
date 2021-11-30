@@ -1,16 +1,15 @@
 package io.github.g0dkar.qrcode.internals
 
-import org.junit.jupiter.api.Assertions.assertArrayEquals
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class QRNumberTest {
     @Test
     fun `write - zero`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        val expectedBufferData = MutableList(32) { 0 }
         val expectedLengthInBits = 4
 
         val underTest = QRNumber("0")
@@ -19,15 +18,17 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - one`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 16
+            }
         val expectedLengthInBits = 4
 
         val underTest = QRNumber("1")
@@ -36,48 +37,18 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - multiple digits`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                30,
-                192,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 30
+                this[1] = 192
+            }
         val expectedLengthInBits = 10
 
         val underTest = QRNumber("123")
@@ -86,48 +57,19 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - multiple digits 2`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                30,
-                220,
-                135,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 30
+                this[1] = 220
+                this[2] = 135
+            }
         val expectedLengthInBits = 24
 
         val underTest = QRNumber("1234567")
@@ -136,48 +78,24 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - multiple digits 3`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                230,
-                149,
-                19,
-                46,
-                173,
-                119,
-                100,
-                71,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 230
+                this[1] = 149
+                this[2] = 19
+                this[3] = 46
+                this[4] = 173
+                this[5] = 119
+                this[6] = 100
+                this[7] = 71
+            }
         val expectedLengthInBits = 64
 
         val underTest = QRNumber("9223372036854775807")
@@ -186,15 +104,14 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - empty string`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        val expectedBufferData = MutableList(32) { 0 }
         val expectedLengthInBits = 0
 
         val underTest = QRNumber("")
@@ -203,15 +120,17 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - negative numbers - minus one`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(254, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 254
+            }
         val expectedLengthInBits = 7
 
         val underTest = QRNumber("-1")
@@ -220,48 +139,19 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - negative numbers - multiple digits`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                253,
-                12,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 253
+                this[1] = 12
+            }
+
         val expectedLengthInBits = 14
 
         val underTest = QRNumber("-123")
@@ -270,48 +160,20 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - negative numbers - multiple digits 2`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                253,
-                21,
-                152,
-                96,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 253
+                this[1] = 21
+                this[2] = 152
+                this[3] = 96
+            }
         val expectedLengthInBits = 27
 
         val underTest = QRNumber("-1234567")
@@ -320,51 +182,25 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        println(testBuffer.buffer.joinToString())
-        println(testBuffer.lengthInBits)
-
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 
     @Test
     fun `write - negative numbers - multiple digits 3`() {
         val testBuffer = BitBuffer()
-        val expectedBufferData =
-            intArrayOf(
-                233,
-                14,
-                155,
-                65,
-                112,
-                136,
-                239,
-                96,
-                224,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            )
+        val expectedBufferData = MutableList(32) { 0 }
+            .apply {
+                this[0] = 233
+                this[1] = 14
+                this[2] = 155
+                this[3] = 65
+                this[4] = 112
+                this[5] = 136
+                this[6] = 239
+                this[7] = 96
+                this[8] = 224
+            }
         val expectedLengthInBits = 67
 
         val underTest = QRNumber("-9223372036854775807")
@@ -373,7 +209,7 @@ internal class QRNumberTest {
             underTest.write(testBuffer)
         }
 
-        assertArrayEquals(expectedBufferData, testBuffer.buffer, "Data is different")
-        assertEquals(expectedLengthInBits, testBuffer.lengthInBits, "Length is not equals")
+        testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+        testBuffer.lengthInBits shouldBe expectedLengthInBits
     }
 }

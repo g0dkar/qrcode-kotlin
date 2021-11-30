@@ -1,6 +1,10 @@
 package io.github.g0dkar.qrcode.internals
 
-import io.github.g0dkar.qrcode.Mode
+import io.github.g0dkar.qrcode.QRCodeDataType
+import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
+import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
+import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import java.lang.Integer.parseInt
 import java.lang.Integer.toHexString
 
@@ -10,35 +14,40 @@ import java.lang.Integer.toHexString
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal abstract class QRData(val mode: Mode, val data: String) {
+internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
     abstract fun length(): Int
 
     abstract fun write(buffer: BitBuffer)
 
     fun getLengthInBits(type: Int): Int =
-        if (type in 1..9) {
-            when (mode) {
-                Mode.MODE_NUMBER -> 10
-                Mode.MODE_ALPHA_NUM -> 9
-                Mode.MODE_8BIT_BYTE -> 8
-                Mode.MODE_KANJI -> 8
+        when (type) {
+            in 1..9 -> {
+                when (dataType) {
+                    NUMBERS -> 10
+                    UPPER_ALPHA_NUM -> 9
+                    DEFAULT -> 8
+                    KANJI -> 8
+                }
             }
-        } else if (type < 27) {
-            when (mode) {
-                Mode.MODE_NUMBER -> 12
-                Mode.MODE_ALPHA_NUM -> 11
-                Mode.MODE_8BIT_BYTE -> 16
-                Mode.MODE_KANJI -> 10
+            in 1..26 -> {
+                when (dataType) {
+                    NUMBERS -> 12
+                    UPPER_ALPHA_NUM -> 11
+                    DEFAULT -> 16
+                    KANJI -> 10
+                }
             }
-        } else if (type < 41) {
-            when (mode) {
-                Mode.MODE_NUMBER -> 14
-                Mode.MODE_ALPHA_NUM -> 13
-                Mode.MODE_8BIT_BYTE -> 16
-                Mode.MODE_KANJI -> 12
+            in 1..40 -> {
+                when (dataType) {
+                    NUMBERS -> 14
+                    UPPER_ALPHA_NUM -> 13
+                    DEFAULT -> 16
+                    KANJI -> 12
+                }
             }
-        } else {
-            throw IllegalArgumentException("'type' must be greater than 0 and cannot be greater than 40: $type")
+            else -> {
+                throw IllegalArgumentException("'type' must be greater than 0 and cannot be greater than 40: $type")
+            }
         }
 }
 
@@ -48,7 +57,7 @@ internal abstract class QRData(val mode: Mode, val data: String) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QR8BitByte(data: String) : QRData(Mode.MODE_8BIT_BYTE, data) {
+internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
     private val dataBytes = data.toByteArray(Charsets.UTF_8)
 
     override fun write(buffer: BitBuffer) {
@@ -67,20 +76,40 @@ internal class QR8BitByte(data: String) : QRData(Mode.MODE_8BIT_BYTE, data) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
+internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
     override fun write(buffer: BitBuffer) {
-        val c = data.toCharArray()
         var i = 0
-        while (i + 1 < c.size) {
-            buffer.put(c[i].code * 45 + c[i + 1].code, 11)
+        val dataLength = data.length
+        while (i + 1 < dataLength) {
+            buffer.put(charCode(data[i]) * 45 + charCode(data[i + 1]), 11)
             i += 2
         }
-        if (i < c.size) {
-            buffer.put(c[i].code, 6)
+        if (i < dataLength) {
+            buffer.put(charCode(data[i]), 6)
         }
     }
 
     override fun length(): Int = data.length
+
+    private fun charCode(c: Char): Int =
+        when (c) {
+            in '0'..'9' -> c - '0'
+            in 'A'..'Z' -> c - 'A' + 10
+            else -> {
+                when (c) {
+                    ' ' -> 36
+                    '$' -> 37
+                    '%' -> 38
+                    '*' -> 39
+                    '+' -> 40
+                    '-' -> 41
+                    '.' -> 42
+                    '/' -> 43
+                    ':' -> 44
+                    else -> throw IllegalArgumentException("Illegal character: $c")
+                }
+            }
+        }
 }
 
 /**
@@ -89,7 +118,7 @@ internal class QRAlphaNum(data: String) : QRData(Mode.MODE_ALPHA_NUM, data) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
+internal class QRKanji(data: String) : QRData(KANJI, data) {
     private val dataBytes = data.toByteArray(charset(QRUtil.jISEncoding))
 
     override fun write(buffer: BitBuffer) {
@@ -121,7 +150,7 @@ internal class QRKanji(data: String) : QRData(Mode.MODE_KANJI, data) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QRNumber(data: String) : QRData(Mode.MODE_NUMBER, data) {
+internal class QRNumber(data: String) : QRData(NUMBERS, data) {
     override fun write(buffer: BitBuffer) {
         var i = 0
         val len = length()
