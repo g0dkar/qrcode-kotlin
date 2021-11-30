@@ -24,7 +24,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.1.1/qrcode-kotlin)
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.0/qrcode-kotlin)
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
@@ -33,7 +33,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -41,10 +41,10 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.1.1")
+implementation("io.github.g0dkar:qrcode-kotlin:1.2.0")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.1.1'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.2.0'
 ```
 
 ## Examples and Usage
@@ -153,6 +153,17 @@ BufferedImage imageData = qrCode.render(25, 0, qrCode.encode(), background, fore
 ImageIO.write(imageData, "PNG", new File("example04-java.png"));
 ```
 
+### Specifying your own data type
+
+If you don't want to rely on the basic data-type identification logic implemented by the library, you can specify what
+is the type of data that your input string is composed of. You can pass it as the `dataType` parameter in the
+constructor of the `QRCode` class like this:
+
+```kotlin
+// Create a "String" typed QRCode instead of a "Number" (which would be automatically identified)
+QRCode("42", dataType = QRCodeDataType.DEFAULT)
+```
+
 ### Spring Framework and/or Spring Boot
 
 One of the main reasons I developed this library was to use it on a Spring Boot API that needed to generate QRCodes. So
@@ -224,7 +235,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.1.1/qrcode-kotlin),
+Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.0/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 **Se você utiliza Maven - pom.xml:**
@@ -233,7 +244,7 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -241,10 +252,10 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.1.1")
+implementation("io.github.g0dkar:qrcode-kotlin:1.2.0")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.1.1'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.2.0'
 ```
 
 ## Exemplos e Usos
@@ -350,6 +361,17 @@ QRCode qrCode = new QRCode("https://github.com/g0dkar/qrcode-kotlin");
 BufferedImage dadosImagem = qrCode.render(25, 0, qrCode.encode(), fundo, principal, fundo);
 
 ImageIO.write(dadosImagem, "PNG", new File("exemplo04-java.png"));
+```
+
+### Especificando seu próprio tipo de dados
+
+Se você não quer depender da lógica básica de identificação de tipo de dado implementada pela biblioteca, você pode
+especificar qual o tipo de dado da string de entrada. Você pode passar essa informação pelo parâmetro `dataType` no
+construtor da classe `QRCode` dessa forma:
+
+```kotlin
+// Cria um QRCode do tipo "String" ao invés do tipo "Número" (que seria identificado automaticamente)
+QRCode("42", dataType = QRCodeDataType.DEFAULT)
 ```
 
 ### Spring Framework e/ou Spring Boot

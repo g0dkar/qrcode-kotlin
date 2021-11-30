@@ -28,7 +28,7 @@ internal class QRCodeTest {
         val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
         val expectedImage = javaQRCode.createImage(25, 0)
 
-        val underTest = QRCode(input, dataType = QRCodeDataType.BYTES)
+        val underTest = QRCode(input, dataType = QRCodeDataType.DEFAULT)
 
         val result = assertDoesNotThrow {
             underTest.render()

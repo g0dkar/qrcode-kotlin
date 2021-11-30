@@ -1,8 +1,8 @@
 package io.github.g0dkar.qrcode.internals
 
 import io.github.g0dkar.qrcode.QRCodeDataType
-import io.github.g0dkar.qrcode.QRCodeDataType.ALPHA_NUM
-import io.github.g0dkar.qrcode.QRCodeDataType.BYTES
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
+import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
 import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
 import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
 import java.lang.Integer.parseInt
@@ -24,24 +24,24 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
             in 1..9 -> {
                 when (dataType) {
                     NUMBERS -> 10
-                    ALPHA_NUM -> 9
-                    BYTES -> 8
+                    UPPER_ALPHA_NUM -> 9
+                    DEFAULT -> 8
                     KANJI -> 8
                 }
             }
             in 1..26 -> {
                 when (dataType) {
                     NUMBERS -> 12
-                    ALPHA_NUM -> 11
-                    BYTES -> 16
+                    UPPER_ALPHA_NUM -> 11
+                    DEFAULT -> 16
                     KANJI -> 10
                 }
             }
             in 1..40 -> {
                 when (dataType) {
                     NUMBERS -> 14
-                    ALPHA_NUM -> 13
-                    BYTES -> 16
+                    UPPER_ALPHA_NUM -> 13
+                    DEFAULT -> 16
                     KANJI -> 12
                 }
             }
@@ -57,7 +57,7 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QR8BitByte(data: String) : QRData(BYTES, data) {
+internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
     private val dataBytes = data.toByteArray(Charsets.UTF_8)
 
     override fun write(buffer: BitBuffer) {
@@ -76,7 +76,7 @@ internal class QR8BitByte(data: String) : QRData(BYTES, data) {
  * @author Rafael Lins
  * @author Kazuhiko Arase
  */
-internal class QRAlphaNum(data: String) : QRData(ALPHA_NUM, data) {
+internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
     override fun write(buffer: BitBuffer) {
         var i = 0
         val dataLength = data.length

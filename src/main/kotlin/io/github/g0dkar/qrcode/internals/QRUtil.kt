@@ -304,12 +304,12 @@ internal object QRUtil {
             if (isNumber(s)) {
                 QRCodeDataType.NUMBERS
             } else {
-                QRCodeDataType.ALPHA_NUM
+                QRCodeDataType.UPPER_ALPHA_NUM
             }
         } else if (isKanji(s)) {
             QRCodeDataType.KANJI
         } else {
-            QRCodeDataType.BYTES
+            QRCodeDataType.DEFAULT
         }
 
     private fun isNumber(s: String) = s.matches(Regex("^\\d+$"))

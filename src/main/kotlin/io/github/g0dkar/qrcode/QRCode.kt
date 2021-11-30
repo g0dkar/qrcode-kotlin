@@ -1,11 +1,10 @@
 package io.github.g0dkar.qrcode
 
-import io.github.g0dkar.qrcode.QRCodeDataType.ALPHA_NUM
-import io.github.g0dkar.qrcode.QRCodeDataType.BYTES
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
+import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
 import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
 import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
 import io.github.g0dkar.qrcode.internals.BitBuffer
-import io.github.g0dkar.qrcode.internals.Helper
 import io.github.g0dkar.qrcode.internals.Helper.saveState
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
@@ -67,8 +66,8 @@ class QRCode @JvmOverloads constructor(
 ) {
     private val qrCodeData: QRData = when (dataType) {
         NUMBERS -> QRNumber(data)
-        ALPHA_NUM -> QRAlphaNum(data)
-        BYTES -> QR8BitByte(data)
+        UPPER_ALPHA_NUM -> QRAlphaNum(data)
+        DEFAULT -> QR8BitByte(data)
         KANJI -> QRKanji(data)
     }
 
@@ -88,8 +87,8 @@ class QRCode @JvmOverloads constructor(
         ): Int {
             val qrCodeData = when (dataType) {
                 NUMBERS -> QRNumber(data)
-                ALPHA_NUM -> QRAlphaNum(data)
-                BYTES -> QR8BitByte(data)
+                UPPER_ALPHA_NUM -> QRAlphaNum(data)
+                DEFAULT -> QR8BitByte(data)
                 KANJI -> QRKanji(data)
             }
             val dataLength = qrCodeData.length()
