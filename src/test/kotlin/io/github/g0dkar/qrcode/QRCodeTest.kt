@@ -25,10 +25,26 @@ internal class QRCodeTest {
     @Test
     fun `render - numbers - as string`() {
         val input = "123456"
-        val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_ALPHA_NUM)
+        val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
         val expectedImage = javaQRCode.createImage(25, 0)
 
-        val underTest = QRCode(input, dataType = QRCodeDataType.ALPHA_NUM)
+        val underTest = QRCode(input, dataType = QRCodeDataType.BYTES)
+
+        val result = assertDoesNotThrow {
+            underTest.render()
+        }
+
+        result shouldHaveSameDimensionsAs expectedImage
+        result shouldBeSameImageAs expectedImage
+    }
+
+    @Test
+    fun `render - strings - as string`() {
+        val input = "Test!"
+        val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
+        val expectedImage = javaQRCode.createImage(25, 0)
+
+        val underTest = QRCode(input)
 
         val result = assertDoesNotThrow {
             underTest.render()

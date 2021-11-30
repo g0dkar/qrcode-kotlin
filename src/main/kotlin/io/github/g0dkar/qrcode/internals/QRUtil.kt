@@ -313,7 +313,7 @@ internal object QRUtil {
         }
 
     private fun isNumber(s: String) = s.matches(Regex("^\\d+$"))
-    private fun isAlphaNum(s: String) = s.matches(Regex("^\\p{Alnum}+$"))
+    private fun isAlphaNum(s: String) = s.matches(Regex("^[0-9A-Z $%*+\\-./:]+$"))
     private fun isKanji(s: String): Boolean {
         var result: Boolean? = null
         val data = s.toByteArray(charset(jISEncoding))
