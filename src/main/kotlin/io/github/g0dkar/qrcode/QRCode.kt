@@ -1,11 +1,10 @@
 package io.github.g0dkar.qrcode
 
-import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
 import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
 import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import io.github.g0dkar.qrcode.internals.BitBuffer
-import io.github.g0dkar.qrcode.internals.Helper.saveState
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
 import io.github.g0dkar.qrcode.internals.QRAlphaNum
@@ -16,7 +15,6 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.util.StringJoiner
 import java.util.function.Function
 import javax.imageio.ImageIO
 
@@ -243,38 +241,25 @@ class QRCode @JvmOverloads constructor(
     ): Array<Array<Boolean?>> {
         val moduleCount = type * 4 + 17
         val modules: Array<Array<Boolean?>> = Array(moduleCount) { Array(moduleCount) { null } }
-        saveState("test-01A", modules)
 
         setupPositionProbePattern(0, 0, moduleCount, modules)
-        saveState("test-02A", modules)
         setupPositionProbePattern(moduleCount - 7, 0, moduleCount, modules)
-        saveState("test-03A", modules)
         setupPositionProbePattern(0, moduleCount - 7, moduleCount, modules)
-        saveState("test-04A", modules)
 
         setupPositionAdjustPattern(type, modules)
-        saveState("test-05A", modules)
         setupTimingPattern(moduleCount, modules)
-        saveState("test-06A", modules)
         setupTypeInfo(maskPattern, moduleCount, modules)
-        saveState("test-07A", modules)
 
         if (type >= 7) {
             setupTypeNumber(type, moduleCount, modules)
         }
-        saveState("test-08A", modules)
 
         val data = createData(type)
         val data2 = data.copyOf()
         val modules2 = modules.copyOf()
 
-        saveState("test-09A", modules)
-
         applyMaskPattern(data, maskPattern, moduleCount, modules)
-        saveState("test-10A", modules)
-
         mapData(data2, maskPattern, modules2)
-        saveState("test-10AA", modules2)
 
         return modules
     }
@@ -377,7 +362,6 @@ class QRCode @JvmOverloads constructor(
         buffer.put(qrCodeData.dataType.value, 4)
         buffer.put(qrCodeData.length(), qrCodeData.getLengthInBits(type))
         qrCodeData.write(buffer)
-
 
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
@@ -484,14 +468,12 @@ class QRCode @JvmOverloads constructor(
                     if (modules[row][col - c] == null) {
                         modules[row][col - c] = if (byteIndex < data.size) {
                             (data[byteIndex] ushr bitIndex) and 1 == 1
-                        }
-                        else {
+                        } else {
                             false
                         }.let {
                             if (QRUtil.getMask(maskPattern, row, col - c)) {
                                 !it
-                            }
-                            else {
+                            } else {
                                 it
                             }
                         }
@@ -574,12 +556,4 @@ class QRCode @JvmOverloads constructor(
 
     private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
         modules[row][col] ?: false
-
-    override fun toString(): String =
-        StringJoiner(", ", QRCode.javaClass.simpleName + "[", "]")
-            .add("data=$data")
-            .add("dataType=$dataType")
-            .add("qrCodeData=$qrCodeData")
-            .add("errorCorrectionLevel=$errorCorrectionLevel")
-            .toString()
 }

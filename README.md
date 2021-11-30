@@ -24,7 +24,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.0/qrcode-kotlin)
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.1/qrcode-kotlin)
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
@@ -33,7 +33,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
@@ -41,10 +41,10 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.2.0")
+implementation("io.github.g0dkar:qrcode-kotlin:1.2.1")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.2.0'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.2.1'
 ```
 
 ## Examples and Usage
@@ -235,7 +235,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.0/qrcode-kotlin),
+Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/1.2.1/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 **Se você utiliza Maven - pom.xml:**
@@ -244,7 +244,7 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
@@ -252,10 +252,10 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:1.2.0")
+implementation("io.github.g0dkar:qrcode-kotlin:1.2.1")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:1.2.0'
+implementation 'io.github.g0dkar:qrcode-kotlin:1.2.1'
 ```
 
 ## Exemplos e Usos

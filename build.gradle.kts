@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.2.0"
+version = "1.2.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8

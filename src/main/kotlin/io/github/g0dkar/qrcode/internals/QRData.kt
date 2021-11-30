@@ -1,10 +1,10 @@
 package io.github.g0dkar.qrcode.internals
 
 import io.github.g0dkar.qrcode.QRCodeDataType
-import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import io.github.g0dkar.qrcode.QRCodeDataType.DEFAULT
 import io.github.g0dkar.qrcode.QRCodeDataType.KANJI
 import io.github.g0dkar.qrcode.QRCodeDataType.NUMBERS
+import io.github.g0dkar.qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 import java.lang.Integer.parseInt
 import java.lang.Integer.toHexString
 

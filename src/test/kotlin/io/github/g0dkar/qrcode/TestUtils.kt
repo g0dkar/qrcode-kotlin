@@ -46,9 +46,9 @@ fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage
     private fun comparePixels(image1: BufferedImage, image2: BufferedImage): Triple<Boolean, Point?, Pair<Int, Int>?> {
         for (x in 0 until image1.width) {
             for (y in 0 until image1.height) {
-                    if (image1.getRGB(x, y) != image2.getRGB(x, y)) {
-                        return Triple(false, Point(x, y), Pair(image1.getRGB(x, y), image2.getRGB(x, y)))
-                    }
+                if (image1.getRGB(x, y) != image2.getRGB(x, y)) {
+                    return Triple(false, Point(x, y), Pair(image1.getRGB(x, y), image2.getRGB(x, y)))
+                }
             }
         }
 
