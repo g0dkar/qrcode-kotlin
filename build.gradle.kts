@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.1.2"
+version = "1.2.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,7 +36,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    // testImplementation("io.kotest:kotest-assertions:4.0.7")
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.0.0.RC")
 }
 
