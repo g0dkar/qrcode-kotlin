@@ -9,6 +9,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.5.31"
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    id("org.sonarqube") version "3.3"
 }
 
 group = "io.github.g0dkar"
@@ -36,7 +37,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.0.2")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.1.0")
 }
 
 tasks {
@@ -78,7 +79,6 @@ ktlint {
 /* **************** */
 /* Publishing       */
 /* **************** */
-
 val ossrhUsername: String? = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword: String? = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
 
@@ -163,4 +163,15 @@ signing {
 
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
+}
+
+/* *************************** */
+/* SonarQube Quality Reporting */
+/* *************************** */
+sonarqube {
+    properties {
+        property("sonar.projectKey", "qrcode-kotlin")
+        property("sonar.organization", "minimmo")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
