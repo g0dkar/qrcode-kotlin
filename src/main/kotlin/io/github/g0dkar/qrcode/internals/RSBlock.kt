@@ -5,8 +5,8 @@ import io.github.g0dkar.qrcode.ErrorCorrectionLevel
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
     companion object {

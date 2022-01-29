@@ -11,8 +11,8 @@ import java.lang.Integer.toHexString
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRData.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
     abstract fun length(): Int
@@ -54,8 +54,8 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QR8BitByte.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
     private val dataBytes = data.toByteArray(Charsets.UTF_8)
@@ -73,8 +73,8 @@ internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRAlphaNum.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
     override fun write(buffer: BitBuffer) {
@@ -115,8 +115,8 @@ internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRKanji.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal class QRKanji(data: String) : QRData(KANJI, data) {
     private val dataBytes = data.toByteArray(charset(QRUtil.jISEncoding))
@@ -147,8 +147,8 @@ internal class QRKanji(data: String) : QRData(KANJI, data) {
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRNumber.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 internal class QRNumber(data: String) : QRData(NUMBERS, data) {
     override fun write(buffer: BitBuffer) {

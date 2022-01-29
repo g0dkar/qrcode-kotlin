@@ -19,8 +19,8 @@ package io.github.g0dkar.qrcode
  * @param value Value associated with this error correction level
  * @param maxTypeNum Maximum `type` value which can fit 2048 bytes. Used to automatically calculate the `type` value.
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
     L(1, 21),
@@ -34,8 +34,8 @@ enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
  *
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/MaskPattern.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 enum class MaskPattern {
     /** This is the default pattern (no pattern is applied) */
@@ -54,8 +54,8 @@ enum class MaskPattern {
  *
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/Mode.java)
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  */
 enum class QRCodeDataType(val value: Int) {
     /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
