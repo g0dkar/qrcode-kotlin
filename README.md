@@ -4,6 +4,7 @@
 [![Build Status](https://app.travis-ci.com/g0dkar/qrcode-kotlin.svg?branch=main)](https://app.travis-ci.com/g0dkar/qrcode-kotlin)
 [![Coverage Status](https://coveralls.io/repos/github/g0dkar/qrcode-kotlin/badge.svg?branch=main)](https://coveralls.io/github/g0dkar/qrcode-kotlin?branch=main)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=qrcode-kotlin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=qrcode-kotlin)
 
 [_:brazil: **Disponível em Português (Brasil)**_](#documenta%C3%A7%C3%A3o-em-portugu%C3%AAs-brasil)
 

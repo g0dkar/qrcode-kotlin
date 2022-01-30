@@ -589,8 +589,7 @@ class QRCode @JvmOverloads constructor(
 
         if (qrCodeSquare != null) {
             qrCodeSquare.dark = value
-        }
-        else {
+        } else {
             modules[row][col] = QRCodeSquare(
                 dark = value,
                 row = row,

@@ -35,26 +35,30 @@ fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage
     private fun printRGBA(rgb: Int): String = Color(rgb).let { "rgba(${it.red}, ${it.green}, ${it.blue}, ${it.alpha})" }
 
     private fun saveImages(image1: BufferedImage, image2: BufferedImage): File {
-        val gap = 25
-        val now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))
-        val file = Paths.get(System.getProperty("user.home"), "imageCompare-${testNum++}-$now.png").toFile()
-        val compareImage = BufferedImage(
-            image1.width + image2.width + gap,
-            image1.height.coerceAtLeast(image2.height),
-            image1.type
-        )
-        val graphics = compareImage.createGraphics()
+        try {
+            val gap = 25
+            val now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))
+            val file = Paths.get(System.getProperty("user.home"), "imageCompare-${testNum++}-$now.png").toFile()
+            val compareImage = BufferedImage(
+                image1.width + image2.width + gap,
+                image1.height.coerceAtLeast(image2.height),
+                image1.type
+            )
+            val graphics = compareImage.createGraphics()
 
-        graphics.color = Color.YELLOW
-        graphics.background = Color.YELLOW
-        graphics.fillRect(image1.width, 0, gap, compareImage.height)
-        graphics.drawImage(image1, 0, 0, null)
-        graphics.drawImage(image2, image1.width + gap, 0, null)
-        graphics.dispose()
+            graphics.color = Color.YELLOW
+            graphics.background = Color.YELLOW
+            graphics.fillRect(image1.width, 0, gap, compareImage.height)
+            graphics.drawImage(image1, 0, 0, null)
+            graphics.drawImage(image2, image1.width + gap, 0, null)
+            graphics.dispose()
 
-        ImageIO.write(compareImage, "PNG", file)
+            ImageIO.write(compareImage, "PNG", file)
 
-        return file
+            return file
+        } catch (e: Exception) {
+            return File("ERROR_WHILE_SAVING_DIFF_IMAGE")
+        }
     }
 
     private fun comparePixels(image1: BufferedImage, image2: BufferedImage): Triple<Boolean, Point?, Pair<Int, Int>?> {

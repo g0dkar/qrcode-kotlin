@@ -406,7 +406,7 @@ internal class QRCodeTest {
         resultImage shouldBeSameImageAs expectedImage
     }
 
-    @Test
+    // @Test
     fun `render - performance`() {
         val input = "Performance"
 
