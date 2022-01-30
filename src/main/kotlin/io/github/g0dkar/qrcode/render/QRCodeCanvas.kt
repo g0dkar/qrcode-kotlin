@@ -12,9 +12,10 @@ import java.io.OutputStream
  *
  * @author Rafael Lins - g0dkar
  */
-abstract class QRCodeCanvas<T>(
+abstract class QRCodeCanvas<T> @JvmOverloads constructor (
     val width: Int,
-    val height: Int
+    val height: Int,
+    var alpha: Boolean = false,
 ) {
     var color: Int = Colors.WHITE
 
@@ -23,7 +24,7 @@ abstract class QRCodeCanvas<T>(
     /**
      * Writes the image data to the especified [OutputStream].
      *
-     * Please, check the implementation for extra options such as image types (JPG, PNG, BMP, ...)
+     * Please, check the implementation for extra options such as image types (JPG, PNG, BMP, ...).
      *
      * @see BufferedImageCanvas
      */

@@ -22,11 +22,13 @@ import javax.imageio.ImageIO
  * @see ImageIO.write
  * @see ImageIO.getWriterFormatNames
  */
-class BufferedImageCanvas(
+
+class BufferedImageCanvas @JvmOverloads constructor(
     width: Int,
     height: Int,
+    alpha: Boolean = false,
     var fileType: String = "PNG"
-) : QRCodeCanvas<BufferedImage>(width, height) {
+) : QRCodeCanvas<BufferedImage>(width, height, alpha) {
     companion object {
         const val IMAGE_CLASS = "java.awt.image.BufferedImage"
     }
@@ -41,12 +43,14 @@ class BufferedImageCanvas(
 
     /** Writes the image data to the especified [OutputStream] in the especified [fileType] (defaults to `PNG`). */
     override fun writeImage(outputStream: OutputStream) {
-        ImageIO.write(image, fileType, outputStream)
+        outputStream.use {
+            ImageIO.write(image, fileType, outputStream)
+        }
     }
 
     private fun draw(color: Int, action: (Graphics2D) -> Unit) {
         val graphics = image.createGraphics()
-        val jdkColor = Color(color, true)
+        val jdkColor = Color(color, alpha)
 
         graphics.color = jdkColor
         graphics.background = jdkColor

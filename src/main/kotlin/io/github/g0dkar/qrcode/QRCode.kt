@@ -229,7 +229,7 @@ class QRCode @JvmOverloads constructor(
                 if (cell != null) {
                     val squareCanvas = newCanvas(cellSize, cellSize)
                     renderer.accept(cell, squareCanvas)
-                    qrCodeCanvas.drawImage(squareCanvas, margin + cellSize * row, margin + cellSize * col)
+                    qrCodeCanvas.drawImage(squareCanvas, margin + cellSize * col, margin + cellSize * row)
                 }
             }
         }

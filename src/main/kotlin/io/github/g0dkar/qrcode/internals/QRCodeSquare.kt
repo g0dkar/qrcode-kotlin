@@ -13,8 +13,8 @@ data class QRCodeSquare(
     var dark: Boolean,
     val row: Int,
     val col: Int,
-    val type: QRCodeSquareType = QRCodeSquareType.DEFAULT,
     val size: Int,
+    val type: QRCodeSquareType = QRCodeSquareType.DEFAULT,
 )
 
 /**

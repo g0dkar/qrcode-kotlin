@@ -11,7 +11,6 @@ import java.lang.ClassLoader.getSystemClassLoader
  */
 object QRCodeCanvasFactory {
     private val hasBufferedImage = detectClass(BufferedImageCanvas.IMAGE_CLASS)
-    // private val hasBufferedImage = Class.forName("java.awt.image.BufferedImage", false, getSystemClassLoader())
 
     fun newCanvas(size: Int): QRCodeCanvas<*> =
         newCanvas(size, size)
