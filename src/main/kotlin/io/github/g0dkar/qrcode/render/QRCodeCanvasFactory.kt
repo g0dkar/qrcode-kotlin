@@ -78,7 +78,7 @@ object QRCodeCanvasFactory {
         try {
             Class.forName(className, false, classLoader)
             true
-        } catch (t: Throwable) {
+        } catch (t: ClassNotFoundException) {
             false
         }
 }
