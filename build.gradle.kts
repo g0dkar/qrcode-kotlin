@@ -1,5 +1,11 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    }
+}
+
 plugins {
     id("idea")
     signing
@@ -28,7 +34,6 @@ idea {
 }
 
 dependencies {
-    runtimeOnly("androidx.core:core-ktx:1.3.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
@@ -72,6 +77,8 @@ ktlint {
         exclude("**.gradle.kts")
     }
 }
+
+
 
 /* **************** */
 /* Publishing       */
@@ -162,6 +169,8 @@ signing {
     sign(publishing.publications)
 }
 
+
+
 /* *************************** */
 /* SonarQube Quality Reporting */
 /* *************************** */
@@ -172,3 +181,35 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
+
+
+
+/* ******* */
+/* Android */
+/* ******* */
+// android {
+//     compileSdk = 31
+//
+//     defaultConfig {
+//         minSdk = 26
+//         targetSdk = 31
+//         version = project.version
+//         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//     }
+//
+//     buildTypes {
+//         getByName("release") {
+//             isMinifyEnabled = true
+//             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+//         }
+//     }
+//
+//     compileOptions {
+//         sourceCompatibility = JavaVersion.VERSION_1_8
+//         targetCompatibility = JavaVersion.VERSION_1_8
+//     }
+//
+//     kotlinOptions {
+//         jvmTarget = "1.8"
+//     }
+// }

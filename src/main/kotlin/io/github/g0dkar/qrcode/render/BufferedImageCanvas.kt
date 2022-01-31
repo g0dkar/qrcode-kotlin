@@ -22,7 +22,6 @@ import javax.imageio.ImageIO
  * @see ImageIO.write
  * @see ImageIO.getWriterFormatNames
  */
-
 class BufferedImageCanvas @JvmOverloads constructor(
     width: Int,
     height: Int,

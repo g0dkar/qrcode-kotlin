@@ -207,6 +207,7 @@ class QRCode @JvmOverloads constructor(
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
+     * @param qrCodeCanvas The [QRCodeCanvas] where the QRCode will be painted into. Defaults to a platform appropriate implementation, if available.
      * @param renderer Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
      *
      * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
@@ -215,6 +216,7 @@ class QRCode @JvmOverloads constructor(
      * @see QRCodeCanvas
      * @see BufferedImageCanvas
      * @see Colors
+     * @see newCanvas
      */
     @JvmOverloads
     fun renderShaded(

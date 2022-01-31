@@ -1,10 +1,11 @@
 # qrcode-kotlin
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin?ref=badge_shield)
+
 [![Build Status](https://app.travis-ci.com/g0dkar/qrcode-kotlin.svg?branch=main)](https://app.travis-ci.com/g0dkar/qrcode-kotlin)
 [![Coverage Status](https://coveralls.io/repos/github/g0dkar/qrcode-kotlin/badge.svg?branch=main)](https://coveralls.io/github/g0dkar/qrcode-kotlin?branch=main)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=qrcode-kotlin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=qrcode-kotlin)
 
 [_:brazil: **Disponível em Português (Brasil)**_](#documenta%C3%A7%C3%A3o-em-portugu%C3%AAs-brasil)
 
@@ -212,6 +213,8 @@ the library even better for everyone! :grin:
 If you enjoyed the library and want to get me some coffee, use the button below :love_you_gesture:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee over at Ko-fi!")](https://ko-fi.com/g0dkar)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin?ref=badge_large)
 
 --------------------
 
@@ -422,3 +425,5 @@ fazer a biblioteca melhor para todo o mundo! :grin:
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee over at Ko-fi!")](https://ko-fi.com/g0dkar)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fg0dkar%2Fqrcode-kotlin?ref=badge_large)
