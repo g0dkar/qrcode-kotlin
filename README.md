@@ -16,17 +16,20 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 * **Pure Kotlin:** Reimplemented on pure Kotlin from a reference implementation of the QRCode spec
   by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Lightweight:** No dependencies, `~42KB` and it does what it says on the tin.
+* **Lightweight:** No dependencies*, `~72KB` and it does what it says on the tin.
 * **Easy to use:** Instantiate an object, invoke a method, and you're done :)
 * **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate
   QRCodes)
-* **Customizable output:** Want to make a colorful QRCode? We got you!
-* **Server friendly:** This isn't a library for Mobile applications. This is a library thought by backend developers for
-  backend developers.
+* **Customizable output:** Want to make a colorful QRCode? We got you! A round one? Sure! Maybe use a drawing library?
+  All good as well!
+* **Server friendly:** This isn't a library for Mobile applications, but it is extensible. This is a library thought by
+  backend developers for backend developers.
+
+>\* Well, except the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.0/qrcode-kotlin)
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.0/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**

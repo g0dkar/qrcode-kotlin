@@ -83,8 +83,8 @@ ktlint {
 /* **************** */
 /* Publishing       */
 /* **************** */
-val ossrhUsername: String? = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
-val ossrhPassword: String? = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
+val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
 
 val dokkaHtml by tasks.getting(DokkaTask::class)
 val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
@@ -124,7 +124,7 @@ publishing {
                 licenses {
                     license {
                         name.set("MIT")
-                        url.set("https://github.com/g0dkar/qrcode-kotlin/blob/main/LICENSE")
+                        url.set("$projectGitUrl/blob/main/LICENSE")
                     }
                 }
                 developers {
@@ -181,35 +181,3 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
-
-
-
-/* ******* */
-/* Android */
-/* ******* */
-// android {
-//     compileSdk = 31
-//
-//     defaultConfig {
-//         minSdk = 26
-//         targetSdk = 31
-//         version = project.version
-//         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//     }
-//
-//     buildTypes {
-//         getByName("release") {
-//             isMinifyEnabled = true
-//             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-//         }
-//     }
-//
-//     compileOptions {
-//         sourceCompatibility = JavaVersion.VERSION_1_8
-//         targetCompatibility = JavaVersion.VERSION_1_8
-//     }
-//
-//     kotlinOptions {
-//         jvmTarget = "1.8"
-//     }
-// }
