@@ -15,6 +15,21 @@ object Colors {
     fun css(str: String): Int =
         str.substring(1..6).toInt(16)
 
+    /** Builds an RGBA color value from its numerical components. All values must be between `0..255`. */
+    fun rgba(r: Int, g: Int, b: Int, a: Int = 255): Int =
+        a.coerceIn(0..255) and 0xFF shl 24 or
+            (r.coerceIn(0..255) and 0xFF shl 16) or
+            (g.coerceIn(0..255) and 0xFF shl 8) or
+            (b.coerceIn(0..255) and 0xFF shl 0)
+
+    /** Compute the R, G and B components of a color. */
+    fun getRGB(color: Int): Triple<Int, Int, Int> =
+        Triple(
+            (color shl 16) and 0xFF,
+            (color shl 8) and 0xFF,
+            (color shl 0) and 0xFF
+        )
+
     /**
      * Returns the especified color with an added alpha channel. That means a transparent/opaque color.
      *
@@ -22,7 +37,7 @@ object Colors {
      * range are [coerced][coerceIn] into it.
      */
     fun withAlpha(color: Int, alpha: Int): Int =
-        alpha.coerceIn(0..255).shl(6) or color
+        (alpha.coerceIn(0..255) shl 24) or color
 
     const val ALICE_BLUE = 0xF0F8FF
     const val ANTIQUE_WHITE = 0xFAEBD7

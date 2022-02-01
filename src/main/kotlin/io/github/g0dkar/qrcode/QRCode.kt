@@ -75,6 +75,7 @@ class QRCode @JvmOverloads constructor(
     }
 
     companion object {
+        const val DEFAULT_CELL_SIZE = 25
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
 
@@ -113,7 +114,7 @@ class QRCode @JvmOverloads constructor(
      * image will be 100x100 pixels.
      */
     fun computeImageSize(
-        cellSize: Int = 25,
+        cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = 0,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
     ): Int = computeImageSize(cellSize, margin, rawData.size)
@@ -125,7 +126,7 @@ class QRCode @JvmOverloads constructor(
      * image will be 100x100 pixels.
      */
     fun computeImageSize(
-        cellSize: Int = 25,
+        cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = 0,
         size: Int,
     ): Int = size * cellSize + margin * 2
@@ -152,7 +153,7 @@ class QRCode @JvmOverloads constructor(
      */
     @JvmOverloads
     fun render(
-        cellSize: Int = 25,
+        cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = 0,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
         qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
@@ -220,7 +221,7 @@ class QRCode @JvmOverloads constructor(
      */
     @JvmOverloads
     fun renderShaded(
-        cellSize: Int = 25,
+        cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = 0,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
         qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
@@ -237,39 +238,6 @@ class QRCode @JvmOverloads constructor(
         }
 
         return qrCodeCanvas
-
-        // val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
-        // val currentPixelData = QRCodePixelData(0, 0, 0, 0, false, false)
-        //
-        // for (y in 0 until imageSize) {
-        //     for (x in 0 until imageSize) {
-        //         currentPixelData.x = x
-        //         currentPixelData.y = y
-        //
-        //         val pixelColor = if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
-        //             val col = (x - margin) / cellSize
-        //             val row = (y - margin) / cellSize
-        //
-        //             currentPixelData.row = row
-        //             currentPixelData.col = col
-        //             currentPixelData.isDark = isDark(row, col, rawData)
-        //             currentPixelData.isMargin = false
-        //
-        //             shader.apply(currentPixelData)
-        //         } else {
-        //             currentPixelData.row = -1
-        //             currentPixelData.col = -1
-        //             currentPixelData.isDark = false
-        //             currentPixelData.isMargin = true
-        //
-        //             shader.apply(currentPixelData)
-        //         }
-        //
-        //         image.setRGB(x, y, pixelColor.rgb)
-        //     }
-        // }
-        //
-        // return image
     }
 
     /**
@@ -328,7 +296,7 @@ class QRCode @JvmOverloads constructor(
                     row = row + r,
                     col = col + c,
                     type = QRCodeSquareType.POSITION_PROBE,
-                    size = modules.size
+                    moduleSize = modules.size
                 )
             }
         }
@@ -353,7 +321,7 @@ class QRCode @JvmOverloads constructor(
                             row = row + r,
                             col = col + c,
                             type = QRCodeSquareType.POSITION_ADJUST,
-                            size = modules.size
+                            moduleSize = modules.size
                         )
                     }
                 }
@@ -372,7 +340,7 @@ class QRCode @JvmOverloads constructor(
                 row = r,
                 col = 6,
                 type = QRCodeSquareType.TIMING_PATTERN,
-                size = modules.size
+                moduleSize = modules.size
             )
         }
 
@@ -386,7 +354,7 @@ class QRCode @JvmOverloads constructor(
                 row = 6,
                 col = c,
                 type = QRCodeSquareType.TIMING_PATTERN,
-                size = modules.size
+                moduleSize = modules.size
             )
         }
     }
@@ -596,7 +564,7 @@ class QRCode @JvmOverloads constructor(
                 dark = value,
                 row = row,
                 col = col,
-                size = modules.size
+                moduleSize = modules.size
             )
         }
     }

@@ -1,11 +1,10 @@
 import io.github.g0dkar.qrcode.QRCode
-import java.io.File
-import javax.imageio.ImageIO
+import java.io.FileOutputStream
 
 class SimpleQRCode {
     fun createQRCode(content: String) {
-        val imageData = QRCode(content).render()
-        ImageIO.write(imageData, "PNG", File("kotlin-simple.png"))
+        val fileOut = FileOutputStream("kotlin-simple.png")
+        QRCode(content).render().writeImage(fileOut)
     }
 }
 
