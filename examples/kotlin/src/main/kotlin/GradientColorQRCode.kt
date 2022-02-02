@@ -23,12 +23,13 @@ class GradientColorQRCode(
         val qrCodeData = qrCode.encode()
         val qrCodeSize = qrCode.computeImageSize(rawData = qrCodeData)
 
-        val (startR, startG, startB) = Colors.getRGB(startColor)
-        val (endR, endG, endB) = Colors.getRGB(endColor)
+        val (startR, startG, startB) = Colors.getRGBA(startColor)
+        val (endR, endG, endB) = Colors.getRGBA(endColor)
 
         val qrCodeCanvas = qrCode.renderShaded(rawData = qrCodeData) { cellData, cellCanvas ->
             if (cellData.dark) {
-                val (x, y) = cellData.coords()
+                val x = cellData.absoluteX()
+                val y = cellData.absoluteY()
 
                 for (currY in 0 until cellCanvas.height) {
                     val topBottomPct = pct(x, y + currY, qrCodeSize, qrCodeSize)
@@ -42,8 +43,7 @@ class GradientColorQRCode(
 
                     cellCanvas.drawLine(0, currY, cellCanvas.width, currY, currColor)
                 }
-            }
-            else {
+            } else {
                 cellCanvas.fill(Colors.WHITE)
             }
         }
@@ -53,8 +53,8 @@ class GradientColorQRCode(
 }
 
 fun main() {
-    val startColor = Colors.css("#0087DC") // Light Blue
-    val endColor = Colors.css("#003778") // Dark Blue
+    val startColor = Colors.rgba(0, 135, 220) // Light Blue
+    val endColor = Colors.rgba(0, 55, 120) // Dark Blue
 
     GradientColorQRCode()
         .createQRCode("Hello, world!", startColor, endColor)

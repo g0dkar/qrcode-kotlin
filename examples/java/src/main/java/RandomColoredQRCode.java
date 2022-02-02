@@ -1,15 +1,21 @@
 import io.github.g0dkar.qrcode.QRCode;
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType;
 import java.awt.Color;
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
+/**
+ * This code creates a QRCode where all normal squares are a random color each. The probes are all the same color.
+ * <p>
+ * It uses the {@code java.awt} package classes on purpose to show how they can interop with the library :)
+ *
+ * @author Rafael Lins - g0dkar
+ */
 public class RandomColoredQRCode {
 
     public void createQRCode(
@@ -17,23 +23,23 @@ public class RandomColoredQRCode {
         List<Color> colors,
         Color backgroundColor
     ) throws IOException {
-        HashMap<Point, Color> colorMap = new HashMap<>();
-        BufferedImage imageData = new QRCode(content).renderShaded(pixelData -> {
-            if (!pixelData.isMargin()) {
-                Point point = new Point(pixelData.getRow(), pixelData.getCol());
+        Random rand = new Random();
+        FileOutputStream fileOut = new FileOutputStream("java-random-colored.png");
+        Map<QRCodeSquareType, Color> colorMap = new EnumMap<>(QRCodeSquareType.class);
 
-                if (pixelData.isDark()) {
-                    return colorMap.computeIfAbsent(point, p -> colors.get(new Random().nextInt(colors.size())));
-                }
-                else {
-                    return backgroundColor;
-                }
-            }
-            else {
-                return backgroundColor;
-            }
-        });
-        ImageIO.write(imageData, "PNG", new File("java-random-colored.png"));
+        new QRCode(content).renderShaded((cellData, canvas) -> {
+                               if (cellData.getDark()) {
+                                   if (cellData.getType() != QRCodeSquareType.DEFAULT) {
+                                       colorMap.putIfAbsent(cellData.getType(), colors.get(rand.nextInt(colors.size())));
+                                   }
+
+                                   Color cellColor = colorMap.getOrDefault(cellData.getType(), colors.get(rand.nextInt(colors.size())));
+                                   canvas.fill(cellColor.getRGB());
+                               } else {
+                                   canvas.fill(backgroundColor.getRGB());
+                               }
+                           })
+                           .writeImage(fileOut);
     }
 
     public static void main(String[] args) throws Exception {

@@ -13,7 +13,7 @@ package io.github.g0dkar.qrcode.render
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
     fun css(str: String): Int =
-        str.substring(1..6).toInt(16)
+        str.substring(1..6).toInt(16) or 0xFF000000.toInt()
 
     /** Builds an RGBA color value from its numerical components. All values must be between `0..255`. */
     fun rgba(r: Int, g: Int, b: Int, a: Int = 255): Int =
@@ -22,12 +22,13 @@ object Colors {
             (g.coerceIn(0..255) and 0xFF shl 8) or
             (b.coerceIn(0..255) and 0xFF shl 0)
 
-    /** Compute the R, G and B components of a color. */
-    fun getRGB(color: Int): Triple<Int, Int, Int> =
-        Triple(
-            (color shl 16) and 0xFF,
-            (color shl 8) and 0xFF,
-            (color shl 0) and 0xFF
+    /** Compute the R, G, B and Alpha components of a color. All values between `0..255`. */
+    fun getRGBA(color: Int): List<Int> =
+        listOf(
+            (color shr 16) and 0xFF,
+            (color shr 8) and 0xFF,
+            (color shr 0) and 0xFF,
+            (color shr 24) and 0xFF
         )
 
     /**
@@ -37,7 +38,7 @@ object Colors {
      * range are [coerced][coerceIn] into it.
      */
     fun withAlpha(color: Int, alpha: Int): Int =
-        (alpha.coerceIn(0..255) shl 24) or color
+        (alpha.coerceIn(0..255) shl 24) + (color and 0xFFFFFF)
 
     const val ALICE_BLUE = 0xF0F8FF
     const val ANTIQUE_WHITE = 0xFAEBD7

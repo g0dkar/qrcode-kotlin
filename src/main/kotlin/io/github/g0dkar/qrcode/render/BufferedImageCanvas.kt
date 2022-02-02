@@ -3,6 +3,7 @@ package io.github.g0dkar.qrcode.render
 import io.github.g0dkar.qrcode.internals.ErrorMessage.error
 import java.awt.Color
 import java.awt.Graphics2D
+import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.io.OutputStream
 import javax.imageio.ImageIO
@@ -53,6 +54,7 @@ class BufferedImageCanvas @JvmOverloads constructor(
 
         graphics.color = jdkColor
         graphics.background = jdkColor
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
         action(graphics)
 

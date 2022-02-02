@@ -24,14 +24,12 @@ data class QRCodeSquare(
     val type: QRCodeSquareType = QRCodeSquareType.DEFAULT,
 ) {
     /** Calculates where is the X position where this square will be in the main QRCode image given a [cellSize]. */
+    @JvmOverloads
     fun absoluteX(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = col * cellSize
 
     /** Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize]. */
+    @JvmOverloads
     fun absoluteY(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = row * cellSize
-
-    /** Calculates the pair `(X, Y)` where this square will be in the main QRCode image given a [cellSize]. */
-    fun coords(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Pair<Int, Int> =
-        Pair(absoluteX(cellSize), absoluteY(cellSize))
 }
 
 /**
@@ -47,5 +45,7 @@ enum class QRCodeSquareType {
     /** Part of the timing pattern. Make it a square like any other :) */
     TIMING_PATTERN,
     /** Anything special. Just a square. */
-    DEFAULT
+    DEFAULT,
+    /** Used to point out that this is part of the margin. */
+    MARGIN
 }

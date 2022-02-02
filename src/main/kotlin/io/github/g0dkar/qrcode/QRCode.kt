@@ -76,6 +76,7 @@ class QRCode @JvmOverloads constructor(
 
     companion object {
         const val DEFAULT_CELL_SIZE = 25
+        const val DEFAULT_MARGIN = 0
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
 
@@ -127,23 +128,21 @@ class QRCode @JvmOverloads constructor(
      */
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
+        margin: Int = DEFAULT_MARGIN,
         size: Int,
     ): Int = size * cellSize + margin * 2
 
     /**
-     * Renders a QR Code image based on its [computed data][encode].
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
+     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
+     * Java :)
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
-     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param brightColor [Color] to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
-     * @param darkColor [Color] to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Color.BLACK].
-     * @param marginColor [Color] to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
+     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      *
-     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
      * @see renderShaded
      * @see QRCodeSquare
@@ -154,30 +153,98 @@ class QRCode @JvmOverloads constructor(
     @JvmOverloads
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
+        margin: Int = DEFAULT_MARGIN,
+        brightColor: Int = Colors.WHITE,
+        darkColor: Int = Colors.BLACK,
+        marginColor: Int = Colors.WHITE
+    ) =
+        render(
+            cellSize = cellSize,
+            margin = margin,
+            rawData = encode(),
+            brightColor = brightColor,
+            darkColor = darkColor,
+            marginColor = marginColor
+        )
+
+    /**
+     * Renders a QR Code image based on its [computed data][encode].
+     *
+     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
+     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
+     * @param qrCodeCanvas The [QRCodeCanvas] where the QRCode will be painted into. Defaults to a platform appropriate implementation, if available.
+     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
+     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     *
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see renderShaded
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
+     */
+    fun render(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
         qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
         brightColor: Int = Colors.WHITE,
         darkColor: Int = Colors.BLACK,
         marginColor: Int = Colors.WHITE,
     ) =
-        qrCodeCanvas.apply {
-            val size = computeImageSize(cellSize, margin, rawData)
-            drawRect(0, 0, size, size, marginColor)
-
-            renderShaded(
-                cellSize,
-                margin,
-                rawData,
-                qrCodeCanvas,
-            ) { cellData, canvas ->
-                if (cellData.dark) {
-                    canvas.fill(darkColor)
-                } else {
+        renderShaded(
+            cellSize,
+            margin,
+            rawData,
+            qrCodeCanvas,
+        ) { cellData, canvas ->
+            if (cellData.dark) {
+                canvas.fill(darkColor)
+            } else {
+                if (cellData.type != QRCodeSquareType.MARGIN) {
                     canvas.fill(brightColor)
+                }
+                else {
+                    canvas.fill(marginColor)
                 }
             }
         }
+
+    /**
+     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
+     * Java :)
+     *
+     * Please, see [renderShaded].
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
+     * @param renderer Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     *
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
+     * @see newCanvas
+     */
+    @JvmOverloads
+    fun renderShaded(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        renderer: BiConsumer<QRCodeSquare, QRCodeCanvas<*>>, // To keep Java Interop w/o any extra dependencies
+    ) =
+        renderShaded(
+            cellSize = cellSize,
+            margin = margin,
+            rawData = encode(),
+            renderer = renderer
+        )
 
     /**
      * Renders a QR Code image based on its [computed data][encode].
@@ -190,7 +257,7 @@ class QRCode @JvmOverloads constructor(
      *
      * ```kotlin
      * QRCode("example").renderShaded { cellData, canvas ->
-     *     if (cellData.dark) {
+     *     if (cellData.type != QRCodeSquareType.MARGIN && cellData.dark) {
      *         if (cellData.row > cellData.size / 2) {
      *             canvas.fill(Colors.BLUE)
      *         }
@@ -209,9 +276,9 @@ class QRCode @JvmOverloads constructor(
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
      * @param qrCodeCanvas The [QRCodeCanvas] where the QRCode will be painted into. Defaults to a platform appropriate implementation, if available.
-     * @param renderer Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     * @param renderer [BiConsumer] that draws a single QRCode square. It receives as parameters the [QRCodeSquare] being draw and a [QRCodeCanvas] for it to draw the square.
      *
-     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
      * @see QRCodeSquare
      * @see QRCodeCanvas
@@ -219,14 +286,25 @@ class QRCode @JvmOverloads constructor(
      * @see Colors
      * @see newCanvas
      */
-    @JvmOverloads
     fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
+        margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
         qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
         renderer: BiConsumer<QRCodeSquare, QRCodeCanvas<*>>, // To keep Java Interop w/o any extra dependencies
     ): QRCodeCanvas<*> {
+        if (margin > 0) {
+            val marginSquare = QRCodeSquare(
+                dark = false,
+                row = 0,
+                col = 0,
+                moduleSize = rawData.size,
+                type = QRCodeSquareType.MARGIN
+            )
+
+            renderer.accept(marginSquare, qrCodeCanvas)
+        }
+
         rawData.forEachIndexed { row, rowData ->
             rowData.forEachIndexed { col, cell ->
                 if (cell != null) {

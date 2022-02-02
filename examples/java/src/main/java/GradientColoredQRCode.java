@@ -1,10 +1,17 @@
 import io.github.g0dkar.qrcode.QRCode;
+import io.github.g0dkar.qrcode.internals.QRCodeSquare;
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 
+/**
+ * This code creates a QRCode where it is colored as a Gradient from top to bottom.
+ * <p>
+ * It uses the {@code java.awt} package classes on purpose to show how they can interop with the library :)
+ *
+ * @author Rafael Lins - g0dkar
+ */
 public class GradientColoredQRCode {
 
     private final boolean topToBottom;
@@ -30,24 +37,37 @@ public class GradientColoredQRCode {
         Color startColor,
         Color endColor
     ) throws IOException {
-        BufferedImage imageData = new QRCode(content).renderShaded(pixelData -> {
-            if (!pixelData.isMargin()) {
-                if (pixelData.isDark()) {
-                    double topBottomPct = pct(pixelData.getX(), pixelData.getY(), pixelData.getImage().getWidth(), pixelData.getImage().getHeight());
-                    double bottomTopPct = 1 - topBottomPct;
-                    return new Color(
-                        (int) (startColor.getRed() * topBottomPct + endColor.getRed() * bottomTopPct),
-                        (int) (startColor.getGreen() * topBottomPct + endColor.getGreen() * bottomTopPct),
-                        (int) (startColor.getBlue() * topBottomPct + endColor.getBlue() * bottomTopPct)
-                    );
-                } else {
-                    return Color.white;
-                }
-            } else {
-                return Color.white;
-            }
-        });
-        ImageIO.write(imageData, "PNG", new File("java-gradient.png"));
+        FileOutputStream fileOut = new FileOutputStream("java-gradient.png");
+        QRCode qrCode = new QRCode(content);
+        QRCodeSquare[][] rawData = qrCode.encode();
+        int qrCodeSize = qrCode.computeImageSize(QRCode.DEFAULT_CELL_SIZE, QRCode.DEFAULT_MARGIN, rawData);
+
+        new QRCode(content).renderShaded((cellData, canvas) -> {
+                               if (cellData.getType() != QRCodeSquareType.MARGIN) {
+                                   if (cellData.getDark()) {
+                                       int x = cellData.absoluteX();
+                                       int y = cellData.absoluteY();
+
+                                       for (int currY = 0; currY < canvas.getHeight(); currY++) {
+                                           double topBottomPct = pct(x, y + currY, qrCodeSize, qrCodeSize);
+                                           double bottomTopPct = 1 - topBottomPct;
+
+                                           Color lineColor = new Color(
+                                               (int) (startColor.getRed() * bottomTopPct + endColor.getRed() * topBottomPct),
+                                               (int) (startColor.getGreen() * bottomTopPct + endColor.getGreen() * topBottomPct),
+                                               (int) (startColor.getBlue() * bottomTopPct + endColor.getBlue() * topBottomPct)
+                                           );
+
+                                           canvas.drawLine(0, currY, canvas.getWidth(), currY, lineColor.getRGB());
+                                       }
+                                   } else {
+                                       canvas.fill(Color.white.getRGB());
+                                   }
+                               } else {
+                                   canvas.fill(Color.white.getRGB());
+                               }
+                           })
+                           .writeImage(fileOut);
     }
 
     public static void main(String[] args) throws Exception {
