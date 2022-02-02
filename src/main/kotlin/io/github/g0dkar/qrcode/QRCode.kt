@@ -19,7 +19,6 @@ import io.github.g0dkar.qrcode.render.BufferedImageCanvas
 import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.QRCodeCanvas
 import io.github.g0dkar.qrcode.render.QRCodeCanvasFactory.newCanvas
-import java.awt.image.BufferedImage
 import java.util.function.BiConsumer
 import javax.imageio.ImageIO
 
@@ -208,8 +207,7 @@ class QRCode @JvmOverloads constructor(
             } else {
                 if (cellData.type != QRCodeSquareType.MARGIN) {
                     canvas.fill(brightColor)
-                }
-                else {
+                } else {
                     canvas.fill(marginColor)
                 }
             }

@@ -119,8 +119,7 @@ internal class ColorsTest {
             .let {
                 if (alpha != null) {
                     Color(it.red, it.green, it.blue, alpha)
-                }
-                else {
+                } else {
                     it
                 }
             }
