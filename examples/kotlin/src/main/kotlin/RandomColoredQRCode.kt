@@ -1,51 +1,34 @@
 import io.github.g0dkar.qrcode.QRCode
-import java.awt.Color
-import java.awt.Point
-import java.io.File
-import java.util.*
-import javax.imageio.ImageIO
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType
+import io.github.g0dkar.qrcode.render.Colors
+import java.io.FileOutputStream
 
 class RandomColoredQRCode {
     fun createQRCode(
         content: String,
-        colors: List<Color>,
-        backgroundColor: Color
+        colors: Collection<Int>,
+        backgroundColor: Int
     ) {
-        val colorMap = mutableMapOf<Point, Color>()
-        val imageData = QRCode(content).renderShaded { pixelData ->
-            if (pixelData.isMargin) {
-                if (pixelData.isDark) {
-                    colorMap.computeIfAbsent(
-                        Point(
-                            pixelData.row,
-                            pixelData.col
-                        )
-                    ) { colors[Random().nextInt(colors.size)] }
-                } else {
-                    backgroundColor
+        val fileOut = FileOutputStream("kotlin-random-colored.png")
+        val typeColorMap = mutableMapOf<QRCodeSquareType, Int>()
+
+        val qrCodeCanvas = QRCode(content).renderShaded { cellData, cellCanvas ->
+            if (cellData.dark) {
+                if (cellData.type != QRCodeSquareType.DEFAULT) {
+                    typeColorMap.putIfAbsent(cellData.type, colors.random())
                 }
+
+                cellCanvas.fill(typeColorMap[cellData.type] ?: colors.random())
             } else {
-                backgroundColor
+                cellCanvas.fill(backgroundColor)
             }
         }
-        ImageIO.write(imageData, "PNG", File("kotlin-random-colored.png"))
+
+        qrCodeCanvas.writeImage(fileOut)
     }
 }
 
 fun main() {
-    val colors = listOf(
-        Color.gray,
-        Color.darkGray,
-        Color.red,
-        Color.pink,
-        Color.orange,
-        Color.yellow,
-        Color.green,
-        Color.magenta,
-        Color.cyan,
-        Color.blue,
-    )
-
     RandomColoredQRCode()
-        .createQRCode("Hello, world!", colors, Color.white)
+        .createQRCode("Hello, world!", Colors.allColors().values, Colors.WHITE)
 }

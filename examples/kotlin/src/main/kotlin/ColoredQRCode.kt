@@ -1,37 +1,25 @@
 import io.github.g0dkar.qrcode.QRCode
-import java.awt.Color
-import java.io.File
-import java.util.*
-import javax.imageio.ImageIO
+import io.github.g0dkar.qrcode.render.Colors
+import java.io.FileOutputStream
 
 class ColoredQRCode {
     fun createQRCode(
         content: String,
-        squareColor: Color,
-        backgroundColor: Color,
+        squareColor: Int,
+        backgroundColor: Int,
         filename: String = "kotlin-colored.png"
     ) {
-        val imageData = QRCode(content).render(darkColor = squareColor, brightColor = backgroundColor)
-        ImageIO.write(imageData, "PNG", File(filename))
+        val fileOut = FileOutputStream(filename)
+        val qrCodeCanvas = QRCode(content).render(darkColor = squareColor, brightColor = backgroundColor)
+
+        qrCodeCanvas.writeImage(fileOut)
     }
 }
 
 fun main() {
-    val colors = listOf(
-        Color.gray,
-        Color.darkGray,
-        Color.red,
-        Color.pink,
-        Color.orange,
-        Color.yellow,
-        Color.green,
-        Color.magenta,
-        Color.cyan,
-        Color.blue,
-    )
-
-    val randomColor = colors[Random().nextInt(colors.size)]
+    val colors = Colors.allColors()
+    val randomColor = colors[colors.keys.random()]!!
 
     ColoredQRCode()
-        .createQRCode("Hello, world!", randomColor, Color.white)
+        .createQRCode("Hello, world!", randomColor, Colors.WHITE)
 }

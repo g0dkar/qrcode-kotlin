@@ -1,8 +1,8 @@
-import java.awt.Color
+import io.github.g0dkar.qrcode.render.Colors
 
 fun main() {
-    val darkColor = Color(13, 17, 23)
-    val lightColor = Color(139, 148, 158)
+    val darkColor = Colors.css("#0D1117")
+    val lightColor = Colors.css("#8B949E")
 
     // Dark Mode 01: Dark foreground with Bright background
     ColoredQRCode()

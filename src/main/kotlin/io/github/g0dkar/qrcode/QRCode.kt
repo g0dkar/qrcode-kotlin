@@ -8,14 +8,19 @@ import io.github.g0dkar.qrcode.internals.BitBuffer
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
 import io.github.g0dkar.qrcode.internals.QRAlphaNum
+import io.github.g0dkar.qrcode.internals.QRCodeSquare
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType
 import io.github.g0dkar.qrcode.internals.QRData
 import io.github.g0dkar.qrcode.internals.QRKanji
 import io.github.g0dkar.qrcode.internals.QRNumber
 import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
-import java.awt.Color
+import io.github.g0dkar.qrcode.render.BufferedImageCanvas
+import io.github.g0dkar.qrcode.render.Colors
+import io.github.g0dkar.qrcode.render.QRCodeCanvas
+import io.github.g0dkar.qrcode.render.QRCodeCanvasFactory.newCanvas
 import java.awt.image.BufferedImage
-import java.util.function.Function
+import java.util.function.BiConsumer
 import javax.imageio.ImageIO
 
 /**
@@ -52,8 +57,8 @@ import javax.imageio.ImageIO
  * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M].
  * @param dataType One of the available [QRCodeDataType]. By default, the code tries to guess which one is the best fitting one from your input data.
  *
- * @author Rafael Lins
- * @author Kazuhiko Arase
+ * @author Rafael Lins - g0dkar
+ * @author Kazuhiko Arase - kazuhikoarase
  *
  * @see ErrorCorrectionLevel
  */
@@ -70,6 +75,8 @@ class QRCode @JvmOverloads constructor(
     }
 
     companion object {
+        const val DEFAULT_CELL_SIZE = 25
+        const val DEFAULT_MARGIN = 0
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
 
@@ -102,6 +109,65 @@ class QRCode @JvmOverloads constructor(
     }
 
     /**
+     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
+     *
+     * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
+     * image will be 100x100 pixels.
+     */
+    fun computeImageSize(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = 0,
+        rawData: Array<Array<QRCodeSquare?>> = encode(),
+    ): Int = computeImageSize(cellSize, margin, rawData.size)
+
+    /**
+     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
+     *
+     * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
+     * image will be 100x100 pixels.
+     */
+    fun computeImageSize(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        size: Int,
+    ): Int = size * cellSize + margin * 2
+
+    /**
+     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
+     * Java :)
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
+     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
+     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     *
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see renderShaded
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
+     */
+    @JvmOverloads
+    fun render(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        brightColor: Int = Colors.WHITE,
+        darkColor: Int = Colors.BLACK,
+        marginColor: Int = Colors.WHITE
+    ) =
+        render(
+            cellSize = cellSize,
+            margin = margin,
+            rawData = encode(),
+            brightColor = brightColor,
+            darkColor = darkColor,
+            marginColor = marginColor
+        )
+
+    /**
      * Renders a QR Code image based on its [computed data][encode].
      *
      * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
@@ -109,59 +175,98 @@ class QRCode @JvmOverloads constructor(
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param brightColor [Color] to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
-     * @param darkColor [Color] to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Color.BLACK].
-     * @param marginColor [Color] to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Color.WHITE].
+     * @param qrCodeCanvas The [QRCodeCanvas] where the QRCode will be painted into. Defaults to a platform appropriate implementation, if available.
+     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
+     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
+     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      *
-     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
-     * @see [renderShaded]
+     * @see renderShaded
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
      */
-    @JvmOverloads
     fun render(
-        cellSize: Int = 25,
-        margin: Int = 0,
-        rawData: Array<Array<Boolean?>> = encode(),
-        brightColor: Color = Color.WHITE,
-        darkColor: Color = Color.BLACK,
-        marginColor: Color = Color.WHITE,
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        rawData: Array<Array<QRCodeSquare?>> = encode(),
+        qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
+        brightColor: Int = Colors.WHITE,
+        darkColor: Int = Colors.BLACK,
+        marginColor: Int = Colors.WHITE,
     ) =
         renderShaded(
             cellSize,
             margin,
             rawData,
-        ) { pixelData ->
-            if (pixelData.isDark) {
-                darkColor
-            } else if (pixelData.isMargin) {
-                marginColor
+            qrCodeCanvas,
+        ) { cellData, canvas ->
+            if (cellData.dark) {
+                canvas.fill(darkColor)
             } else {
-                brightColor
+                if (cellData.type != QRCodeSquareType.MARGIN) {
+                    canvas.fill(brightColor)
+                }
+                else {
+                    canvas.fill(marginColor)
+                }
             }
         }
 
     /**
+     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
+     * Java :)
+     *
+     * Please, see [renderShaded].
+     *
+     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
+     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
+     * @param renderer Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     *
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
+     * @see newCanvas
+     */
+    @JvmOverloads
+    fun renderShaded(
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        renderer: BiConsumer<QRCodeSquare, QRCodeCanvas<*>>, // To keep Java Interop w/o any extra dependencies
+    ) =
+        renderShaded(
+            cellSize = cellSize,
+            margin = margin,
+            rawData = encode(),
+            renderer = renderer
+        )
+
+    /**
      * Renders a QR Code image based on its [computed data][encode].
      *
-     * This function provides a way to implement more artistic QRCodes. The [shader] is a mapping function that maps a
-     * pixel to a color. It receives 4 parameters: `image`, `x`, `y` and a nullable [Triple] with a [Boolean] and 2
-     * [Int]s.
+     * This function provides a way to implement more artistic QRCodes. The [renderer] is a function that draws a single
+     * square of the QRCode. It receives 2 parameters: [cellData][QRCodeSquare] and a [QRCodeCanvas] for it to freely
+     * draw. After finished, the canvas will be placed into the final image in its respective place.
      *
-     * The [Triple] holds information about the current cell being painted: the [Boolean] is whether it is a bright or
-     * dark cell and the [Int]s are its `row` and `column` coordinates. **If the [Triple] is null this means this pixel
-     * belongs to the margin.**
-     *
-     * To show this, here's a shader that makes a QR Code that is half [blue][Color.BLUE] and half [red][Color.RED]:
+     * To show this, here's a renderer that makes a QR Code that is half [blue][Colors.BLUE] and half [red][Colors.RED]:
      *
      * ```kotlin
-     * QRCode("example").renderShaded { pixelData ->
-     *     if (!pixelData.isMargin) {
-     *         if (pixelData.isDark) {
-     *             if (pixelData.y >= pixelData.image.height / 2) { Color.RED } // Lower half is red
-     *             else { Color.blue } // Upper half is blue
+     * QRCode("example").renderShaded { cellData, canvas ->
+     *     if (cellData.type != QRCodeSquareType.MARGIN && cellData.dark) {
+     *         if (cellData.row > cellData.size / 2) {
+     *             canvas.fill(Colors.BLUE)
      *         }
-     *         else { Color.white } // Background is white
-     *     } else { Color.white } // Margin is white
+     *         else {
+     *             canvas.fill(Colors.RED)
+     *         }
+     *     } else {
+     *         canvas.fill(Colors.WHITE)
+     *     }
      * }
      * ```
      *
@@ -170,51 +275,47 @@ class QRCode @JvmOverloads constructor(
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param shader Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
+     * @param qrCodeCanvas The [QRCodeCanvas] where the QRCode will be painted into. Defaults to a platform appropriate implementation, if available.
+     * @param renderer [BiConsumer] that draws a single QRCode square. It receives as parameters the [QRCodeSquare] being draw and a [QRCodeCanvas] for it to draw the square.
      *
-     * @return A [BufferedImage] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     * @return A [QRCodeCanvas] with the QR Code rendered on it. It can then be saved or manipulated as desired.
+     *
+     * @see QRCodeSquare
+     * @see QRCodeCanvas
+     * @see BufferedImageCanvas
+     * @see Colors
+     * @see newCanvas
      */
-    @JvmOverloads
     fun renderShaded(
-        cellSize: Int = 25,
-        margin: Int = 0,
-        rawData: Array<Array<Boolean?>> = encode(),
-        shader: Function<QRCodePixelData, Color> // To keep Java Interop w/o any extra dependencies
-    ): BufferedImage {
-        val moduleCount = rawData[0].size
-        val imageSize: Int = moduleCount * cellSize + margin * 2
-        val image = BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB)
-        val currentPixelData = QRCodePixelData(image, 0, 0, 0, 0, false, false)
+        cellSize: Int = DEFAULT_CELL_SIZE,
+        margin: Int = DEFAULT_MARGIN,
+        rawData: Array<Array<QRCodeSquare?>> = encode(),
+        qrCodeCanvas: QRCodeCanvas<*> = newCanvas(computeImageSize(cellSize, margin, rawData)),
+        renderer: BiConsumer<QRCodeSquare, QRCodeCanvas<*>>, // To keep Java Interop w/o any extra dependencies
+    ): QRCodeCanvas<*> {
+        if (margin > 0) {
+            val marginSquare = QRCodeSquare(
+                dark = false,
+                row = 0,
+                col = 0,
+                moduleSize = rawData.size,
+                type = QRCodeSquareType.MARGIN
+            )
 
-        for (y in 0 until imageSize) {
-            for (x in 0 until imageSize) {
-                currentPixelData.x = x
-                currentPixelData.y = y
+            renderer.accept(marginSquare, qrCodeCanvas)
+        }
 
-                val pixelColor = if (margin <= x && x < imageSize - margin && margin <= y && y < imageSize - margin) {
-                    val col = (x - margin) / cellSize
-                    val row = (y - margin) / cellSize
-
-                    currentPixelData.row = row
-                    currentPixelData.col = col
-                    currentPixelData.isDark = isDark(row, col, rawData)
-                    currentPixelData.isMargin = false
-
-                    shader.apply(currentPixelData)
-                } else {
-                    currentPixelData.row = -1
-                    currentPixelData.col = -1
-                    currentPixelData.isDark = false
-                    currentPixelData.isMargin = true
-
-                    shader.apply(currentPixelData)
+        rawData.forEachIndexed { row, rowData ->
+            rowData.forEachIndexed { col, cell ->
+                if (cell != null) {
+                    val squareCanvas = newCanvas(cellSize, cellSize)
+                    renderer.accept(cell, squareCanvas)
+                    qrCodeCanvas.drawImage(squareCanvas, margin + cellSize * col, margin + cellSize * row)
                 }
-
-                image.setRGB(x, y, pixelColor.rgb)
             }
         }
 
-        return image
+        return qrCodeCanvas
     }
 
     /**
@@ -238,9 +339,9 @@ class QRCode @JvmOverloads constructor(
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
-    ): Array<Array<Boolean?>> {
+    ): Array<Array<QRCodeSquare?>> {
         val moduleCount = type * 4 + 17
-        val modules: Array<Array<Boolean?>> = Array(moduleCount) { Array(moduleCount) { null } }
+        val modules: Array<Array<QRCodeSquare?>> = Array(moduleCount) { Array(moduleCount) { null } }
 
         setupPositionProbePattern(0, 0, moduleCount, modules)
         setupPositionProbePattern(moduleCount - 7, 0, moduleCount, modules)
@@ -255,103 +356,133 @@ class QRCode @JvmOverloads constructor(
         }
 
         val data = createData(type)
-        val data2 = data.copyOf()
-        val modules2 = modules.copyOf()
 
         applyMaskPattern(data, maskPattern, moduleCount, modules)
-        mapData(data2, maskPattern, modules2)
 
         return modules
     }
 
-    private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<Boolean?>>) {
+    private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
         for (r in -1..7) {
             for (c in -1..7) {
                 if (row + r <= -1 || moduleCount <= row + r || col + c <= -1 || moduleCount <= col + c) {
                     continue
                 }
 
-                modules[row + r][col + c] =
-                    (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4)
+                modules[row + r][col + c] = QRCodeSquare(
+                    dark = (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4),
+                    row = row + r,
+                    col = col + c,
+                    type = QRCodeSquareType.POSITION_PROBE,
+                    moduleSize = modules.size
+                )
             }
         }
     }
 
-    private fun setupPositionAdjustPattern(type: Int, modules: Array<Array<Boolean?>>) {
+    private fun setupPositionAdjustPattern(type: Int, modules: Array<Array<QRCodeSquare?>>) {
         val pos = QRUtil.getPatternPosition(type)
+
         for (i in pos.indices) {
             for (j in pos.indices) {
                 val row = pos[i]
                 val col = pos[j]
+
                 if (modules[row][col] != null) {
                     continue
                 }
+
                 for (r in -2..2) {
                     for (c in -2..2) {
-                        modules[row + r][col + c] = r == -2 || r == 2 || c == -2 || c == 2 || r == 0 && c == 0
+                        modules[row + r][col + c] = QRCodeSquare(
+                            dark = r == -2 || r == 2 || c == -2 || c == 2 || r == 0 && c == 0,
+                            row = row + r,
+                            col = col + c,
+                            type = QRCodeSquareType.POSITION_ADJUST,
+                            moduleSize = modules.size
+                        )
                     }
                 }
             }
         }
     }
 
-    private fun setupTimingPattern(moduleCount: Int, modules: Array<Array<Boolean?>>) {
+    private fun setupTimingPattern(moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
         for (r in 8 until moduleCount - 8) {
             if (modules[r][6] != null) {
                 continue
             }
-            modules[r][6] = r % 2 == 0
+
+            modules[r][6] = QRCodeSquare(
+                dark = r % 2 == 0,
+                row = r,
+                col = 6,
+                type = QRCodeSquareType.TIMING_PATTERN,
+                moduleSize = modules.size
+            )
         }
+
         for (c in 8 until moduleCount - 8) {
             if (modules[6][c] != null) {
                 continue
             }
-            modules[6][c] = c % 2 == 0
+
+            modules[6][c] = QRCodeSquare(
+                dark = c % 2 == 0,
+                row = 6,
+                col = c,
+                type = QRCodeSquareType.TIMING_PATTERN,
+                moduleSize = modules.size
+            )
         }
     }
 
     private fun setupTypeInfo(
         maskPattern: MaskPattern,
         moduleCount: Int,
-        modules: Array<Array<Boolean?>>
+        modules: Array<Array<QRCodeSquare?>>
     ) {
         val data = errorCorrectionLevel.value shl 3 or maskPattern.ordinal
         val bits = QRUtil.getBCHTypeInfo(data)
 
         for (i in 0..14) {
             val mod = bits shr i and 1 == 1
+
             if (i < 6) {
-                modules[i][8] = mod
+                set(i, 8, mod, modules)
             } else if (i < 8) {
-                modules[i + 1][8] = mod
+                set(i + 1, 8, mod, modules)
             } else {
-                modules[moduleCount - 15 + i][8] = mod
+                set(moduleCount - 15 + i, 8, mod, modules)
             }
         }
 
         for (i in 0..14) {
             val mod = bits shr i and 1 == 1
+
             if (i < 8) {
-                modules[8][moduleCount - i - 1] = mod
+                set(8, moduleCount - i - 1, mod, modules)
             } else if (i < 9) {
-                modules[8][15 - i - 1 + 1] = mod
+                set(8, 15 - i, mod, modules)
             } else {
-                modules[8][15 - i - 1] = mod
+                set(8, 15 - i - 1, mod, modules)
             }
         }
 
-        modules[moduleCount - 8][8] = true
+        set(moduleCount - 8, 8, true, modules)
     }
 
-    private fun setupTypeNumber(type: Int, moduleCount: Int, modules: Array<Array<Boolean?>>) {
+    private fun setupTypeNumber(type: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
         val bits = QRUtil.getBCHTypeNumber(type)
+
         for (i in 0..17) {
             val mod = bits shr i and 1 == 1
-            modules[i / 3][(i % 3 + moduleCount) - 8 - 3] = mod
+            set(i / 3, (i % 3 + moduleCount) - 10, mod, modules)
         }
+
         for (i in 0..17) {
             val mod = bits shr i and 1 == 1
-            modules[(i % 3 + moduleCount) - 8 - 3][i / 3] = mod
+            set((i % 3 + moduleCount) - 10, i / 3, mod, modules)
         }
     }
 
@@ -398,7 +529,7 @@ class QRCode @JvmOverloads constructor(
         data: IntArray,
         maskPattern: MaskPattern,
         moduleCount: Int,
-        modules: Array<Array<Boolean?>>
+        modules: Array<Array<QRCodeSquare?>>
     ) {
         var inc = -1
         var bitIndex = 7
@@ -415,6 +546,7 @@ class QRCode @JvmOverloads constructor(
                 for (c in 0..1) {
                     if (modules[row][col - c] == null) {
                         var dark = false
+
                         if (byteIndex < data.size) {
                             dark = (data[byteIndex] ushr bitIndex) and 1 == 1
                         }
@@ -424,7 +556,8 @@ class QRCode @JvmOverloads constructor(
                             dark = !dark
                         }
 
-                        modules[row][col - c] = dark
+                        set(row, col - c, dark, modules)
+
                         bitIndex--
                         if (bitIndex == -1) {
                             byteIndex++
@@ -434,61 +567,6 @@ class QRCode @JvmOverloads constructor(
                 }
 
                 row += inc
-                if (row < 0 || moduleCount <= row) {
-                    row -= inc
-                    inc = -inc
-                    break
-                }
-            }
-
-            col -= 2
-        }
-    }
-
-    private fun mapData(
-        data: IntArray,
-        maskPattern: MaskPattern,
-        modules: Array<Array<Boolean?>>,
-        moduleCount: Int = modules.size,
-    ) {
-        var inc = -1
-        var row = modules[0].size - 1
-        var bitIndex = 7
-        var byteIndex = 0
-
-        var col = modules[0].size - 1
-
-        while (col > 0) {
-            if (col == 6) {
-                col--
-            }
-
-            while (true) {
-                for (c in 0..1) {
-                    if (modules[row][col - c] == null) {
-                        modules[row][col - c] = if (byteIndex < data.size) {
-                            (data[byteIndex] ushr bitIndex) and 1 == 1
-                        } else {
-                            false
-                        }.let {
-                            if (QRUtil.getMask(maskPattern, row, col - c)) {
-                                !it
-                            } else {
-                                it
-                            }
-                        }
-
-                        bitIndex--
-
-                        if (bitIndex == -1) {
-                            byteIndex++
-                            bitIndex = 7
-                        }
-                    }
-                }
-
-                row += inc
-
                 if (row < 0 || moduleCount <= row) {
                     row -= inc
                     inc = -inc
@@ -554,6 +632,18 @@ class QRCode @JvmOverloads constructor(
         return data
     }
 
-    private fun isDark(row: Int, col: Int, modules: Array<Array<Boolean?>>): Boolean =
-        modules[row][col] ?: false
+    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>) {
+        val qrCodeSquare = modules[row][col]
+
+        if (qrCodeSquare != null) {
+            qrCodeSquare.dark = value
+        } else {
+            modules[row][col] = QRCodeSquare(
+                dark = value,
+                row = row,
+                col = col,
+                moduleSize = modules.size
+            )
+        }
+    }
 }

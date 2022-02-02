@@ -1,5 +1,11 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    }
+}
+
 plugins {
     id("idea")
     signing
@@ -13,7 +19,7 @@ plugins {
 }
 
 group = "io.github.g0dkar"
-version = "1.2.1"
+version = "2.0.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -25,10 +31,6 @@ idea {
         isDownloadJavadoc = false
         isDownloadSources = true
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -76,11 +78,13 @@ ktlint {
     }
 }
 
+
+
 /* **************** */
 /* Publishing       */
 /* **************** */
-val ossrhUsername: String? = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
-val ossrhPassword: String? = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
+val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
 
 val dokkaHtml by tasks.getting(DokkaTask::class)
 val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
@@ -120,7 +124,7 @@ publishing {
                 licenses {
                     license {
                         name.set("MIT")
-                        url.set("https://github.com/g0dkar/qrcode-kotlin/blob/main/LICENSE")
+                        url.set("$projectGitUrl/blob/main/LICENSE")
                     }
                 }
                 developers {
@@ -164,6 +168,8 @@ signing {
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
+
+
 
 /* *************************** */
 /* SonarQube Quality Reporting */

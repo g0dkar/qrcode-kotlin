@@ -8,8 +8,11 @@ import java.awt.Point
 import java.awt.image.BufferedImage
 import java.io.File
 import java.nio.file.Paths
-import java.util.UUID
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.imageio.ImageIO
+
+private var testNum = 1
 
 /**
  * Check if two [BufferedImage] have the same width and height.
@@ -31,16 +34,31 @@ infix fun BufferedImage.shouldHaveSameDimensionsAs(otherImage: BufferedImage) =
 fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage> {
     private fun printRGBA(rgb: Int): String = Color(rgb).let { "rgba(${it.red}, ${it.green}, ${it.blue}, ${it.alpha})" }
 
-    private fun saveImages(image1: BufferedImage, image2: BufferedImage): Pair<File, File> {
-        val files = Pair(
-            Paths.get(System.getProperty("user.home"), "image1_${UUID.randomUUID()}.png").toFile(),
-            Paths.get(System.getProperty("user.home"), "image2_${UUID.randomUUID()}.png").toFile(),
-        )
+    private fun saveImages(image1: BufferedImage, image2: BufferedImage): File {
+        try {
+            val gap = 25
+            val now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))
+            val file = Paths.get(System.getProperty("user.home"), "imageCompare-${testNum++}-$now.png").toFile()
+            val compareImage = BufferedImage(
+                image1.width + image2.width + gap,
+                image1.height.coerceAtLeast(image2.height),
+                image1.type
+            )
+            val graphics = compareImage.createGraphics()
 
-        ImageIO.write(image1, "PNG", files.first)
-        ImageIO.write(image2, "PNG", files.second)
+            graphics.color = Color.YELLOW
+            graphics.background = Color.YELLOW
+            graphics.fillRect(image1.width, 0, gap, compareImage.height)
+            graphics.drawImage(image1, 0, 0, null)
+            graphics.drawImage(image2, image1.width + gap, 0, null)
+            graphics.dispose()
 
-        return files
+            ImageIO.write(compareImage, "PNG", file)
+
+            return file
+        } catch (e: Exception) {
+            return File("ERROR_WHILE_SAVING_DIFF_IMAGE")
+        }
     }
 
     private fun comparePixels(image1: BufferedImage, image2: BufferedImage): Triple<Boolean, Point?, Pair<Int, Int>?> {
@@ -61,15 +79,15 @@ fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage
                 MatcherResult(
                     result,
                     {
-                        val (file1, file2) = saveImages(value, otherImage)
+                        val file = saveImages(value, otherImage)
                         "Pixel at (${differentPixel!!.x}, ${differentPixel.y}) is different." +
                             " Expected: ${printRGBA(colorPair!!.first)}, Got: ${printRGBA(colorPair.second)}!" +
-                            " Saved images at: $file1 | $file2"
+                            " Saved images at: $file"
                     },
                     {
-                        val (file1, file2) = saveImages(value, otherImage)
+                        val file = saveImages(value, otherImage)
                         "Images should not be pixel-equal but all pixels are the same RGB color!" +
-                            " Saved images at: $file1 | $file2"
+                            " Saved images at: $file"
                     }
                 )
             }

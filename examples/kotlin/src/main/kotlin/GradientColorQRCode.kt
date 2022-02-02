@@ -1,7 +1,6 @@
 import io.github.g0dkar.qrcode.QRCode
-import java.awt.Color
-import java.io.File
-import javax.imageio.ImageIO
+import io.github.g0dkar.qrcode.render.Colors
+import java.io.FileOutputStream
 
 class GradientColorQRCode(
     private val topToBottom: Boolean = false
@@ -15,34 +14,47 @@ class GradientColorQRCode(
 
     fun createQRCode(
         content: String,
-        startColor: Color,
-        endColor: Color,
+        startColor: Int,
+        endColor: Int,
     ) {
-        val imageData = QRCode(content).renderShaded { pixelData ->
-            if (!pixelData.isMargin) {
-                if (pixelData.isDark) {
-                    val topBottomPct = pct(pixelData.x, pixelData.y, pixelData.image.width, pixelData.image.height)
+        val fileOut = FileOutputStream("kotlin-gradient.png")
+
+        val qrCode = QRCode(content)
+        val qrCodeData = qrCode.encode()
+        val qrCodeSize = qrCode.computeImageSize(rawData = qrCodeData)
+
+        val (startR, startG, startB) = Colors.getRGBA(startColor)
+        val (endR, endG, endB) = Colors.getRGBA(endColor)
+
+        val qrCodeCanvas = qrCode.renderShaded(rawData = qrCodeData) { cellData, cellCanvas ->
+            if (cellData.dark) {
+                val x = cellData.absoluteX()
+                val y = cellData.absoluteY()
+
+                for (currY in 0 until cellCanvas.height) {
+                    val topBottomPct = pct(x, y + currY, qrCodeSize, qrCodeSize)
                     val bottomTopPct = 1 - topBottomPct
-                    Color(
-                        (startColor.red * topBottomPct + endColor.red * bottomTopPct).toInt(),
-                        (startColor.green * topBottomPct + endColor.green * bottomTopPct).toInt(),
-                        (startColor.blue * topBottomPct + endColor.blue * bottomTopPct).toInt()
+
+                    val currColor = Colors.rgba(
+                        (startR * bottomTopPct + endR * topBottomPct).toInt(),
+                        (startG * bottomTopPct + endG * topBottomPct).toInt(),
+                        (startB * bottomTopPct + endB * topBottomPct).toInt()
                     )
-                } else {
-                    Color.white
+
+                    cellCanvas.drawLine(0, currY, cellCanvas.width, currY, currColor)
                 }
             } else {
-                Color.white
+                cellCanvas.fill(Colors.WHITE)
             }
         }
 
-        ImageIO.write(imageData, "PNG", File("kotlin-gradient.png"))
+        qrCodeCanvas.writeImage(fileOut)
     }
 }
 
 fun main() {
-    val startColor = Color(0, 135, 220) // Light Blue
-    val endColor = Color(0, 55, 120) // Dark Blue
+    val startColor = Colors.rgba(0, 135, 220) // Light Blue
+    val endColor = Colors.rgba(0, 55, 120) // Dark Blue
 
     GradientColorQRCode()
         .createQRCode("Hello, world!", startColor, endColor)

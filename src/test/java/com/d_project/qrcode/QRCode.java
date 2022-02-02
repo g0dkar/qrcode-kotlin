@@ -1,5 +1,7 @@
 package com.d_project.qrcode;
 
+import io.github.g0dkar.qrcode.render.Colors;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -568,7 +570,7 @@ public class QRCode {
      * @param cellSize セルのサイズ(pixel)
      * @param margin   余白(pixel)
      */
-    public BufferedImage createImage(int cellSize, int margin) throws IOException {
+    public BufferedImage createImage(int cellSize, int margin, int bright, int dark) throws IOException {
 
         int imageSize = getModuleCount() * cellSize + margin * 2;
 
@@ -585,13 +587,13 @@ public class QRCode {
                     int row = (y - margin) / cellSize;
 
                     if (isDark(row, col)) {
-                        image.setRGB(x, y, 0x000000);
+                        image.setRGB(x, y, dark);
                     } else {
-                        image.setRGB(x, y, 0xffffff);
+                        image.setRGB(x, y, bright);
                     }
 
                 } else {
-                    image.setRGB(x, y, 0xffffff);
+                    image.setRGB(x, y, bright);
                 }
             }
         }

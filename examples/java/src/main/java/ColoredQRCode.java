@@ -2,13 +2,11 @@ import static java.util.Optional.ofNullable;
 
 import io.github.g0dkar.qrcode.QRCode;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 public class ColoredQRCode {
 
@@ -21,9 +19,16 @@ public class ColoredQRCode {
         String filename
     ) throws IOException {
         String destination = ofNullable(filename).orElse(DEFAULT_FILENAME);
+        FileOutputStream fileOut = new FileOutputStream(destination);
         QRCode qrCode = new QRCode(content);
-        BufferedImage imageData = qrCode.render(25, 0, qrCode.encode(), backgroundColor, squareColor);
-        ImageIO.write(imageData, "PNG", new File(destination));
+
+        qrCode.render(
+                  QRCode.DEFAULT_CELL_SIZE,
+                  QRCode.DEFAULT_MARGIN,
+                  backgroundColor.getRGB(),
+                  squareColor.getRGB()
+              )
+              .writeImage(fileOut);
     }
 
     public static void main(String[] args) throws Exception {
