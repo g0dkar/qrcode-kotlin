@@ -19,8 +19,8 @@ import io.github.g0dkar.qrcode.render.BufferedImageCanvas
 import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.QRCodeCanvas
 import io.github.g0dkar.qrcode.render.QRCodeCanvasFactory.newCanvas
+import java.io.OutputStream
 import java.util.function.BiConsumer
-import javax.imageio.ImageIO
 
 /**
  * A Class/Library that helps encode data as QR Code images without any external dependencies.
@@ -32,23 +32,23 @@ import javax.imageio.ImageIO
  * ```kotlin
  * val dataToEncode = "Hello QRCode!"
  * val eachQRCodeSquareSize = 10 // In Pixels!
- * val imageData = QRCode(dataToEncode).render(eachQRCodeSquareSize)
+ * val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
  * ```
  *
- * You can now encode `imageData` however you want using Java's [ImageIO] API!
+ * You can now use `qrCodeRenderer` to render your QRCode into any [OutputStream] (as a PNG by default)
  *
- * For example, to save it as a PNG file:
+ * For example, to simply save it on the disk:
  *
  * ```kotlin
  * val qrCodeFile = File("qrcode.png")
- * ImageIO.write(imageData, "PNG", qrCodeFile)
+ * qrCodeRenderer.writeImage(qrCodeFile.outputStream())
  * ```
  *
  * Or maybe have it as a byte array, to be sent as a response to a server request:
  *
  * ```kotlin
  * val imageBytes = ByteArrayOutputStream()
- *     .also { ImageIO.write(imageData, "PNG", it) }
+ *     .also { qrCodeRenderer.writeImage(it) }
  *     .toByteArray()
  * ```
  *
@@ -60,6 +60,7 @@ import javax.imageio.ImageIO
  * @author Kazuhiko Arase - kazuhikoarase
  *
  * @see ErrorCorrectionLevel
+ * @see QRUtil.getDataType
  */
 class QRCode @JvmOverloads constructor(
     private val data: String,
@@ -475,12 +476,12 @@ class QRCode @JvmOverloads constructor(
 
         for (i in 0..17) {
             val mod = bits shr i and 1 == 1
-            set(i / 3, (i % 3 + moduleCount) - 10, mod, modules)
+            set(i / 3, i % 3 + moduleCount - 8 - 3, mod, modules)
         }
 
         for (i in 0..17) {
             val mod = bits shr i and 1 == 1
-            set((i % 3 + moduleCount) - 10, i / 3, mod, modules)
+            set(i % 3 + moduleCount - 8 - 3, i / 3, mod, modules)
         }
     }
 
@@ -644,4 +645,11 @@ class QRCode @JvmOverloads constructor(
             )
         }
     }
+
+    override fun toString(): String =
+        "QRCode(data=$data" +
+            ", errorCorrectionLevel=$errorCorrectionLevel" +
+            ", dataType=$dataType" +
+            ", qrCodeData=${qrCodeData.javaClass.simpleName}" +
+            ")"
 }

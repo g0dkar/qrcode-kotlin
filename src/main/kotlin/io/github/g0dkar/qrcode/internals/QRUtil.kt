@@ -299,6 +299,11 @@ internal object QRUtil {
             PATTERN111 -> ((i * j) % 3 + (i + j) % 2) % 2 == 0
         }
 
+    /**
+     * Returns a suitable [QRCodeDataType] to the given input String based on a simple matching.
+     *
+     * @see QRCodeDataType
+     */
     fun getDataType(s: String): QRCodeDataType =
         if (isAlphaNum(s)) {
             if (isNumber(s)) {
