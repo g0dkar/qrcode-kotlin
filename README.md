@@ -29,7 +29,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.0/qrcode-kotlin),
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.1/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
@@ -38,7 +38,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
@@ -46,10 +46,10 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:2.0.0")
+implementation("io.github.g0dkar:qrcode-kotlin:2.0.1")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:2.0.0'
+implementation 'io.github.g0dkar:qrcode-kotlin:2.0.1'
 ```
 
 ## Examples and Usage
@@ -133,12 +133,12 @@ new QRCode("https://github.com/g0dkar/qrcode-kotlin")
 
 ### A splash of Color
 
-![new on v2.0.0](https://img.shields.io/badge/new!-v2.0.0-critical)
+![new on v2.0.1](https://img.shields.io/badge/new!-v2.0.1-critical)
 
 Want to have a colorful QRCode? Easy-peasy! The `render()` function also have the `brightColor`, `darkColor` and
 `marginColor` parameters just for that. Their default values are Black-and-White squares with a White margin.
 
-Starting from **v2.0.0** these are simply `Int` values in the RGBA space. These can be created with either the new
+Starting from **v2.0.1** these are simply `Int` values in the RGBA space. These can be created with either the new
 [Colors](src/main/kotlin/io/github/g0dkar/qrcode/render/Colors.kt) helper class or if you are running in the JRE
 with plain, _(very)_ old `java.awt.Color` classes :)
 
@@ -220,7 +220,7 @@ QR Code is trademarked by Denso Wave, inc.
 * [Paul Varry](https://github.com/pvarry): for opening the first few issues on the repo and helping to make the library
   even better for everyone! :grin:
 * [Renan Lukas](https://github.com/RenanLukas): For his friendship, patience and help with Android, Gradle and a bunch
-  of other stuff during the development of v2.0.0!
+  of other stuff during the development of v2.0.1!
 
 ## Support and Links
 
