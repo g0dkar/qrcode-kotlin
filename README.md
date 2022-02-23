@@ -133,12 +133,12 @@ new QRCode("https://github.com/g0dkar/qrcode-kotlin")
 
 ### A splash of Color
 
-![new on v2.0.1](https://img.shields.io/badge/new!-v2.0.1-critical)
+![new on v2.0.0](https://img.shields.io/badge/new!-v2.0.0-critical)
 
 Want to have a colorful QRCode? Easy-peasy! The `render()` function also have the `brightColor`, `darkColor` and
 `marginColor` parameters just for that. Their default values are Black-and-White squares with a White margin.
 
-Starting from **v2.0.1** these are simply `Int` values in the RGBA space. These can be created with either the new
+Starting from **v2.0.0** these are simply `Int` values in the RGBA space. These can be created with either the new
 [Colors](src/main/kotlin/io/github/g0dkar/qrcode/render/Colors.kt) helper class or if you are running in the JRE
 with plain, _(very)_ old `java.awt.Color` classes :)
 
