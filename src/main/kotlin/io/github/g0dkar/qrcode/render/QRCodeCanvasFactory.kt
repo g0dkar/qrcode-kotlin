@@ -2,13 +2,12 @@ package io.github.g0dkar.qrcode.render
 
 import io.github.g0dkar.qrcode.internals.ErrorMessage.error
 import java.lang.ClassLoader.getSystemClassLoader
-import java.util.function.BiFunction
 
 /**
  * Builds platform-correct instances of QRCode. It tries to detect available implementations of
  * image builders and creates a respective [QRCodeCanvas] instance.
  *
- * @author Rafael Lins - g0dkar
+ * @author Rafael Lins - g0dkar - Doomsdayrs
  *
  * @see AVAILABLE_IMPLEMENTATIONS
  */
@@ -17,7 +16,7 @@ object QRCodeCanvasFactory {
      * Holds a map of available implementations of QRCodeCanvas. The keys on this map are the FQCN of a class that
      * must exist in the Classpath in order for this QRCodeCanvas implementation to be available.
      *
-     * The values are [BiFunction]s which receive the `width` and `height` of the canvas and returns an instance.
+     * The values is a lamba which receive the `width` and `height` of the canvas and returns an instance.
      *
      * By default, [BufferedImageCanvas] (which needs `java.awt.image.BufferedImage`) is always added in the following
      * manner:
@@ -27,11 +26,12 @@ object QRCodeCanvasFactory {
      *     BiFunction { width, height -> BufferedImageCanvas(width, height) }
      * ```
      */
-    val AVAILABLE_IMPLEMENTATIONS = LinkedHashMap<String, BiFunction<Int, Int, QRCodeCanvas<*>>>()
-        .apply {
-            this[BufferedImageCanvas.IMAGE_CLASS] =
-                BiFunction { width, height -> BufferedImageCanvas(width, height) }
-        }
+    val AVAILABLE_IMPLEMENTATIONS =
+        LinkedHashMap<String, (width: Int, height: Int) -> QRCodeCanvas<*>>()
+            .apply {
+                this[BufferedImageCanvas.IMAGE_CLASS] =
+                    { width, height -> BufferedImageCanvas(width, height) }
+            }
 
     /**
      * Try to create a platform appropriate [QRCodeCanvas] implementation.
@@ -66,7 +66,7 @@ object QRCodeCanvasFactory {
                     } else {
                         null
                     }
-                }.apply(width, height)
+                }(width, height)
             } catch (e: NoSuchElementException) {
                 throw UnsupportedOperationException(error("No available image classes were found!"))
             }
@@ -74,7 +74,10 @@ object QRCodeCanvasFactory {
             throw UnsupportedOperationException(error("No available image classes were found!"))
         }
 
-    private fun detectClass(className: String, classLoader: ClassLoader = getSystemClassLoader()): Boolean =
+    private fun detectClass(
+        className: String,
+        classLoader: ClassLoader = getSystemClassLoader()
+    ): Boolean =
         try {
             Class.forName(className, false, classLoader)
             true
