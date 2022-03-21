@@ -1,3 +1,5 @@
+@file:JvmName("TestUtils")
+
 package io.github.g0dkar.qrcode
 
 import io.kotest.matchers.Matcher
