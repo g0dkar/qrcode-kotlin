@@ -269,5 +269,6 @@ QR Code é marca registrada de Denso Wave, inc.
 
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Pague um café para mim no Ko-fi!")](https://ko-fi.com/g0dkar)
-[![Mande um Café no PayPal](https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg "Pague um café para mim no PayPal!")](https://www.paypal.com/donate/?business=EFVC68BFJQWSC&no_recurring=0&item_name=Rafael+is+working+on+Open+Source+software+in+his+free+time.+This+helps+him+keep+this+up+for+longer%2C+and+with+higher+quality%21&currency_code=BRL)
+[<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Me pague um café no Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
+
+[<img src="https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg" alt="Me pague um café pelo PayPal!" width="200"/>](https://www.paypal.com/donate/?business=EFVC68BFJQWSC&no_recurring=0&item_name=Rafael+est%C3%A1+trabalhando+em+software+Open+Source+em+seu+tempo+livre.+Isso+o+ajuda+a+continuar+e+com+mais+qualidade%21&currency_code=BRL)
