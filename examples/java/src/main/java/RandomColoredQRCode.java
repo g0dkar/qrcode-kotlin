@@ -38,6 +38,7 @@ public class RandomColoredQRCode {
                                } else {
                                    canvas.fill(backgroundColor.getRGB());
                                }
+                               return null;
                            })
                            .writeImage(fileOut);
     }

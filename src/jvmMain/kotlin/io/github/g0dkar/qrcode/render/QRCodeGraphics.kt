@@ -9,8 +9,8 @@ import java.io.OutputStream
 import javax.imageio.ImageIO
 
 actual class QRCodeGraphics actual constructor(
-    private val width: Int,
-    private val height: Int
+    val width: Int,
+    val height: Int
 ) {
     private val image: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
     private val colorCache = mutableMapOf<Int, Color>()

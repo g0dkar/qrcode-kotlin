@@ -30,7 +30,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 * **Kotlin Puro:** Reimplementação em puro Kotlin a partir da implementação de referência da especificação do QRCode
   por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Leve:** Sem dependencias*, `~72KB` e faz exatamente o que promete fazer.
+* **Leve:** Sem dependencias*, `~65KB` e faz exatamente o que promete fazer.
 * **Fácil de usar:** Instancie um objeto, chame um método e pronto :)
 * **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que
   gerar QRCodes)

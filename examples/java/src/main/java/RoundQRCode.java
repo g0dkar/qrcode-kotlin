@@ -18,6 +18,7 @@ public class RoundQRCode {
                                            Color.BLACK.getRGB());
                                    }
                                }
+                               return null;
                            })
                            .writeImage(fileOut);
     }

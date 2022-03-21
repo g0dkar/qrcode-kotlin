@@ -183,7 +183,9 @@ $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/fillRect/#kotlin.I
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/fillRoundRect/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/fill-round-rect.html
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/getBytes/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/get-bytes.html
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/getBytes/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/get-bytes.html
+$dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/height/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/[jvm]height.html
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/nativeImage/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/native-image.html
+$dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/width/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/[jvm]width.html
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/writeImage/#java.io.OutputStream#kotlin.String#kotlin.Int/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/write-image.html
 $dokka.location:io.github.g0dkar.qrcode.render/QRCodeGraphics/writeImage/#java.io.OutputStream#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/-q-r-code-graphics/write-image.html
 $dokka.location:io.github.g0dkar.qrcode////PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/index.html

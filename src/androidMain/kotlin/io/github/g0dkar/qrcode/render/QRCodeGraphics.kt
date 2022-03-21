@@ -14,8 +14,8 @@ import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
 actual class QRCodeGraphics actual constructor(
-    private val width: Int,
-    private val height: Int
+    val width: Int,
+    val height: Int
 ) {
     private val image: Bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     private val canvas: Canvas = Canvas(image)
