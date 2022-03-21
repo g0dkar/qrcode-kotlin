@@ -14,7 +14,7 @@ internal class QRNumberTest {
 
         val underTest = QRNumber("0")
 
-                    underTest.write(testBuffer)
+        underTest.write(testBuffer)
 
         testBuffer.buffer.asList() shouldContainExactly expectedBufferData
         testBuffer.lengthInBits shouldBe expectedLengthInBits
@@ -31,7 +31,7 @@ internal class QRNumberTest {
 
         val underTest = QRNumber("1")
 
-                    underTest.write(testBuffer)
+        underTest.write(testBuffer)
 
         testBuffer.buffer.asList() shouldContainExactly expectedBufferData
         testBuffer.lengthInBits shouldBe expectedLengthInBits

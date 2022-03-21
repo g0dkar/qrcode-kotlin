@@ -2,13 +2,11 @@ package io.github.g0dkar.qrcode
 
 import com.d_project.qrcode.Mode
 import io.github.g0dkar.qrcode.render.Colors
-import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.awt.image.BufferedImage
-import java.time.Instant
 
 internal class QRCodeTest {
 

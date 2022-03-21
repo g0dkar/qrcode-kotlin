@@ -5,6 +5,7 @@ import java.awt.Graphics2D
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import javax.imageio.ImageIO
 
 actual class QRCodeGraphics actual constructor(
@@ -12,10 +13,11 @@ actual class QRCodeGraphics actual constructor(
     private val height: Int
 ) {
     private val image: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+    private val colorCache = mutableMapOf<Int, Color>()
 
     private fun draw(color: Int, action: (Graphics2D) -> Unit) {
         val graphics = image.createGraphics()
-        val jdkColor = Color(color, true)
+        val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
         graphics.color = jdkColor
         graphics.background = jdkColor
@@ -26,20 +28,48 @@ actual class QRCodeGraphics actual constructor(
         graphics.dispose()
     }
 
-    /** Returns this image as a [ByteArray] encoded as PNG. */
+    /**
+     * Returns this image as a [ByteArray] encoded as PNG. Usually recommended to use [writeImage] instead :)
+     *
+     * @see writeImage
+     */
     actual fun getBytes(): ByteArray = getBytes("PNG")
 
-    /** Returns this image as a [ByteArray] encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...). */
+    /**
+     * Returns this image as a [ByteArray] encoded as the specified format. Usually recommended to use [writeImage]
+     * instead :)
+     *
+     * @see writeImage
+     */
     actual fun getBytes(format: String): ByteArray =
         ByteArrayOutputStream().let {
-            ImageIO.write(image, format, it)
+            writeImage(it, format)
             it.toByteArray()
         }
 
-    /** Returns the available formats to be passed as parameters to [getBytes]. */
+    /**
+     * Writes the QRCode image in the specified [format] into the destination [OutputStream].
+     *
+     * @see ImageIO.write
+     * @throws UnsupportedOperationException No suitable Image Writer was found for the specified format.
+     */
+    @JvmOverloads
+    fun writeImage(destination: OutputStream, format: String = "PNG") {
+        val wasImageWritten = ImageIO.write(image, format, destination)
+
+        if (!wasImageWritten) {
+            throw UnsupportedOperationException("Unsupported format: $format")
+        }
+    }
+
+    /**
+     * Returns the available formats to be passed as parameters to [getBytes].
+     *
+     * @see ImageIO.getWriterFileSuffixes
+     */
     actual fun availableFormats(): List<String> = ImageIO.getWriterFileSuffixes().toList()
 
-    /** Returns the native image object this QRCodeGraphics is working upon. */
+    /** Returns the [BufferedImage] object being worked upon. */
     actual fun nativeImage(): Any = image
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */

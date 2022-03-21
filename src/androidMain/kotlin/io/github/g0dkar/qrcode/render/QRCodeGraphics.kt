@@ -1,11 +1,17 @@
 package io.github.g0dkar.qrcode.render
 
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.Bitmap.CompressFormat.JPEG
+import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 
 actual class QRCodeGraphics actual constructor(
     private val width: Int,
@@ -15,40 +21,88 @@ actual class QRCodeGraphics actual constructor(
     private val canvas: Canvas = Canvas(image)
     private val paintCache = mutableMapOf<Int, Paint>()
 
-    private fun paint(color: Int): Paint {
+    private fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
         if (!paintCache.containsKey(color)) {
             paintCache[color] = Paint().apply { setColor(color) }
         }
 
-        return paintCache[color]!!
+        return paintCache[color]!!.apply {
+            if (style != paintStyle) {
+                style = paintStyle
+            }
+        }
     }
 
-    /** Returns this image as a [ByteArray] encoded as PNG. */
+    /**
+     * Returns this image as a [ByteArray] encoded as PNG. Recommended to use [writeImage].
+     *
+     * @see writeImage
+     */
     actual fun getBytes(): ByteArray = getBytes("PNG")
 
-    /** Returns this image as a [ByteArray] encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...). */
+    /**
+     * Returns this image as a [ByteArray] encoded as the specified format. Recommended to use [writeImage].
+     *
+     * @see writeImage
+     * @see availableFormats
+     */
     actual fun getBytes(format: String): ByteArray =
-        ByteArray(0)
+        ByteArrayOutputStream().let {
+            writeImage(it, format)
+            it.toByteArray()
+        }
 
-    /** Returns the available formats to be passed as parameters to [getBytes]. */
-    actual fun availableFormats(): List<String> = listOf("png", "jpeg")
+    /**
+     * Writes the QRCode image in the specified [format] and [quality] into the destination [OutputStream].
+     *
+     * For app stability reasons if the specified [format] doesn't exist it'll be defaulted to [PNG].
+     *
+     * >**Note:** Please note that `JPG` is supported via the [JPEG] value, with an `E`.
+     *
+     * @see Bitmap.compress
+     * @see availableFormats
+     */
+    fun writeImage(destination: OutputStream, format: String = "PNG", quality: Int = 100) {
+        val compressFormat = toCompressFormat(format)
+        image.compress(compressFormat, quality.coerceIn(0, 100), destination)
+    }
 
-    /** Returns the native image object this QRCodeGraphics is working upon. */
+    /**
+     * Tries to convert a [String] into a [CompressFormat] returning [PNG] if it fails to do so.
+     */
+    private fun toCompressFormat(format: String) =
+        try {
+            CompressFormat.valueOf(format.uppercase())
+        } catch (e: Throwable) {
+            PNG
+        }
+
+    /**
+     * Returns the available formats to be passed as parameters to [getBytes].
+     *
+     * @see CompressFormat
+     * @see CompressFormat.PNG
+     * @see CompressFormat.JPEG
+     * @see CompressFormat.WEBP
+     */
+    actual fun availableFormats(): List<String> = CompressFormat.values().map { it.name }
+
+    /** Returns the [Bitmap] object being worked upon. */
     actual fun nativeImage(): Any = image
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
-        canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paint(color))
+        canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color))
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawRect(Rect(x, y, width, height), paint(color).apply { style = STROKE })
+        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color))
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawRect(Rect(x, y, width, height), paint(color).apply { style = FILL })
+        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, FILL))
     }
 
     /** Fill the whole area of this canvas with the especified [color]. */
@@ -85,7 +139,7 @@ actual class QRCodeGraphics actual constructor(
             height.toFloat(),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
-            paint(color).apply { style = STROKE }
+            paintFromCache(color)
         )
     }
 
@@ -118,7 +172,7 @@ actual class QRCodeGraphics actual constructor(
             height.toFloat(),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
-            paint(color).apply { style = FILL }
+            paintFromCache(color, FILL)
         )
     }
 
