@@ -188,7 +188,7 @@ import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
-@GetMapping("/qrcode")
+@GetMapping("/io/github/g0dkar/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
     val imageOut = ByteArrayOutputStream()
 

@@ -1,4 +1,4 @@
-# qrcode-kotlin
+# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
@@ -29,7 +29,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.1/qrcode-kotlin),
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.0.0/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 **If you're using Maven - pom.xml:**
@@ -38,7 +38,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin</artifactId>
-    <version>2.0.1</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -46,10 +46,10 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:2.0.1")
+implementation("io.github.g0dkar:qrcode-kotlin:3.0.0")
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:2.0.1'
+implementation 'io.github.g0dkar:qrcode-kotlin:3.0.0'
 ```
 
 ## Examples and Usage
@@ -193,7 +193,7 @@ import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
-@GetMapping("/qrcode")
+@GetMapping("/io/github/g0dkar/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
     val imageOut = ByteArrayOutputStream()
 
@@ -220,7 +220,7 @@ QR Code is trademarked by Denso Wave, inc.
 * [Paul Varry](https://github.com/pvarry): for opening the first few issues on the repo and helping to make the library
   even better for everyone! :grin:
 * [Renan Lukas](https://github.com/RenanLukas): For his friendship, patience and help with Android, Gradle and a bunch
-  of other stuff during the development of v2.0.1!
+  of other stuff during the development of v3.0.0!
 
 ## Support and Links
 
