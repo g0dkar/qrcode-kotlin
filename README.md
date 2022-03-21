@@ -1,20 +1,36 @@
-# qrcode-kotlin
+# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
+[![Send a Thank You Message](https://img.shields.io/badge/Send%20a-Thank%20You%20Message-green)](https://saythanks.io/to/g0dkar)
 
-[![Send a Thank You Message](https://img.shields.io/badge/Send%20a-Thank%20You%20Message-green?style=for-the-badge)](https://saythanks.io/to/g0dkar)
-
-[_:brazil: **Disponível em Português (Brasil)**_](README.pt_BR.md)
+💚 [_**Disponível em Português (Brasil)**_](README.pt_BR.md) 💛
 
 Creating QRCodes in Kotlin and Java is harder than it should be. QRCode-Kotlin aims to bring a simple, straightforward
 and customizable way to create QRCodes into the JVM domain, especially in the backend.
+
+## Table of Contents
+
+<!-- toc -->
+- [Advantages of QRCode-Kotlin](#advantages-of-qrcode-kotlin)
+- [Installation](#installation)
+- [Examples and Usage](#examples-and-usage)
+  - [Just a plain, simple QRCode, nothing fancy](#just-a-plain-simple-qrcode-nothing-fancy)
+  - [A QRCode, but bigger](#a-qrcode-but-bigger)
+  - [Just like Google's ZXing one!](#just-like-googles-zxing-one)
+  - [A splash of Color](#a-splash-of-color)
+  - [Specifying your own data type](#specifying-your-own-data-type)
+  - [Spring Framework and/or Spring Boot](#spring-framework-andor-spring-boot)
+- [License](#license)
+- [Thanks and Acknowledgements](#thanks-and-acknowledgements)
+- [Support and Links](#support-and-links)
+<!-- /toc -->
 
 ## Advantages of QRCode-Kotlin
 
 * **Pure Kotlin:** Reimplemented on pure Kotlin from a reference implementation of the QRCode spec
   by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Lightweight:** No dependencies*, `~72KB` and it does what it says on the tin.
+* **Lightweight:** No dependencies*, `~65KB` and it does what it says on the tin.
 * **Easy to use:** Instantiate an object, invoke a method, and you're done :)
 * **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate
   QRCodes)
@@ -29,16 +45,31 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.1/qrcode-kotlin),
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.0.0/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
+
+![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical)
+> **Now this is a Multiplatform lib:** Starting from version `3.0.0` this library became a Kotlin Multiplatform library.
+> We hope that to you using the library the only change is to declare either `qrcode-kotlin-jvm` or
+> `qrcode-kotlin-android` as the dependency.
 
 **If you're using Maven - pom.xml:**
 
 ```xml
+<!-- Use this one for normal applications -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin</artifactId>
-    <version>2.0.1</version>
+    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <version>3.0.0</version>
+</dependency>
+
+
+
+<!-- Or this one for Android apps 👀 -->
+<dependency>
+    <groupId>io.github.g0dkar</groupId>
+    <artifactId>qrcode-kotlin-android</artifactId>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -46,20 +77,28 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:2.0.1")
+// Use this one for normal applications
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.0.0")
+// Or this one for Android apps 👀
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.0.0")
+
+
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:2.0.1'
+// Use this one for normal applications
+implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.0.0'
+// Or this one for Android apps 👀
+implementation 'io.github.g0dkar:qrcode-kotlin-android:3.0.0'
 ```
 
 ## Examples and Usage
 
 Here are a few examples of how to use the library to achieve some nice results. If you are interested in more advanced
-uses and/or fancier QRCodes, please read the documentation :)
+uses and/or fancier QRCodes, please read the [documentation](docs) :)
 
 >Also, make sure to check our [examples](examples) folder for codes in Kotlin and Java, and the resulting QRCodes!
 
-### Just a plain, simple QRCode, nothing fancy:
+### Just a plain, simple QRCode, nothing fancy
 
 To generate a simple QRCode:
 
@@ -220,7 +259,9 @@ QR Code is trademarked by Denso Wave, inc.
 * [Paul Varry](https://github.com/pvarry): for opening the first few issues on the repo and helping to make the library
   even better for everyone! :grin:
 * [Renan Lukas](https://github.com/RenanLukas): For his friendship, patience and help with Android, Gradle and a bunch
-  of other stuff during the development of v2.0.1!
+  of other stuff during the development of v2.0.0 and v3.0.0!
+* [Doomsdayrs](https://github.com/Doomsdayrs): For ponting out how the library could be improved using Kotlin
+  Multiplatform, and helping out implementing it into the project.
 
 ## Support and Links
 
@@ -233,4 +274,6 @@ QR Code is trademarked by Denso Wave, inc.
 
 If you enjoyed the library and want to get me some coffee, use the button below :love_you_gesture:
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee over at Ko-fi!")](https://ko-fi.com/g0dkar)
+[<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy me a coffee over at Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
+
+[<img src="https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg" alt="Buy me a coffee over at PayPal!" width="200"/>](https://www.paypal.com/donate/?business=EFVC68BFJQWSC&no_recurring=0&item_name=Rafael+is+working+on+Open+Source+software+in+his+free+time.+This+helps+him+keep+this+up+for+longer%2C+and+with+higher+quality%21&currency_code=BRL)

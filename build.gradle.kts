@@ -7,25 +7,87 @@ buildscript {
 }
 
 plugins {
+    // Dev Plugins
     id("idea")
+
+    // Base Plugins
+    kotlin("multiplatform") version "1.6.10"
+    id("com.android.library")
+    id("kotlin-android-extensions")
+
+    // Publishing Plugins
     signing
-    `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.6.0"
-    id("org.jetbrains.dokka") version "1.5.31"
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id("org.sonarqube") version "3.3"
+
+    // Docs Plugins
+    id("org.jetbrains.dokka") version "1.6.10"
+
+    // Lint plugins
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
 
 group = "io.github.g0dkar"
-version = "2.0.1"
+version = "3.0.0"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+                freeCompilerArgs = listOf("-Xjsr305=strict")
+            }
+        }
+
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
+    }
+
+    android {
+        publishAllLibraryVariants()
+    }
+
+    sourceSets {
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation("io.kotest:kotest-assertions-core:5.1.0")
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+            }
+        }
+        val androidTest by getting {
+            dependencies {
+                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+            }
+        }
+    }
 }
 
+android {
+    compileSdkVersion(29)
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(29)
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+/* **************** */
+/* Dev Environment  */
+/* **************** */
 idea {
     module {
         isDownloadJavadoc = false
@@ -33,41 +95,24 @@ idea {
     }
 }
 
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+/* **************** */
+/* Docs             */
+/* **************** */
+val dokkaOutputDir = "$projectDir/docs"
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.1.0")
+tasks.getByName<DokkaTask>("dokkaHtml") {
+    outputDirectory.set(file(dokkaOutputDir))
 }
 
-tasks {
-    test { useJUnitPlatform() }
-
-    compileTestJava {
-        options.encoding = "UTF-8"
-    }
-
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = "1.8"
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-        }
-    }
-
-    jar {
-        manifest {
-            attributes(
-                mapOf(
-                    "Implementation-Title" to project.name,
-                    "Implementation-Version" to project.version
-                )
-            )
-        }
-    }
+val javadocJar = tasks.register<Jar>("javadocJar") {
+    dependsOn(tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaOutputDir)
 }
 
+/* **************** */
+/* Lint             */
+/* **************** */
 ktlint {
     coloredOutput.set(true)
     outputToConsole.set(true)
@@ -78,25 +123,11 @@ ktlint {
     }
 }
 
-
-
 /* **************** */
 /* Publishing       */
 /* **************** */
 val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
-
-val dokkaHtml by tasks.getting(DokkaTask::class)
-val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
-    dependsOn(dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaHtml.outputDirectory)
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
 
 nexusPublishing {
     repositories {
@@ -110,15 +141,25 @@ nexusPublishing {
     }
 }
 
+signing {
+    val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
+    val password =
+        properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+
+    useInMemoryPgpKeys(key, password)
+    sign(publishing.publications)
+}
+
 publishing {
     publications {
-        create<MavenPublication>("main") {
-            from(components["java"])
+        withType<MavenPublication> {
+            artifact(javadocJar)
+
             pom {
                 val projectGitUrl = "https://github.com/g0dkar/qrcode-kotlin"
 
                 name.set(rootProject.name)
-                description.set("A JVM Kotlin Library to generate QR Codes without any other dependencies.")
+                description.set("A Kotlin Library to generate QR Codes without any other dependencies.")
                 url.set(projectGitUrl)
                 inceptionYear.set("2021")
                 licenses {
@@ -160,24 +201,12 @@ publishing {
     }
 }
 
-signing {
-    val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
-    val password =
-        properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+tasks {
+    publish {
+        dependsOn(ktlintCheck)
+    }
 
-    useInMemoryPgpKeys(key, password)
-    sign(publishing.publications)
-}
-
-
-
-/* *************************** */
-/* SonarQube Quality Reporting */
-/* *************************** */
-sonarqube {
-    properties {
-        property("sonar.projectKey", "qrcode-kotlin")
-        property("sonar.organization", "minimmo")
-        property("sonar.host.url", "https://sonarcloud.io")
+    publishToMavenLocal  {
+        dependsOn(ktlintCheck)
     }
 }

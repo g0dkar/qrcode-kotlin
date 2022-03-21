@@ -1,20 +1,36 @@
-# qrcode-kotlin
+# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
 
 [![Licença](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
+[![Mande uma Mensagem de Agradecimento](https://img.shields.io/badge/Mande%20uma-Mensagem%20de%20Agradecimento-green)](https://saythanks.io/to/g0dkar)
 
-[![Mande uma Mensagem de Agradecimento](https://img.shields.io/badge/Mande%20uma-Mensagem%20de%20Agradecimento-green?style=for-the-badge)](https://saythanks.io/to/g0dkar)
-
-[_:us: **Available in English**_](README.md)
+❤️️ [_**Available in English**_](README.md) 💙
 
 Criar QRCodes em Kotlin e Java é mais difícil do que deveria. O QRCode-Kotlin tenta trazer uma forma simples, direta e
 personalizável de se criar QRCodes para o domínio da JVM, especialmente no backend.
+
+## Sumário
+
+<!-- toc -->
+- [Vantagens do QRCode-Kotlin](#vantagens-do-qrcode-kotlin)
+- [Instalação](#instalao)
+- [Exemplos e Usos](#exemplos-e-usos)
+  - [Apenas um QRCode simples, nada de mais](#apenas-um-qrcode-simples-nada-de-mais)
+  - [Um QRCode, mas maior](#um-qrcode-mas-maior)
+  - [Igual ao Google ZXing!](#igual-ao-google-zxing)
+  - [Um toque de Cor](#um-toque-de-cor)
+  - [Especificando seu próprio tipo de dados](#especificando-seu-prprio-tipo-de-dados)
+  - [Spring Framework e/ou Spring Boot](#spring-framework-eou-spring-boot)
+- [Licença](#licena)
+- [Agradecimentos e Reconhecimentos](#agradecimentos-e-reconhecimentos)
+- [Suporte e Links](#suporte-e-links)
+<!-- /toc -->
 
 ## Vantagens do QRCode-Kotlin
 
 * **Kotlin Puro:** Reimplementação em puro Kotlin a partir da implementação de referência da especificação do QRCode
   por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Leve:** Sem dependencias*, `~72KB` e faz exatamente o que promete fazer.
+* **Leve:** Sem dependencias*, `~65KB` e faz exatamente o que promete fazer.
 * **Fácil de usar:** Instancie um objeto, chame um método e pronto :)
 * **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que
   gerar QRCodes)
@@ -29,13 +45,28 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/2.0.0/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
+![novo na v3.0.0](https://img.shields.io/badge/novo!-v3.0.0-critical)
+>**Agora esta é uma biblioteca Multiplataforma:** A partir da versão `3.0.0` esta biblioteca tornou-se uma biblioteca
+> Kotlin Multiplataforma. Para você que utiliza a biblioteca, esperamos que a única mudança notável seja que agora é
+> necessário especificar `qrcode-kotlin-jvm` ou `qrcode-kotlin-android` como a dependência.
+
 **Se você utiliza Maven - pom.xml:**
 
 ```xml
+<!-- Use essa para aplicações normais -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin</artifactId>
-    <version>2.0.0</version>
+    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <version>3.0.0</version>
+</dependency>
+
+
+
+<!-- Ou essa se for um app Android 👀 -->
+<dependency>
+    <groupId>io.github.g0dkar</groupId>
+    <artifactId>qrcode-kotlin-android</artifactId>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -43,20 +74,28 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 
 ```groovy
 // Kotlin ❤️
-implementation("io.github.g0dkar:qrcode-kotlin:2.0.0")
+// Use essa para aplicações normais
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.0.0")
+// Ou essa se for um app Android 👀
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.0.0")
+
+
 
 // Groovy
-implementation 'io.github.g0dkar:qrcode-kotlin:2.0.0'
+// Use essa para aplicações normais
+implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.0.0'
+// Ou essa se for um app Android 👀
+implementation 'io.github.g0dkar:qrcode-kotlin-android:3.0.0'
 ```
 
 ## Exemplos e Usos
 
-Aqui estão alguns exemplos de como utilizar a biblioteca para se ter alguns resultados bacanas. Se você tiver interesse
-em usos mais avançados ou QRCodes mais sofisticados, por favor leia a documentação :)
+Aqui estão alguns exemplos de como utilizar a biblioteca para se ter alguns resultados bacanas. Se tiver interesse
+em usos mais avançados ou QRCodes mais sofisticados, por favor leia a [documentação](docs) :)
 
 >Também lembre de checar a pasta de [exemplos](examples) para ver códigos em Kotlin e Java, e os QRCodes resultantes!
 
-### Apenas um QRCode simples, nada de mais:
+### Apenas um QRCode simples, nada de mais
 
 Para gerar um QRCode simples:
 
@@ -180,7 +219,7 @@ QRCode("42", dataType = QRCodeDataType.DEFAULT)
 
 ### Spring Framework e/ou Spring Boot
 
-Uma das razões principais que desenvolvi essa biblioteca foi para utilizá-la em uma API Spring Boot que necessitava
+Uma das razões principais que desenvolvi essa biblioteca foi para utilizá-la numa API Spring Boot que necessitava
 gerar QRCodes, então é apenas natural mostrar como se fazer isso :)
 
 ```kotlin
@@ -215,7 +254,9 @@ QR Code é marca registrada de Denso Wave, inc.
 * [Paul Varry](https://github.com/pvarry): Por abrir as primeiras issues no repositório e ajudar a fazer a biblioteca
   melhor para todo o mundo! :grin:
 * [Renan Lukas](https://github.com/RenanLukas): Por sua amizade, paciência e ajuda com Android, Gradle e outras coisas
-  durante o desenvolvimento da v2.0.0!
+  durante o desenvolvimento da v2.0.0 e v3.0.0!
+* [Doomsdayrs](https://github.com/Doomsdayrs): Por mostrar como a biblioteca poderia melhorar ao utilizar Kotlin
+  Multiplataforma, e ajudar com a implementação do mesmo no projeto.
 
 ## Suporte e Links
 
@@ -228,4 +269,6 @@ QR Code é marca registrada de Denso Wave, inc.
 
 Se curtiu a biblioteca e quiser me pagar um café, utilize o botão abaixo :love_you_gesture:
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg "Pague um café para mim no Ko-fi!")](https://ko-fi.com/g0dkar)
+[<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Me pague um café no Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
+
+[<img src="https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg" alt="Me pague um café pelo PayPal!" width="200"/>](https://www.paypal.com/donate/?business=EFVC68BFJQWSC&no_recurring=0&item_name=Rafael+est%C3%A1+trabalhando+em+software+Open+Source+em+seu+tempo+livre.+Isso+o+ajuda+a+continuar+e+com+mais+qualidade%21&currency_code=BRL)

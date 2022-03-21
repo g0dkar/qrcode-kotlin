@@ -66,6 +66,7 @@ public class GradientColoredQRCode {
                                } else {
                                    canvas.fill(Color.white.getRGB());
                                }
+                               return null;
                            })
                            .writeImage(fileOut);
     }
