@@ -37,6 +37,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 * **Saída Personalizada:** Quer um QRCode colorido? Nós temos!
 * **Amigável aos Servidores:** Esta não é uma biblioteca para aplicações Mobile. Esta biblioteca foi pensada por devs
   backend para devs backend.
+* ![novo na v3.0.0](https://img.shields.io/badge/novo!-v3.0.0-critical) **Android é Suportado:** Agora que a biblioteca utiliza Kotlin Multiplatforma, Android é suportado nativamente!
 
 >\* Bom, exceto talvez a `org.jetbrains.kotlin:kotlin-stdlib-jdk8` se você estiver usando Java...
 
