@@ -293,7 +293,7 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
                 row = 0,
                 col = 0,
                 moduleSize = rawData.size,
-                squareInfo = QRCodeSquareInfo.margin(UNKNOWN)
+                squareInfo = QRCodeSquareInfo.margin()
             )
 
             renderer(marginSquare, qrCodeGraphics)
@@ -359,9 +359,10 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
     private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
         for (r in -1..7) {
             for (c in -1..7) {
-                println("row=$row, r=$r, row + r=${row + r}, moduleCount=$moduleCount, col=$col, c=$c, col + c=${col + c}")
+                val rowPos = row + r
+                val colPos = col + c
 
-                if (row + r <= -1 || moduleCount <= row + r || col + c <= -1 || moduleCount <= col + c) {
+                if (rowPos <= -1 || moduleCount <= rowPos || colPos <= -1 || moduleCount <= colPos) {
                     continue
                 }
 
@@ -378,10 +379,10 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
                 //     }
                 // }
 
-                modules[row + r][col + c] = QRCodeSquare(
+                modules[rowPos][colPos] = QRCodeSquare(
                     dark = (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4),
-                    row = row + r,
-                    col = col + c,
+                    row = rowPos,
+                    col = colPos,
                     squareInfo = QRCodeSquareInfo(POSITION_PROBE, UNKNOWN),
                     moduleSize = modules.size
                 )

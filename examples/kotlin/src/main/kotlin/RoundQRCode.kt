@@ -13,7 +13,7 @@ class RoundQRCode {
                 canvas.fill(Colors.WHITE)
 
                 if (cellData.dark) {
-                    when (cellData.type) {
+                    when (cellData.squareInfo.type) {
                         POSITION_PROBE -> canvas.fill(Colors.BLACK)
                         MARGIN -> canvas.fill(Colors.WHITE)
                         else -> canvas.fillRoundRect(0, 0, canvas.width, canvas.height, radius, Colors.BLACK)

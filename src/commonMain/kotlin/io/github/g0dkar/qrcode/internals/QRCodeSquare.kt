@@ -51,7 +51,7 @@ data class QRCodeSquareInfo(
     val region: QRCodeRegion
 ) {
     companion object {
-        internal fun margin(region: QRCodeRegion) = QRCodeSquareInfo(MARGIN, region)
+        internal fun margin() = QRCodeSquareInfo(MARGIN, QRCodeRegion.MARGIN)
     }
 }
 
@@ -104,5 +104,6 @@ enum class QRCodeRegion {
     BOTTOM_LEFT_CORNER,
     BOTTOM_RIGHT_CORNER,
     BOTTOM_MID,
+    MARGIN,
     UNKNOWN;
 }
