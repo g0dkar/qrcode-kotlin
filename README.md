@@ -93,7 +93,7 @@ implementation 'io.github.g0dkar:qrcode-kotlin-android:3.0.0'
 ## Examples and Usage
 
 Here are a few examples of how to use the library to achieve some nice results. If you are interested in more advanced
-uses and/or fancier QRCodes, please read the [documentation](docs) :)
+uses and/or fancier QRCodes, please read the [documentation](dokka) :)
 
 >Also, make sure to check our [examples](examples) folder for codes in Kotlin and Java, and the resulting QRCodes!
 

@@ -98,7 +98,7 @@ idea {
 /* **************** */
 /* Docs             */
 /* **************** */
-val dokkaOutputDir = "$projectDir/docs"
+val dokkaOutputDir = "$projectDir/dokka"
 
 tasks.getByName<DokkaTask>("dokkaHtml") {
     outputDirectory.set(file(dokkaOutputDir))
