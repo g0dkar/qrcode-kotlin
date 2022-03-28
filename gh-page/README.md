@@ -1,4 +1,9 @@
-# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
+---
+title: QRCode-Kotlin
+feature_image: "https://picsum.photos/1300/400?image=989"
+feature_text: |
+## [Github Link](https://github.com/g0dkar/qrcode-kotlin)
+---
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)

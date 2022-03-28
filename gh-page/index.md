@@ -1,4 +1,9 @@
-# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
+---
+title: QRCode-Kotlin
+feature_image: "https://picsum.photos/1300/400?image=989"
+feature_text: |
+## [Github Link](https://github.com/g0dkar/qrcode-kotlin)
+---
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
@@ -15,12 +20,12 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 - [Advantages of QRCode-Kotlin](#advantages-of-qrcode-kotlin)
 - [Installation](#installation)
 - [Examples and Usage](#examples-and-usage)
-  - [Just a plain, simple QRCode, nothing fancy](#just-a-plain-simple-qrcode-nothing-fancy)
-  - [A QRCode, but bigger](#a-qrcode-but-bigger)
-  - [Just like Google's ZXing one!](#just-like-googles-zxing-one)
-  - [A splash of Color](#a-splash-of-color)
-  - [Specifying your own data type](#specifying-your-own-data-type)
-  - [Spring Framework and/or Spring Boot](#spring-framework-andor-spring-boot)
+    - [Just a plain, simple QRCode, nothing fancy](#just-a-plain-simple-qrcode-nothing-fancy)
+    - [A QRCode, but bigger](#a-qrcode-but-bigger)
+    - [Just like Google's ZXing one!](#just-like-googles-zxing-one)
+    - [A splash of Color](#a-splash-of-color)
+    - [Specifying your own data type](#specifying-your-own-data-type)
+    - [Spring Framework and/or Spring Boot](#spring-framework-andor-spring-boot)
 - [License](#license)
 - [Thanks and Acknowledgements](#thanks-and-acknowledgements)
 - [Support and Links](#support-and-links)
