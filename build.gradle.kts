@@ -6,6 +6,12 @@ buildscript {
     }
 }
 
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    google()
+}
+
 plugins {
     // Dev Plugins
     id("idea")
@@ -22,13 +28,10 @@ plugins {
 
     // Docs Plugins
     id("org.jetbrains.dokka") version "1.6.10"
-
-    // Lint plugins
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
 
 group = "io.github.g0dkar"
-version = "3.0.0"
+version = "3.1.0"
 
 kotlin {
     jvm {
@@ -45,7 +48,17 @@ kotlin {
     }
 
     android {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release")
+
+        dependencies {
+            implementation("com.android.tools.lint:lint-gradle:30.1.2")
+        }
+
+        // lintOptions {
+        //     checkReleaseBuilds false
+        //     //If you want to continue even if errors found use following line
+        //     abortOnError false
+        // }
     }
 
     sourceSets {
@@ -113,13 +126,33 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 /* **************** */
 /* Lint             */
 /* **************** */
-ktlint {
-    coloredOutput.set(true)
-    outputToConsole.set(true)
-    additionalEditorconfigFile.set(file("${project.projectDir}/../.editorconfig"))
+val ktlint by configurations.creating
 
-    filter {
-        exclude("**.gradle.kts")
+dependencies {
+    ktlint("com.pinterest:ktlint:0.45.1") {
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+        }
+    }
+}
+
+val ktlintCheck by tasks.creating(JavaExec::class) {
+    description = "Check Kotlin code style."
+    mainClass.set("com.pinterest.ktlint.Main")
+    classpath = ktlint
+    args = listOf("--editorconfig=$projectDir/.editorconfig", "--color", "--relative", "src/**/*.kt")
+}
+
+val ktlintFormat by tasks.creating(JavaExec::class) {
+    description = "Fix Kotlin code style deviations."
+    mainClass.set("com.pinterest.ktlint.Main")
+    classpath = ktlint
+    args = listOf("--editorconfig=$projectDir/.editorconfig", "--format", "--color", "--relative", "src/**/*.kt")
+}
+
+tasks {
+    publish {
+        dependsOn(ktlintCheck)
     }
 }
 
@@ -128,6 +161,9 @@ ktlint {
 /* **************** */
 val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+repositories {
+    mavenCentral()
+}
 
 nexusPublishing {
     repositories {
@@ -198,15 +234,5 @@ publishing {
                 password = ossrhPassword
             }
         }
-    }
-}
-
-tasks {
-    publish {
-        dependsOn(ktlintCheck)
-    }
-
-    publishToMavenLocal  {
-        dependsOn(ktlintCheck)
     }
 }

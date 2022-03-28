@@ -7,16 +7,19 @@ import io.github.g0dkar.qrcode.internals.BitBuffer
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
 import io.github.g0dkar.qrcode.internals.QRAlphaNum
+import io.github.g0dkar.qrcode.internals.QRCodeRegion.UNKNOWN
 import io.github.g0dkar.qrcode.internals.QRCodeSquare
+import io.github.g0dkar.qrcode.internals.QRCodeSquareInfo
 import io.github.g0dkar.qrcode.internals.QRCodeSquareType
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType.POSITION_ADJUST
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import io.github.g0dkar.qrcode.internals.QRCodeSquareType.TIMING_PATTERN
 import io.github.g0dkar.qrcode.internals.QRData
 import io.github.g0dkar.qrcode.internals.QRNumber
 import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.QRCodeGraphics
-import kotlin.jvm.JvmOverloads
-import kotlin.jvm.JvmStatic
 
 /**
  * A Class/Library that helps encode data as QR Code images without any external dependencies.
@@ -58,7 +61,7 @@ import kotlin.jvm.JvmStatic
  * @see ErrorCorrectionLevel
  * @see QRUtil.getDataType
  */
-class QRCode @JvmOverloads constructor(
+class QRCode @kotlin.jvm.JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data),
@@ -78,8 +81,8 @@ class QRCode @JvmOverloads constructor(
         /**
          * Calculates a suitable value for the [dataType] field for you.
          */
-        @JvmStatic
-        @JvmOverloads
+        @kotlin.jvm.JvmStatic
+        @kotlin.jvm.JvmOverloads
         fun typeForDataAndECL(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
@@ -145,7 +148,7 @@ class QRCode @JvmOverloads constructor(
      * @see QRCodeGraphics
      * @see Colors
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -200,7 +203,7 @@ class QRCode @JvmOverloads constructor(
             if (cellData.dark) {
                 graphics.fill(darkColor)
             } else {
-                if (cellData.type != QRCodeSquareType.MARGIN) {
+                if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
                     graphics.fill(brightColor)
                 } else {
                     graphics.fill(marginColor)
@@ -221,12 +224,11 @@ class QRCode @JvmOverloads constructor(
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
      * @see QRCodeSquare
-     * @see QRCodeCanvas
-     * @see BufferedImageCanvas
+     * @see QRCodeGraphics
      * @see Colors
-     * @see newCanvas
+     * @see newGraphics
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -291,7 +293,7 @@ class QRCode @JvmOverloads constructor(
                 row = 0,
                 col = 0,
                 moduleSize = rawData.size,
-                type = QRCodeSquareType.MARGIN
+                squareInfo = QRCodeSquareInfo.margin(UNKNOWN)
             )
 
             renderer(marginSquare, qrCodeGraphics)
@@ -327,7 +329,7 @@ class QRCode @JvmOverloads constructor(
      * @see MaskPattern
      * @see renderShaded
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
@@ -357,15 +359,30 @@ class QRCode @JvmOverloads constructor(
     private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
         for (r in -1..7) {
             for (c in -1..7) {
+                println("row=$row, r=$r, row + r=${row + r}, moduleCount=$moduleCount, col=$col, c=$c, col + c=${col + c}")
+
                 if (row + r <= -1 || moduleCount <= row + r || col + c <= -1 || moduleCount <= col + c) {
                     continue
                 }
+
+                // val region = when (r) {
+                //     0 -> when (c) {
+                //         0 -> TOP_LEFT_CORNER
+                //         6 -> TOP_RIGHT_CORNER
+                //         else -> LEFT_MID
+                //     }
+                //     6 -> when (c) {
+                //         0 -> BOTTOM_LEFT_CORNER
+                //         6 -> BOTTOM_RIGHT_CORNER
+                //         else -> RIGHT_MID
+                //     }
+                // }
 
                 modules[row + r][col + c] = QRCodeSquare(
                     dark = (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4),
                     row = row + r,
                     col = col + c,
-                    type = QRCodeSquareType.POSITION_PROBE,
+                    squareInfo = QRCodeSquareInfo(POSITION_PROBE, UNKNOWN),
                     moduleSize = modules.size
                 )
             }
@@ -390,7 +407,7 @@ class QRCode @JvmOverloads constructor(
                             dark = r == -2 || r == 2 || c == -2 || c == 2 || r == 0 && c == 0,
                             row = row + r,
                             col = col + c,
-                            type = QRCodeSquareType.POSITION_ADJUST,
+                            squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
                             moduleSize = modules.size
                         )
                     }
@@ -409,7 +426,7 @@ class QRCode @JvmOverloads constructor(
                 dark = r % 2 == 0,
                 row = r,
                 col = 6,
-                type = QRCodeSquareType.TIMING_PATTERN,
+                squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size
             )
         }
@@ -423,7 +440,7 @@ class QRCode @JvmOverloads constructor(
                 dark = c % 2 == 0,
                 row = 6,
                 col = c,
-                type = QRCodeSquareType.TIMING_PATTERN,
+                squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size
             )
         }

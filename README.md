@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
+[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 [![Send a Thank You Message](https://img.shields.io/badge/Send%20a-Thank%20You%20Message-green)](https://saythanks.io/to/g0dkar)
 
 💚 [_**Disponível em Português (Brasil)**_](README.pt_BR.md) 💛
