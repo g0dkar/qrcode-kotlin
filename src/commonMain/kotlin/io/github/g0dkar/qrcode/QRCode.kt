@@ -38,13 +38,13 @@ import io.github.g0dkar.qrcode.render.QRCodeGraphics
  * val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
  * ```
  *
- * You can now use `qrCodeRenderer` to render your QRCode into any [OutputStream] (as a PNG by default)
+ * You can now use `qrCodeRenderer` to render your QRCode into any `OutputStream` (as a PNG by default)
  *
  * For example, to simply save it on the disk:
  *
  * ```kotlin
  * val qrCodeFile = File("qrcode.png")
- * qrCodeRenderer.writeImage(qrCodeFile.outputStream())
+ * qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
  * ```
  *
  * Or maybe have it as a byte array, to be sent as a response to a server request:
