@@ -453,21 +453,6 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
         return data
     }
 
-    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>) {
-        val qrCodeSquare = modules[row][col]
-
-        if (qrCodeSquare != null) {
-            qrCodeSquare.dark = value
-        } else {
-            modules[row][col] = QRCodeSquare(
-                dark = value,
-                row = row,
-                col = col,
-                moduleSize = modules.size
-            )
-        }
-    }
-
     override fun toString(): String =
         "QRCode(data=$data" +
             ", errorCorrectionLevel=$errorCorrectionLevel" +
