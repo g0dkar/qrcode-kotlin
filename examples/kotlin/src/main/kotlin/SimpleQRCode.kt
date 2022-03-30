@@ -3,8 +3,9 @@ import java.io.FileOutputStream
 
 class SimpleQRCode {
     fun createQRCode(content: String) {
-        val fileOut = FileOutputStream("kotlin-simple.png")
-        QRCode(content).render().writeImage(fileOut)
+        FileOutputStream("kotlin-simple.png").use {
+            QRCode(content).render().writeImage(it)
+        }
     }
 }
 

@@ -1,9 +1,9 @@
 package io.github.g0dkar.qrcode.internals
 
-import io.github.g0dkar.qrcode.assertDoesNotThrow
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 
 internal class QRNumberTest {
     @Test

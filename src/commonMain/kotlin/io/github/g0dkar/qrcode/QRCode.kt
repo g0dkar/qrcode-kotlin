@@ -7,7 +7,16 @@ import io.github.g0dkar.qrcode.internals.BitBuffer
 import io.github.g0dkar.qrcode.internals.Polynomial
 import io.github.g0dkar.qrcode.internals.QR8BitByte
 import io.github.g0dkar.qrcode.internals.QRAlphaNum
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.applyMaskPattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupBottomLeftPositionProbePattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupPositionAdjustPattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupTimingPattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupTopLeftPositionProbePattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupTopRightPositionProbePattern
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupTypeInfo
+import io.github.g0dkar.qrcode.internals.QRCodeSetup.setupTypeNumber
 import io.github.g0dkar.qrcode.internals.QRCodeSquare
+import io.github.g0dkar.qrcode.internals.QRCodeSquareInfo
 import io.github.g0dkar.qrcode.internals.QRCodeSquareType
 import io.github.g0dkar.qrcode.internals.QRData
 import io.github.g0dkar.qrcode.internals.QRNumber
@@ -15,8 +24,6 @@ import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.QRCodeGraphics
-import kotlin.jvm.JvmOverloads
-import kotlin.jvm.JvmStatic
 
 /**
  * A Class/Library that helps encode data as QR Code images without any external dependencies.
@@ -31,13 +38,13 @@ import kotlin.jvm.JvmStatic
  * val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
  * ```
  *
- * You can now use `qrCodeRenderer` to render your QRCode into any [OutputStream] (as a PNG by default)
+ * You can now use `qrCodeRenderer` to render your QRCode into any `OutputStream` (as a PNG by default)
  *
  * For example, to simply save it on the disk:
  *
  * ```kotlin
  * val qrCodeFile = File("qrcode.png")
- * qrCodeRenderer.writeImage(qrCodeFile.outputStream())
+ * qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
  * ```
  *
  * Or maybe have it as a byte array, to be sent as a response to a server request:
@@ -58,7 +65,7 @@ import kotlin.jvm.JvmStatic
  * @see ErrorCorrectionLevel
  * @see QRUtil.getDataType
  */
-class QRCode @JvmOverloads constructor(
+class QRCode @kotlin.jvm.JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data),
@@ -78,8 +85,8 @@ class QRCode @JvmOverloads constructor(
         /**
          * Calculates a suitable value for the [dataType] field for you.
          */
-        @JvmStatic
-        @JvmOverloads
+        @kotlin.jvm.JvmStatic
+        @kotlin.jvm.JvmOverloads
         fun typeForDataAndECL(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
@@ -145,7 +152,7 @@ class QRCode @JvmOverloads constructor(
      * @see QRCodeGraphics
      * @see Colors
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -200,7 +207,7 @@ class QRCode @JvmOverloads constructor(
             if (cellData.dark) {
                 graphics.fill(darkColor)
             } else {
-                if (cellData.type != QRCodeSquareType.MARGIN) {
+                if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
                     graphics.fill(brightColor)
                 } else {
                     graphics.fill(marginColor)
@@ -221,12 +228,11 @@ class QRCode @JvmOverloads constructor(
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
      * @see QRCodeSquare
-     * @see QRCodeCanvas
-     * @see BufferedImageCanvas
+     * @see QRCodeGraphics
      * @see Colors
-     * @see newCanvas
+     * @see newGraphics
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -291,7 +297,7 @@ class QRCode @JvmOverloads constructor(
                 row = 0,
                 col = 0,
                 moduleSize = rawData.size,
-                type = QRCodeSquareType.MARGIN
+                squareInfo = QRCodeSquareInfo.margin()
             )
 
             renderer(marginSquare, qrCodeGraphics)
@@ -327,7 +333,7 @@ class QRCode @JvmOverloads constructor(
      * @see MaskPattern
      * @see renderShaded
      */
-    @JvmOverloads
+    @kotlin.jvm.JvmOverloads
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
@@ -335,13 +341,13 @@ class QRCode @JvmOverloads constructor(
         val moduleCount = type * 4 + 17
         val modules: Array<Array<QRCodeSquare?>> = Array(moduleCount) { Array(moduleCount) { null } }
 
-        setupPositionProbePattern(0, 0, moduleCount, modules)
-        setupPositionProbePattern(moduleCount - 7, 0, moduleCount, modules)
-        setupPositionProbePattern(0, moduleCount - 7, moduleCount, modules)
+        setupTopLeftPositionProbePattern(modules)
+        setupTopRightPositionProbePattern(modules)
+        setupBottomLeftPositionProbePattern(modules)
 
         setupPositionAdjustPattern(type, modules)
         setupTimingPattern(moduleCount, modules)
-        setupTypeInfo(maskPattern, moduleCount, modules)
+        setupTypeInfo(errorCorrectionLevel, maskPattern, moduleCount, modules)
 
         if (type >= 7) {
             setupTypeNumber(type, moduleCount, modules)
@@ -352,130 +358,6 @@ class QRCode @JvmOverloads constructor(
         applyMaskPattern(data, maskPattern, moduleCount, modules)
 
         return modules
-    }
-
-    private fun setupPositionProbePattern(row: Int, col: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
-        for (r in -1..7) {
-            for (c in -1..7) {
-                if (row + r <= -1 || moduleCount <= row + r || col + c <= -1 || moduleCount <= col + c) {
-                    continue
-                }
-
-                modules[row + r][col + c] = QRCodeSquare(
-                    dark = (r in 0..6 && (c == 0 || c == 6) || c in 0..6 && (r == 0 || r == 6) || r in 2..4 && 2 <= c && c <= 4),
-                    row = row + r,
-                    col = col + c,
-                    type = QRCodeSquareType.POSITION_PROBE,
-                    moduleSize = modules.size
-                )
-            }
-        }
-    }
-
-    private fun setupPositionAdjustPattern(type: Int, modules: Array<Array<QRCodeSquare?>>) {
-        val pos = QRUtil.getPatternPosition(type)
-
-        for (i in pos.indices) {
-            for (j in pos.indices) {
-                val row = pos[i]
-                val col = pos[j]
-
-                if (modules[row][col] != null) {
-                    continue
-                }
-
-                for (r in -2..2) {
-                    for (c in -2..2) {
-                        modules[row + r][col + c] = QRCodeSquare(
-                            dark = r == -2 || r == 2 || c == -2 || c == 2 || r == 0 && c == 0,
-                            row = row + r,
-                            col = col + c,
-                            type = QRCodeSquareType.POSITION_ADJUST,
-                            moduleSize = modules.size
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setupTimingPattern(moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
-        for (r in 8 until moduleCount - 8) {
-            if (modules[r][6] != null) {
-                continue
-            }
-
-            modules[r][6] = QRCodeSquare(
-                dark = r % 2 == 0,
-                row = r,
-                col = 6,
-                type = QRCodeSquareType.TIMING_PATTERN,
-                moduleSize = modules.size
-            )
-        }
-
-        for (c in 8 until moduleCount - 8) {
-            if (modules[6][c] != null) {
-                continue
-            }
-
-            modules[6][c] = QRCodeSquare(
-                dark = c % 2 == 0,
-                row = 6,
-                col = c,
-                type = QRCodeSquareType.TIMING_PATTERN,
-                moduleSize = modules.size
-            )
-        }
-    }
-
-    private fun setupTypeInfo(
-        maskPattern: MaskPattern,
-        moduleCount: Int,
-        modules: Array<Array<QRCodeSquare?>>
-    ) {
-        val data = errorCorrectionLevel.value shl 3 or maskPattern.ordinal
-        val bits = QRUtil.getBCHTypeInfo(data)
-
-        for (i in 0..14) {
-            val mod = bits shr i and 1 == 1
-
-            if (i < 6) {
-                set(i, 8, mod, modules)
-            } else if (i < 8) {
-                set(i + 1, 8, mod, modules)
-            } else {
-                set(moduleCount - 15 + i, 8, mod, modules)
-            }
-        }
-
-        for (i in 0..14) {
-            val mod = bits shr i and 1 == 1
-
-            if (i < 8) {
-                set(8, moduleCount - i - 1, mod, modules)
-            } else if (i < 9) {
-                set(8, 15 - i, mod, modules)
-            } else {
-                set(8, 15 - i - 1, mod, modules)
-            }
-        }
-
-        set(moduleCount - 8, 8, true, modules)
-    }
-
-    private fun setupTypeNumber(type: Int, moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
-        val bits = QRUtil.getBCHTypeNumber(type)
-
-        for (i in 0..17) {
-            val mod = bits shr i and 1 == 1
-            set(i / 3, i % 3 + moduleCount - 8 - 3, mod, modules)
-        }
-
-        for (i in 0..17) {
-            val mod = bits shr i and 1 == 1
-            set(i % 3 + moduleCount - 8 - 3, i / 3, mod, modules)
-        }
     }
 
     private fun createData(type: Int): IntArray {
@@ -515,59 +397,6 @@ class QRCode @JvmOverloads constructor(
         }
 
         return createBytes(buffer, rsBlocks)
-    }
-
-    private fun applyMaskPattern(
-        data: IntArray,
-        maskPattern: MaskPattern,
-        moduleCount: Int,
-        modules: Array<Array<QRCodeSquare?>>
-    ) {
-        var inc = -1
-        var bitIndex = 7
-        var byteIndex = 0
-        var row = moduleCount - 1
-        var col = moduleCount - 1
-
-        while (col > 0) {
-            if (col == 6) {
-                col--
-            }
-
-            while (true) {
-                for (c in 0..1) {
-                    if (modules[row][col - c] == null) {
-                        var dark = false
-
-                        if (byteIndex < data.size) {
-                            dark = (data[byteIndex] ushr bitIndex) and 1 == 1
-                        }
-
-                        val mask = QRUtil.getMask(maskPattern, row, col - c)
-                        if (mask) {
-                            dark = !dark
-                        }
-
-                        set(row, col - c, dark, modules)
-
-                        bitIndex--
-                        if (bitIndex == -1) {
-                            byteIndex++
-                            bitIndex = 7
-                        }
-                    }
-                }
-
-                row += inc
-                if (row < 0 || moduleCount <= row) {
-                    row -= inc
-                    inc = -inc
-                    break
-                }
-            }
-
-            col -= 2
-        }
     }
 
     private fun createBytes(buffer: BitBuffer, rsBlocks: List<RSBlock>): IntArray {
@@ -622,21 +451,6 @@ class QRCode @JvmOverloads constructor(
         }
 
         return data
-    }
-
-    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>) {
-        val qrCodeSquare = modules[row][col]
-
-        if (qrCodeSquare != null) {
-            qrCodeSquare.dark = value
-        } else {
-            modules[row][col] = QRCodeSquare(
-                dark = value,
-                row = row,
-                col = col,
-                moduleSize = modules.size
-            )
-        }
     }
 
     override fun toString(): String =

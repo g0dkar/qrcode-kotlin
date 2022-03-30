@@ -1,10 +1,8 @@
-# [QRCode-Kotlin](https://github.com/g0dkar/qrcode-kotlin)
-
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
-[![Send a Thank You Message](https://img.shields.io/badge/Send%20a-Thank%20You%20Message-green)](https://saythanks.io/to/g0dkar)
+[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
-💚 [_**Disponível em Português (Brasil)**_](README.pt_BR.md) 💛
+💚 [_**Disponível em Português (Brasil)**_](https://qrcodekotlin.com/pt_br) 💛
 
 Creating QRCodes in Kotlin and Java is harder than it should be. QRCode-Kotlin aims to bring a simple, straightforward
 and customizable way to create QRCodes into the JVM domain, especially in the backend.
@@ -59,7 +57,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 </dependency>
 
 
@@ -68,7 +66,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -77,17 +75,17 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 ```groovy
 // Kotlin ❤️
 // Use this one for normal applications
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.0.0")
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.1.0")
 // Or this one for Android apps 👀
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.0.0")
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
 
 
 
 // Groovy
 // Use this one for normal applications
-implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.0.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.1.0'
 // Or this one for Android apps 👀
-implementation 'io.github.g0dkar:qrcode-kotlin-android:3.0.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-android:3.1.0'
 ```
 
 ## Examples and Usage

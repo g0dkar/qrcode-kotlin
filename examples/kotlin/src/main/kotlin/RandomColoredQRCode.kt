@@ -14,11 +14,11 @@ class RandomColoredQRCode {
 
         val qrCodeCanvas = QRCode(content).renderShaded { cellData, cellCanvas ->
             if (cellData.dark) {
-                if (cellData.type != QRCodeSquareType.DEFAULT) {
-                    typeColorMap.putIfAbsent(cellData.type, colors.random())
+                if (cellData.squareInfo.type != QRCodeSquareType.DEFAULT) {
+                    typeColorMap.putIfAbsent(cellData.squareInfo.type, colors.random())
                 }
 
-                cellCanvas.fill(typeColorMap[cellData.type] ?: colors.random())
+                cellCanvas.fill(typeColorMap[cellData.squareInfo.type] ?: colors.random())
             } else {
                 cellCanvas.fill(backgroundColor)
             }
