@@ -150,6 +150,10 @@ tasks {
     publish {
         dependsOn(ktlintCheck)
     }
+
+    publishToMavenLocal {
+        dependsOn(ktlintCheck)
+    }
 }
 
 /* **************** */
@@ -157,9 +161,6 @@ tasks {
 /* **************** */
 val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
-repositories {
-    mavenCentral()
-}
 
 nexusPublishing {
     repositories {
