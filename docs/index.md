@@ -1,15 +1,11 @@
 ---
+layout: default
 title: QRCode-Kotlin
+sidebar: en
 feature_image: "https://picsum.photos/1300/400?image=989"
 feature_text: |
 ## [Github Link](https://github.com/g0dkar/qrcode-kotlin)
 ---
-
-[![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
-[![Send a Thank You Message](https://img.shields.io/badge/Send%20a-Thank%20You%20Message-green)](https://saythanks.io/to/g0dkar)
-
-💚 [_**Disponível em Português (Brasil)**_](README.pt_BR.md) 💛
 
 Creating QRCodes in Kotlin and Java is harder than it should be. QRCode-Kotlin aims to bring a simple, straightforward
 and customizable way to create QRCodes into the JVM domain, especially in the backend.
@@ -43,7 +39,8 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
   All good as well!
 * **Server friendly:** This isn't a library for Mobile applications, but it is extensible. This is a library thought by
   backend developers for backend developers.
-* ![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical?style=flat) **Android is Supported:** Since this library is now a Kotlin Multiplatform one, Android is now natively supported as well!
+* ![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical?style=flat) **Android is Supported:** Since this
+  library is now a Kotlin Multiplatform one, Android is now natively supported as well!
 
 >\* Well, except maybe the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
@@ -261,7 +258,7 @@ QR Code is trademarked by Denso Wave, inc.
 
 * [Kazuhiko Arase](https://github.com/kazuhikoarase): For his reference implementation!
 * [Paul Varry](https://github.com/pvarry): for opening the first few issues on the repo and helping to make the library
-  even better for everyone! :grin:
+  even better for everyone! 😁
 * [Renan Lukas](https://github.com/RenanLukas): For his friendship, patience and help with Android, Gradle and a bunch
   of other stuff during the development of v2.0.0 and v3.0.0!
 * [Doomsdayrs](https://github.com/Doomsdayrs): For pointing out how the library could be improved using Kotlin
@@ -276,7 +273,7 @@ QR Code is trademarked by Denso Wave, inc.
   can [make them](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
   as well!
 
-If you enjoyed the library and want to get me some coffee, use the button below :love_you_gesture:
+If you enjoyed the library and want to get me some coffee, use the button below ✌️
 
 [<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy me a coffee over at Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
 
