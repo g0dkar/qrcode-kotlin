@@ -29,7 +29,7 @@ class QRCodeKotlinLogo {
 
     fun createQRCodeKotlinLogo(cellSize: Int, margin: Int = (cellSize / 1.16).roundToInt()) {
         val renderedQrCodeImage =
-            QRCode("Kotlin").renderShaded(cellSize, margin) { qrCodeSquare, qrCodeGraphics ->
+            QRCode("QRCode Kotlin").renderShaded(cellSize, margin) { qrCodeSquare, qrCodeGraphics ->
                 if (qrCodeSquare.dark) {
                     when (qrCodeSquare.squareInfo.type) {
                         POSITION_PROBE -> when (qrCodeSquare.squareInfo.region) {
@@ -73,9 +73,9 @@ class QRCodeKotlinLogo {
         graphics.drawImage(renderedQrCodeImage, 0, 0, null)
 
         // Draw the Kotlin Logo
-        val logoSquarePosition = background.width / 2 - cellSize / 2 - cellSize * 2
-        val logoSquareSize = cellSize * 6
-        val factor = 0.5
+        val logoSquarePosition = background.width / 2 - cellSize / 2 - cellSize
+        val logoSquareSize = cellSize * 3
+        val factor = 1
         val logoPosition = (logoSquarePosition + margin / factor).toInt()
         val logoSize = (logoSquareSize - (margin / factor) * 2).toInt()
 
