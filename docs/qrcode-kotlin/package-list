@@ -6,6 +6,7 @@ $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.BOTTOM_MID///Poin
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.BOTTOM_RIGHT_CORNER///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-b-o-t-t-o-m_-r-i-g-h-t_-c-o-r-n-e-r/index.html
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.CENTER///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-c-e-n-t-e-r/index.html
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.LEFT_MID///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-l-e-f-t_-m-i-d/index.html
+$dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.MARGIN///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-m-a-r-g-i-n/index.html
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.RIGHT_MID///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-r-i-g-h-t_-m-i-d/index.html
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.TOP_LEFT_CORNER///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-t-o-p_-l-e-f-t_-c-o-r-n-e-r/index.html
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.TOP_MID///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-t-o-p_-m-i-d/index.html

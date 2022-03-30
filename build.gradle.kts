@@ -53,33 +53,29 @@ kotlin {
         dependencies {
             implementation("com.android.tools.lint:lint-gradle:30.1.2")
         }
-
-        // lintOptions {
-        //     checkReleaseBuilds false
-        //     //If you want to continue even if errors found use following line
-        //     abortOnError false
-        // }
     }
 
     sourceSets {
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
                 implementation("io.kotest:kotest-assertions-core:5.1.0")
+                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
     }
