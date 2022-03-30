@@ -39,8 +39,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
   All good as well!
 * **Server friendly:** This isn't a library for Mobile applications, but it is extensible. This is a library thought by
   backend developers for backend developers.
-* ![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical?style=flat) **Android is Supported:** Since this
-  library is now a Kotlin Multiplatform one, Android is now natively supported as well!
+* **Android is Supported:** Since this library is a Kotlin Multiplatform one, Android is natively supported as well!
 
 >\* Well, except maybe the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
