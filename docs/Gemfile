@@ -2,16 +2,15 @@
 
 source "https://rubygems.org"
 
-gemspec
-
-# commenting below to remove dependency with "github-pages"
-# gem "github-pages", group: :jekyll_plugins
-gem "jemoji"
-gem "jekyll-sitemap"
-gem "jekyll-seo-tag"
-gem "jekyll-minifier"
-gem "jekyll-mentions"
-gem "jekyll-redirect-from"
-gem "jekyll-include-cache"
-gem "webrick"
-gem "kramdown-parser-gfm"
+group :jekyll_plugins do
+    gem "jemoji"
+    gem "jekyll-sitemap"
+    gem "jekyll-seo-tag"
+    gem "jekyll-minifier"
+    gem "jekyll-mentions"
+    gem "jekyll-redirect-from"
+    gem "jekyll-include-cache"
+    gem "jekyll-tabs"
+    gem "webrick"
+    gem "kramdown-parser-gfm"
+end

@@ -246,7 +246,7 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
 
 ## License
 
-Copyright 2021 Rafael M. Lins, Licensed under the [MIT License](LICENSE).
+Copyright since 2021 Rafael M. Lins, Licensed under the [MIT License](https://rafaellins.mit-license.org/2021/).
 
 QR Code is trademarked by Denso Wave, inc.
 
