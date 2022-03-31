@@ -176,10 +176,10 @@ val background = Colors.css("#8b949e")
 val foreground = Colors.css("#0d1117")
 
 FileOutputStream("exemplo03.png").use {
-QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
-brightColor = background, // Background (fundo)
-darkColor = foreground    // Foreground (os quadrados)
-).writeImage(it)
+    QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
+        brightColor = background, // Background (fundo)
+        darkColor = foreground    // Foreground (os quadrados)
+    ).writeImage(it)
 }
 ```
 </li>
