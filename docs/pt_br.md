@@ -46,18 +46,24 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.1.0/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
-{% tabs deps %}
-{% tab deps Gradle (JVM) %}
+<ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
+    <li class="active"><a href="#">Gradle (JVM)</a></li>
+    <li><a href="#">Gradle (Android)</a></li>
+    <li><a href="#">Maven (JVM)</a></li>
+    <li><a href="#">Maven (Android)</a></li>
+</ul>
+<ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
+<li class="active" markdown="block">
 ```groovy
 implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.1.0")
 ```
-{% endtab %}
-{% tab deps Gradle (Android) %}
+</li>
+<li markdown="block">
 ```groovy
 implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
 ```
-{% endtab %}
-{% tab deps Maven (JVM) %}
+</li>
+<li markdown="block">
 ```xml
 <dependency>
     <groupId>io.github.g0dkar</groupId>
@@ -65,8 +71,8 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
     <version>3.1.0</version>
 </dependency>
 ```
-{% endtab %}
-{% tab deps Maven (Android) %}
+</li>
+<li markdown="block">
 ```xml
 <dependency>
     <groupId>io.github.g0dkar</groupId>
@@ -74,8 +80,8 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
     <version>3.1.0</version>
 </dependency>
 ```
-{% endtab %}
-{% endtabs %}
+</li>
+</ul>
 
 ## Usos
 
@@ -86,8 +92,12 @@ sofisticados, por favor veja os [Exemplos](/exemplos)! Também há vários [exem
 
 Para gerar um QRCode simples:
 
-{% tabs exemplo01 %}
-{% tab exemplo01 Kotlin %}
+<ul class="tab" data-tab="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
+    <li class="active"><a href="#">Kotlin</a></li>
+    <li><a href="#">Java</a></li>
+</ul>
+<ul class="tab-content" id="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
+<li class="active" markdown="block">
 ```kotlin
 // By default, the writeImage() method outputs PNGs
 FileOutputStream("exemplo01.png").use {
@@ -96,8 +106,8 @@ FileOutputStream("exemplo01.png").use {
         .writeImage(it)
 }
 ```
-{% endtab %}
-{% tab exemplo01 Java %}
+</li>
+<li markdown="block">
 ```java
 // By default, the writeImage() method outputs PNGs
 try (FileOutputStream fileOut = new FileOutputStream("exemplo01.png")) {
@@ -106,8 +116,8 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo01.png")) {
         .writeImage(fileOut);
 }
 ```
-{% endtab %}
-{% endtabs %}
+</li>
+</ul>
 
 ### Ajustando o tamanho
 
@@ -117,8 +127,12 @@ representa o tamanho em pixels de cada quadrado no QRCode resultante. Seu valor 
 Ela também aceita o parâmetro `margin` (margem) o qual é um espaço, em pixels, que será deixado ao redor do QRCode.
 Seu valor padrão é `0`:
 
-{% tabs exemplo02 %}
-{% tab exemplo02 Kotlin %}
+<ul class="tab" data-tab="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
+    <li class="active"><a href="#">Kotlin</a></li>
+    <li><a href="#">Java</a></li>
+</ul>
+<ul class="tab-content" id="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
+<li class="active" markdown="block">
 ```kotlin
 FileOutputStream("exemplo02.png").use {
     QRCode("https://github.com/g0dkar/qrcode-kotlin")
@@ -126,8 +140,8 @@ FileOutputStream("exemplo02.png").use {
         .writeImage(it)
 }
 ```
-{% endtab %}
-{% tab exemplo02 Java %}
+</li>
+<li markdown="block">
 ```java
 try (FileOutputStream fileOut = new FileOutputStream("exemplo02.png")) {
     new QRCode("https://github.com/g0dkar/qrcode-kotlin")
@@ -135,8 +149,8 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo02.png")) {
         .writeImage(fileOut);
 }
 ```
-{% endtab %}
-{% endtabs %}
+</li>
+</ul>
 
 ### QRCodes coloridos
 
@@ -149,8 +163,12 @@ ou, se estiver na JRE, utilizando as simples e _(bastante)_ velhas classes `java
 
 Por diversão, este código cria um QRCode com as cores do Modo Escuro do GitHub:
 
-{% tabs exemplo03 %}
-{% tab exemplo03 Kotlin %}
+<ul class="tab" data-tab="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
+    <li class="active"><a href="#">Kotlin</a></li>
+    <li><a href="#">Java</a></li>
+</ul>
+<ul class="tab-content" id="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
+<li class="active" markdown="block">
 ```kotlin
 import io.github.g0dkar.qrcode.render.Colors
 
@@ -158,14 +176,14 @@ val background = Colors.css("#8b949e")
 val foreground = Colors.css("#0d1117")
 
 FileOutputStream("exemplo03.png").use {
-    QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
-        brightColor = background, // Background (fundo)
-        darkColor = foreground    // Foreground (os quadrados)
-    ).writeImage(it)
+QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
+brightColor = background, // Background
+darkColor = foreground    // Foreground (the squares)
+).writeImage(it)
 }
 ```
-{% endtab %}
-{% tab exemplo03 Java (JRE) %}
+</li>
+<li markdown="block">
 ```java
 import java.awt.Color;
 
@@ -178,55 +196,59 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo03.png")){
         .writeImage(fileOut);
 }
 ```
-{% endtab %}
-{% endtabs %}
+</li>
+</ul>
 
 ### Server-side: Spring Framework/Boot
 
 Uma das razões principais que desenvolvi essa biblioteca foi para utilizá-la numa API Spring Boot que necessitava
 gerar QRCodes, então é apenas natural mostrar como se fazer isso :)
 
-{% tabs exemplo04 %}
-{% tab exemplo04 Kotlin %}
+<ul class="tab" data-tab="013583aa-c7bd-48a8-9d9f-d463669ac699" data-name="exemplo04">
+    <li class="active"><a href="#">Kotlin</a></li>
+    <li><a href="#">Java</a></li>
+</ul>
+<ul class="tab-content" id="013583aa-c7bd-48a8-9d9f-d463669ac699" data-name="exemplo04">
+<li class="active" markdown="block">
 ```kotlin
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
 import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
 @GetMapping("/qrcode")
-fun gerarQrCode(conteudoQrCode: String): ResponseEntity<ByteArrayResource> {
-    val dadosImagem = ByteArrayOutputStream()
+fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
+val imageOut = ByteArrayOutputStream()
 
-    QRCode(conteudoQrCode).render().writeImage(dadosImagem)
+    QRCode(content).render().writeImage(imageOut)
 
-    val bytesImagem = dadosImagem.toByteArray()
-    val corpoResposta = ByteArrayResource(bytesImagem, IMAGE_PNG_VALUE)
+    val imageBytes = imageOut.toByteArray()
+    val resource = ByteArrayResource(imageBytes, IMAGE_PNG_VALUE)
 
     return ResponseEntity.ok()
         .header(CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
-        .body(corpoResposta)
+        .body(resource)
 }
 ```
-{% endtab %}
-{% tab exemplo04 Java %}
+</li>
+<li markdown="block">
 ```java
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 import org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @GetMapping("/qrcode")
-public ResponseEntity<ByteArrayResource> gerarQrCode(String conteudoQrCode) {
-    ByteArrayOutputStream dadosImagem = new ByteArrayOutputStream();
+public ResponseEntity<ByteArrayResource> generateQrCode(String content) {
+    ByteArrayOutputStream imageOut = new ByteArrayOutputStream();
 
-    new QRCode(conteudoQrCode).render().writeImage(dadosImagem);
+    new QRCode(content).render().writeImage(imageOut);
 
     return ResponseEntity.ok()
         .header(CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
-        .body(new ByteArrayResource(dadosImagem.toByteArray(), IMAGE_PNG_VALUE))
+        .body(new ByteArrayResource(imageOut.toByteArray(), IMAGE_PNG_VALUE))
 }
 ```
-{% endtab %}
-{% endtabs %}
+</li>
+</ul>
 
 ## Licença
 
