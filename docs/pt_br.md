@@ -99,7 +99,7 @@ Para gerar um QRCode simples:
 <ul class="tab-content" id="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
 <li class="active" markdown="block">
 ```kotlin
-// By default, the writeImage() method outputs PNGs
+// Por padrão, the writeImage() escreve PNGs
 FileOutputStream("exemplo01.png").use {
     QRCode("https://github.com/g0dkar/qrcode-kotlin")
         .render()
@@ -109,7 +109,7 @@ FileOutputStream("exemplo01.png").use {
 </li>
 <li markdown="block">
 ```java
-// By default, the writeImage() method outputs PNGs
+// Por padrão, the writeImage() escreve PNGs
 try (FileOutputStream fileOut = new FileOutputStream("exemplo01.png")) {
     new QRCode("https://github.com/g0dkar/qrcode-kotlin")
         .render()
@@ -177,8 +177,8 @@ val foreground = Colors.css("#0d1117")
 
 FileOutputStream("exemplo03.png").use {
 QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
-brightColor = background, // Background
-darkColor = foreground    // Foreground (the squares)
+brightColor = background, // Background (fundo)
+darkColor = foreground    // Foreground (os quadrados)
 ).writeImage(it)
 }
 ```
