@@ -13,13 +13,13 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 <!-- toc -->
 
 - [Vantagens do QRCode-Kotlin](#vantagens-do-qrcode-kotlin)
-- [Instalação](#instalacao)
+- [Instalação](#instalação)
 - [Usos](#usos)
   * [Um QRCode simples](#um-qrcode-simples)
   * [Ajustando o tamanho](#ajustando-o-tamanho)
   * [QRCodes coloridos](#qrcodes-coloridos)
   * [Server-side: Spring Framework/Boot](#server-side-spring-frameworkboot)
-- [Licença](#licenca)
+- [Licença](#licença)
 - [Agradecimentos e Reconhecimentos](#agradecimentos-e-reconhecimentos)
 - [Suporte e Links](#suporte-e-links)
 
