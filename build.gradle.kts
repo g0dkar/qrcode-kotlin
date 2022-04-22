@@ -50,7 +50,7 @@ kotlin {
         publishLibraryVariants("release")
 
         dependencies {
-            implementation("com.android.tools.lint:lint-gradle:30.1.2")
+            implementation("com.android.tools.lint:lint-gradle:30.1.3")
         }
     }
 
