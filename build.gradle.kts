@@ -2,7 +2,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
     }
 }
 
@@ -17,7 +17,7 @@ plugins {
     id("idea")
 
     // Base Plugins
-    kotlin("multiplatform") version "1.6.10"
+    kotlin("multiplatform") version "1.6.20"
     id("com.android.library") version "3.6.1"
 
     // Publishing Plugins
@@ -26,7 +26,7 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 
     // Docs Plugins
-    id("org.jetbrains.dokka") version "1.6.10"
+    id("org.jetbrains.dokka") version "1.6.20"
 }
 
 group = "io.github.g0dkar"
@@ -63,7 +63,9 @@ kotlin {
                 implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
+        val jvmMain by getting
         val jvmTest by getting
+        val androidMain by getting
         val androidTest by getting
     }
 }
