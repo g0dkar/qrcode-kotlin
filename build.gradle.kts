@@ -18,7 +18,7 @@ plugins {
 
     // Base Plugins
     kotlin("multiplatform") version "1.6.20"
-    id("com.android.library") version "3.6.1"
+    id("com.android.library") version "7.1.3"
 
     // Publishing Plugins
     signing
