@@ -63,20 +63,8 @@ kotlin {
                 implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
             }
         }
-        val jvmTest by getting {
-            dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-            }
-        }
+        val jvmTest by getting
+        val androidTest by getting
     }
 }
 
