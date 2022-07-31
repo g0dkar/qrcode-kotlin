@@ -2,7 +2,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     }
 }
 
@@ -17,9 +17,9 @@ plugins {
     id("idea")
 
     // Base Plugins
-    kotlin("multiplatform") version "1.6.10"
-    id("com.android.library")
-    id("kotlin-android-extensions")
+    kotlin("multiplatform") version "1.7.10"
+    id("com.android.library") version "7.2.0"
+    id("kotlin-android-extensions") version "1.7.10"
 
     // Publishing Plugins
     signing
@@ -27,11 +27,11 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 
     // Docs Plugins
-    id("org.jetbrains.dokka") version "1.6.10"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "io.github.g0dkar"
-version = "3.1.0"
+version = "3.1.1"
 
 kotlin {
     jvm {
@@ -49,33 +49,29 @@ kotlin {
 
     android {
         publishLibraryVariants("release")
-
-        dependencies {
-            implementation("com.android.tools.lint:lint-gradle:30.1.2")
-        }
     }
 
     sourceSets {
         val commonTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-assertions-core:5.1.0")
-                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+                implementation("io.kotest:kotest-assertions-core:5.3.0")
+                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
             }
         }
     }
@@ -125,7 +121,7 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest:ktlint:0.45.1") {
+    ktlint("com.pinterest:ktlint:0.45.2") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
