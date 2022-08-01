@@ -13,6 +13,17 @@ dependencyResolutionManagement {
     }
 }
 
+// buildscript {
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+//
+//     dependencies {
+//         classpath("com.android.tools.build:gradle:7.2.1")
+//     }
+// }
+
 rootProject.name = "qrcode-kotlin-examples"
 
 // Kotlin Examples
@@ -22,4 +33,4 @@ include("kotlin")
 include("java")
 
 // Android Example
-include(":android")
+//include("android")

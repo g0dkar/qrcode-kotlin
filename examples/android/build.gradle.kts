@@ -1,5 +1,16 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.2.1")
+    }
+}
+
 plugins {
-    id("com.android.application") version "7.2.0"
+    id("com.android.application") version "7.2.1"
     id("org.jetbrains.kotlin.android") version "1.7.10"
 }
 
@@ -7,7 +18,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        applicationId = "com.example.android"
+        applicationId = "io.github.g0dkar.qrcode"
         minSdk = 28
         targetSdk = 32
         versionCode = 1
@@ -18,8 +29,11 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
