@@ -8,15 +8,17 @@ import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import javax.imageio.ImageIO
 
-actual class QRCodeGraphics actual constructor(
+actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
     private val image: BufferedImage = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
     private val colorCache = mutableMapOf<Int, Color>()
 
+    protected fun createGraphics(): Graphics2D = image.createGraphics()
+
     private fun draw(color: Int, action: (Graphics2D) -> Unit) {
-        val graphics = image.createGraphics()
+        val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
         graphics.color = jdkColor

@@ -1,6 +1,6 @@
 package io.github.g0dkar.qrcode.render
 
-expect class QRCodeGraphics(width: Int, height: Int) {
+expect open class QRCodeGraphics(width: Int, height: Int) {
     /** Returns this image as a [ByteArray] encoded as PNG. */
     fun getBytes(): ByteArray
 
@@ -22,7 +22,7 @@ expect class QRCodeGraphics(width: Int, height: Int) {
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int)
 
-    /** Fill the whole area of this canvas with the especified [color]. */
+    /** Fill the whole area of this canvas with the specified [color]. */
     fun fill(color: Int)
 
     /**
@@ -43,7 +43,7 @@ expect class QRCodeGraphics(width: Int, height: Int) {
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int)
@@ -66,7 +66,7 @@ expect class QRCodeGraphics(width: Int, height: Int) {
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int)

@@ -13,7 +13,7 @@ import android.graphics.Rect
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
-actual class QRCodeGraphics actual constructor(
+actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
