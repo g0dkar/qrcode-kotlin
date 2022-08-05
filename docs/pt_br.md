@@ -43,7 +43,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.1.0/qrcode-kotlin),
+Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.2.0/qrcode-kotlin),
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 <ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
@@ -55,12 +55,12 @@ então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra depen
 <ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
 <li class="active" markdown="block">
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.2.0")
 ```
 </li>
 <li markdown="block">
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 ```
 </li>
 <li markdown="block">
@@ -68,7 +68,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 </li>
@@ -77,7 +77,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 </li>
