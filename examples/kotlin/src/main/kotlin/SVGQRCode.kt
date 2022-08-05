@@ -9,7 +9,7 @@ class SVGQRCode {
             val computedSize = qrCode.computeImageSize()
             val graphics = SVGQRCodeGraphics(computedSize, computedSize)
 
-            qrCode.renderShadedIntoGraphics(qrCodeGraphics = graphics) { qrCodeSquare, cellGraphics ->
+            qrCode.renderShaded(qrCodeGraphics = graphics) { qrCodeSquare, cellGraphics ->
                 if (qrCodeSquare.dark) {
                     graphics.fillRect(
                         qrCodeSquare.absoluteX(),
