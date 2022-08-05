@@ -93,6 +93,10 @@ implementation 'io.github.g0dkar:qrcode-kotlin-android:3.2.0'
 Here are a few examples of how to use the library to achieve some nice results. If you are interested in more advanced
 uses and/or fancier QRCodes, please read the [documentation](dokka) :)
 
+![new on v3.2.0](https://img.shields.io/badge/new!-v3.2.0-critical)
+
+**New:** There's a new example showing how to create an [SVG QRCode](examples/kotlin/src/main/kotlin/SVGQRCode.kt)!
+
 >Also, make sure to check our [examples](examples) folder for codes in Kotlin and Java, and the resulting QRCodes!
 
 ### Just a plain, simple QRCode, nothing fancy
