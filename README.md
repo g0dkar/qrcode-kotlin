@@ -57,7 +57,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 
 
@@ -66,7 +66,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
@@ -75,17 +75,17 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 ```groovy
 // Kotlin ❤️
 // Use this one for normal applications
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.2.0")
 // Or this one for Android apps 👀
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 
 
 
 // Groovy
 // Use this one for normal applications
-implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.1.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.2.0'
 // Or this one for Android apps 👀
-implementation 'io.github.g0dkar:qrcode-kotlin-android:3.1.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-android:3.2.0'
 ```
 
 ## Examples and Usage
