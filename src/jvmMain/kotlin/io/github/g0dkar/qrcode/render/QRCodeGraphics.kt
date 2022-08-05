@@ -29,6 +29,7 @@ actual open class QRCodeGraphics actual constructor(
         val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
+        graphics.paint = jdkColor
         graphics.color = jdkColor
         graphics.background = jdkColor
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
@@ -97,7 +98,7 @@ actual open class QRCodeGraphics actual constructor(
         draw(color) { it.fillRect(x, y, width, height) }
     }
 
-    /** Fill the whole area of this canvas with the especified [color]. */
+    /** Fill the whole area of this canvas with the specified [color]. */
     actual open fun fill(color: Int) {
         fillRect(0, 0, width, height, color)
     }
@@ -120,7 +121,7 @@ actual open class QRCodeGraphics actual constructor(
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
@@ -145,7 +146,7 @@ actual open class QRCodeGraphics actual constructor(
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {

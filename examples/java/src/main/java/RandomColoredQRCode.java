@@ -29,11 +29,11 @@ public class RandomColoredQRCode {
 
         new QRCode(content).renderShaded((cellData, canvas) -> {
                                if (cellData.getDark()) {
-                                   if (cellData.getType() != QRCodeSquareType.DEFAULT) {
-                                       colorMap.putIfAbsent(cellData.getType(), colors.get(rand.nextInt(colors.size())));
+                                   if (cellData.getSquareInfo().getType() != QRCodeSquareType.DEFAULT) {
+                                       colorMap.putIfAbsent(cellData.getSquareInfo().getType(), colors.get(rand.nextInt(colors.size())));
                                    }
 
-                                   Color cellColor = colorMap.getOrDefault(cellData.getType(), colors.get(rand.nextInt(colors.size())));
+                                   Color cellColor = colorMap.getOrDefault(cellData.getSquareInfo().getType(), colors.get(rand.nextInt(colors.size())));
                                    canvas.fill(cellColor.getRGB());
                                } else {
                                    canvas.fill(backgroundColor.getRGB());

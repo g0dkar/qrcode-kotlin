@@ -13,7 +13,7 @@ class SVGQRCode {
     }
     fun createQRCode(content: String) {
         FileOutputStream("kotlin-svg.svg").use {
-            QRCode(content).render(qrCodeGraphics = svgRenderer).writeImage(it)
+            QRCode(content).renderIntoGraphics(qrCodeGraphics = svgRenderer).writeImage(it)
         }
     }
 }
