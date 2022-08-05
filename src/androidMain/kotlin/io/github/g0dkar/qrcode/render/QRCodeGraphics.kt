@@ -13,12 +13,14 @@ import android.graphics.Rect
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
-actual class QRCodeGraphics actual constructor(
+actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
+    protected open fun createCanvas(image: Bitmap) = Canvas(image)
+
     private val image: Bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    private val canvas: Canvas = Canvas(image)
+    private val canvas: Canvas = createCanvas(image)
     private val paintCache = mutableMapOf<Int, Paint>()
 
     private fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
@@ -38,7 +40,7 @@ actual class QRCodeGraphics actual constructor(
      *
      * @see writeImage
      */
-    actual fun getBytes(): ByteArray = getBytes("PNG")
+    actual open fun getBytes(): ByteArray = getBytes("PNG")
 
     /**
      * Returns this image as a [ByteArray] encoded as the specified format. Recommended to use [writeImage].
@@ -46,7 +48,7 @@ actual class QRCodeGraphics actual constructor(
      * @see writeImage
      * @see availableFormats
      */
-    actual fun getBytes(format: String): ByteArray =
+    actual open fun getBytes(format: String): ByteArray =
         ByteArrayOutputStream().let {
             writeImage(it, format)
             it.toByteArray()
@@ -62,7 +64,7 @@ actual class QRCodeGraphics actual constructor(
      * @see Bitmap.compress
      * @see availableFormats
      */
-    fun writeImage(destination: OutputStream, format: String = "PNG", quality: Int = 100) {
+    open fun writeImage(destination: OutputStream, format: String = "PNG", quality: Int = 100) {
         val compressFormat = toCompressFormat(format)
         image.compress(compressFormat, quality.coerceIn(0, 100), destination)
     }
@@ -85,28 +87,28 @@ actual class QRCodeGraphics actual constructor(
      * @see CompressFormat.JPEG
      * @see CompressFormat.WEBP
      */
-    actual fun availableFormats(): List<String> = CompressFormat.values().map { it.name }
+    actual open fun availableFormats(): List<String> = CompressFormat.values().map { it.name }
 
     /** Returns the [Bitmap] object being worked upon. */
-    actual fun nativeImage(): Any = image
+    actual open fun nativeImage(): Any = image
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
         canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color))
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
         canvas.drawRect(Rect(x, y, width, height), paintFromCache(color))
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
         canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, FILL))
     }
 
     /** Fill the whole area of this canvas with the especified [color]. */
-    actual fun fill(color: Int) {
+    actual open fun fill(color: Int) {
         fillRect(0, 0, width, height, color)
     }
 
@@ -131,7 +133,7 @@ actual class QRCodeGraphics actual constructor(
      * **Note:** you can't especify different sizes for different edges. This is just an example :)
      *
      */
-    actual fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
+    actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -164,7 +166,7 @@ actual class QRCodeGraphics actual constructor(
      * **Note:** you can't especify different sizes for different edges. This is just an example :)
      *
      */
-    actual fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
+    actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -177,7 +179,7 @@ actual class QRCodeGraphics actual constructor(
     }
 
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
+    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
         canvas.drawBitmap(img.image, x.toFloat(), y.toFloat(), null)
     }
 }

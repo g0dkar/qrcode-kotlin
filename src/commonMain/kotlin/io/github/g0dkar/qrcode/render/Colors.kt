@@ -351,6 +351,6 @@ object Colors {
             "WHITE" to WHITE,
             "WHITE_SMOKE" to WHITE_SMOKE,
             "YELLOW" to YELLOW,
-            "YELLOW_GREEN" to YELLOW_GREEN,
+            "YELLOW_GREEN" to YELLOW_GREEN
         )
 }

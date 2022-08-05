@@ -43,7 +43,7 @@ public class GradientColoredQRCode {
         int qrCodeSize = qrCode.computeImageSize(QRCode.DEFAULT_CELL_SIZE, QRCode.DEFAULT_MARGIN, rawData);
 
         new QRCode(content).renderShaded((cellData, canvas) -> {
-                               if (cellData.getType() != QRCodeSquareType.MARGIN) {
+                               if (cellData.getSquareInfo().getType() != QRCodeSquareType.MARGIN) {
                                    if (cellData.getDark()) {
                                        int x = cellData.absoluteX();
                                        int y = cellData.absoluteY();

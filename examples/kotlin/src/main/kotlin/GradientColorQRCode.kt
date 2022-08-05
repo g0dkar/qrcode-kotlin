@@ -26,7 +26,7 @@ class GradientColorQRCode(
         val (startR, startG, startB) = Colors.getRGBA(startColor)
         val (endR, endG, endB) = Colors.getRGBA(endColor)
 
-        val qrCodeCanvas = qrCode.renderShaded(rawData = qrCodeData) { cellData, cellCanvas ->
+        val qrCodeCanvas = qrCode.renderShadedIntoGraphics(rawData = qrCodeData) { cellData, cellCanvas ->
             if (cellData.dark) {
                 val x = cellData.absoluteX()
                 val y = cellData.absoluteY()
