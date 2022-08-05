@@ -67,7 +67,7 @@ import io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory
  * @see ErrorCorrectionLevel
  * @see QRUtil.getDataType
  */
-class QRCode @kotlin.jvm.JvmOverloads constructor(
+class QRCode @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data)
@@ -89,8 +89,8 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
         /**
          * Calculates a suitable value for the [dataType] field for you.
          */
-        @kotlin.jvm.JvmStatic
-        @kotlin.jvm.JvmOverloads
+        @JvmStatic
+        @JvmOverloads
         fun typeForDataAndECL(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
@@ -149,12 +149,11 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
      *
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
-     * @see renderShadedIntoGraphics
+     * @see renderShaded
      * @see QRCodeSquare
      * @see QRCodeGraphics
      * @see Colors
      */
-    @kotlin.jvm.JvmOverloads
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -162,7 +161,7 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
         darkColor: Int = Colors.BLACK,
         marginColor: Int = Colors.WHITE
     ) =
-        renderIntoGraphics(
+        render(
             cellSize = cellSize,
             margin = margin,
             rawData = encode(),
@@ -186,22 +185,28 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
      *
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
-     * @see renderShadedIntoGraphics
+     * @see renderShaded
      * @see QRCodeSquare
      * @see QRCodeGraphics
      * @see Colors
      */
-    @kotlin.jvm.JvmOverloads
-    fun renderIntoGraphics(
+    @JvmOverloads
+    fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(computeImageSize(cellSize, margin, rawData)),
+        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(
+            computeImageSize(
+                cellSize,
+                margin,
+                rawData
+            )
+        ),
         brightColor: Int = Colors.WHITE,
         darkColor: Int = Colors.BLACK,
         marginColor: Int = Colors.WHITE
     ) =
-        renderShadedIntoGraphics(
+        renderShaded(
             cellSize,
             margin,
             rawData,
@@ -217,36 +222,6 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
                 }
             }
         }
-
-    /**
-     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
-     * Java :)
-     *
-     * Please, see [renderShadedIntoGraphics].
-     *
-     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
-     * @param renderer Mapping function that maps a pixel to a color. `(image, x, y, Triple<Bright, Row, Column>?) -> pixel RGBA color`.
-     *
-     * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
-     *
-     * @see QRCodeSquare
-     * @see QRCodeGraphics
-     * @see Colors
-     * @see newGraphics
-     */
-    @kotlin.jvm.JvmOverloads
-    fun renderShaded(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
-        renderer: (QRCodeSquare, QRCodeGraphics) -> Unit
-    ) =
-        renderShadedIntoGraphics(
-            cellSize = cellSize,
-            margin = margin,
-            rawData = encode(),
-            renderer = renderer
-        )
 
     /**
      * Renders a QR Code image based on its [computed data][encode].
@@ -287,12 +262,18 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
      * @see QRCodeGraphics
      * @see Colors
      */
-    @kotlin.jvm.JvmOverloads
-    fun renderShadedIntoGraphics(
+    @JvmOverloads
+    fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(computeImageSize(cellSize, margin, rawData)),
+        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(
+            computeImageSize(
+                cellSize,
+                margin,
+                rawData
+            )
+        ),
         renderer: (QRCodeSquare, QRCodeGraphics) -> Unit
     ): QRCodeGraphics {
         if (margin > 0) {
@@ -312,7 +293,11 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
                 if (cell != null) {
                     val squareCanvas = qrCodeGraphicsFactory.newGraphics(cellSize)
                     renderer(cell, squareCanvas)
-                    qrCodeGraphics.drawImage(squareCanvas, margin + cellSize * col, margin + cellSize * row)
+                    qrCodeGraphics.drawImage(
+                        squareCanvas,
+                        margin + cellSize * col,
+                        margin + cellSize * row
+                    )
                 }
             }
         }
@@ -323,7 +308,7 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
     /**
      * Computes and encodes the [data] of this object into a QR Code. This method returns the raw data of the QR Code.
      *
-     * If you just want to render (create) a QR Code image, you are probably looking for the [renderShadedIntoGraphics] method.
+     * If you just want to render (create) a QR Code image, you are probably looking for the [renderShaded] method.
      *
      * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
      * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
@@ -335,15 +320,16 @@ class QRCode @kotlin.jvm.JvmOverloads constructor(
      * @see typeForDataAndECL
      * @see ErrorCorrectionLevel
      * @see MaskPattern
-     * @see renderShadedIntoGraphics
+     * @see renderShaded
      */
-    @kotlin.jvm.JvmOverloads
+    @JvmOverloads
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
     ): Array<Array<QRCodeSquare?>> {
         val moduleCount = type * 4 + 17
-        val modules: Array<Array<QRCodeSquare?>> = Array(moduleCount) { Array(moduleCount) { null } }
+        val modules: Array<Array<QRCodeSquare?>> =
+            Array(moduleCount) { Array(moduleCount) { null } }
 
         setupTopLeftPositionProbePattern(modules)
         setupTopRightPositionProbePattern(modules)
