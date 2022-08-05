@@ -268,7 +268,7 @@ internal object QRUtil {
             intArrayOf(4134, 2506, 1722, 1060),
             intArrayOf(2949, 1787, 1228, 756),
             intArrayOf(2301, 1394, 958, 590)
-        ),
+        )
     )
 
     fun getMaxLength(typeNumber: Int, dataType: QRCodeDataType, errorCorrectionLevel: ErrorCorrectionLevel): Int =

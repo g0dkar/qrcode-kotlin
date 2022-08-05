@@ -18,7 +18,7 @@ plugins {
 
     // Base Plugins
     kotlin("multiplatform") version "1.7.10"
-    id("com.android.library") version "7.2.0"
+    id("com.android.library") version "7.2.1"
     id("kotlin-android-extensions") version "1.7.10"
 
     // Publishing Plugins
@@ -78,11 +78,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdk = 29
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
+        minSdk = 21
+        targetSdk = 29
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -121,7 +121,7 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest:ktlint:0.45.2") {
+    ktlint("com.pinterest:ktlint:0.46.1") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
