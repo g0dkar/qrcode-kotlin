@@ -57,7 +57,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 
 
@@ -66,7 +66,7 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
@@ -75,23 +75,27 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 ```groovy
 // Kotlin ❤️
 // Use this one for normal applications
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.2.0")
 // Or this one for Android apps 👀
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 
 
 
 // Groovy
 // Use this one for normal applications
-implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.1.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.2.0'
 // Or this one for Android apps 👀
-implementation 'io.github.g0dkar:qrcode-kotlin-android:3.1.0'
+implementation 'io.github.g0dkar:qrcode-kotlin-android:3.2.0'
 ```
 
 ## Examples and Usage
 
 Here are a few examples of how to use the library to achieve some nice results. If you are interested in more advanced
 uses and/or fancier QRCodes, please read the [documentation](dokka) :)
+
+![new on v3.2.0](https://img.shields.io/badge/new!-v3.2.0-critical)
+
+**New:** There's a new example showing how to create an [SVG QRCode](examples/kotlin/src/main/kotlin/SVGQRCode.kt)!
 
 >Also, make sure to check our [examples](examples) folder for codes in Kotlin and Java, and the resulting QRCodes!
 

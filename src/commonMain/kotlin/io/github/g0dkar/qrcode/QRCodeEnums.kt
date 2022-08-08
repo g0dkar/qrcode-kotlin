@@ -60,8 +60,10 @@ enum class MaskPattern {
 enum class QRCodeDataType(val value: Int) {
     /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
     NUMBERS(1 shl 0),
+
     /** Represents Uppercase Alphanumerical data. Allowed characters: `[0-9A-Z $%*+\-./:]`. */
     UPPER_ALPHA_NUM(1 shl 1),
+
     /** This can be any kind of data. With this you can encode Strings, URLs, images, files, anything. */
     DEFAULT(1 shl 2)
 }

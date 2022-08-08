@@ -11,7 +11,7 @@ public class RoundQRCode {
         new QRCode(content).renderShaded((cellData, canvas) -> {
                                canvas.fill(Color.WHITE.getRGB());
                                if (cellData.getDark()) {
-                                   if (cellData.getType() == QRCodeSquareType.POSITION_PROBE) {
+                                   if (cellData.getSquareInfo().getType() == QRCodeSquareType.POSITION_PROBE) {
                                        canvas.fill(Color.BLACK.getRGB());
                                    } else {
                                        canvas.fillRoundRect(0, 0, canvas.getWidth(), canvas.getHeight(), radius,
