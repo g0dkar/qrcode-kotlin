@@ -1,12 +1,18 @@
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        gradlePluginPortal()
         google()
+        gradlePluginPortal()
     }
 }
 
 pluginManagement {
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+
     resolutionStrategy {
         eachPlugin {
             if (requested.id.namespace == "com.android" || requested.id.name == "kotlin-android-extensions") {
