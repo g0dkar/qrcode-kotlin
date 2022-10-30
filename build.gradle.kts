@@ -2,7 +2,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
     }
 }
 
@@ -17,9 +17,9 @@ plugins {
     id("idea")
 
     // Base Plugins
-    kotlin("multiplatform") version "1.7.10"
+    kotlin("multiplatform") version "1.7.20"
     id("com.android.library") version "7.2.1"
-    id("kotlin-android-extensions") version "1.7.10"
+    id("kotlin-android-extensions") version "1.7.20"
 
     // Publishing Plugins
     signing
