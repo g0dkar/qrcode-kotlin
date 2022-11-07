@@ -1,4 +1,5 @@
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 
 buildscript {
     dependencies {
@@ -30,7 +31,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.2.0"
+version = "3.3.0"
 
 kotlin {
     jvm {
@@ -50,27 +51,35 @@ kotlin {
         publishLibraryVariants("release")
     }
 
+    js(BOTH) {
+        browser {
+            commonWebpackConfig {
+                mode = PRODUCTION
+                outputFileName = "qrcode-kotlin"
+                outputPath = rootDir
+                cssSupport {
+                    enabled = true
+                }
+            }
+        }
+    }
+
+    val hostOs = System.getProperty("os.name")
+    val isMingwX64 = hostOs.startsWith("Windows")
+    val nativeTarget = when {
+        hostOs == "Mac OS X" -> macosX64("native")
+        hostOs == "Linux" -> linuxX64("native")
+        isMingwX64 -> mingwX64("native")
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    }
+
     sourceSets {
         val commonTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-assertions-core:5.3.0")
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation("io.kotest:kotest-assertions-core:5.5.3")
+                implementation("org.junit.jupiter:junit-jupiter:5.9.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
             }
         }
     }
@@ -102,16 +111,26 @@ idea {
 /* **************** */
 /* Docs             */
 /* **************** */
-val dokkaOutputDir = "$projectDir/dokka"
+tasks {
+    dokkaHtml {
+        outputDirectory.set(buildDir.resolve("javadoc"))
 
-tasks.getByName<DokkaTask>("dokkaHtml") {
-    outputDirectory.set(file(dokkaOutputDir))
+        dokkaSourceSets {
+            configureEach {
+                includeNonPublic.set(false)
+                skipDeprecated.set(true)
+                reportUndocumented.set(true)
+                skipEmptyPackages.set(true)
+            }
+        }
+    }
 }
 
-val javadocJar = tasks.register<Jar>("javadocJar") {
-    dependsOn(tasks.dokkaHtml)
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
-    from(dokkaOutputDir)
+    from(tasks.dokkaHtml)
 }
 
 /* **************** */
@@ -120,7 +139,7 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest:ktlint:0.46.1") {
+    ktlint("com.pinterest:ktlint:0.47.1") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
@@ -181,7 +200,7 @@ signing {
 publishing {
     publications {
         withType<MavenPublication> {
-            artifact(javadocJar)
+            artifact(dokkaJar)
 
             pom {
                 val projectGitUrl = "https://github.com/g0dkar/qrcode-kotlin"
