@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 
 buildscript {
@@ -10,6 +9,7 @@ buildscript {
 plugins {
     // Dev Plugins
     id("idea")
+    id("com.diffplug.spotless") version "6.11.0"
 
     // Base Plugins
     kotlin("multiplatform") version "1.7.20"
@@ -136,37 +136,12 @@ val dokkaJar by tasks.creating(Jar::class) {
 /* **************** */
 /* Lint             */
 /* **************** */
-val ktlint by configurations.creating
-
-dependencies {
-    ktlint("com.pinterest:ktlint:0.47.1") {
-        attributes {
-            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
-        }
+spotless {
+    kotlin {
+        ktlint("0.47.1")
     }
-}
-
-val ktlintCheck by tasks.creating(JavaExec::class) {
-    description = "Check Kotlin code style."
-    mainClass.set("com.pinterest.ktlint.Main")
-    classpath = ktlint
-    args = listOf("--editorconfig=$projectDir/.editorconfig", "--color", "--relative", "src/**/*.kt")
-}
-
-val ktlintFormat by tasks.creating(JavaExec::class) {
-    description = "Fix Kotlin code style deviations."
-    mainClass.set("com.pinterest.ktlint.Main")
-    classpath = ktlint
-    args = listOf("--editorconfig=$projectDir/.editorconfig", "--format", "--color", "--relative", "src/**/*.kt")
-}
-
-tasks {
-    publish {
-        dependsOn(ktlintCheck)
-    }
-
-    publishToMavenLocal {
-        dependsOn(ktlintCheck)
+    kotlinGradle {
+        ktlint("0.47.1")
     }
 }
 
