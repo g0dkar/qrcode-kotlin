@@ -52,6 +52,11 @@ kotlin {
     }
 
     js(BOTH) {
+        compilations.all {
+            kotlinOptions {
+                main = "noCall"
+            }
+        }
         browser {
             commonWebpackConfig {
                 mode = PRODUCTION
@@ -77,9 +82,9 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation("io.kotest:kotest-assertions-core:5.5.3")
-                implementation("org.junit.jupiter:junit-jupiter:5.9.0")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+                implementation("org.junit.jupiter:junit-jupiter:5.9.1")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.1")
             }
         }
     }

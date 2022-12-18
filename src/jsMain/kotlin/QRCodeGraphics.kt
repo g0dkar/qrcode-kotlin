@@ -1,9 +1,44 @@
 package io.github.g0dkar.qrcode.render
 
+import kotlinx.browser.document
+import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.RenderingContext
+
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
+    companion object {
+        private const val CANVAS_UNSUPPORTED = "Canvas seems to not be supported :("
+    }
+
+    private val canvas: HTMLCanvasElement
+    private val context: RenderingContext
+
+    init {
+        val canvas: HTMLCanvasElement = try {
+            document.createElement("canvas") as HTMLCanvasElement
+        } catch (t: Throwable) {
+            throw UnsupportedOperationException(CANVAS_UNSUPPORTED, cause = t)
+        }
+
+        canvas.width = width
+        canvas.height = height
+
+        val context = try {
+            canvas.getContext("2d")
+        } catch (t: Throwable) {
+            throw UnsupportedOperationException(CANVAS_UNSUPPORTED, cause = t)
+        }
+
+        if (context != null) {
+            this.canvas = canvas
+            this.context = context
+        } else {
+            throw UnsupportedOperationException(CANVAS_UNSUPPORTED)
+        }
+    }
+
     /** Returns this image as a [ByteArray] encoded as PNG. */
     actual open fun getBytes(): ByteArray {
         TODO("Not yet implemented")
