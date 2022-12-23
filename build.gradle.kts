@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 
 buildscript {
@@ -19,9 +22,11 @@ plugins {
 
     // Base Plugins
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotest.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android.extensions)
+
+    // Kotest
+    alias(libs.plugins.kotest.multiplatform)
 
     // Publishing Plugins
     signing
@@ -86,14 +91,17 @@ kotlin {
         val commonMain by getting
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
                 implementation(libs.kotest.assertions.core)
                 implementation(libs.kotest.framework.engine)
             }
         }
         val jvmMain by getting
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.kotest.runner.junit5)
+            }
+        }
         val jsMain by getting
         val jsTest by getting
         val nativeMain by getting
@@ -116,6 +124,19 @@ android {
 tasks {
     wrapper {
         distributionType = Wrapper.DistributionType.ALL
+    }
+
+    named<Test>("jvmTest") {
+        useJUnitPlatform()
+        filter {
+            isFailOnNoMatchingTests = false
+        }
+        testLogging {
+            showExceptions = true
+            showStandardStreams = true
+            events = setOf(FAILED, PASSED)
+            exceptionFormat = FULL
+        }
     }
 }
 

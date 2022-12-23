@@ -1,12 +1,12 @@
 package io.github.g0dkar.qrcode.internals
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 
-class PolynomialTest : StringSpec({
-    "Creation" {
-        "Simple" {
+class PolynomialTest : FunSpec({
+    context("Creation") {
+        test("Simple") {
             val input = intArrayOf(1, 2, 3)
             val expected = listOf(1, 2, 3)
 
@@ -15,7 +15,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Simple with 0" {
+        test("Simple with 0") {
             val input = intArrayOf(0, 1, 2)
             val expected = listOf(1, 2)
 
@@ -24,7 +24,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Only 0s" {
+        test("Only 0s") {
             val input = intArrayOf(0, 0, 0)
             val expected = listOf(0, 0, 0)
 
@@ -33,7 +33,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Shifted 1" {
+        test("Shifted 1") {
             val input = intArrayOf(1, 2, 3)
             val shift = 1
             val expected = listOf(1, 2, 3, 0)
@@ -43,7 +43,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Shifted 3" {
+        test("Shifted 3") {
             val input = intArrayOf(1, 2, 3)
             val shift = 3
             val expected = listOf(1, 2, 3, 0, 0, 0)
@@ -53,7 +53,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Shifted 1, With 0" {
+        test("Shifted 1, With 0") {
             val input = intArrayOf(0, 1, 2)
             val shift = 1
             val expected = listOf(1, 2, 0)
@@ -63,7 +63,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Shifted 5, With 0" {
+        test("Shifted 5, With 0") {
             val input = intArrayOf(0, 1, 2)
             val shift = 5
             val expected = listOf(1, 2, 0, 0, 0, 0, 0)
@@ -73,7 +73,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "Shifted 2, With 2 zeroes" {
+        test("Shifted 2, With 2 zeroes") {
             val input = intArrayOf(0, 0, 1)
             val shift = 2
             val expected = listOf(1, 0, 0)
@@ -84,8 +84,8 @@ class PolynomialTest : StringSpec({
         }
     }
 
-    "Operations" {
-        "mod" {
+    context("Operations") {
+        test("mod") {
             val input = inputArray(0, 43, 139, 206, 78, 43, 239, 123, 206, 214, 147, 24, 99, 150, 39, 243, 163, 136)
             val inputPolynomial = Polynomial(input)
 
@@ -100,7 +100,7 @@ class PolynomialTest : StringSpec({
             result.toList() shouldContainExactly expected
         }
 
-        "multiply" {
+        test("multiply") {
             val expected = listOf(1, 127, 122, 154, 164, 11, 68, 117)
             var result = Polynomial(intArrayOf(1))
 

@@ -1,13 +1,27 @@
 package io.github.g0dkar.qrcode.internals
 
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
-class QRNumberTest : StringSpec({
-    "Write" {
+class QRNumberTest : FunSpec({
+    context("Edge Cases") {
+        test("Empty String") {
+            val testBuffer = BitBuffer()
+            val expectedBufferData = MutableList(32) { 0 }
+            val expectedLengthInBits = 0
 
-        "0" {
+            val underTest = QRNumber("")
+
+            underTest.write(testBuffer)
+
+            testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+            testBuffer.lengthInBits shouldBe expectedLengthInBits
+        }
+    }
+
+    context("Positive Numbers") {
+        test("0") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
             val expectedLengthInBits = 4
@@ -20,7 +34,7 @@ class QRNumberTest : StringSpec({
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
 
-        "1" {
+        test("1") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
                 .apply {
@@ -36,7 +50,7 @@ class QRNumberTest : StringSpec({
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
 
-        "Multiple Digits 01" {
+        test("Multiple Digits 01") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
                 .apply {
@@ -53,7 +67,7 @@ class QRNumberTest : StringSpec({
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
 
-        "Multiple Digits 02" {
+        test("Multiple Digits 02") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
                 .apply {
@@ -71,7 +85,7 @@ class QRNumberTest : StringSpec({
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
 
-        "Multiple Digits 03" {
+        test("Multiple Digits 03") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
                 .apply {
@@ -93,13 +107,18 @@ class QRNumberTest : StringSpec({
             testBuffer.buffer.asList() shouldContainExactly expectedBufferData
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
+    }
 
-        "Empty String" {
+    context("Negative Numbers") {
+        test("-1") {
             val testBuffer = BitBuffer()
             val expectedBufferData = MutableList(32) { 0 }
-            val expectedLengthInBits = 0
+                .apply {
+                    this[0] = 254
+                }
+            val expectedLengthInBits = 7
 
-            val underTest = QRNumber("")
+            val underTest = QRNumber("-1")
 
             underTest.write(testBuffer)
 
@@ -107,83 +126,65 @@ class QRNumberTest : StringSpec({
             testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
 
-        "Negative Numbers" {
-            "-1" {
-                val testBuffer = BitBuffer()
-                val expectedBufferData = MutableList(32) { 0 }
-                    .apply {
-                        this[0] = 254
-                    }
-                val expectedLengthInBits = 7
+        test("Multiple Digits 01") {
+            val testBuffer = BitBuffer()
+            val expectedBufferData = MutableList(32) { 0 }
+                .apply {
+                    this[0] = 253
+                    this[1] = 12
+                }
 
-                val underTest = QRNumber("-1")
+            val expectedLengthInBits = 14
 
-                underTest.write(testBuffer)
+            val underTest = QRNumber("-123")
 
-                testBuffer.buffer.asList() shouldContainExactly expectedBufferData
-                testBuffer.lengthInBits shouldBe expectedLengthInBits
-            }
+            underTest.write(testBuffer)
 
-            "Multiple Digits 01" {
-                val testBuffer = BitBuffer()
-                val expectedBufferData = MutableList(32) { 0 }
-                    .apply {
-                        this[0] = 253
-                        this[1] = 12
-                    }
+            testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+            testBuffer.lengthInBits shouldBe expectedLengthInBits
+        }
 
-                val expectedLengthInBits = 14
+        test("Multiple Digits 02") {
+            val testBuffer = BitBuffer()
+            val expectedBufferData = MutableList(32) { 0 }
+                .apply {
+                    this[0] = 253
+                    this[1] = 21
+                    this[2] = 152
+                    this[3] = 96
+                }
+            val expectedLengthInBits = 27
 
-                val underTest = QRNumber("-123")
+            val underTest = QRNumber("-1234567")
 
-                underTest.write(testBuffer)
+            underTest.write(testBuffer)
 
-                testBuffer.buffer.asList() shouldContainExactly expectedBufferData
-                testBuffer.lengthInBits shouldBe expectedLengthInBits
-            }
+            testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+            testBuffer.lengthInBits shouldBe expectedLengthInBits
+        }
 
-            "Multiple Digits 02" {
-                val testBuffer = BitBuffer()
-                val expectedBufferData = MutableList(32) { 0 }
-                    .apply {
-                        this[0] = 253
-                        this[1] = 21
-                        this[2] = 152
-                        this[3] = 96
-                    }
-                val expectedLengthInBits = 27
+        test("Multiple Digits 03") {
+            val testBuffer = BitBuffer()
+            val expectedBufferData = MutableList(32) { 0 }
+                .apply {
+                    this[0] = 233
+                    this[1] = 14
+                    this[2] = 155
+                    this[3] = 65
+                    this[4] = 112
+                    this[5] = 136
+                    this[6] = 239
+                    this[7] = 96
+                    this[8] = 224
+                }
+            val expectedLengthInBits = 67
 
-                val underTest = QRNumber("-1234567")
+            val underTest = QRNumber("-9223372036854775807")
 
-                underTest.write(testBuffer)
+            underTest.write(testBuffer)
 
-                testBuffer.buffer.asList() shouldContainExactly expectedBufferData
-                testBuffer.lengthInBits shouldBe expectedLengthInBits
-            }
-
-            "Multiple Digits 03" {
-                val testBuffer = BitBuffer()
-                val expectedBufferData = MutableList(32) { 0 }
-                    .apply {
-                        this[0] = 233
-                        this[1] = 14
-                        this[2] = 155
-                        this[3] = 65
-                        this[4] = 112
-                        this[5] = 136
-                        this[6] = 239
-                        this[7] = 96
-                        this[8] = 224
-                    }
-                val expectedLengthInBits = 67
-
-                val underTest = QRNumber("-9223372036854775807")
-
-                underTest.write(testBuffer)
-
-                testBuffer.buffer.asList() shouldContainExactly expectedBufferData
-                testBuffer.lengthInBits shouldBe expectedLengthInBits
-            }
+            testBuffer.buffer.asList() shouldContainExactly expectedBufferData
+            testBuffer.lengthInBits shouldBe expectedLengthInBits
         }
     }
 })
