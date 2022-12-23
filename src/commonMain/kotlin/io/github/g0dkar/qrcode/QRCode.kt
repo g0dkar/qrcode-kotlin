@@ -26,6 +26,8 @@ import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.DefaultQRCodeGraphicsFactory
 import io.github.g0dkar.qrcode.render.QRCodeGraphics
 import io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 /**
  * A Class/Library that helps encode data as QR Code images without any external dependencies.

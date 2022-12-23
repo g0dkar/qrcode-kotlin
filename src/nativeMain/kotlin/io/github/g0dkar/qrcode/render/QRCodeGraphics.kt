@@ -1,40 +1,9 @@
 package io.github.g0dkar.qrcode.render
 
-import kotlinx.browser.document
-import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.RenderingContext
-
-@Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
-    companion object {
-        private const val CANVAS_UNSUPPORTED = "Canvas seems to not be supported :("
-    }
-
-    private val canvas: HTMLCanvasElement
-    private val context: RenderingContext
-
-    init {
-        val canvas = tryGet { document.createElement("canvas") as HTMLCanvasElement }
-
-        canvas.width = width
-        canvas.height = height
-
-        val context = tryGet { canvas.getContext("2d") }
-
-        println("canvas=$canvas")
-        println("context=$context (jsType=${jsTypeOf(context)}, ktType=$context)")
-
-        if (context != null) {
-            this.canvas = canvas
-            this.context = context
-        } else {
-            throw Error(CANVAS_UNSUPPORTED)
-        }
-    }
-
     /** Returns this image as a [ByteArray] encoded as PNG. */
     actual open fun getBytes(): ByteArray {
         return ByteArray(0)
@@ -49,7 +18,7 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun availableFormats(): List<String> = listOf("PNG")
 
     /** Returns the native image object this QRCodeGraphics is working upon. */
-    actual open fun nativeImage(): Any = canvas
+    actual open fun nativeImage(): Any = 1
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
@@ -132,11 +101,4 @@ actual open class QRCodeGraphics actual constructor(
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
     actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
     }
-
-    private fun <T> tryGet(what: () -> T): T =
-        try {
-            what()
-        } catch (t: Throwable) {
-            throw Error(CANVAS_UNSUPPORTED, cause = t)
-        }
 }

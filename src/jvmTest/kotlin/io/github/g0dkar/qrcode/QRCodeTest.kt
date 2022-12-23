@@ -2,13 +2,14 @@ package io.github.g0dkar.qrcode
 
 import com.d_project.qrcode.Mode
 import io.github.g0dkar.qrcode.render.Colors
+import io.kotest.core.spec.style.FunSpec
 import java.awt.image.BufferedImage
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-internal class QRCodeTest {
+class QRCodeTest : FunSpec({
 
     @Test
     fun `render - numbers - as numbers`() {
@@ -403,17 +404,17 @@ internal class QRCodeTest {
         resultImage shouldHaveSameDimensionsAs expectedImage
         resultImage shouldBeSameImageAs expectedImage
     }
+})
 
-    private fun generateJavaQRCode(
-        data: String,
-        ecl: Int = com.d_project.qrcode.ErrorCorrectionLevel.M,
-        type: Int = 1,
-        mode: Int = QRCode.typeForDataAndECL(data, ErrorCorrectionLevel.values().first { it.value == ecl })
-    ): com.d_project.qrcode.QRCode =
-        com.d_project.qrcode.QRCode().apply {
-            errorCorrectionLevel = ecl
-            typeNumber = type
-            addData(data, mode)
-            make(false, 0)
-        }
-}
+private fun generateJavaQRCode(
+    data: String,
+    ecl: Int = com.d_project.qrcode.ErrorCorrectionLevel.M,
+    type: Int = 1,
+    mode: Int = QRCode.typeForDataAndECL(data, ErrorCorrectionLevel.values().first { it.value == ecl })
+): com.d_project.qrcode.QRCode =
+    com.d_project.qrcode.QRCode().apply {
+        errorCorrectionLevel = ecl
+        typeNumber = type
+        addData(data, mode)
+        make(false, 0)
+    }

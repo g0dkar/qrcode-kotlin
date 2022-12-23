@@ -2,27 +2,34 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.P
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
+        classpath(libs.kotlin.gradle.plugin)
     }
 }
 
+/*
+ * IntelliJ is currently (2022-12-22) bugged if you use this "alias(libs...)" here on plugins.
+ *
+ * Solution found here: https://youtrack.jetbrains.com/issue/KTIJ-19369/False-positive-cant-be-called-in-this-context-by-implicit-receiver-with-plugins-in-Gradle-version-catalogs-as-a-TOML-file#focus=Comments-27-5860112.0-0
+ */
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Dev Plugins
     id("idea")
-    id("com.diffplug.spotless") version "6.11.0"
+    alias(libs.plugins.spotless)
 
     // Base Plugins
-    kotlin("multiplatform") version "1.7.20"
-    id("com.android.library") version "7.2.1"
-    id("kotlin-android-extensions") version "1.7.20"
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotest.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android.extensions)
 
     // Publishing Plugins
     signing
     `maven-publish`
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    alias(libs.plugins.nexus)
 
     // Docs Plugins
-    id("org.jetbrains.dokka") version "1.7.20"
+    alias(libs.plugins.dokka)
 }
 
 repositories {
@@ -51,7 +58,7 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-    js(BOTH) {
+    js(IR) {
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -61,45 +68,54 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 outputFileName = "qrcode-kotlin"
-                outputPath = rootDir
-                cssSupport {
-                    enabled = true
-                }
             }
         }
     }
 
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
+    val nativeArtifactName = name.replace(Regex("-(\\w)")) { it.groupValues[1].toUpperCase() }
+    val hostOS = System.getProperty("os.name")
+    val isMingwX64 = hostOS.startsWith("Windows")
     val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
+        hostOS == "Mac OS X" -> macosX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
+        hostOS == "Linux" -> linuxX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
+        isMingwX64 -> mingwX64("native") { binaries { sharedLib { baseName = "lib$nativeArtifactName" } } }
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
     sourceSets {
+        val commonMain by getting
         val commonTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-assertions-core:5.5.3")
-                implementation("org.junit.jupiter:junit-jupiter:5.9.1")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation(libs.kotest.assertions.core)
+                implementation(libs.kotest.framework.engine)
             }
         }
+        val jvmMain by getting
+        val jvmTest by getting
+        val jsMain by getting
+        val jsTest by getting
+        val nativeMain by getting
+        val nativeTest by getting
     }
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+tasks {
+    wrapper {
+        distributionType = Wrapper.DistributionType.ALL
     }
 }
 
@@ -142,11 +158,13 @@ val dokkaJar by tasks.creating(Jar::class) {
 /* Lint             */
 /* **************** */
 spotless {
+    val ktlintVersion = libs.versions.ktlint.getOrElse("0.47.1")
+
     kotlin {
-        ktlint("0.47.1")
+        ktlint(ktlintVersion)
     }
     kotlinGradle {
-        ktlint("0.47.1")
+        ktlint(ktlintVersion)
     }
 }
 
