@@ -5,7 +5,7 @@ dokka = "1.7.20"
 kotest = "5.5.4"
 spotless = "6.11.0"
 mavenNexus = "1.1.0"
-ktlint = "0.48.0"
+ktlint = "0.47.1"
 
 [libraries]
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

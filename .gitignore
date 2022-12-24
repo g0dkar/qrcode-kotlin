@@ -58,8 +58,7 @@ build/
 .env.test.local
 .env.production.local
 /examples/gradle*
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/kotlin-js-store/yarn.lock
+/kotlin-js-store/

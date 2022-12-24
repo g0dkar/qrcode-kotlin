@@ -53,10 +53,6 @@ kotlin {
                 freeCompilerArgs = listOf("-Xjsr305=strict")
             }
         }
-
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
     }
 
     android {
@@ -69,10 +65,20 @@ kotlin {
                 main = "noCall"
             }
         }
+
         browser {
             commonWebpackConfig {
                 mode = PRODUCTION
                 outputFileName = "qrcode-kotlin"
+                outputPath = projectDir.resolve("/releases")
+            }
+
+            dceTask {
+                keep("io.github.g0dkar.qrcode.render")
+            }
+
+            testTask {
+                enabled = false
             }
         }
     }
@@ -88,7 +94,6 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -96,16 +101,11 @@ kotlin {
                 implementation(libs.kotest.framework.engine)
             }
         }
-        val jvmMain by getting
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
             }
         }
-        val jsMain by getting
-        val jsTest by getting
-        val nativeMain by getting
-        val nativeTest by getting
     }
 }
 
@@ -121,6 +121,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
 tasks {
     wrapper {
         distributionType = Wrapper.DistributionType.ALL
@@ -137,6 +138,13 @@ tasks {
             events = setOf(FAILED, PASSED)
             exceptionFormat = FULL
         }
+    }
+
+    /** Copies release files into /release dir */
+    register<Copy>("copyToReleaseDir") {
+        from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
+        // from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
+        into(layout.projectDirectory.dir("release"))
     }
 }
 

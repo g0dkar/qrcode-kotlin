@@ -1,8 +1,8 @@
 package io.github.g0dkar.qrcode.render
 
 import kotlinx.browser.document
+import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.RenderingContext
 
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
@@ -14,7 +14,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     private val canvas: HTMLCanvasElement
-    private val context: RenderingContext
+    private val context: CanvasRenderingContext2D
 
     init {
         val canvas = tryGet { document.createElement("canvas") as HTMLCanvasElement }
@@ -22,17 +22,13 @@ actual open class QRCodeGraphics actual constructor(
         canvas.width = width
         canvas.height = height
 
-        val context = tryGet { canvas.getContext("2d") }
+        val context = tryGet { canvas.getContext("2d") as CanvasRenderingContext2D }
 
         println("canvas=$canvas")
         println("context=$context (jsType=${jsTypeOf(context)}, ktType=$context)")
 
-        if (context != null) {
-            this.canvas = canvas
-            this.context = context
-        } else {
-            throw Error(CANVAS_UNSUPPORTED)
-        }
+        this.canvas = canvas
+        this.context = context
     }
 
     /** Returns this image as a [ByteArray] encoded as PNG. */
