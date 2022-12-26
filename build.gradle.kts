@@ -179,14 +179,10 @@ tasks {
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js.map"))
         into(layout.projectDirectory.dir("release"))
     }
-
-//     task generateAngularApp (type: NpxTask) {
-//     command = '@angular/cli@8.3.2'
-//     args = ['new', 'myApp']
-// }
-    // npx terser qrcode-kotlin.js --output qrcode-kotlin.min.js --keep-classnames --keep-fnames --source-map "content='qrcode-kotlin.js.map'"
 }
 
 node {

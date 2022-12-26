@@ -12,6 +12,7 @@
         <list>
           <option value="clean" />
           <option value="build" />
+          <option value="copyToReleaseDir" />
         </list>
       </option>
       <option name="vmOptions" />
