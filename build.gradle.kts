@@ -1,3 +1,4 @@
+import com.github.gradle.node.npm.task.NpxTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -32,6 +33,7 @@ plugins {
     signing
     `maven-publish`
     alias(libs.plugins.nexus)
+    alias(libs.plugins.nodejs)
 
     // Docs Plugins
     alias(libs.plugins.dokka)
@@ -67,11 +69,10 @@ kotlin {
         }
 
         browser {
-            webpackTask {
+            commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
                 outputFileName = "qrcode-kotlin-$version.js"
-                report = true
             }
 
             testTask {
@@ -121,11 +122,10 @@ android {
     }
 }
 
+/**
+ * Kotest Configuration
+ */
 tasks {
-    wrapper {
-        distributionType = Wrapper.DistributionType.ALL
-    }
-
     named<Test>("jvmTest") {
         useJUnitPlatform()
         filter {
@@ -138,13 +138,62 @@ tasks {
             exceptionFormat = FULL
         }
     }
+}
+
+/* *********************** */
+/* After Build Publishing  */
+/* *********************** */
+tasks {
+    val minifyReleaseJS by register<NpxTask>("minifyReleaseJS") {
+        val baseFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js").get().asFile.path
+        val minFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js").get().asFile.path
+        val sourceMap = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map").get().asFile.path
+        val argss = listOf(
+            baseFile,
+            "--output",
+            minFile,
+            "--keep-classnames",
+            "--keep-fnames"
+        )
+
+        println("baseFile=$baseFile")
+        println("minFile=$minFile")
+        println("sourceMap=$sourceMap")
+        println("args=$argss")
+
+        command.set("terser")
+        args.set(argss)
+        inputs.files(baseFile, sourceMap)
+        outputs.files(minFile)
+    }
 
     /** Copies release files into /release dir */
     register<Copy>("copyToReleaseDir") {
+        dependsOn(minifyReleaseJS)
+
+        doFirst {
+            layout.projectDirectory.dir("release").asFile.deleteRecursively()
+        }
+
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        // from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
         into(layout.projectDirectory.dir("release"))
     }
+
+//     task generateAngularApp (type: NpxTask) {
+//     command = '@angular/cli@8.3.2'
+//     args = ['new', 'myApp']
+// }
+    // npx terser qrcode-kotlin.js --output qrcode-kotlin.min.js --keep-classnames --keep-fnames --source-map "content='qrcode-kotlin.js.map'"
+}
+
+node {
+    download.set(true)
+    version.set("16.14.0")
+    allowInsecureProtocol.set(false)
+    nodeProjectDir.set(layout.buildDirectory.dir("tmp"))
 }
 
 /* **************** */

@@ -8,6 +8,7 @@ import io.github.g0dkar.qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import io.github.g0dkar.qrcode.internals.QRCodeRegion.UNKNOWN
 import io.github.g0dkar.qrcode.internals.QRCodeSquareType.DEFAULT
 import io.github.g0dkar.qrcode.internals.QRCodeSquareType.MARGIN
+import kotlin.js.JsExport
 
 /**
  * Represents a single QRCode square unit. It has information about its "color" (either dark or bright),
@@ -18,6 +19,7 @@ import io.github.g0dkar.qrcode.internals.QRCodeSquareType.MARGIN
  *
  * @author Rafael Lins - g0dkar
  */
+@JsExport
 data class QRCodeSquare(
     /** Is this a painted square? */
     var dark: Boolean,
@@ -46,6 +48,7 @@ data class QRCodeSquare(
  * is positioned. A [region] of [QRCodeRegion.TOP_LEFT_CORNER] for example represents the top left corner of the
  * position probe this particular square is part of (a QRCode have 3 position probes).
  */
+@JsExport
 data class QRCodeSquareInfo(
     val type: QRCodeSquareType,
     val region: QRCodeRegion
@@ -60,6 +63,7 @@ data class QRCodeSquareInfo(
  *
  * @author Rafael Lins - g0dkar
  */
+@JsExport
 enum class QRCodeSquareType {
     /** Part of a position probe: one of those big squares at the extremities of the QRCode. */
     POSITION_PROBE,
@@ -94,6 +98,7 @@ enum class QRCodeSquareType {
  * The positions marked with `A`, `B`, `C` and `D` would be regions [TOP_LEFT_CORNER], [TOP_RIGHT_CORNER],
  * [BOTTOM_LEFT_CORNER] and [BOTTOM_RIGHT_CORNER] respectively.
  */
+@JsExport
 enum class QRCodeRegion {
     TOP_LEFT_CORNER,
     TOP_RIGHT_CORNER,
@@ -105,5 +110,5 @@ enum class QRCodeRegion {
     BOTTOM_RIGHT_CORNER,
     BOTTOM_MID,
     MARGIN,
-    UNKNOWN;
+    UNKNOWN
 }
