@@ -24,3 +24,6 @@ include("java")
 
 // Android Example
 include("android")
+
+// Kotlin/JS Example
+include("js")
