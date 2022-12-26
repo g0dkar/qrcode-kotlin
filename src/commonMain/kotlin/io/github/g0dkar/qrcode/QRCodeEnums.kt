@@ -1,5 +1,7 @@
 package io.github.g0dkar.qrcode
 
+import kotlin.js.JsExport
+
 /**
  * The level of Error Correction to apply to the QR Code image. The Higher the Error Correction, the lower quality
  * **print** the QRCode can be (think of "wow, even with the paper a bit crumpled, it still read the QR Code!" - that
@@ -22,6 +24,7 @@ package io.github.g0dkar.qrcode
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
     L(1, 21),
     M(0, 25),
@@ -37,6 +40,7 @@ enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
 enum class MaskPattern {
     /** This is the default pattern (no pattern is applied) */
     PATTERN000,
@@ -57,6 +61,7 @@ enum class MaskPattern {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
 enum class QRCodeDataType(val value: Int) {
     /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
     NUMBERS(1 shl 0),

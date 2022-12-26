@@ -43,7 +43,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.3.0"
+version = "3.3.1"
 
 kotlin {
     jvm {
@@ -67,19 +67,18 @@ kotlin {
         }
 
         browser {
-            commonWebpackConfig {
+            webpackTask {
                 mode = PRODUCTION
-                outputFileName = "qrcode-kotlin"
-                outputPath = projectDir.resolve("/releases")
-            }
-
-            dceTask {
-                keep("io.github.g0dkar.qrcode.render")
+                sourceMaps = true
+                outputFileName = "qrcode-kotlin-$version.js"
+                report = true
             }
 
             testTask {
                 enabled = false
             }
+
+            binaries.library()
         }
     }
 

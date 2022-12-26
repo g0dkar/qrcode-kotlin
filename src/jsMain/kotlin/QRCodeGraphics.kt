@@ -4,6 +4,7 @@ import kotlinx.browser.document
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 
+@JsExport
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
@@ -37,6 +38,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Returns this image as a [ByteArray] encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...). */
+    @JsName("getBytesForFormat")
     actual open fun getBytes(format: String): ByteArray {
         TODO("Not yet implemented")
     }
