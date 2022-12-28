@@ -23,7 +23,6 @@ import io.github.g0dkar.qrcode.internals.QRNumber
 import io.github.g0dkar.qrcode.internals.QRUtil
 import io.github.g0dkar.qrcode.internals.RSBlock
 import io.github.g0dkar.qrcode.render.Colors
-import io.github.g0dkar.qrcode.render.DefaultQRCodeGraphicsFactory
 import io.github.g0dkar.qrcode.render.QRCodeGraphics
 import io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory
 import kotlin.js.JsExport
@@ -72,6 +71,7 @@ import kotlin.jvm.JvmStatic
  * @see QRUtil.getDataType
  */
 @JsExport
+@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
@@ -83,7 +83,8 @@ class QRCode @JvmOverloads constructor(
         DEFAULT -> QR8BitByte(data)
     }
 
-    var qrCodeGraphicsFactory: QRCodeGraphicsFactory<*> = DefaultQRCodeGraphicsFactory()
+    @Suppress("MemberVisibilityCanBePrivate")
+    var qrCodeGraphicsFactory = QRCodeGraphicsFactory()
 
     companion object {
         const val DEFAULT_CELL_SIZE = 25
@@ -202,7 +203,7 @@ class QRCode @JvmOverloads constructor(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(
+        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
             computeImageSize(
                 cellSize,
                 margin,
@@ -274,7 +275,7 @@ class QRCode @JvmOverloads constructor(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
         rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphics(
+        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
             computeImageSize(
                 cellSize,
                 margin,
@@ -298,7 +299,7 @@ class QRCode @JvmOverloads constructor(
         rawData.forEachIndexed { row, rowData ->
             rowData.forEachIndexed { col, cell ->
                 if (cell != null) {
-                    val squareCanvas = qrCodeGraphicsFactory.newGraphics(cellSize)
+                    val squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
                     renderer(cell, squareCanvas)
                     qrCodeGraphics.drawImage(
                         squareCanvas,

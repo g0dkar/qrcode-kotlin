@@ -8,5 +8,18 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:3.3.1")
+    implementation("io.github.g0dkar:qrcode-kotlin-js:3.3.1")
+}
+
+kotlin {
+    js {
+        binaries.executable()
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled = true
+                }
+            }
+        }
+    }
 }

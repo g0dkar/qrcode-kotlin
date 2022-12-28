@@ -15,7 +15,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Returns the available formats to be passed as parameters to [getBytes]. */
-    actual open fun availableFormats(): List<String> = listOf("PNG")
+    actual open fun availableFormats(): Array<String> = arrayOf("PNG")
 
     /** Returns the native image object this QRCodeGraphics is working upon. */
     actual open fun nativeImage(): Any = 1

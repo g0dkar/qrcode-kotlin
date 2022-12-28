@@ -8,7 +8,7 @@ expect open class QRCodeGraphics(width: Int, height: Int) {
     open fun getBytes(format: String): ByteArray
 
     /** Returns the available formats to be passed as parameters to [getBytes]. */
-    open fun availableFormats(): List<String>
+    open fun availableFormats(): Array<String>
 
     /** Returns the native image object this QRCodeGraphics is working upon. */
     open fun nativeImage(): Any

@@ -13,11 +13,16 @@ import android.graphics.Rect
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
+@Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
 ) {
-    protected open fun createCanvas(image: Bitmap) = Canvas(image)
+    companion object {
+        val AVAILABLE_FORMATS: Array<String> = CompressFormat.values().map { it.name }.toTypedArray()
+    }
+
+    protected fun createCanvas(image: Bitmap) = Canvas(image)
 
     private val image: Bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     private val canvas: Canvas = createCanvas(image)
@@ -87,7 +92,7 @@ actual open class QRCodeGraphics actual constructor(
      * @see CompressFormat.JPEG
      * @see CompressFormat.WEBP
      */
-    actual open fun availableFormats(): List<String> = CompressFormat.values().map { it.name }
+    actual open fun availableFormats(): Array<String> = AVAILABLE_FORMATS
 
     /** Returns the [Bitmap] object being worked upon. */
     actual open fun nativeImage(): Any = image

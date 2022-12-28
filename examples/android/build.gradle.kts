@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
+    implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.5.1")

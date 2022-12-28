@@ -10,6 +10,7 @@ package io.github.g0dkar.qrcode.render
  * @see withAlpha
  * @see allColors
  */
+@Suppress("MemberVisibilityCanBePrivate")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
     fun css(str: String): Int =

@@ -78,7 +78,7 @@ actual open class QRCodeGraphics actual constructor(
      *
      * @see ImageIO.getWriterFileSuffixes
      */
-    actual open fun availableFormats(): List<String> = ImageIO.getWriterFileSuffixes().toList()
+    actual open fun availableFormats(): Array<String> = ImageIO.getWriterFileSuffixes()
 
     /** Returns the [BufferedImage] object being worked upon. */
     actual open fun nativeImage(): Any = createImage()
