@@ -4,8 +4,8 @@ type __doNotImplementIt = typeof __doNotImplementIt
 export namespace io.github.g0dkar.qrcode {
     class QRCode {
         constructor(data: string, errorCorrectionLevel?: io.github.g0dkar.qrcode.ErrorCorrectionLevel, dataType?: io.github.g0dkar.qrcode.QRCodeDataType);
-        get qrCodeGraphicsFactory(): io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory<any /*UnknownType **/>;
-        set qrCodeGraphicsFactory(value: io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory<any /*UnknownType **/>);
+        get qrCodeGraphicsFactory(): io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory;
+        set qrCodeGraphicsFactory(value: io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory);
         computeImageSizeFromRawData(cellSize?: number, margin?: number, rawData?: Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>): number;
         computeImageSize(cellSize?: number, margin?: number, size: number): number;
         renderSimple(cellSize?: number, margin?: number, brightColor?: number, darkColor?: number, marginColor?: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
@@ -220,13 +220,9 @@ export namespace io.github.g0dkar.qrcode.internals {
     }
 }
 export namespace io.github.g0dkar.qrcode.render {
-    abstract class QRCodeGraphicsFactory<T> {
+    class QRCodeGraphicsFactory {
         constructor();
-        newGraphicsSquare(size: number): T;
-        abstract newGraphics(width: number, height: number): T;
-    }
-    class DefaultQRCodeGraphicsFactory extends io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory<io.github.g0dkar.qrcode.render.QRCodeGraphics> {
-        constructor();
+        newGraphicsSquare(size: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
         newGraphics(width: number, height: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
     }
 }
@@ -237,7 +233,7 @@ export namespace io.github.g0dkar.qrcode.render {
         get height(): number;
         getBytes(): Int8Array;
         getBytesForFormat(format: string): Int8Array;
-        availableFormats(): any/* kotlin.collections.List<string> */;
+        availableFormats(): Array<string>;
         nativeImage(): any;
         drawLine(x1: number, y1: number, x2: number, y2: number, color: number): void;
         drawRect(x: number, y: number, width: number, height: number, color: number): void;
