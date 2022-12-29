@@ -13,12 +13,17 @@ import io.github.g0dkar.qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
 import io.github.g0dkar.qrcode.internals.QRCodeRegion.TOP_MID
 import io.github.g0dkar.qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import io.github.g0dkar.qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Object with helper methods and constants to setup stuff into the QRCode such as Position Probes and Timing Probes.
  *
  * @author Rafael Lins - g0dkar
  */
+@JsExport
+@OptIn(ExperimentalJsExport::class)
+@Suppress("MemberVisibilityCanBePrivate")
 internal object QRCodeSetup {
     private const val DEFAULT_PROBE_SIZE = 7
 
@@ -94,12 +99,14 @@ internal object QRCodeSetup {
                 probeSize -> MARGIN // Outside boundaries
                 else -> TOP_MID // between: ─
             }
+
             probeSize - 1 -> when (col) { // MAX x ?: └───┘
                 0 -> BOTTOM_LEFT_CORNER // MAX x 0: └
                 probeSize - 1 -> BOTTOM_RIGHT_CORNER // MAX x MAX: ┘
                 probeSize -> MARGIN // Outside boundaries
                 else -> BOTTOM_MID // between: ─
             }
+
             probeSize -> MARGIN // Outside boundaries
             else -> when (col) { // Inside boundaries but not in any edge
                 0 -> LEFT_MID

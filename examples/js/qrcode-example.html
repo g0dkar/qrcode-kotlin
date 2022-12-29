@@ -38,7 +38,14 @@
                         </div>
                     </div>
 
-                    [ QR Code ]
+                    <div>
+                        <img id="qrcodeResult" width="100%" alt="QRCode Result"/>
+                    </div>
+
+                    <div class="text-xs text-gray-600">
+                        <p>Image size: <span id="imgSize">...</span></p>
+                        <p>Generated in: <span id="generatedTime">...</span></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,15 +86,30 @@
 </div>
 <script>
   const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
-  document.getElementById("qrcodeData").onchange = (evt) => {
-    const data = evt.target.value
-    const xpto = new QRCode(data)
-    const xpto2 = xpto.render()
+  const qrcodeData = document.getElementById("qrcodeData")
+  const timeEl = document.getElementById("generatedTime")
+  const imgSizeEl = document.getElementById("imgSize")
+  const imgEl = document.getElementById("qrcodeResult")
 
-    console.log("data =", data)
-    console.log("xpto =", xpto)
-    console.log("xpto2 =", xpto2)
+  const doRender = (data, size = 25) => {
+    const start = Date.now()
+    const result = new QRCode(data).render(size)
+    imgEl.src = result.toDataURL()
+    timeEl.textContent = `${Date.now() - start}ms`
+    imgSizeEl.textContent = `${result.width}x${result.height}, each square is ${size}x${size}`
   }
+
+  qrcodeData.onkeyup = (evt) => {
+    const data = evt.target.value
+    const prev = evt.target.$prev
+
+    if (data !== prev) {
+      evt.target.$prev = data
+      doRender(data)
+    }
+  }
+
+  doRender(qrcodeData.value)
 </script>
 </body>
 </html>

@@ -25,6 +25,7 @@ import io.github.g0dkar.qrcode.internals.RSBlock
 import io.github.g0dkar.qrcode.render.Colors
 import io.github.g0dkar.qrcode.render.QRCodeGraphics
 import io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory
+import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlin.jvm.JvmOverloads
@@ -71,6 +72,7 @@ import kotlin.jvm.JvmStatic
  * @see QRUtil.getDataType
  */
 @JsExport
+@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
     private val data: String,
@@ -161,7 +163,6 @@ class QRCode @JvmOverloads constructor(
      * @see QRCodeGraphics
      * @see Colors
      */
-    @JsName("renderSimple")
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -199,6 +200,7 @@ class QRCode @JvmOverloads constructor(
      * @see Colors
      */
     @JvmOverloads
+    @JsName("renderComputed")
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
@@ -397,7 +399,7 @@ class QRCode @JvmOverloads constructor(
         return createBytes(buffer, rsBlocks)
     }
 
-    private fun createBytes(buffer: BitBuffer, rsBlocks: List<RSBlock>): IntArray {
+    private fun createBytes(buffer: BitBuffer, rsBlocks: Array<RSBlock>): IntArray {
         var offset = 0
         var maxDcCount = 0
         var maxEcCount = 0

@@ -1,6 +1,7 @@
 package io.github.g0dkar.qrcode.render
 
 import io.github.g0dkar.qrcode.QRCode
+import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 /**
@@ -13,6 +14,7 @@ import kotlin.js.JsExport
  * @author Rafael Lins - g0dkar
  */
 @JsExport
+@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 open class QRCodeGraphicsFactory {
     /**

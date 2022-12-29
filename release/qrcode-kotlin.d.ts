@@ -8,8 +8,8 @@ export namespace io.github.g0dkar.qrcode {
         set qrCodeGraphicsFactory(value: io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory);
         computeImageSizeFromRawData(cellSize?: number, margin?: number, rawData?: Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>): number;
         computeImageSize(cellSize?: number, margin?: number, size: number): number;
-        renderSimple(cellSize?: number, margin?: number, brightColor?: number, darkColor?: number, marginColor?: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
-        render(cellSize?: number, margin?: number, rawData?: Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>, qrCodeGraphics?: io.github.g0dkar.qrcode.render.QRCodeGraphics, brightColor?: number, darkColor?: number, marginColor?: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
+        render(cellSize?: number, margin?: number, brightColor?: number, darkColor?: number, marginColor?: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
+        renderComputed(cellSize?: number, margin?: number, rawData?: Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>, qrCodeGraphics?: io.github.g0dkar.qrcode.render.QRCodeGraphics, brightColor?: number, darkColor?: number, marginColor?: number): io.github.g0dkar.qrcode.render.QRCodeGraphics;
         renderShaded(cellSize?: number, margin?: number, rawData?: Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>, qrCodeGraphics?: io.github.g0dkar.qrcode.render.QRCodeGraphics, renderer: (p0: io.github.g0dkar.qrcode.internals.QRCodeSquare, p1: io.github.g0dkar.qrcode.render.QRCodeGraphics) => void): io.github.g0dkar.qrcode.render.QRCodeGraphics;
         encode(type?: number, maskPattern?: io.github.g0dkar.qrcode.MaskPattern): Array<Array<Nullable<io.github.g0dkar.qrcode.internals.QRCodeSquare>>>;
         toString(): string;
@@ -231,6 +231,8 @@ export namespace io.github.g0dkar.qrcode.render {
         constructor(width: number, height: number);
         get width(): number;
         get height(): number;
+        toDataURL(format?: string): string;
+        toBlob(callback: (p0: Nullable<Blob>) => void): void;
         getBytes(): Int8Array;
         getBytesForFormat(format: string): Int8Array;
         availableFormats(): Array<string>;

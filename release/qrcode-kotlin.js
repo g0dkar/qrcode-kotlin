@@ -28,14 +28,8 @@ if (typeof Math.imul === 'undefined') {
   IntRange.prototype.constructor = IntRange;
   IntProgressionIterator.prototype = Object.create(IntIterator.prototype);
   IntProgressionIterator.prototype.constructor = IntProgressionIterator;
-  Error_0.prototype = Object.create(Error.prototype);
-  Error_0.prototype.constructor = Error_0;
-  NotImplementedError.prototype = Object.create(Error_0.prototype);
-  NotImplementedError.prototype.constructor = NotImplementedError;
   AbstractMutableCollection.prototype = Object.create(AbstractCollection.prototype);
   AbstractMutableCollection.prototype.constructor = AbstractMutableCollection;
-  AbstractMutableList.prototype = Object.create(AbstractMutableCollection.prototype);
-  AbstractMutableList.prototype.constructor = AbstractMutableList;
   AbstractMutableSet.prototype = Object.create(AbstractMutableCollection.prototype);
   AbstractMutableSet.prototype.constructor = AbstractMutableSet;
   AbstractEntrySet.prototype = Object.create(AbstractMutableSet.prototype);
@@ -44,8 +38,6 @@ if (typeof Math.imul === 'undefined') {
   AbstractMutableMap$keys$1.prototype.constructor = AbstractMutableMap$keys$1;
   AbstractMutableMap.prototype = Object.create(AbstractMap.prototype);
   AbstractMutableMap.prototype.constructor = AbstractMutableMap;
-  ArrayList.prototype = Object.create(AbstractMutableList.prototype);
-  ArrayList.prototype.constructor = ArrayList;
   EntrySet.prototype = Object.create(AbstractEntrySet.prototype);
   EntrySet.prototype.constructor = EntrySet;
   HashMap.prototype = Object.create(AbstractMutableMap.prototype);
@@ -66,12 +58,6 @@ if (typeof Math.imul === 'undefined') {
   LinkedHashMap.prototype.constructor = LinkedHashMap;
   LinkedHashSet.prototype = Object.create(HashSet.prototype);
   LinkedHashSet.prototype.constructor = LinkedHashSet;
-  NodeJsOutput.prototype = Object.create(BaseOutput.prototype);
-  NodeJsOutput.prototype.constructor = NodeJsOutput;
-  BufferedOutput.prototype = Object.create(BaseOutput.prototype);
-  BufferedOutput.prototype.constructor = BufferedOutput;
-  BufferedOutputToConsoleLog.prototype = Object.create(BufferedOutput.prototype);
-  BufferedOutputToConsoleLog.prototype.constructor = BufferedOutputToConsoleLog;
   PrimitiveKClassImpl.prototype = Object.create(KClassImpl.prototype);
   PrimitiveKClassImpl.prototype.constructor = PrimitiveKClassImpl;
   NothingKClassImpl.prototype = Object.create(KClassImpl.prototype);
@@ -82,10 +68,10 @@ if (typeof Math.imul === 'undefined') {
   Exception.prototype.constructor = Exception;
   CharacterCodingException.prototype = Object.create(Exception.prototype);
   CharacterCodingException.prototype.constructor = CharacterCodingException;
-  intArrayIterator$1.prototype = Object.create(IntIterator.prototype);
-  intArrayIterator$1.prototype.constructor = intArrayIterator$1;
   Long.prototype = Object.create(Number_0.prototype);
   Long.prototype.constructor = Long;
+  Error_0.prototype = Object.create(Error.prototype);
+  Error_0.prototype.constructor = Error_0;
   RuntimeException.prototype = Object.create(Exception.prototype);
   RuntimeException.prototype.constructor = RuntimeException;
   IllegalArgumentException.prototype = Object.create(RuntimeException.prototype);
@@ -100,8 +86,6 @@ if (typeof Math.imul === 'undefined') {
   UnsupportedOperationException.prototype.constructor = UnsupportedOperationException;
   NumberFormatException.prototype = Object.create(IllegalArgumentException.prototype);
   NumberFormatException.prototype.constructor = NumberFormatException;
-  ArithmeticException.prototype = Object.create(RuntimeException.prototype);
-  ArithmeticException.prototype.constructor = ArithmeticException;
   NullPointerException.prototype = Object.create(RuntimeException.prototype);
   NullPointerException.prototype.constructor = NullPointerException;
   NoWhenBranchMatchedException.prototype = Object.create(RuntimeException.prototype);
@@ -138,6 +122,18 @@ if (typeof Math.imul === 'undefined') {
       action(tmp1, item);
     }
   }
+  function sumOf(_this__u8e3s4, selector) {
+    var sum = 0;
+    var indexedObject = _this__u8e3s4;
+    var inductionVariable = 0;
+    var last = indexedObject.length;
+    while (inductionVariable < last) {
+      var element = indexedObject[inductionVariable];
+      inductionVariable = inductionVariable + 1 | 0;
+      sum = sum + selector(element) | 0;
+    }
+    return sum;
+  }
   function indexOfFirst(_this__u8e3s4, predicate) {
     var inductionVariable = 0;
     var last = _this__u8e3s4.length - 1 | 0;
@@ -152,39 +148,18 @@ if (typeof Math.imul === 'undefined') {
        while (inductionVariable <= last);
     return -1;
   }
-  function get_indices(_this__u8e3s4) {
-    return new IntRange(0, get_lastIndex(_this__u8e3s4));
-  }
-  function get_lastIndex(_this__u8e3s4) {
-    return _this__u8e3s4.length - 1 | 0;
-  }
-  function indexOf(_this__u8e3s4, element) {
-    if (element == null) {
-      var inductionVariable = 0;
-      var last = _this__u8e3s4.length - 1 | 0;
-      if (inductionVariable <= last)
-        do {
-          var index = inductionVariable;
-          inductionVariable = inductionVariable + 1 | 0;
-          if (_this__u8e3s4[index] == null) {
-            return index;
-          }
-        }
-         while (inductionVariable <= last);
-    } else {
-      var inductionVariable_0 = 0;
-      var last_0 = _this__u8e3s4.length - 1 | 0;
-      if (inductionVariable_0 <= last_0)
-        do {
-          var index_0 = inductionVariable_0;
-          inductionVariable_0 = inductionVariable_0 + 1 | 0;
-          if (equals(element, _this__u8e3s4[index_0])) {
-            return index_0;
-          }
-        }
-         while (inductionVariable_0 <= last_0);
+  function forEachIndexed_0(_this__u8e3s4, action) {
+    var index = 0;
+    var indexedObject = _this__u8e3s4;
+    var inductionVariable = 0;
+    var last = indexedObject.length;
+    while (inductionVariable < last) {
+      var item = indexedObject[inductionVariable];
+      inductionVariable = inductionVariable + 1 | 0;
+      var tmp1 = index;
+      index = tmp1 + 1 | 0;
+      action(tmp1, item);
     }
-    return -1;
   }
   function toCollection(_this__u8e3s4, destination) {
     var indexedObject = _this__u8e3s4;
@@ -196,6 +171,44 @@ if (typeof Math.imul === 'undefined') {
       destination.a(item);
     }
     return destination;
+  }
+  function firstOrNull(_this__u8e3s4, predicate) {
+    var indexedObject = _this__u8e3s4;
+    var inductionVariable = 0;
+    var last = indexedObject.length;
+    while (inductionVariable < last) {
+      var element = indexedObject[inductionVariable];
+      inductionVariable = inductionVariable + 1 | 0;
+      if (predicate(element))
+        return element;
+    }
+    return null;
+  }
+  function toSet(_this__u8e3s4) {
+    if (isInterface(_this__u8e3s4, Collection)) {
+      var tmp0_subject = _this__u8e3s4.b();
+      var tmp;
+      switch (tmp0_subject) {
+        case 0:
+          tmp = emptySet();
+          break;
+        case 1:
+          var tmp_0;
+          if (isInterface(_this__u8e3s4, List)) {
+            tmp_0 = _this__u8e3s4.e(0);
+          } else {
+            tmp_0 = _this__u8e3s4.c().d();
+          }
+
+          tmp = setOf(tmp_0);
+          break;
+        default:
+          tmp = toCollection_0(_this__u8e3s4, LinkedHashSet_init_$Create$_0(mapCapacity(_this__u8e3s4.b())));
+          break;
+      }
+      return tmp;
+    }
+    return optimizeReadOnlySet(toCollection_0(_this__u8e3s4, LinkedHashSet_init_$Create$()));
   }
   function joinToString(_this__u8e3s4, separator, prefix, postfix, limit, truncated, transform) {
     return joinTo(_this__u8e3s4, StringBuilder_init_$Create$(), separator, prefix, postfix, limit, truncated, transform).toString();
@@ -215,122 +228,23 @@ if (typeof Math.imul === 'undefined') {
       transform = null;
     return joinToString(_this__u8e3s4, separator, prefix, postfix, limit, truncated, transform);
   }
-  function joinTo(_this__u8e3s4, buffer, separator, prefix, postfix, limit, truncated, transform) {
-    buffer.b(prefix);
-    var count = 0;
-    var indexedObject = _this__u8e3s4;
-    var inductionVariable = 0;
-    var last = indexedObject.length;
-    $l$loop: while (inductionVariable < last) {
-      var element = indexedObject[inductionVariable];
-      inductionVariable = inductionVariable + 1 | 0;
-      count = count + 1 | 0;
-      if (count > 1) {
-        buffer.b(separator);
-      }
-      if (limit < 0 ? true : count <= limit) {
-        appendElement(buffer, element, transform);
-      } else
-        break $l$loop;
-    }
-    if (limit >= 0 ? count > limit : false) {
-      buffer.b(truncated);
-    }
-    buffer.b(postfix);
-    return buffer;
-  }
-  function firstOrNull(_this__u8e3s4, predicate) {
-    var indexedObject = _this__u8e3s4;
-    var inductionVariable = 0;
-    var last = indexedObject.length;
-    while (inductionVariable < last) {
-      var element = indexedObject[inductionVariable];
-      inductionVariable = inductionVariable + 1 | 0;
-      if (predicate(element))
-        return element;
-    }
-    return null;
-  }
-  function sumOf(_this__u8e3s4, selector) {
-    var sum = 0;
-    var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
-      sum = sum + selector(element) | 0;
-    }
-    return sum;
-  }
-  function forEachIndexed_0(_this__u8e3s4, action) {
-    var index = 0;
-    var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var item = tmp0_iterator.e();
-      var tmp1 = index;
-      index = tmp1 + 1 | 0;
-      action(checkIndexOverflow(tmp1), item);
-    }
-  }
-  function toSet(_this__u8e3s4) {
-    if (isInterface(_this__u8e3s4, Collection)) {
-      var tmp0_subject = _this__u8e3s4.f();
-      var tmp;
-      switch (tmp0_subject) {
-        case 0:
-          tmp = emptySet();
-          break;
-        case 1:
-          var tmp_0;
-          if (isInterface(_this__u8e3s4, List)) {
-            tmp_0 = _this__u8e3s4.g(0);
-          } else {
-            tmp_0 = _this__u8e3s4.c().e();
-          }
-
-          tmp = setOf(tmp_0);
-          break;
-        default:
-          tmp = toCollection_0(_this__u8e3s4, LinkedHashSet_init_$Create$_0(mapCapacity(_this__u8e3s4.f())));
-          break;
-      }
-      return tmp;
-    }
-    return optimizeReadOnlySet(toCollection_0(_this__u8e3s4, LinkedHashSet_init_$Create$()));
-  }
-  function joinToString_0(_this__u8e3s4, separator, prefix, postfix, limit, truncated, transform) {
-    return joinTo_0(_this__u8e3s4, StringBuilder_init_$Create$(), separator, prefix, postfix, limit, truncated, transform).toString();
-  }
-  function joinToString$default_0(_this__u8e3s4, separator, prefix, postfix, limit, truncated, transform, $mask0, $handler) {
-    if (!(($mask0 & 1) === 0))
-      separator = ', ';
-    if (!(($mask0 & 2) === 0))
-      prefix = '';
-    if (!(($mask0 & 4) === 0))
-      postfix = '';
-    if (!(($mask0 & 8) === 0))
-      limit = -1;
-    if (!(($mask0 & 16) === 0))
-      truncated = '...';
-    if (!(($mask0 & 32) === 0))
-      transform = null;
-    return joinToString_0(_this__u8e3s4, separator, prefix, postfix, limit, truncated, transform);
-  }
   function toCollection_0(_this__u8e3s4, destination) {
     var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var item = tmp0_iterator.e();
+    while (tmp0_iterator.f()) {
+      var item = tmp0_iterator.d();
       destination.a(item);
     }
     return destination;
   }
-  function joinTo_0(_this__u8e3s4, buffer, separator, prefix, postfix, limit, truncated, transform) {
-    buffer.b(prefix);
+  function joinTo(_this__u8e3s4, buffer, separator, prefix, postfix, limit, truncated, transform) {
+    buffer.g(prefix);
     var count = 0;
     var tmp0_iterator = _this__u8e3s4.c();
-    $l$loop: while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    $l$loop: while (tmp0_iterator.f()) {
+      var element = tmp0_iterator.d();
       count = count + 1 | 0;
       if (count > 1) {
-        buffer.b(separator);
+        buffer.g(separator);
       }
       if (limit < 0 ? true : count <= limit) {
         appendElement(buffer, element, transform);
@@ -338,9 +252,9 @@ if (typeof Math.imul === 'undefined') {
         break $l$loop;
     }
     if (limit >= 0 ? count > limit : false) {
-      buffer.b(truncated);
+      buffer.g(truncated);
     }
-    buffer.b(postfix);
+    buffer.g(postfix);
     return buffer;
   }
   function any(_this__u8e3s4, predicate) {
@@ -353,8 +267,8 @@ if (typeof Math.imul === 'undefined') {
     if (tmp)
       return false;
     var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    while (tmp0_iterator.f()) {
+      var element = tmp0_iterator.d();
       if (predicate(element))
         return true;
     }
@@ -370,8 +284,8 @@ if (typeof Math.imul === 'undefined') {
     if (tmp)
       return true;
     var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    while (tmp0_iterator.f()) {
+      var element = tmp0_iterator.d();
       if (!predicate(element))
         return false;
     }
@@ -379,8 +293,8 @@ if (typeof Math.imul === 'undefined') {
   }
   function firstOrNull_0(_this__u8e3s4, predicate) {
     var tmp0_iterator = _this__u8e3s4.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    while (tmp0_iterator.f()) {
+      var element = tmp0_iterator.d();
       if (predicate(element))
         return element;
     }
@@ -388,18 +302,14 @@ if (typeof Math.imul === 'undefined') {
   }
   function until(_this__u8e3s4, to) {
     if (to <= IntCompanionObject_getInstance().j_1)
-      return Companion_getInstance_2().i_1;
+      return Companion_getInstance_1().i_1;
     return numberRangeToNumber(_this__u8e3s4, to - 1 | 0);
   }
   function coerceAtLeast(_this__u8e3s4, minimumValue) {
     return _this__u8e3s4 < minimumValue ? minimumValue : _this__u8e3s4;
   }
-  function step(_this__u8e3s4, step) {
-    checkStepIsPositive(step > 0, step);
-    return Companion_getInstance_3().q(_this__u8e3s4.n_1, _this__u8e3s4.o_1, _this__u8e3s4.p_1 > 0 ? step : -step | 0);
-  }
   function getOrElse(_this__u8e3s4, index, defaultValue) {
-    return (index >= 0 ? index <= get_lastIndex_1(_this__u8e3s4) : false) ? charSequenceGet(_this__u8e3s4, index) : defaultValue(index).r_1;
+    return (index >= 0 ? index <= get_lastIndex(_this__u8e3s4) : false) ? charSequenceGet(_this__u8e3s4, index) : defaultValue(index).n_1;
   }
   function get_code(_this__u8e3s4) {
     return Char__toInt_impl_vasixd(_this__u8e3s4);
@@ -408,7 +318,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp;
     var tmp$ret$0;
     // Inline function 'kotlin.code' call
-    Companion_getInstance_5();
+    Companion_getInstance_4();
     var tmp0__get_code__88qj9g = _Char___init__impl__6a9atx(0);
     tmp$ret$0 = Char__toInt_impl_vasixd(tmp0__get_code__88qj9g);
     if (code < tmp$ret$0) {
@@ -416,7 +326,7 @@ if (typeof Math.imul === 'undefined') {
     } else {
       var tmp$ret$1;
       // Inline function 'kotlin.code' call
-      Companion_getInstance_5();
+      Companion_getInstance_4();
       var tmp1__get_code__adl84j = _Char___init__impl__6a9atx(65535);
       tmp$ret$1 = Char__toInt_impl_vasixd(tmp1__get_code__adl84j);
       tmp = code > tmp$ret$1;
@@ -433,7 +343,7 @@ if (typeof Math.imul === 'undefined') {
   }
   function AbstractCollection() {
   }
-  AbstractCollection.prototype.s = function (element) {
+  AbstractCollection.prototype.o = function (element) {
     var tmp$ret$0;
     $l$block_0: {
       // Inline function 'kotlin.collections.any' call
@@ -448,8 +358,8 @@ if (typeof Math.imul === 'undefined') {
         break $l$block_0;
       }
       var tmp0_iterator = this.c();
-      while (tmp0_iterator.d()) {
-        var element_0 = tmp0_iterator.e();
+      while (tmp0_iterator.f()) {
+        var element_0 = tmp0_iterator.d();
         var tmp$ret$1;
         // Inline function 'kotlin.collections.AbstractCollection.contains.<anonymous>' call
         tmp$ret$1 = equals(element_0, element);
@@ -462,7 +372,7 @@ if (typeof Math.imul === 'undefined') {
     }
     return tmp$ret$0;
   };
-  AbstractCollection.prototype.t = function (elements) {
+  AbstractCollection.prototype.p = function (elements) {
     var tmp$ret$0;
     $l$block_0: {
       // Inline function 'kotlin.collections.all' call
@@ -477,11 +387,11 @@ if (typeof Math.imul === 'undefined') {
         break $l$block_0;
       }
       var tmp0_iterator = elements.c();
-      while (tmp0_iterator.d()) {
-        var element = tmp0_iterator.e();
+      while (tmp0_iterator.f()) {
+        var element = tmp0_iterator.d();
         var tmp$ret$1;
         // Inline function 'kotlin.collections.AbstractCollection.containsAll.<anonymous>' call
-        tmp$ret$1 = this.s(element);
+        tmp$ret$1 = this.o(element);
         if (!tmp$ret$1) {
           tmp$ret$0 = false;
           break $l$block_0;
@@ -492,61 +402,15 @@ if (typeof Math.imul === 'undefined') {
     return tmp$ret$0;
   };
   AbstractCollection.prototype.h = function () {
-    return this.f() === 0;
+    return this.b() === 0;
   };
   AbstractCollection.prototype.toString = function () {
-    return joinToString$default_0(this, ', ', '[', ']', 0, null, AbstractCollection$toString$lambda(this), 24, null);
+    return joinToString$default(this, ', ', '[', ']', 0, null, AbstractCollection$toString$lambda(this), 24, null);
   };
   AbstractCollection.prototype.toArray = function () {
     return copyToArrayImpl(this);
   };
   AbstractCollection.$metadata$ = classMeta('AbstractCollection', [Collection]);
-  function Companion() {
-    Companion_instance = this;
-  }
-  Companion.prototype.u = function (index, size) {
-    if (index < 0 ? true : index >= size) {
-      throw IndexOutOfBoundsException_init_$Create$('index: ' + index + ', size: ' + size);
-    }
-  };
-  Companion.prototype.v = function (index, size) {
-    if (index < 0 ? true : index > size) {
-      throw IndexOutOfBoundsException_init_$Create$('index: ' + index + ', size: ' + size);
-    }
-  };
-  Companion.prototype.w = function (c) {
-    var hashCode_0 = 1;
-    var tmp0_iterator = c.c();
-    while (tmp0_iterator.d()) {
-      var e = tmp0_iterator.e();
-      var tmp = imul(31, hashCode_0);
-      var tmp1_safe_receiver = e;
-      var tmp2_elvis_lhs = tmp1_safe_receiver == null ? null : hashCode(tmp1_safe_receiver);
-      hashCode_0 = tmp + (tmp2_elvis_lhs == null ? 0 : tmp2_elvis_lhs) | 0;
-    }
-    return hashCode_0;
-  };
-  Companion.prototype.x = function (c, other) {
-    if (!(c.f() === other.f()))
-      return false;
-    var otherIterator = other.c();
-    var tmp0_iterator = c.c();
-    while (tmp0_iterator.d()) {
-      var elem = tmp0_iterator.e();
-      var elemOther = otherIterator.e();
-      if (!equals(elem, elemOther)) {
-        return false;
-      }
-    }
-    return true;
-  };
-  Companion.$metadata$ = objectMeta('Companion');
-  var Companion_instance;
-  function Companion_getInstance() {
-    if (Companion_instance == null)
-      new Companion();
-    return Companion_instance;
-  }
   function toString($this, o) {
     return o === $this ? '(this Map)' : toString_1(o);
   }
@@ -554,13 +418,13 @@ if (typeof Math.imul === 'undefined') {
     var tmp$ret$1;
     $l$block: {
       // Inline function 'kotlin.collections.firstOrNull' call
-      var tmp0_firstOrNull = $this.y();
+      var tmp0_firstOrNull = $this.q();
       var tmp0_iterator = tmp0_firstOrNull.c();
-      while (tmp0_iterator.d()) {
-        var element = tmp0_iterator.e();
+      while (tmp0_iterator.f()) {
+        var element = tmp0_iterator.d();
         var tmp$ret$0;
         // Inline function 'kotlin.collections.AbstractMap.implFindEntry.<anonymous>' call
-        tmp$ret$0 = equals(element.z(), key);
+        tmp$ret$0 = equals(element.r(), key);
         if (tmp$ret$0) {
           tmp$ret$1 = element;
           break $l$block;
@@ -570,67 +434,67 @@ if (typeof Math.imul === 'undefined') {
     }
     return tmp$ret$1;
   }
-  function Companion_0() {
-    Companion_instance_0 = this;
+  function Companion() {
+    Companion_instance = this;
   }
-  Companion_0.prototype.a1 = function (e) {
+  Companion.prototype.s = function (e) {
     var tmp$ret$1;
     // Inline function 'kotlin.with' call
     // Inline function 'kotlin.contracts.contract' call
     var tmp$ret$0;
     // Inline function 'kotlin.collections.Companion.entryHashCode.<anonymous>' call
-    var tmp2_safe_receiver = e.z();
+    var tmp2_safe_receiver = e.r();
     var tmp3_elvis_lhs = tmp2_safe_receiver == null ? null : hashCode(tmp2_safe_receiver);
     var tmp = tmp3_elvis_lhs == null ? 0 : tmp3_elvis_lhs;
-    var tmp0_safe_receiver = e.b1();
+    var tmp0_safe_receiver = e.t();
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : hashCode(tmp0_safe_receiver);
     tmp$ret$0 = tmp ^ (tmp1_elvis_lhs == null ? 0 : tmp1_elvis_lhs);
     tmp$ret$1 = tmp$ret$0;
     return tmp$ret$1;
   };
-  Companion_0.prototype.c1 = function (e) {
+  Companion.prototype.u = function (e) {
     var tmp$ret$1;
     // Inline function 'kotlin.with' call
     // Inline function 'kotlin.contracts.contract' call
     var tmp$ret$0;
     // Inline function 'kotlin.collections.Companion.entryToString.<anonymous>' call
-    tmp$ret$0 = toString_1(e.z()) + '=' + toString_1(e.b1());
+    tmp$ret$0 = toString_1(e.r()) + '=' + toString_1(e.t());
     tmp$ret$1 = tmp$ret$0;
     return tmp$ret$1;
   };
-  Companion_0.prototype.d1 = function (e, other) {
+  Companion.prototype.v = function (e, other) {
     if (!(!(other == null) ? isInterface(other, Entry) : false))
       return false;
-    return equals(e.z(), other.z()) ? equals(e.b1(), other.b1()) : false;
+    return equals(e.r(), other.r()) ? equals(e.t(), other.t()) : false;
   };
-  Companion_0.$metadata$ = objectMeta('Companion');
-  var Companion_instance_0;
-  function Companion_getInstance_0() {
-    if (Companion_instance_0 == null)
-      new Companion_0();
-    return Companion_instance_0;
+  Companion.$metadata$ = objectMeta('Companion');
+  var Companion_instance;
+  function Companion_getInstance() {
+    if (Companion_instance == null)
+      new Companion();
+    return Companion_instance;
   }
   function AbstractMap$toString$lambda(this$0) {
     return function (it) {
-      return this$0.g1(it);
+      return this$0.y(it);
     };
   }
   function AbstractMap() {
-    Companion_getInstance_0();
-    this.e1_1 = null;
-    this.f1_1 = null;
+    Companion_getInstance();
+    this.w_1 = null;
+    this.x_1 = null;
   }
-  AbstractMap.prototype.h1 = function (key) {
+  AbstractMap.prototype.z = function (key) {
     return !(implFindEntry(this, key) == null);
   };
-  AbstractMap.prototype.i1 = function (entry) {
+  AbstractMap.prototype.a1 = function (entry) {
     if (!(!(entry == null) ? isInterface(entry, Entry) : false))
       return false;
-    var key = entry.z();
-    var value = entry.b1();
+    var key = entry.r();
+    var value = entry.t();
     var tmp$ret$0;
     // Inline function 'kotlin.collections.get' call
-    tmp$ret$0 = (isInterface(this, Map) ? this : THROW_CCE()).j1(key);
+    tmp$ret$0 = (isInterface(this, Map) ? this : THROW_CCE()).b1(key);
     var ourValue = tmp$ret$0;
     if (!equals(value, ourValue)) {
       return false;
@@ -639,7 +503,7 @@ if (typeof Math.imul === 'undefined') {
     if (ourValue == null) {
       var tmp$ret$1;
       // Inline function 'kotlin.collections.containsKey' call
-      tmp$ret$1 = (isInterface(this, Map) ? this : THROW_CCE()).h1(key);
+      tmp$ret$1 = (isInterface(this, Map) ? this : THROW_CCE()).z(key);
       tmp = !tmp$ret$1;
     } else {
       tmp = false;
@@ -654,12 +518,12 @@ if (typeof Math.imul === 'undefined') {
       return true;
     if (!(!(other == null) ? isInterface(other, Map) : false))
       return false;
-    if (!(this.f() === other.f()))
+    if (!(this.b() === other.b()))
       return false;
     var tmp$ret$0;
     $l$block_0: {
       // Inline function 'kotlin.collections.all' call
-      var tmp0_all = other.y();
+      var tmp0_all = other.q();
       var tmp;
       if (isInterface(tmp0_all, Collection)) {
         tmp = tmp0_all.h();
@@ -671,11 +535,11 @@ if (typeof Math.imul === 'undefined') {
         break $l$block_0;
       }
       var tmp0_iterator = tmp0_all.c();
-      while (tmp0_iterator.d()) {
-        var element = tmp0_iterator.e();
+      while (tmp0_iterator.f()) {
+        var element = tmp0_iterator.d();
         var tmp$ret$1;
         // Inline function 'kotlin.collections.AbstractMap.equals.<anonymous>' call
-        tmp$ret$1 = this.i1(element);
+        tmp$ret$1 = this.a1(element);
         if (!tmp$ret$1) {
           tmp$ret$0 = false;
           break $l$block_0;
@@ -685,35 +549,35 @@ if (typeof Math.imul === 'undefined') {
     }
     return tmp$ret$0;
   };
-  AbstractMap.prototype.j1 = function (key) {
+  AbstractMap.prototype.b1 = function (key) {
     var tmp0_safe_receiver = implFindEntry(this, key);
-    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.b1();
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.t();
   };
   AbstractMap.prototype.hashCode = function () {
-    return hashCode(this.y());
+    return hashCode(this.q());
   };
   AbstractMap.prototype.h = function () {
-    return this.f() === 0;
+    return this.b() === 0;
   };
-  AbstractMap.prototype.f = function () {
-    return this.y().f();
+  AbstractMap.prototype.b = function () {
+    return this.q().b();
   };
   AbstractMap.prototype.toString = function () {
-    var tmp = this.y();
-    return joinToString$default_0(tmp, ', ', '{', '}', 0, null, AbstractMap$toString$lambda(this), 24, null);
+    var tmp = this.q();
+    return joinToString$default(tmp, ', ', '{', '}', 0, null, AbstractMap$toString$lambda(this), 24, null);
   };
-  AbstractMap.prototype.g1 = function (entry) {
-    return toString(this, entry.z()) + '=' + toString(this, entry.b1());
+  AbstractMap.prototype.y = function (entry) {
+    return toString(this, entry.r()) + '=' + toString(this, entry.t());
   };
   AbstractMap.$metadata$ = classMeta('AbstractMap', [Map]);
-  function Companion_1() {
-    Companion_instance_1 = this;
+  function Companion_0() {
+    Companion_instance_0 = this;
   }
-  Companion_1.prototype.k1 = function (c) {
+  Companion_0.prototype.c1 = function (c) {
     var hashCode_0 = 0;
     var tmp0_iterator = c.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    while (tmp0_iterator.f()) {
+      var element = tmp0_iterator.d();
       var tmp = hashCode_0;
       var tmp1_safe_receiver = element;
       var tmp2_elvis_lhs = tmp1_safe_receiver == null ? null : hashCode(tmp1_safe_receiver);
@@ -721,31 +585,28 @@ if (typeof Math.imul === 'undefined') {
     }
     return hashCode_0;
   };
-  Companion_1.prototype.l1 = function (c, other) {
-    if (!(c.f() === other.f()))
+  Companion_0.prototype.d1 = function (c, other) {
+    if (!(c.b() === other.b()))
       return false;
     var tmp$ret$0;
     // Inline function 'kotlin.collections.containsAll' call
-    tmp$ret$0 = c.t(other);
+    tmp$ret$0 = c.p(other);
     return tmp$ret$0;
   };
-  Companion_1.$metadata$ = objectMeta('Companion');
-  var Companion_instance_1;
-  function Companion_getInstance_1() {
-    if (Companion_instance_1 == null)
-      new Companion_1();
-    return Companion_instance_1;
-  }
-  function mutableListOf() {
-    return ArrayList_init_$Create$();
+  Companion_0.$metadata$ = objectMeta('Companion');
+  var Companion_instance_0;
+  function Companion_getInstance_0() {
+    if (Companion_instance_0 == null)
+      new Companion_0();
+    return Companion_instance_0;
   }
   function EmptyIterator() {
     EmptyIterator_instance = this;
   }
-  EmptyIterator.prototype.d = function () {
+  EmptyIterator.prototype.f = function () {
     return false;
   };
-  EmptyIterator.prototype.e = function () {
+  EmptyIterator.prototype.d = function () {
     throw NoSuchElementException_init_$Create$();
   };
   EmptyIterator.$metadata$ = objectMeta('EmptyIterator', [ListIterator]);
@@ -755,25 +616,19 @@ if (typeof Math.imul === 'undefined') {
       new EmptyIterator();
     return EmptyIterator_instance;
   }
-  function throwIndexOverflow() {
-    throw ArithmeticException_init_$Create$('Index overflow has happened.');
-  }
-  function get_lastIndex_0(_this__u8e3s4) {
-    return _this__u8e3s4.f() - 1 | 0;
-  }
   function containsAll(_this__u8e3s4, elements) {
-    return _this__u8e3s4.t(elements);
+    return _this__u8e3s4.p(elements);
   }
   function get(_this__u8e3s4, key) {
-    return (isInterface(_this__u8e3s4, Map) ? _this__u8e3s4 : THROW_CCE()).j1(key);
+    return (isInterface(_this__u8e3s4, Map) ? _this__u8e3s4 : THROW_CCE()).b1(key);
   }
   function containsKey(_this__u8e3s4, key) {
-    return (isInterface(_this__u8e3s4, Map) ? _this__u8e3s4 : THROW_CCE()).h1(key);
+    return (isInterface(_this__u8e3s4, Map) ? _this__u8e3s4 : THROW_CCE()).z(key);
   }
   function IntIterator() {
   }
-  IntIterator.prototype.e = function () {
-    return this.m1();
+  IntIterator.prototype.d = function () {
+    return this.e1();
   };
   IntIterator.$metadata$ = classMeta('IntIterator', [Iterator]);
   function emptySet() {
@@ -781,7 +636,7 @@ if (typeof Math.imul === 'undefined') {
   }
   function EmptySet() {
     EmptySet_instance = this;
-    this.n1_1 = new Long(1993859828, 793161749);
+    this.f1_1 = new Long(1993859828, 793161749);
   }
   EmptySet.prototype.equals = function (other) {
     var tmp;
@@ -798,17 +653,17 @@ if (typeof Math.imul === 'undefined') {
   EmptySet.prototype.toString = function () {
     return '[]';
   };
-  EmptySet.prototype.f = function () {
+  EmptySet.prototype.b = function () {
     return 0;
   };
   EmptySet.prototype.h = function () {
     return true;
   };
-  EmptySet.prototype.o1 = function (elements) {
+  EmptySet.prototype.g1 = function (elements) {
     return elements.h();
   };
-  EmptySet.prototype.t = function (elements) {
-    return this.o1(elements);
+  EmptySet.prototype.p = function (elements) {
+    return this.g1(elements);
   };
   EmptySet.prototype.c = function () {
     return EmptyIterator_getInstance();
@@ -824,12 +679,12 @@ if (typeof Math.imul === 'undefined') {
     return toCollection(elements, HashSet_init_$Create$(mapCapacity(elements.length)));
   }
   function optimizeReadOnlySet(_this__u8e3s4) {
-    var tmp0_subject = _this__u8e3s4.f();
+    var tmp0_subject = _this__u8e3s4.b();
     switch (tmp0_subject) {
       case 0:
         return emptySet();
       case 1:
-        return setOf(_this__u8e3s4.c().e());
+        return setOf(_this__u8e3s4.c().d());
       default:
         return _this__u8e3s4;
     }
@@ -854,9 +709,65 @@ if (typeof Math.imul === 'undefined') {
     var mod = a % b | 0;
     return mod >= 0 ? mod : mod + b | 0;
   }
+  function Companion_1() {
+    Companion_instance_1 = this;
+    this.i_1 = new IntRange(1, 0);
+  }
+  Companion_1.$metadata$ = objectMeta('Companion');
+  var Companion_instance_1;
+  function Companion_getInstance_1() {
+    if (Companion_instance_1 == null)
+      new Companion_1();
+    return Companion_instance_1;
+  }
+  function IntRange(start, endInclusive) {
+    Companion_getInstance_1();
+    IntProgression.call(this, start, endInclusive, 1);
+  }
+  IntRange.prototype.h = function () {
+    return this.k1_1 > this.l1_1;
+  };
+  IntRange.prototype.equals = function (other) {
+    var tmp;
+    if (other instanceof IntRange) {
+      tmp = (this.h() ? other.h() : false) ? true : this.k1_1 === other.k1_1 ? this.l1_1 === other.l1_1 : false;
+    } else {
+      tmp = false;
+    }
+    return tmp;
+  };
+  IntRange.prototype.hashCode = function () {
+    return this.h() ? -1 : imul(31, this.k1_1) + this.l1_1 | 0;
+  };
+  IntRange.prototype.toString = function () {
+    return '' + this.k1_1 + '..' + this.l1_1;
+  };
+  IntRange.$metadata$ = classMeta('IntRange', [ClosedRange, OpenEndRange], undefined, undefined, undefined, IntProgression.prototype);
+  function IntProgressionIterator(first, last, step) {
+    IntIterator.call(this);
+    this.n1_1 = step;
+    this.o1_1 = last;
+    this.p1_1 = this.n1_1 > 0 ? first <= last : first >= last;
+    this.q1_1 = this.p1_1 ? first : this.o1_1;
+  }
+  IntProgressionIterator.prototype.f = function () {
+    return this.p1_1;
+  };
+  IntProgressionIterator.prototype.e1 = function () {
+    var value = this.q1_1;
+    if (value === this.o1_1) {
+      if (!this.p1_1)
+        throw NoSuchElementException_init_$Create$();
+      this.p1_1 = false;
+    } else {
+      var tmp0_this = this;
+      tmp0_this.q1_1 = tmp0_this.q1_1 + this.n1_1 | 0;
+    }
+    return value;
+  };
+  IntProgressionIterator.$metadata$ = classMeta('IntProgressionIterator', undefined, undefined, undefined, undefined, IntIterator.prototype);
   function Companion_2() {
     Companion_instance_2 = this;
-    this.i_1 = new IntRange(1, 0);
   }
   Companion_2.$metadata$ = objectMeta('Companion');
   var Companion_instance_2;
@@ -865,95 +776,36 @@ if (typeof Math.imul === 'undefined') {
       new Companion_2();
     return Companion_instance_2;
   }
-  function IntRange(start, endInclusive) {
-    Companion_getInstance_2();
-    IntProgression.call(this, start, endInclusive, 1);
-  }
-  IntRange.prototype.h = function () {
-    return this.n_1 > this.o_1;
-  };
-  IntRange.prototype.equals = function (other) {
-    var tmp;
-    if (other instanceof IntRange) {
-      tmp = (this.h() ? other.h() : false) ? true : this.n_1 === other.n_1 ? this.o_1 === other.o_1 : false;
-    } else {
-      tmp = false;
-    }
-    return tmp;
-  };
-  IntRange.prototype.hashCode = function () {
-    return this.h() ? -1 : imul(31, this.n_1) + this.o_1 | 0;
-  };
-  IntRange.prototype.toString = function () {
-    return '' + this.n_1 + '..' + this.o_1;
-  };
-  IntRange.$metadata$ = classMeta('IntRange', [ClosedRange, OpenEndRange], undefined, undefined, undefined, IntProgression.prototype);
-  function IntProgressionIterator(first, last, step) {
-    IntIterator.call(this);
-    this.s1_1 = step;
-    this.t1_1 = last;
-    this.u1_1 = this.s1_1 > 0 ? first <= last : first >= last;
-    this.v1_1 = this.u1_1 ? first : this.t1_1;
-  }
-  IntProgressionIterator.prototype.d = function () {
-    return this.u1_1;
-  };
-  IntProgressionIterator.prototype.m1 = function () {
-    var value = this.v1_1;
-    if (value === this.t1_1) {
-      if (!this.u1_1)
-        throw NoSuchElementException_init_$Create$();
-      this.u1_1 = false;
-    } else {
-      var tmp0_this = this;
-      tmp0_this.v1_1 = tmp0_this.v1_1 + this.s1_1 | 0;
-    }
-    return value;
-  };
-  IntProgressionIterator.$metadata$ = classMeta('IntProgressionIterator', undefined, undefined, undefined, undefined, IntIterator.prototype);
-  function Companion_3() {
-    Companion_instance_3 = this;
-  }
-  Companion_3.prototype.q = function (rangeStart, rangeEnd, step) {
-    return new IntProgression(rangeStart, rangeEnd, step);
-  };
-  Companion_3.$metadata$ = objectMeta('Companion');
-  var Companion_instance_3;
-  function Companion_getInstance_3() {
-    if (Companion_instance_3 == null)
-      new Companion_3();
-    return Companion_instance_3;
-  }
   function IntProgression(start, endInclusive, step) {
-    Companion_getInstance_3();
+    Companion_getInstance_2();
     if (step === 0)
       throw IllegalArgumentException_init_$Create$('Step must be non-zero.');
     if (step === IntCompanionObject_getInstance().j_1)
       throw IllegalArgumentException_init_$Create$('Step must be greater than Int.MIN_VALUE to avoid overflow on negation.');
-    this.n_1 = start;
-    this.o_1 = getProgressionLastElement(start, endInclusive, step);
-    this.p_1 = step;
+    this.k1_1 = start;
+    this.l1_1 = getProgressionLastElement(start, endInclusive, step);
+    this.m1_1 = step;
   }
   IntProgression.prototype.c = function () {
-    return new IntProgressionIterator(this.n_1, this.o_1, this.p_1);
+    return new IntProgressionIterator(this.k1_1, this.l1_1, this.m1_1);
   };
   IntProgression.prototype.h = function () {
-    return this.p_1 > 0 ? this.n_1 > this.o_1 : this.n_1 < this.o_1;
+    return this.m1_1 > 0 ? this.k1_1 > this.l1_1 : this.k1_1 < this.l1_1;
   };
   IntProgression.prototype.equals = function (other) {
     var tmp;
     if (other instanceof IntProgression) {
-      tmp = (this.h() ? other.h() : false) ? true : (this.n_1 === other.n_1 ? this.o_1 === other.o_1 : false) ? this.p_1 === other.p_1 : false;
+      tmp = (this.h() ? other.h() : false) ? true : (this.k1_1 === other.k1_1 ? this.l1_1 === other.l1_1 : false) ? this.m1_1 === other.m1_1 : false;
     } else {
       tmp = false;
     }
     return tmp;
   };
   IntProgression.prototype.hashCode = function () {
-    return this.h() ? -1 : imul(31, imul(31, this.n_1) + this.o_1 | 0) + this.p_1 | 0;
+    return this.h() ? -1 : imul(31, imul(31, this.k1_1) + this.l1_1 | 0) + this.m1_1 | 0;
   };
   IntProgression.prototype.toString = function () {
-    return this.p_1 > 0 ? '' + this.n_1 + '..' + this.o_1 + ' step ' + this.p_1 : '' + this.n_1 + ' downTo ' + this.o_1 + ' step ' + (-this.p_1 | 0);
+    return this.m1_1 > 0 ? '' + this.k1_1 + '..' + this.l1_1 + ' step ' + this.m1_1 : '' + this.k1_1 + ' downTo ' + this.l1_1 + ' step ' + (-this.m1_1 | 0);
   };
   IntProgression.$metadata$ = classMeta('IntProgression', [Iterable]);
   function ClosedRange() {
@@ -962,24 +814,20 @@ if (typeof Math.imul === 'undefined') {
   function OpenEndRange() {
   }
   OpenEndRange.$metadata$ = interfaceMeta('OpenEndRange');
-  function checkStepIsPositive(isPositive, step) {
-    if (!isPositive)
-      throw IllegalArgumentException_init_$Create$('Step must be positive, was: ' + toString_2(step) + '.');
-  }
   function KClassifier() {
   }
   KClassifier.$metadata$ = interfaceMeta('KClassifier');
   function appendElement(_this__u8e3s4, element, transform) {
     if (!(transform == null)) {
-      _this__u8e3s4.b(transform(element));
+      _this__u8e3s4.g(transform(element));
     } else {
       if (element == null ? true : isCharSequence(element)) {
-        _this__u8e3s4.b(element);
+        _this__u8e3s4.g(element);
       } else {
         if (element instanceof Char_0) {
-          _this__u8e3s4.w1(element.r_1);
+          _this__u8e3s4.r1(element.n_1);
         } else {
-          _this__u8e3s4.b(toString_1(element));
+          _this__u8e3s4.g(toString_1(element));
         }
       }
     }
@@ -1046,9 +894,9 @@ if (typeof Math.imul === 'undefined') {
     return isNegative ? result : -result | 0;
   }
   function matches(_this__u8e3s4, regex) {
-    return regex.c2(_this__u8e3s4);
+    return regex.x1(_this__u8e3s4);
   }
-  function get_lastIndex_1(_this__u8e3s4) {
+  function get_lastIndex(_this__u8e3s4) {
     return charSequenceLength(_this__u8e3s4) - 1 | 0;
   }
   function check(value) {
@@ -1121,12 +969,11 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.contracts.contract' call
     return block();
   }
-  function NotImplementedError(message) {
-    Error_init_$Init$(message, this);
-    captureStack(this, NotImplementedError);
-  }
-  NotImplementedError.$metadata$ = classMeta('NotImplementedError', undefined, undefined, undefined, undefined, Error_0.prototype);
   function let_0(_this__u8e3s4, block) {
+    // Inline function 'kotlin.contracts.contract' call
+    return block(_this__u8e3s4);
+  }
+  function run_0(_this__u8e3s4, block) {
     // Inline function 'kotlin.contracts.contract' call
     return block(_this__u8e3s4);
   }
@@ -1134,24 +981,6 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.contracts.contract' call
     block(_this__u8e3s4);
     return _this__u8e3s4;
-  }
-  function repeat(times, action) {
-    // Inline function 'kotlin.contracts.contract' call
-    var inductionVariable = 0;
-    if (inductionVariable < times)
-      do {
-        var index = inductionVariable;
-        inductionVariable = inductionVariable + 1 | 0;
-        action(index);
-      }
-       while (inductionVariable < times);
-  }
-  function TODO(reason) {
-    throw new NotImplementedError('An operation is not implemented: ' + reason);
-  }
-  function run_0(_this__u8e3s4, block) {
-    // Inline function 'kotlin.contracts.contract' call
-    return block(_this__u8e3s4);
   }
   function takeIf(_this__u8e3s4, predicate) {
     // Inline function 'kotlin.contracts.contract' call
@@ -1211,34 +1040,34 @@ if (typeof Math.imul === 'undefined') {
     this.l_1 = 4;
     this.m_1 = 32;
   }
-  IntCompanionObject.prototype.i2 = function () {
+  IntCompanionObject.prototype.b2 = function () {
     return this.j_1;
   };
-  IntCompanionObject.prototype.j2 = function () {
+  IntCompanionObject.prototype.c2 = function () {
     return this.k_1;
   };
-  IntCompanionObject.prototype.k2 = function () {
+  IntCompanionObject.prototype.d2 = function () {
     return this.l_1;
   };
-  IntCompanionObject.prototype.l2 = function () {
+  IntCompanionObject.prototype.e2 = function () {
     return this.m_1;
   };
   IntCompanionObject.$metadata$ = objectMeta('IntCompanionObject');
   Object.defineProperty(IntCompanionObject.prototype, 'MIN_VALUE', {
     configurable: true,
-    get: IntCompanionObject.prototype.i2
+    get: IntCompanionObject.prototype.b2
   });
   Object.defineProperty(IntCompanionObject.prototype, 'MAX_VALUE', {
     configurable: true,
-    get: IntCompanionObject.prototype.j2
+    get: IntCompanionObject.prototype.c2
   });
   Object.defineProperty(IntCompanionObject.prototype, 'SIZE_BYTES', {
     configurable: true,
-    get: IntCompanionObject.prototype.k2
+    get: IntCompanionObject.prototype.d2
   });
   Object.defineProperty(IntCompanionObject.prototype, 'SIZE_BITS', {
     configurable: true,
-    get: IntCompanionObject.prototype.l2
+    get: IntCompanionObject.prototype.e2
   });
   var IntCompanionObject_instance;
   function IntCompanionObject_getInstance() {
@@ -1249,12 +1078,6 @@ if (typeof Math.imul === 'undefined') {
   function Comparator() {
   }
   Comparator.$metadata$ = interfaceMeta('Comparator');
-  function checkIndexOverflow(index) {
-    if (index < 0) {
-      throwIndexOverflow();
-    }
-    return index;
-  }
   function setOf(element) {
     return hashSetOf([element]);
   }
@@ -1267,11 +1090,11 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$0 = [];
     var array = tmp$ret$0;
     var iterator = collection.c();
-    while (iterator.d()) {
+    while (iterator.f()) {
       var tmp$ret$1;
       // Inline function 'kotlin.js.asDynamic' call
       tmp$ret$1 = array;
-      tmp$ret$1.push(iterator.e());
+      tmp$ret$1.push(iterator.d());
     }
     return array;
   }
@@ -1281,147 +1104,86 @@ if (typeof Math.imul === 'undefined') {
   AbstractMutableCollection.prototype.toJSON = function () {
     return this.toArray();
   };
-  AbstractMutableCollection.prototype.m2 = function () {
-  };
   AbstractMutableCollection.$metadata$ = classMeta('AbstractMutableCollection', [MutableCollection], undefined, undefined, undefined, AbstractCollection.prototype);
-  function IteratorImpl($outer) {
-    this.p2_1 = $outer;
-    this.n2_1 = 0;
-    this.o2_1 = -1;
-  }
-  IteratorImpl.prototype.d = function () {
-    return this.n2_1 < this.p2_1.f();
-  };
-  IteratorImpl.prototype.e = function () {
-    if (!this.d())
-      throw NoSuchElementException_init_$Create$();
-    var tmp = this;
-    var tmp0_this = this;
-    var tmp1 = tmp0_this.n2_1;
-    tmp0_this.n2_1 = tmp1 + 1 | 0;
-    tmp.o2_1 = tmp1;
-    return this.p2_1.g(this.o2_1);
-  };
-  IteratorImpl.$metadata$ = classMeta('IteratorImpl', [MutableIterator]);
-  function AbstractMutableList() {
-    AbstractMutableCollection.call(this);
-    this.q2_1 = 0;
-  }
-  AbstractMutableList.prototype.a = function (element) {
-    this.m2();
-    this.r2(this.f(), element);
-    return true;
-  };
-  AbstractMutableList.prototype.c = function () {
-    return new IteratorImpl(this);
-  };
-  AbstractMutableList.prototype.s = function (element) {
-    return this.s2(element) >= 0;
-  };
-  AbstractMutableList.prototype.s2 = function (element) {
-    var inductionVariable = 0;
-    var last = get_lastIndex_0(this);
-    if (inductionVariable <= last)
-      do {
-        var index = inductionVariable;
-        inductionVariable = inductionVariable + 1 | 0;
-        if (equals(this.g(index), element)) {
-          return index;
-        }
-      }
-       while (!(index === last));
-    return -1;
-  };
-  AbstractMutableList.prototype.equals = function (other) {
-    if (other === this)
-      return true;
-    if (!(!(other == null) ? isInterface(other, List) : false))
-      return false;
-    return Companion_getInstance().x(this, other);
-  };
-  AbstractMutableList.prototype.hashCode = function () {
-    return Companion_getInstance().w(this);
-  };
-  AbstractMutableList.$metadata$ = classMeta('AbstractMutableList', [MutableList], undefined, undefined, undefined, AbstractMutableCollection.prototype);
   function AbstractMutableMap$keys$1$iterator$1($entryIterator) {
-    this.t2_1 = $entryIterator;
+    this.f2_1 = $entryIterator;
   }
-  AbstractMutableMap$keys$1$iterator$1.prototype.d = function () {
-    return this.t2_1.d();
+  AbstractMutableMap$keys$1$iterator$1.prototype.f = function () {
+    return this.f2_1.f();
   };
-  AbstractMutableMap$keys$1$iterator$1.prototype.e = function () {
-    return this.t2_1.e().z();
+  AbstractMutableMap$keys$1$iterator$1.prototype.d = function () {
+    return this.f2_1.d().r();
   };
   AbstractMutableMap$keys$1$iterator$1.$metadata$ = classMeta(undefined, [MutableIterator]);
   function SimpleEntry(key, value) {
-    this.u2_1 = key;
-    this.v2_1 = value;
+    this.g2_1 = key;
+    this.h2_1 = value;
   }
-  SimpleEntry.prototype.z = function () {
-    return this.u2_1;
+  SimpleEntry.prototype.r = function () {
+    return this.g2_1;
   };
-  SimpleEntry.prototype.b1 = function () {
-    return this.v2_1;
+  SimpleEntry.prototype.t = function () {
+    return this.h2_1;
   };
-  SimpleEntry.prototype.w2 = function (newValue) {
-    var oldValue = this.v2_1;
-    this.v2_1 = newValue;
+  SimpleEntry.prototype.i2 = function (newValue) {
+    var oldValue = this.h2_1;
+    this.h2_1 = newValue;
     return oldValue;
   };
   SimpleEntry.prototype.hashCode = function () {
-    return Companion_getInstance_0().a1(this);
+    return Companion_getInstance().s(this);
   };
   SimpleEntry.prototype.toString = function () {
-    return Companion_getInstance_0().c1(this);
+    return Companion_getInstance().u(this);
   };
   SimpleEntry.prototype.equals = function (other) {
-    return Companion_getInstance_0().d1(this, other);
+    return Companion_getInstance().v(this, other);
   };
   SimpleEntry.$metadata$ = classMeta('SimpleEntry', [MutableEntry]);
   function AbstractEntrySet() {
     AbstractMutableSet.call(this);
   }
-  AbstractEntrySet.prototype.s = function (element) {
-    return this.x2(element);
+  AbstractEntrySet.prototype.o = function (element) {
+    return this.j2(element);
   };
   AbstractEntrySet.$metadata$ = classMeta('AbstractEntrySet', undefined, undefined, undefined, undefined, AbstractMutableSet.prototype);
   function AbstractMutableMap$keys$1(this$0) {
-    this.y2_1 = this$0;
+    this.k2_1 = this$0;
     AbstractMutableSet.call(this);
   }
-  AbstractMutableMap$keys$1.prototype.z2 = function (element) {
+  AbstractMutableMap$keys$1.prototype.l2 = function (element) {
     throw UnsupportedOperationException_init_$Create$_0('Add is not supported on keys');
   };
   AbstractMutableMap$keys$1.prototype.a = function (element) {
-    return this.z2((element == null ? true : isObject(element)) ? element : THROW_CCE());
+    return this.l2((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
-  AbstractMutableMap$keys$1.prototype.a3 = function (element) {
-    return this.y2_1.h1(element);
+  AbstractMutableMap$keys$1.prototype.m2 = function (element) {
+    return this.k2_1.z(element);
   };
-  AbstractMutableMap$keys$1.prototype.s = function (element) {
+  AbstractMutableMap$keys$1.prototype.o = function (element) {
     if (!(element == null ? true : isObject(element)))
       return false;
-    return this.a3((element == null ? true : isObject(element)) ? element : THROW_CCE());
+    return this.m2((element == null ? true : isObject(element)) ? element : THROW_CCE());
   };
   AbstractMutableMap$keys$1.prototype.c = function () {
-    var entryIterator = this.y2_1.y().c();
+    var entryIterator = this.k2_1.q().c();
     return new AbstractMutableMap$keys$1$iterator$1(entryIterator);
   };
-  AbstractMutableMap$keys$1.prototype.f = function () {
-    return this.y2_1.f();
+  AbstractMutableMap$keys$1.prototype.b = function () {
+    return this.k2_1.b();
   };
   AbstractMutableMap$keys$1.$metadata$ = classMeta(undefined, undefined, undefined, undefined, undefined, AbstractMutableSet.prototype);
   function AbstractMutableMap() {
     AbstractMap.call(this);
-    this.d3_1 = null;
-    this.e3_1 = null;
+    this.p2_1 = null;
+    this.q2_1 = null;
   }
-  AbstractMutableMap.prototype.f3 = function () {
-    if (this.d3_1 == null) {
+  AbstractMutableMap.prototype.r2 = function () {
+    if (this.p2_1 == null) {
       var tmp = this;
-      tmp.d3_1 = new AbstractMutableMap$keys$1(this);
+      tmp.p2_1 = new AbstractMutableMap$keys$1(this);
     }
-    return ensureNotNull(this.d3_1);
+    return ensureNotNull(this.p2_1);
   };
   AbstractMutableMap.$metadata$ = classMeta('AbstractMutableMap', [MutableMap], undefined, undefined, undefined, AbstractMap.prototype);
   function AbstractMutableSet() {
@@ -1432,99 +1194,19 @@ if (typeof Math.imul === 'undefined') {
       return true;
     if (!(!(other == null) ? isInterface(other, Set) : false))
       return false;
-    return Companion_getInstance_1().l1(this, other);
+    return Companion_getInstance_0().d1(this, other);
   };
   AbstractMutableSet.prototype.hashCode = function () {
-    return Companion_getInstance_1().k1(this);
+    return Companion_getInstance_0().c1(this);
   };
   AbstractMutableSet.$metadata$ = classMeta('AbstractMutableSet', [MutableSet], undefined, undefined, undefined, AbstractMutableCollection.prototype);
-  function ArrayList_init_$Init$($this) {
-    var tmp$ret$0;
-    // Inline function 'kotlin.emptyArray' call
-    tmp$ret$0 = [];
-    ArrayList.call($this, tmp$ret$0);
-    return $this;
-  }
-  function ArrayList_init_$Create$() {
-    return ArrayList_init_$Init$(Object.create(ArrayList.prototype));
-  }
-  function rangeCheck($this, index) {
-    var tmp$ret$0;
-    // Inline function 'kotlin.apply' call
-    // Inline function 'kotlin.contracts.contract' call
-    // Inline function 'kotlin.collections.ArrayList.rangeCheck.<anonymous>' call
-    Companion_getInstance().u(index, $this.f());
-    tmp$ret$0 = index;
-    return tmp$ret$0;
-  }
-  function insertionRangeCheck($this, index) {
-    var tmp$ret$0;
-    // Inline function 'kotlin.apply' call
-    // Inline function 'kotlin.contracts.contract' call
-    // Inline function 'kotlin.collections.ArrayList.insertionRangeCheck.<anonymous>' call
-    Companion_getInstance().v(index, $this.f());
-    tmp$ret$0 = index;
-    return tmp$ret$0;
-  }
-  function ArrayList(array) {
-    AbstractMutableList.call(this);
-    this.h3_1 = array;
-    this.i3_1 = false;
-  }
-  ArrayList.prototype.f = function () {
-    return this.h3_1.length;
-  };
-  ArrayList.prototype.g = function (index) {
-    var tmp = this.h3_1[rangeCheck(this, index)];
-    return (tmp == null ? true : isObject(tmp)) ? tmp : THROW_CCE();
-  };
-  ArrayList.prototype.a = function (element) {
-    this.m2();
-    var tmp$ret$0;
-    // Inline function 'kotlin.js.asDynamic' call
-    var tmp0_asDynamic = this.h3_1;
-    tmp$ret$0 = tmp0_asDynamic;
-    tmp$ret$0.push(element);
-    var tmp0_this = this;
-    var tmp1 = tmp0_this.q2_1;
-    tmp0_this.q2_1 = tmp1 + 1 | 0;
-    return true;
-  };
-  ArrayList.prototype.r2 = function (index, element) {
-    this.m2();
-    var tmp$ret$0;
-    // Inline function 'kotlin.js.asDynamic' call
-    var tmp0_asDynamic = this.h3_1;
-    tmp$ret$0 = tmp0_asDynamic;
-    tmp$ret$0.splice(insertionRangeCheck(this, index), 0, element);
-    var tmp0_this = this;
-    var tmp1 = tmp0_this.q2_1;
-    tmp0_this.q2_1 = tmp1 + 1 | 0;
-  };
-  ArrayList.prototype.s2 = function (element) {
-    return indexOf(this.h3_1, element);
-  };
-  ArrayList.prototype.toString = function () {
-    return arrayToString(this.h3_1);
-  };
-  ArrayList.prototype.j3 = function () {
-    return [].slice.call(this.h3_1);
-  };
-  ArrayList.prototype.toArray = function () {
-    return this.j3();
-  };
-  ArrayList.prototype.m2 = function () {
-    if (this.i3_1)
-      throw UnsupportedOperationException_init_$Create$();
-  };
-  ArrayList.$metadata$ = classMeta('ArrayList', [MutableList, RandomAccess], undefined, undefined, undefined, AbstractMutableList.prototype);
   function HashCode() {
     HashCode_instance = this;
   }
-  HashCode.prototype.k3 = function (value1, value2) {
+  HashCode.prototype.s2 = function (value1, value2) {
     return equals(value1, value2);
   };
-  HashCode.prototype.l3 = function (value) {
+  HashCode.prototype.t2 = function (value) {
     var tmp0_safe_receiver = value;
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : hashCode(tmp0_safe_receiver);
     return tmp1_elvis_lhs == null ? 0 : tmp1_elvis_lhs;
@@ -1540,30 +1222,30 @@ if (typeof Math.imul === 'undefined') {
   }
   EqualityComparator.$metadata$ = interfaceMeta('EqualityComparator');
   function EntrySet($outer) {
-    this.m3_1 = $outer;
+    this.u2_1 = $outer;
     AbstractEntrySet.call(this);
   }
-  EntrySet.prototype.n3 = function (element) {
+  EntrySet.prototype.v2 = function (element) {
     throw UnsupportedOperationException_init_$Create$_0('Add is not supported on entries');
   };
   EntrySet.prototype.a = function (element) {
-    return this.n3((!(element == null) ? isInterface(element, MutableEntry) : false) ? element : THROW_CCE());
+    return this.v2((!(element == null) ? isInterface(element, MutableEntry) : false) ? element : THROW_CCE());
   };
-  EntrySet.prototype.x2 = function (element) {
-    return this.m3_1.i1(element);
+  EntrySet.prototype.j2 = function (element) {
+    return this.u2_1.a1(element);
   };
   EntrySet.prototype.c = function () {
-    return this.m3_1.s3_1.c();
+    return this.u2_1.a3_1.c();
   };
-  EntrySet.prototype.f = function () {
-    return this.m3_1.f();
+  EntrySet.prototype.b = function () {
+    return this.u2_1.b();
   };
   EntrySet.$metadata$ = classMeta('EntrySet', undefined, undefined, undefined, undefined, AbstractEntrySet.prototype);
   function HashMap_init_$Init$(internalMap, $this) {
     AbstractMutableMap.call($this);
     HashMap.call($this);
-    $this.s3_1 = internalMap;
-    $this.t3_1 = internalMap.v3();
+    $this.a3_1 = internalMap;
+    $this.b3_1 = internalMap.d3();
     return $this;
   }
   function HashMap_init_$Init$_0($this) {
@@ -1600,35 +1282,35 @@ if (typeof Math.imul === 'undefined') {
   function HashMap_init_$Create$_0(initialCapacity, loadFactor) {
     return HashMap_init_$Init$_1(initialCapacity, loadFactor, Object.create(HashMap.prototype));
   }
-  HashMap.prototype.h1 = function (key) {
-    return this.s3_1.a3(key);
+  HashMap.prototype.z = function (key) {
+    return this.a3_1.m2(key);
   };
-  HashMap.prototype.y = function () {
-    if (this.u3_1 == null) {
-      this.u3_1 = this.w3();
+  HashMap.prototype.q = function () {
+    if (this.c3_1 == null) {
+      this.c3_1 = this.e3();
     }
-    return ensureNotNull(this.u3_1);
+    return ensureNotNull(this.c3_1);
   };
-  HashMap.prototype.w3 = function () {
+  HashMap.prototype.e3 = function () {
     return new EntrySet(this);
   };
-  HashMap.prototype.j1 = function (key) {
-    return this.s3_1.j1(key);
+  HashMap.prototype.b1 = function (key) {
+    return this.a3_1.b1(key);
   };
-  HashMap.prototype.x3 = function (key, value) {
-    return this.s3_1.x3(key, value);
+  HashMap.prototype.f3 = function (key, value) {
+    return this.a3_1.f3(key, value);
   };
-  HashMap.prototype.f = function () {
-    return this.s3_1.f();
+  HashMap.prototype.b = function () {
+    return this.a3_1.b();
   };
   function HashMap() {
-    this.u3_1 = null;
+    this.c3_1 = null;
   }
   HashMap.$metadata$ = classMeta('HashMap', [MutableMap], undefined, undefined, undefined, AbstractMutableMap.prototype);
   function HashSet_init_$Init$(initialCapacity, loadFactor, $this) {
     AbstractMutableSet.call($this);
     HashSet.call($this);
-    $this.y3_1 = HashMap_init_$Create$_0(initialCapacity, loadFactor);
+    $this.g3_1 = HashMap_init_$Create$_0(initialCapacity, loadFactor);
     return $this;
   }
   function HashSet_init_$Init$_0(initialCapacity, $this) {
@@ -1641,56 +1323,56 @@ if (typeof Math.imul === 'undefined') {
   function HashSet_init_$Init$_1(map, $this) {
     AbstractMutableSet.call($this);
     HashSet.call($this);
-    $this.y3_1 = map;
+    $this.g3_1 = map;
     return $this;
   }
   HashSet.prototype.a = function (element) {
-    var old = this.y3_1.x3(element, this);
+    var old = this.g3_1.f3(element, this);
     return old == null;
   };
-  HashSet.prototype.s = function (element) {
-    return this.y3_1.h1(element);
+  HashSet.prototype.o = function (element) {
+    return this.g3_1.z(element);
   };
   HashSet.prototype.h = function () {
-    return this.y3_1.h();
+    return this.g3_1.h();
   };
   HashSet.prototype.c = function () {
-    return this.y3_1.f3().c();
+    return this.g3_1.r2().c();
   };
-  HashSet.prototype.f = function () {
-    return this.y3_1.f();
+  HashSet.prototype.b = function () {
+    return this.g3_1.b();
   };
   function HashSet() {
   }
   HashSet.$metadata$ = classMeta('HashSet', [MutableSet], undefined, undefined, undefined, AbstractMutableSet.prototype);
   function computeNext($this) {
-    if ($this.c4_1 != null ? $this.d4_1 : false) {
+    if ($this.k3_1 != null ? $this.l3_1 : false) {
       var tmp$ret$0;
       // Inline function 'kotlin.js.unsafeCast' call
-      var tmp0_unsafeCast = $this.c4_1;
+      var tmp0_unsafeCast = $this.k3_1;
       tmp$ret$0 = tmp0_unsafeCast;
       var chainSize = tmp$ret$0.length;
       var tmp0_this = $this;
-      tmp0_this.e4_1 = tmp0_this.e4_1 + 1 | 0;
-      if (tmp0_this.e4_1 < chainSize)
+      tmp0_this.m3_1 = tmp0_this.m3_1 + 1 | 0;
+      if (tmp0_this.m3_1 < chainSize)
         return 0;
     }
     var tmp1_this = $this;
-    tmp1_this.b4_1 = tmp1_this.b4_1 + 1 | 0;
-    if (tmp1_this.b4_1 < $this.a4_1.length) {
-      $this.c4_1 = $this.g4_1.i4_1[$this.a4_1[$this.b4_1]];
+    tmp1_this.j3_1 = tmp1_this.j3_1 + 1 | 0;
+    if (tmp1_this.j3_1 < $this.i3_1.length) {
+      $this.k3_1 = $this.o3_1.q3_1[$this.i3_1[$this.j3_1]];
       var tmp = $this;
-      var tmp_0 = $this.c4_1;
-      tmp.d4_1 = !(tmp_0 == null) ? isArray(tmp_0) : false;
-      $this.e4_1 = 0;
+      var tmp_0 = $this.k3_1;
+      tmp.l3_1 = !(tmp_0 == null) ? isArray(tmp_0) : false;
+      $this.m3_1 = 0;
       return 0;
     } else {
-      $this.c4_1 = null;
+      $this.k3_1 = null;
       return 1;
     }
   }
   function getEntry($this, key) {
-    var tmp0_elvis_lhs = getChainOrEntryOrNull($this, $this.h4_1.l3(key));
+    var tmp0_elvis_lhs = getChainOrEntryOrNull($this, $this.p3_1.t2(key));
     var tmp;
     if (tmp0_elvis_lhs == null) {
       return null;
@@ -1700,7 +1382,7 @@ if (typeof Math.imul === 'undefined') {
     var chainOrEntry = tmp;
     if (!(!(chainOrEntry == null) ? isArray(chainOrEntry) : false)) {
       var entry = chainOrEntry;
-      if ($this.h4_1.k3(entry.z(), key)) {
+      if ($this.p3_1.s2(entry.r(), key)) {
         return entry;
       } else {
         return null;
@@ -1722,7 +1404,7 @@ if (typeof Math.imul === 'undefined') {
         inductionVariable = inductionVariable + 1 | 0;
         var tmp$ret$0;
         // Inline function 'kotlin.collections.InternalHashCodeMap.findEntryInChain.<anonymous>' call
-        tmp$ret$0 = $this.h4_1.k3(element.z(), key);
+        tmp$ret$0 = $this.p3_1.s2(element.r(), key);
         if (tmp$ret$0) {
           tmp$ret$1 = element;
           break $l$block;
@@ -1733,68 +1415,68 @@ if (typeof Math.imul === 'undefined') {
     return tmp$ret$1;
   }
   function getChainOrEntryOrNull($this, hashCode) {
-    var chainOrEntry = $this.i4_1[hashCode];
+    var chainOrEntry = $this.q3_1[hashCode];
     return chainOrEntry === undefined ? null : chainOrEntry;
   }
   function InternalHashCodeMap$iterator$1(this$0) {
-    this.g4_1 = this$0;
-    this.z3_1 = -1;
-    this.a4_1 = Object.keys(this$0.i4_1);
-    this.b4_1 = -1;
-    this.c4_1 = null;
-    this.d4_1 = false;
-    this.e4_1 = -1;
-    this.f4_1 = null;
+    this.o3_1 = this$0;
+    this.h3_1 = -1;
+    this.i3_1 = Object.keys(this$0.q3_1);
+    this.j3_1 = -1;
+    this.k3_1 = null;
+    this.l3_1 = false;
+    this.m3_1 = -1;
+    this.n3_1 = null;
   }
-  InternalHashCodeMap$iterator$1.prototype.d = function () {
-    if (this.z3_1 === -1)
-      this.z3_1 = computeNext(this);
-    return this.z3_1 === 0;
+  InternalHashCodeMap$iterator$1.prototype.f = function () {
+    if (this.h3_1 === -1)
+      this.h3_1 = computeNext(this);
+    return this.h3_1 === 0;
   };
-  InternalHashCodeMap$iterator$1.prototype.e = function () {
-    if (!this.d())
+  InternalHashCodeMap$iterator$1.prototype.d = function () {
+    if (!this.f())
       throw NoSuchElementException_init_$Create$();
     var tmp;
-    if (this.d4_1) {
+    if (this.l3_1) {
       var tmp$ret$0;
       // Inline function 'kotlin.js.unsafeCast' call
-      var tmp0_unsafeCast = this.c4_1;
+      var tmp0_unsafeCast = this.k3_1;
       tmp$ret$0 = tmp0_unsafeCast;
-      tmp = tmp$ret$0[this.e4_1];
+      tmp = tmp$ret$0[this.m3_1];
     } else {
       var tmp$ret$1;
       // Inline function 'kotlin.js.unsafeCast' call
-      var tmp1_unsafeCast = this.c4_1;
+      var tmp1_unsafeCast = this.k3_1;
       tmp$ret$1 = tmp1_unsafeCast;
       tmp = tmp$ret$1;
     }
     var lastEntry = tmp;
-    this.f4_1 = lastEntry;
-    this.z3_1 = -1;
+    this.n3_1 = lastEntry;
+    this.h3_1 = -1;
     return lastEntry;
   };
   InternalHashCodeMap$iterator$1.$metadata$ = classMeta(undefined, [MutableIterator]);
   function InternalHashCodeMap(equality) {
-    this.h4_1 = equality;
-    this.i4_1 = this.k4();
-    this.j4_1 = 0;
+    this.p3_1 = equality;
+    this.q3_1 = this.s3();
+    this.r3_1 = 0;
   }
-  InternalHashCodeMap.prototype.v3 = function () {
-    return this.h4_1;
+  InternalHashCodeMap.prototype.d3 = function () {
+    return this.p3_1;
   };
-  InternalHashCodeMap.prototype.f = function () {
-    return this.j4_1;
+  InternalHashCodeMap.prototype.b = function () {
+    return this.r3_1;
   };
-  InternalHashCodeMap.prototype.x3 = function (key, value) {
-    var hashCode = this.h4_1.l3(key);
+  InternalHashCodeMap.prototype.f3 = function (key, value) {
+    var hashCode = this.p3_1.t2(key);
     var chainOrEntry = getChainOrEntryOrNull(this, hashCode);
     if (chainOrEntry == null) {
-      this.i4_1[hashCode] = new SimpleEntry(key, value);
+      this.q3_1[hashCode] = new SimpleEntry(key, value);
     } else {
       if (!(!(chainOrEntry == null) ? isArray(chainOrEntry) : false)) {
         var entry = chainOrEntry;
-        if (this.h4_1.k3(entry.z(), key)) {
-          return entry.w2(value);
+        if (this.p3_1.s2(entry.r(), key)) {
+          return entry.i2(value);
         } else {
           var tmp$ret$2;
           // Inline function 'kotlin.arrayOf' call
@@ -1806,17 +1488,17 @@ if (typeof Math.imul === 'undefined') {
           tmp$ret$0 = tmp0_arrayOf;
           tmp$ret$1 = tmp$ret$0;
           tmp$ret$2 = tmp$ret$1;
-          this.i4_1[hashCode] = tmp$ret$2;
+          this.q3_1[hashCode] = tmp$ret$2;
           var tmp0_this = this;
-          var tmp1 = tmp0_this.j4_1;
-          tmp0_this.j4_1 = tmp1 + 1 | 0;
+          var tmp1 = tmp0_this.r3_1;
+          tmp0_this.r3_1 = tmp1 + 1 | 0;
           return null;
         }
       } else {
         var chain = chainOrEntry;
         var entry_0 = findEntryInChain(chain, this, key);
         if (!(entry_0 == null)) {
-          return entry_0.w2(value);
+          return entry_0.i2(value);
         }
         var tmp$ret$3;
         // Inline function 'kotlin.js.asDynamic' call
@@ -1825,16 +1507,16 @@ if (typeof Math.imul === 'undefined') {
       }
     }
     var tmp2_this = this;
-    var tmp3 = tmp2_this.j4_1;
-    tmp2_this.j4_1 = tmp3 + 1 | 0;
+    var tmp3 = tmp2_this.r3_1;
+    tmp2_this.r3_1 = tmp3 + 1 | 0;
     return null;
   };
-  InternalHashCodeMap.prototype.a3 = function (key) {
+  InternalHashCodeMap.prototype.m2 = function (key) {
     return !(getEntry(this, key) == null);
   };
-  InternalHashCodeMap.prototype.j1 = function (key) {
+  InternalHashCodeMap.prototype.b1 = function (key) {
     var tmp0_safe_receiver = getEntry(this, key);
-    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.b1();
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.t();
   };
   InternalHashCodeMap.prototype.c = function () {
     return new InternalHashCodeMap$iterator$1(this);
@@ -1844,72 +1526,72 @@ if (typeof Math.imul === 'undefined') {
   }
   InternalMap.$metadata$ = interfaceMeta('InternalMap', [MutableIterable]);
   function EntryIterator($outer) {
-    this.n4_1 = $outer;
-    this.l4_1 = null;
-    this.m4_1 = null;
-    this.m4_1 = this.n4_1.y4_1.v4_1;
+    this.v3_1 = $outer;
+    this.t3_1 = null;
+    this.u3_1 = null;
+    this.u3_1 = this.v3_1.g4_1.d4_1;
   }
-  EntryIterator.prototype.d = function () {
-    return !(this.m4_1 === null);
+  EntryIterator.prototype.f = function () {
+    return !(this.u3_1 === null);
   };
-  EntryIterator.prototype.e = function () {
-    if (!this.d())
+  EntryIterator.prototype.d = function () {
+    if (!this.f())
       throw NoSuchElementException_init_$Create$();
-    var current = ensureNotNull(this.m4_1);
-    this.l4_1 = current;
+    var current = ensureNotNull(this.u3_1);
+    this.t3_1 = current;
     var tmp = this;
     var tmp$ret$1;
     // Inline function 'kotlin.takeIf' call
-    var tmp0_takeIf = current.b5_1;
+    var tmp0_takeIf = current.j4_1;
     // Inline function 'kotlin.contracts.contract' call
     var tmp_0;
     var tmp$ret$0;
     // Inline function 'kotlin.collections.EntryIterator.next.<anonymous>' call
-    tmp$ret$0 = !(tmp0_takeIf === this.n4_1.y4_1.v4_1);
+    tmp$ret$0 = !(tmp0_takeIf === this.v3_1.g4_1.d4_1);
     if (tmp$ret$0) {
       tmp_0 = tmp0_takeIf;
     } else {
       tmp_0 = null;
     }
     tmp$ret$1 = tmp_0;
-    tmp.m4_1 = tmp$ret$1;
+    tmp.u3_1 = tmp$ret$1;
     return current;
   };
   EntryIterator.$metadata$ = classMeta('EntryIterator', [MutableIterator]);
   function ChainEntry($outer, key, value) {
-    this.d5_1 = $outer;
+    this.l4_1 = $outer;
     SimpleEntry.call(this, key, value);
-    this.b5_1 = null;
-    this.c5_1 = null;
+    this.j4_1 = null;
+    this.k4_1 = null;
   }
-  ChainEntry.prototype.w2 = function (newValue) {
-    this.d5_1.m2();
-    return SimpleEntry.prototype.w2.call(this, newValue);
+  ChainEntry.prototype.i2 = function (newValue) {
+    this.l4_1.m4();
+    return SimpleEntry.prototype.i2.call(this, newValue);
   };
   ChainEntry.$metadata$ = classMeta('ChainEntry', undefined, undefined, undefined, undefined, SimpleEntry.prototype);
   function EntrySet_0($outer) {
-    this.y4_1 = $outer;
+    this.g4_1 = $outer;
     AbstractEntrySet.call(this);
   }
-  EntrySet_0.prototype.n3 = function (element) {
+  EntrySet_0.prototype.v2 = function (element) {
     throw UnsupportedOperationException_init_$Create$_0('Add is not supported on entries');
   };
   EntrySet_0.prototype.a = function (element) {
-    return this.n3((!(element == null) ? isInterface(element, MutableEntry) : false) ? element : THROW_CCE());
+    return this.v2((!(element == null) ? isInterface(element, MutableEntry) : false) ? element : THROW_CCE());
   };
-  EntrySet_0.prototype.x2 = function (element) {
-    return this.y4_1.i1(element);
+  EntrySet_0.prototype.j2 = function (element) {
+    return this.g4_1.a1(element);
   };
   EntrySet_0.prototype.c = function () {
     return new EntryIterator(this);
   };
-  EntrySet_0.prototype.f = function () {
-    return this.y4_1.f();
+  EntrySet_0.prototype.b = function () {
+    return this.g4_1.b();
   };
   EntrySet_0.$metadata$ = classMeta('EntrySet', undefined, undefined, undefined, undefined, AbstractEntrySet.prototype);
   function addToEnd(_this__u8e3s4, $this) {
     // Inline function 'kotlin.check' call
-    var tmp0_check = _this__u8e3s4.b5_1 == null ? _this__u8e3s4.c5_1 == null : false;
+    var tmp0_check = _this__u8e3s4.j4_1 == null ? _this__u8e3s4.k4_1 == null : false;
     // Inline function 'kotlin.contracts.contract' call
     // Inline function 'kotlin.check' call
     // Inline function 'kotlin.contracts.contract' call
@@ -1920,15 +1602,15 @@ if (typeof Math.imul === 'undefined') {
       var message = tmp$ret$0;
       throw IllegalStateException_init_$Create$_0(toString_2(message));
     }
-    var _head = $this.v4_1;
+    var _head = $this.d4_1;
     if (_head == null) {
-      $this.v4_1 = _this__u8e3s4;
-      _this__u8e3s4.b5_1 = _this__u8e3s4;
-      _this__u8e3s4.c5_1 = _this__u8e3s4;
+      $this.d4_1 = _this__u8e3s4;
+      _this__u8e3s4.j4_1 = _this__u8e3s4;
+      _this__u8e3s4.k4_1 = _this__u8e3s4;
     } else {
       var tmp$ret$3;
       // Inline function 'kotlin.checkNotNull' call
-      var tmp1_checkNotNull = _head.c5_1;
+      var tmp1_checkNotNull = _head.k4_1;
       // Inline function 'kotlin.contracts.contract' call
       var tmp$ret$2;
       $l$block: {
@@ -1947,16 +1629,16 @@ if (typeof Math.imul === 'undefined') {
       }
       tmp$ret$3 = tmp$ret$2;
       var _tail = tmp$ret$3;
-      _this__u8e3s4.c5_1 = _tail;
-      _this__u8e3s4.b5_1 = _head;
-      _head.c5_1 = _this__u8e3s4;
-      _tail.b5_1 = _this__u8e3s4;
+      _this__u8e3s4.k4_1 = _tail;
+      _this__u8e3s4.j4_1 = _head;
+      _head.k4_1 = _this__u8e3s4;
+      _tail.j4_1 = _this__u8e3s4;
     }
   }
   function LinkedHashMap_init_$Init$($this) {
     HashMap_init_$Init$_0($this);
     LinkedHashMap.call($this);
-    $this.w4_1 = HashMap_init_$Create$();
+    $this.e4_1 = HashMap_init_$Create$();
     return $this;
   }
   function LinkedHashMap_init_$Create$() {
@@ -1965,44 +1647,44 @@ if (typeof Math.imul === 'undefined') {
   function LinkedHashMap_init_$Init$_0(initialCapacity, loadFactor, $this) {
     HashMap_init_$Init$_1(initialCapacity, loadFactor, $this);
     LinkedHashMap.call($this);
-    $this.w4_1 = HashMap_init_$Create$();
+    $this.e4_1 = HashMap_init_$Create$();
     return $this;
   }
   function LinkedHashMap_init_$Create$_0(initialCapacity, loadFactor) {
     return LinkedHashMap_init_$Init$_0(initialCapacity, loadFactor, Object.create(LinkedHashMap.prototype));
   }
-  LinkedHashMap.prototype.h1 = function (key) {
-    return this.w4_1.h1(key);
+  LinkedHashMap.prototype.z = function (key) {
+    return this.e4_1.z(key);
   };
-  LinkedHashMap.prototype.w3 = function () {
+  LinkedHashMap.prototype.e3 = function () {
     return new EntrySet_0(this);
   };
-  LinkedHashMap.prototype.j1 = function (key) {
-    var tmp0_safe_receiver = this.w4_1.j1(key);
-    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.b1();
+  LinkedHashMap.prototype.b1 = function (key) {
+    var tmp0_safe_receiver = this.e4_1.b1(key);
+    return tmp0_safe_receiver == null ? null : tmp0_safe_receiver.t();
   };
-  LinkedHashMap.prototype.x3 = function (key, value) {
-    this.m2();
-    var old = this.w4_1.j1(key);
+  LinkedHashMap.prototype.f3 = function (key, value) {
+    this.m4();
+    var old = this.e4_1.b1(key);
     if (old == null) {
       var newEntry = new ChainEntry(this, key, value);
-      this.w4_1.x3(key, newEntry);
+      this.e4_1.f3(key, newEntry);
       addToEnd(newEntry, this);
       return null;
     } else {
-      return old.w2(value);
+      return old.i2(value);
     }
   };
-  LinkedHashMap.prototype.f = function () {
-    return this.w4_1.f();
+  LinkedHashMap.prototype.b = function () {
+    return this.e4_1.b();
   };
-  LinkedHashMap.prototype.m2 = function () {
-    if (this.x4_1)
+  LinkedHashMap.prototype.m4 = function () {
+    if (this.f4_1)
       throw UnsupportedOperationException_init_$Create$();
   };
   function LinkedHashMap() {
-    this.v4_1 = null;
-    this.x4_1 = false;
+    this.d4_1 = null;
+    this.f4_1 = false;
   }
   LinkedHashMap.$metadata$ = classMeta('LinkedHashMap', [MutableMap], undefined, undefined, undefined, HashMap.prototype);
   function LinkedHashSet_init_$Init$($this) {
@@ -2028,121 +1710,6 @@ if (typeof Math.imul === 'undefined') {
   function LinkedHashSet() {
   }
   LinkedHashSet.$metadata$ = classMeta('LinkedHashSet', [MutableSet], undefined, undefined, undefined, HashSet.prototype);
-  function RandomAccess() {
-  }
-  RandomAccess.$metadata$ = interfaceMeta('RandomAccess');
-  function get_output() {
-    init_properties_console_kt_6h8hpf();
-    return output;
-  }
-  var output;
-  function BaseOutput() {
-  }
-  BaseOutput.prototype.e5 = function () {
-    this.f5('\n');
-  };
-  BaseOutput.prototype.g5 = function (message) {
-    this.f5(message);
-    this.e5();
-  };
-  BaseOutput.$metadata$ = classMeta('BaseOutput');
-  function NodeJsOutput(outputStream) {
-    BaseOutput.call(this);
-    this.h5_1 = outputStream;
-  }
-  NodeJsOutput.prototype.f5 = function (message) {
-    var tmp$ret$0;
-    // Inline function 'kotlin.io.String' call
-    tmp$ret$0 = String(message);
-    var messageString = tmp$ret$0;
-    this.h5_1.write(messageString);
-  };
-  NodeJsOutput.$metadata$ = classMeta('NodeJsOutput', undefined, undefined, undefined, undefined, BaseOutput.prototype);
-  function BufferedOutputToConsoleLog() {
-    BufferedOutput.call(this);
-  }
-  BufferedOutputToConsoleLog.prototype.f5 = function (message) {
-    var tmp$ret$0;
-    // Inline function 'kotlin.io.String' call
-    tmp$ret$0 = String(message);
-    var s = tmp$ret$0;
-    var tmp$ret$2;
-    // Inline function 'kotlin.text.nativeLastIndexOf' call
-    var tmp0_nativeLastIndexOf = s;
-    var tmp$ret$1;
-    // Inline function 'kotlin.js.asDynamic' call
-    tmp$ret$1 = tmp0_nativeLastIndexOf;
-    tmp$ret$2 = tmp$ret$1.lastIndexOf('\n', 0);
-    var i = tmp$ret$2;
-    if (i >= 0) {
-      var tmp0_this = this;
-      var tmp = tmp0_this;
-      var tmp_0 = tmp0_this.j5_1;
-      var tmp$ret$4;
-      // Inline function 'kotlin.text.substring' call
-      var tmp1_substring = s;
-      var tmp$ret$3;
-      // Inline function 'kotlin.js.asDynamic' call
-      tmp$ret$3 = tmp1_substring;
-      tmp$ret$4 = tmp$ret$3.substring(0, i);
-      tmp.j5_1 = tmp_0 + tmp$ret$4;
-      this.k5();
-      var tmp$ret$6;
-      // Inline function 'kotlin.text.substring' call
-      var tmp2_substring = s;
-      var tmp3_substring = i + 1 | 0;
-      var tmp$ret$5;
-      // Inline function 'kotlin.js.asDynamic' call
-      tmp$ret$5 = tmp2_substring;
-      tmp$ret$6 = tmp$ret$5.substring(tmp3_substring);
-      s = tmp$ret$6;
-    }
-    var tmp1_this = this;
-    tmp1_this.j5_1 = tmp1_this.j5_1 + s;
-  };
-  BufferedOutputToConsoleLog.prototype.k5 = function () {
-    console.log(this.j5_1);
-    this.j5_1 = '';
-  };
-  BufferedOutputToConsoleLog.$metadata$ = classMeta('BufferedOutputToConsoleLog', undefined, undefined, undefined, undefined, BufferedOutput.prototype);
-  function String_0(value) {
-    init_properties_console_kt_6h8hpf();
-    return String(value);
-  }
-  function BufferedOutput() {
-    BaseOutput.call(this);
-    this.j5_1 = '';
-  }
-  BufferedOutput.prototype.f5 = function (message) {
-    var tmp0_this = this;
-    var tmp = tmp0_this;
-    var tmp_0 = tmp0_this.j5_1;
-    var tmp$ret$0;
-    // Inline function 'kotlin.io.String' call
-    tmp$ret$0 = String(message);
-    tmp.j5_1 = tmp_0 + tmp$ret$0;
-  };
-  BufferedOutput.$metadata$ = classMeta('BufferedOutput', undefined, undefined, undefined, undefined, BaseOutput.prototype);
-  function println(message) {
-    init_properties_console_kt_6h8hpf();
-    get_output().g5(message);
-  }
-  var properties_initialized_console_kt_gll9dl;
-  function init_properties_console_kt_6h8hpf() {
-    if (properties_initialized_console_kt_gll9dl) {
-    } else {
-      properties_initialized_console_kt_gll9dl = true;
-      var tmp$ret$1;
-      // Inline function 'kotlin.run' call
-      // Inline function 'kotlin.contracts.contract' call
-      var tmp$ret$0;
-      // Inline function 'kotlin.io.output.<anonymous>' call
-      var isNode = typeof process !== 'undefined' && process.versions && !!process.versions.node;
-      tmp$ret$0 = isNode ? new NodeJsOutput(process.stdout) : new BufferedOutputToConsoleLog();
-      tmp$ret$1 = tmp$ret$0;
-      output = tmp$ret$1;
-    }
-  }
   function asDynamic(_this__u8e3s4) {
     return _this__u8e3s4;
   }
@@ -2162,58 +1729,58 @@ if (typeof Math.imul === 'undefined') {
     return !(_this__u8e3s4 === _this__u8e3s4);
   }
   function get_js(_this__u8e3s4) {
-    return (_this__u8e3s4 instanceof KClassImpl ? _this__u8e3s4 : THROW_CCE()).m5();
+    return (_this__u8e3s4 instanceof KClassImpl ? _this__u8e3s4 : THROW_CCE()).o4();
   }
   function KClass() {
   }
   KClass.$metadata$ = interfaceMeta('KClass', [KClassifier]);
   function KClassImpl(jClass) {
-    this.l5_1 = jClass;
+    this.n4_1 = jClass;
   }
-  KClassImpl.prototype.m5 = function () {
-    return this.l5_1;
+  KClassImpl.prototype.o4 = function () {
+    return this.n4_1;
   };
   KClassImpl.prototype.equals = function (other) {
     var tmp;
     if (other instanceof KClassImpl) {
-      tmp = equals(this.m5(), other.m5());
+      tmp = equals(this.o4(), other.o4());
     } else {
       tmp = false;
     }
     return tmp;
   };
   KClassImpl.prototype.hashCode = function () {
-    var tmp0_safe_receiver = this.n5();
+    var tmp0_safe_receiver = this.p4();
     var tmp1_elvis_lhs = tmp0_safe_receiver == null ? null : getStringHashCode(tmp0_safe_receiver);
     return tmp1_elvis_lhs == null ? 0 : tmp1_elvis_lhs;
   };
   KClassImpl.prototype.toString = function () {
-    return 'class ' + this.n5();
+    return 'class ' + this.p4();
   };
   KClassImpl.$metadata$ = classMeta('KClassImpl', [KClass]);
   function PrimitiveKClassImpl(jClass, givenSimpleName, isInstanceFunction) {
     KClassImpl.call(this, jClass);
-    this.p5_1 = givenSimpleName;
-    this.q5_1 = isInstanceFunction;
+    this.r4_1 = givenSimpleName;
+    this.s4_1 = isInstanceFunction;
   }
   PrimitiveKClassImpl.prototype.equals = function (other) {
     if (!(other instanceof PrimitiveKClassImpl))
       return false;
-    return KClassImpl.prototype.equals.call(this, other) ? this.p5_1 === other.p5_1 : false;
+    return KClassImpl.prototype.equals.call(this, other) ? this.r4_1 === other.r4_1 : false;
   };
-  PrimitiveKClassImpl.prototype.n5 = function () {
-    return this.p5_1;
+  PrimitiveKClassImpl.prototype.p4 = function () {
+    return this.r4_1;
   };
   PrimitiveKClassImpl.$metadata$ = classMeta('PrimitiveKClassImpl', undefined, undefined, undefined, undefined, KClassImpl.prototype);
   function NothingKClassImpl() {
     NothingKClassImpl_instance = this;
     KClassImpl.call(this, Object);
-    this.s5_1 = 'Nothing';
+    this.u4_1 = 'Nothing';
   }
-  NothingKClassImpl.prototype.n5 = function () {
-    return this.s5_1;
+  NothingKClassImpl.prototype.p4 = function () {
+    return this.u4_1;
   };
-  NothingKClassImpl.prototype.m5 = function () {
+  NothingKClassImpl.prototype.o4 = function () {
     throw UnsupportedOperationException_init_$Create$_0("There's no native JS class for Nothing type");
   };
   NothingKClassImpl.prototype.equals = function (other) {
@@ -2231,7 +1798,7 @@ if (typeof Math.imul === 'undefined') {
   }
   function ErrorKClass() {
   }
-  ErrorKClass.prototype.n5 = function () {
+  ErrorKClass.prototype.p4 = function () {
     throw IllegalStateException_init_$Create$_0('Unknown simpleName for ErrorKClass');
   };
   ErrorKClass.prototype.equals = function (other) {
@@ -2252,10 +1819,10 @@ if (typeof Math.imul === 'undefined') {
     var tmp0_safe_receiver = tmp$ret$0.$metadata$;
     var tmp0_unsafeCast = tmp0_safe_receiver == null ? null : tmp0_safe_receiver.simpleName;
     tmp$ret$1 = tmp0_unsafeCast;
-    tmp.u5_1 = tmp$ret$1;
+    tmp.w4_1 = tmp$ret$1;
   }
-  SimpleKClassImpl.prototype.n5 = function () {
-    return this.u5_1;
+  SimpleKClassImpl.prototype.p4 = function () {
+    return this.w4_1;
   };
   SimpleKClassImpl.$metadata$ = classMeta('SimpleKClassImpl', undefined, undefined, undefined, undefined, KClassImpl.prototype);
   function get_functionClasses() {
@@ -2342,194 +1909,194 @@ if (typeof Math.imul === 'undefined') {
     var tmp0_unsafeCast = Object;
     tmp$ret$0 = tmp0_unsafeCast;
     var tmp_0 = tmp$ret$0;
-    tmp.v5_1 = new PrimitiveKClassImpl(tmp_0, 'Any', PrimitiveClasses$anyClass$lambda);
+    tmp.x4_1 = new PrimitiveKClassImpl(tmp_0, 'Any', PrimitiveClasses$anyClass$lambda);
     var tmp_1 = this;
     var tmp$ret$1;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_0 = Number;
     tmp$ret$1 = tmp0_unsafeCast_0;
     var tmp_2 = tmp$ret$1;
-    tmp_1.w5_1 = new PrimitiveKClassImpl(tmp_2, 'Number', PrimitiveClasses$numberClass$lambda);
-    this.x5_1 = NothingKClassImpl_getInstance();
+    tmp_1.y4_1 = new PrimitiveKClassImpl(tmp_2, 'Number', PrimitiveClasses$numberClass$lambda);
+    this.z4_1 = NothingKClassImpl_getInstance();
     var tmp_3 = this;
     var tmp$ret$2;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_1 = Boolean;
     tmp$ret$2 = tmp0_unsafeCast_1;
     var tmp_4 = tmp$ret$2;
-    tmp_3.y5_1 = new PrimitiveKClassImpl(tmp_4, 'Boolean', PrimitiveClasses$booleanClass$lambda);
+    tmp_3.a5_1 = new PrimitiveKClassImpl(tmp_4, 'Boolean', PrimitiveClasses$booleanClass$lambda);
     var tmp_5 = this;
     var tmp$ret$3;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_2 = Number;
     tmp$ret$3 = tmp0_unsafeCast_2;
     var tmp_6 = tmp$ret$3;
-    tmp_5.z5_1 = new PrimitiveKClassImpl(tmp_6, 'Byte', PrimitiveClasses$byteClass$lambda);
+    tmp_5.b5_1 = new PrimitiveKClassImpl(tmp_6, 'Byte', PrimitiveClasses$byteClass$lambda);
     var tmp_7 = this;
     var tmp$ret$4;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_3 = Number;
     tmp$ret$4 = tmp0_unsafeCast_3;
     var tmp_8 = tmp$ret$4;
-    tmp_7.a6_1 = new PrimitiveKClassImpl(tmp_8, 'Short', PrimitiveClasses$shortClass$lambda);
+    tmp_7.c5_1 = new PrimitiveKClassImpl(tmp_8, 'Short', PrimitiveClasses$shortClass$lambda);
     var tmp_9 = this;
     var tmp$ret$5;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_4 = Number;
     tmp$ret$5 = tmp0_unsafeCast_4;
     var tmp_10 = tmp$ret$5;
-    tmp_9.b6_1 = new PrimitiveKClassImpl(tmp_10, 'Int', PrimitiveClasses$intClass$lambda);
+    tmp_9.d5_1 = new PrimitiveKClassImpl(tmp_10, 'Int', PrimitiveClasses$intClass$lambda);
     var tmp_11 = this;
     var tmp$ret$6;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_5 = Number;
     tmp$ret$6 = tmp0_unsafeCast_5;
     var tmp_12 = tmp$ret$6;
-    tmp_11.c6_1 = new PrimitiveKClassImpl(tmp_12, 'Float', PrimitiveClasses$floatClass$lambda);
+    tmp_11.e5_1 = new PrimitiveKClassImpl(tmp_12, 'Float', PrimitiveClasses$floatClass$lambda);
     var tmp_13 = this;
     var tmp$ret$7;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_6 = Number;
     tmp$ret$7 = tmp0_unsafeCast_6;
     var tmp_14 = tmp$ret$7;
-    tmp_13.d6_1 = new PrimitiveKClassImpl(tmp_14, 'Double', PrimitiveClasses$doubleClass$lambda);
+    tmp_13.f5_1 = new PrimitiveKClassImpl(tmp_14, 'Double', PrimitiveClasses$doubleClass$lambda);
     var tmp_15 = this;
     var tmp$ret$8;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_7 = Array;
     tmp$ret$8 = tmp0_unsafeCast_7;
     var tmp_16 = tmp$ret$8;
-    tmp_15.e6_1 = new PrimitiveKClassImpl(tmp_16, 'Array', PrimitiveClasses$arrayClass$lambda);
+    tmp_15.g5_1 = new PrimitiveKClassImpl(tmp_16, 'Array', PrimitiveClasses$arrayClass$lambda);
     var tmp_17 = this;
     var tmp$ret$9;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_8 = String;
     tmp$ret$9 = tmp0_unsafeCast_8;
     var tmp_18 = tmp$ret$9;
-    tmp_17.f6_1 = new PrimitiveKClassImpl(tmp_18, 'String', PrimitiveClasses$stringClass$lambda);
+    tmp_17.h5_1 = new PrimitiveKClassImpl(tmp_18, 'String', PrimitiveClasses$stringClass$lambda);
     var tmp_19 = this;
     var tmp$ret$10;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_9 = Error;
     tmp$ret$10 = tmp0_unsafeCast_9;
     var tmp_20 = tmp$ret$10;
-    tmp_19.g6_1 = new PrimitiveKClassImpl(tmp_20, 'Throwable', PrimitiveClasses$throwableClass$lambda);
+    tmp_19.i5_1 = new PrimitiveKClassImpl(tmp_20, 'Throwable', PrimitiveClasses$throwableClass$lambda);
     var tmp_21 = this;
     var tmp$ret$11;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_10 = Array;
     tmp$ret$11 = tmp0_unsafeCast_10;
     var tmp_22 = tmp$ret$11;
-    tmp_21.h6_1 = new PrimitiveKClassImpl(tmp_22, 'BooleanArray', PrimitiveClasses$booleanArrayClass$lambda);
+    tmp_21.j5_1 = new PrimitiveKClassImpl(tmp_22, 'BooleanArray', PrimitiveClasses$booleanArrayClass$lambda);
     var tmp_23 = this;
     var tmp$ret$12;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_11 = Uint16Array;
     tmp$ret$12 = tmp0_unsafeCast_11;
     var tmp_24 = tmp$ret$12;
-    tmp_23.i6_1 = new PrimitiveKClassImpl(tmp_24, 'CharArray', PrimitiveClasses$charArrayClass$lambda);
+    tmp_23.k5_1 = new PrimitiveKClassImpl(tmp_24, 'CharArray', PrimitiveClasses$charArrayClass$lambda);
     var tmp_25 = this;
     var tmp$ret$13;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_12 = Int8Array;
     tmp$ret$13 = tmp0_unsafeCast_12;
     var tmp_26 = tmp$ret$13;
-    tmp_25.j6_1 = new PrimitiveKClassImpl(tmp_26, 'ByteArray', PrimitiveClasses$byteArrayClass$lambda);
+    tmp_25.l5_1 = new PrimitiveKClassImpl(tmp_26, 'ByteArray', PrimitiveClasses$byteArrayClass$lambda);
     var tmp_27 = this;
     var tmp$ret$14;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_13 = Int16Array;
     tmp$ret$14 = tmp0_unsafeCast_13;
     var tmp_28 = tmp$ret$14;
-    tmp_27.k6_1 = new PrimitiveKClassImpl(tmp_28, 'ShortArray', PrimitiveClasses$shortArrayClass$lambda);
+    tmp_27.m5_1 = new PrimitiveKClassImpl(tmp_28, 'ShortArray', PrimitiveClasses$shortArrayClass$lambda);
     var tmp_29 = this;
     var tmp$ret$15;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_14 = Int32Array;
     tmp$ret$15 = tmp0_unsafeCast_14;
     var tmp_30 = tmp$ret$15;
-    tmp_29.l6_1 = new PrimitiveKClassImpl(tmp_30, 'IntArray', PrimitiveClasses$intArrayClass$lambda);
+    tmp_29.n5_1 = new PrimitiveKClassImpl(tmp_30, 'IntArray', PrimitiveClasses$intArrayClass$lambda);
     var tmp_31 = this;
     var tmp$ret$16;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_15 = Array;
     tmp$ret$16 = tmp0_unsafeCast_15;
     var tmp_32 = tmp$ret$16;
-    tmp_31.m6_1 = new PrimitiveKClassImpl(tmp_32, 'LongArray', PrimitiveClasses$longArrayClass$lambda);
+    tmp_31.o5_1 = new PrimitiveKClassImpl(tmp_32, 'LongArray', PrimitiveClasses$longArrayClass$lambda);
     var tmp_33 = this;
     var tmp$ret$17;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_16 = Float32Array;
     tmp$ret$17 = tmp0_unsafeCast_16;
     var tmp_34 = tmp$ret$17;
-    tmp_33.n6_1 = new PrimitiveKClassImpl(tmp_34, 'FloatArray', PrimitiveClasses$floatArrayClass$lambda);
+    tmp_33.p5_1 = new PrimitiveKClassImpl(tmp_34, 'FloatArray', PrimitiveClasses$floatArrayClass$lambda);
     var tmp_35 = this;
     var tmp$ret$18;
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp0_unsafeCast_17 = Float64Array;
     tmp$ret$18 = tmp0_unsafeCast_17;
     var tmp_36 = tmp$ret$18;
-    tmp_35.o6_1 = new PrimitiveKClassImpl(tmp_36, 'DoubleArray', PrimitiveClasses$doubleArrayClass$lambda);
+    tmp_35.q5_1 = new PrimitiveKClassImpl(tmp_36, 'DoubleArray', PrimitiveClasses$doubleArrayClass$lambda);
   }
-  PrimitiveClasses.prototype.p6 = function () {
-    return this.v5_1;
+  PrimitiveClasses.prototype.r5 = function () {
+    return this.x4_1;
   };
-  PrimitiveClasses.prototype.q6 = function () {
-    return this.w5_1;
+  PrimitiveClasses.prototype.s5 = function () {
+    return this.y4_1;
   };
-  PrimitiveClasses.prototype.r6 = function () {
-    return this.x5_1;
+  PrimitiveClasses.prototype.t5 = function () {
+    return this.z4_1;
   };
-  PrimitiveClasses.prototype.s6 = function () {
-    return this.y5_1;
+  PrimitiveClasses.prototype.u5 = function () {
+    return this.a5_1;
   };
-  PrimitiveClasses.prototype.t6 = function () {
-    return this.z5_1;
+  PrimitiveClasses.prototype.v5 = function () {
+    return this.b5_1;
   };
-  PrimitiveClasses.prototype.u6 = function () {
-    return this.a6_1;
+  PrimitiveClasses.prototype.w5 = function () {
+    return this.c5_1;
   };
-  PrimitiveClasses.prototype.v6 = function () {
-    return this.b6_1;
+  PrimitiveClasses.prototype.x5 = function () {
+    return this.d5_1;
   };
-  PrimitiveClasses.prototype.w6 = function () {
-    return this.c6_1;
+  PrimitiveClasses.prototype.y5 = function () {
+    return this.e5_1;
   };
-  PrimitiveClasses.prototype.x6 = function () {
-    return this.d6_1;
+  PrimitiveClasses.prototype.z5 = function () {
+    return this.f5_1;
   };
-  PrimitiveClasses.prototype.y6 = function () {
-    return this.e6_1;
+  PrimitiveClasses.prototype.a6 = function () {
+    return this.g5_1;
   };
-  PrimitiveClasses.prototype.z6 = function () {
-    return this.f6_1;
+  PrimitiveClasses.prototype.b6 = function () {
+    return this.h5_1;
   };
-  PrimitiveClasses.prototype.a7 = function () {
-    return this.g6_1;
+  PrimitiveClasses.prototype.c6 = function () {
+    return this.i5_1;
   };
-  PrimitiveClasses.prototype.b7 = function () {
-    return this.h6_1;
+  PrimitiveClasses.prototype.d6 = function () {
+    return this.j5_1;
   };
-  PrimitiveClasses.prototype.c7 = function () {
-    return this.i6_1;
+  PrimitiveClasses.prototype.e6 = function () {
+    return this.k5_1;
   };
-  PrimitiveClasses.prototype.d7 = function () {
-    return this.j6_1;
+  PrimitiveClasses.prototype.f6 = function () {
+    return this.l5_1;
   };
-  PrimitiveClasses.prototype.e7 = function () {
-    return this.k6_1;
+  PrimitiveClasses.prototype.g6 = function () {
+    return this.m5_1;
   };
-  PrimitiveClasses.prototype.f7 = function () {
-    return this.l6_1;
+  PrimitiveClasses.prototype.h6 = function () {
+    return this.n5_1;
   };
-  PrimitiveClasses.prototype.g7 = function () {
-    return this.m6_1;
+  PrimitiveClasses.prototype.i6 = function () {
+    return this.o5_1;
   };
-  PrimitiveClasses.prototype.h7 = function () {
-    return this.n6_1;
+  PrimitiveClasses.prototype.j6 = function () {
+    return this.p5_1;
   };
-  PrimitiveClasses.prototype.i7 = function () {
-    return this.o6_1;
+  PrimitiveClasses.prototype.k6 = function () {
+    return this.q5_1;
   };
   PrimitiveClasses.prototype.functionClass = function (arity) {
     var tmp0_elvis_lhs = get_functionClasses()[arity];
@@ -2563,83 +2130,83 @@ if (typeof Math.imul === 'undefined') {
   PrimitiveClasses.$metadata$ = objectMeta('PrimitiveClasses');
   Object.defineProperty(PrimitiveClasses.prototype, 'anyClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.p6
+    get: PrimitiveClasses.prototype.r5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'numberClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.q6
+    get: PrimitiveClasses.prototype.s5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'nothingClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.r6
+    get: PrimitiveClasses.prototype.t5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'booleanClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.s6
+    get: PrimitiveClasses.prototype.u5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'byteClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.t6
+    get: PrimitiveClasses.prototype.v5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'shortClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.u6
+    get: PrimitiveClasses.prototype.w5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'intClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.v6
+    get: PrimitiveClasses.prototype.x5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'floatClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.w6
+    get: PrimitiveClasses.prototype.y5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'doubleClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.x6
+    get: PrimitiveClasses.prototype.z5
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'arrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.y6
+    get: PrimitiveClasses.prototype.a6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'stringClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.z6
+    get: PrimitiveClasses.prototype.b6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'throwableClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.a7
+    get: PrimitiveClasses.prototype.c6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'booleanArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.b7
+    get: PrimitiveClasses.prototype.d6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'charArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.c7
+    get: PrimitiveClasses.prototype.e6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'byteArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.d7
+    get: PrimitiveClasses.prototype.f6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'shortArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.e7
+    get: PrimitiveClasses.prototype.g6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'intArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.f7
+    get: PrimitiveClasses.prototype.h6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'longArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.g7
+    get: PrimitiveClasses.prototype.i6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'floatArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.h7
+    get: PrimitiveClasses.prototype.j6
   });
   Object.defineProperty(PrimitiveClasses.prototype, 'doubleArrayClass', {
     configurable: true,
-    get: PrimitiveClasses.prototype.i7
+    get: PrimitiveClasses.prototype.k6
   });
   var PrimitiveClasses_instance;
   function PrimitiveClasses_getInstance() {
@@ -2715,7 +2282,7 @@ if (typeof Math.imul === 'undefined') {
     if (jClass === String) {
       var tmp$ret$1;
       // Inline function 'kotlin.js.unsafeCast' call
-      var tmp0_unsafeCast = PrimitiveClasses_getInstance().f6_1;
+      var tmp0_unsafeCast = PrimitiveClasses_getInstance().h5_1;
       var tmp$ret$0;
       // Inline function 'kotlin.js.asDynamic' call
       tmp$ret$0 = tmp0_unsafeCast;
@@ -2749,7 +2316,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp;
     switch (tmp0_subject) {
       case 'string':
-        tmp = PrimitiveClasses_getInstance().f6_1;
+        tmp = PrimitiveClasses_getInstance().h5_1;
         break;
       case 'number':
         var tmp_0;
@@ -2759,15 +2326,15 @@ if (typeof Math.imul === 'undefined') {
         tmp$ret$0 = tmp0_asDynamic;
 
         if (tmp$ret$0 === e) {
-          tmp_0 = PrimitiveClasses_getInstance().b6_1;
+          tmp_0 = PrimitiveClasses_getInstance().d5_1;
         } else {
-          tmp_0 = PrimitiveClasses_getInstance().d6_1;
+          tmp_0 = PrimitiveClasses_getInstance().f5_1;
         }
 
         tmp = tmp_0;
         break;
       case 'boolean':
-        tmp = PrimitiveClasses_getInstance().y5_1;
+        tmp = PrimitiveClasses_getInstance().a5_1;
         break;
       case 'function':
         var tmp_1 = PrimitiveClasses_getInstance();
@@ -2780,41 +2347,41 @@ if (typeof Math.imul === 'undefined') {
       default:
         var tmp_2;
         if (isBooleanArray(e)) {
-          tmp_2 = PrimitiveClasses_getInstance().h6_1;
+          tmp_2 = PrimitiveClasses_getInstance().j5_1;
         } else {
           if (isCharArray(e)) {
-            tmp_2 = PrimitiveClasses_getInstance().i6_1;
+            tmp_2 = PrimitiveClasses_getInstance().k5_1;
           } else {
             if (isByteArray(e)) {
-              tmp_2 = PrimitiveClasses_getInstance().j6_1;
+              tmp_2 = PrimitiveClasses_getInstance().l5_1;
             } else {
               if (isShortArray(e)) {
-                tmp_2 = PrimitiveClasses_getInstance().k6_1;
+                tmp_2 = PrimitiveClasses_getInstance().m5_1;
               } else {
                 if (isIntArray(e)) {
-                  tmp_2 = PrimitiveClasses_getInstance().l6_1;
+                  tmp_2 = PrimitiveClasses_getInstance().n5_1;
                 } else {
                   if (isLongArray(e)) {
-                    tmp_2 = PrimitiveClasses_getInstance().m6_1;
+                    tmp_2 = PrimitiveClasses_getInstance().o5_1;
                   } else {
                     if (isFloatArray(e)) {
-                      tmp_2 = PrimitiveClasses_getInstance().n6_1;
+                      tmp_2 = PrimitiveClasses_getInstance().p5_1;
                     } else {
                       if (isDoubleArray(e)) {
-                        tmp_2 = PrimitiveClasses_getInstance().o6_1;
+                        tmp_2 = PrimitiveClasses_getInstance().q5_1;
                       } else {
                         if (isInterface(e, KClass)) {
                           tmp_2 = getKClass(KClass);
                         } else {
                           if (isArray(e)) {
-                            tmp_2 = PrimitiveClasses_getInstance().e6_1;
+                            tmp_2 = PrimitiveClasses_getInstance().g5_1;
                           } else {
                             var constructor = Object.getPrototypeOf(e).constructor;
                             var tmp_3;
                             if (constructor === Object) {
-                              tmp_3 = PrimitiveClasses_getInstance().v5_1;
+                              tmp_3 = PrimitiveClasses_getInstance().x4_1;
                             } else if (constructor === Error) {
-                              tmp_3 = PrimitiveClasses_getInstance().g6_1;
+                              tmp_3 = PrimitiveClasses_getInstance().i5_1;
                             } else {
                               var jsClass = constructor;
                               tmp_3 = getKClass1(jsClass);
@@ -2860,40 +2427,40 @@ if (typeof Math.imul === 'undefined') {
     return StringBuilder_init_$Init$(Object.create(StringBuilder.prototype));
   }
   function StringBuilder(content) {
-    this.j7_1 = !(content === undefined) ? content : '';
+    this.n6_1 = !(content === undefined) ? content : '';
   }
-  StringBuilder.prototype.f2 = function () {
+  StringBuilder.prototype.y1 = function () {
     var tmp$ret$0;
     // Inline function 'kotlin.js.asDynamic' call
-    var tmp0_asDynamic = this.j7_1;
+    var tmp0_asDynamic = this.n6_1;
     tmp$ret$0 = tmp0_asDynamic;
     return tmp$ret$0.length;
   };
-  StringBuilder.prototype.g2 = function (index) {
+  StringBuilder.prototype.z1 = function (index) {
     var tmp$ret$0;
     // Inline function 'kotlin.text.getOrElse' call
-    var tmp0_getOrElse = this.j7_1;
+    var tmp0_getOrElse = this.n6_1;
     var tmp;
-    if (index >= 0 ? index <= get_lastIndex_1(tmp0_getOrElse) : false) {
+    if (index >= 0 ? index <= get_lastIndex(tmp0_getOrElse) : false) {
       tmp = charSequenceGet(tmp0_getOrElse, index);
     } else {
-      throw IndexOutOfBoundsException_init_$Create$('index: ' + index + ', length: ' + this.f2() + '}');
+      throw IndexOutOfBoundsException_init_$Create$('index: ' + index + ', length: ' + this.y1() + '}');
     }
     tmp$ret$0 = tmp;
     return tmp$ret$0;
   };
-  StringBuilder.prototype.w1 = function (value) {
+  StringBuilder.prototype.r1 = function (value) {
     var tmp0_this = this;
-    tmp0_this.j7_1 = tmp0_this.j7_1 + new Char_0(value);
+    tmp0_this.n6_1 = tmp0_this.n6_1 + new Char_0(value);
     return this;
   };
-  StringBuilder.prototype.b = function (value) {
+  StringBuilder.prototype.g = function (value) {
     var tmp0_this = this;
-    tmp0_this.j7_1 = tmp0_this.j7_1 + toString_1(value);
+    tmp0_this.n6_1 = tmp0_this.n6_1 + toString_1(value);
     return this;
   };
   StringBuilder.prototype.toString = function () {
-    return this.j7_1;
+    return this.n6_1;
   };
   StringBuilder.$metadata$ = classMeta('StringBuilder', [Appendable, CharSequence]);
   function uppercaseChar(_this__u8e3s4) {
@@ -2981,63 +2548,49 @@ if (typeof Math.imul === 'undefined') {
   function Regex_init_$Create$(pattern) {
     return Regex_init_$Init$(pattern, Object.create(Regex.prototype));
   }
-  function Companion_4() {
-    Companion_instance_4 = this;
-    this.k7_1 = new RegExp('[\\\\^$*+?.()|[\\]{}]', 'g');
-    this.l7_1 = new RegExp('[\\\\$]', 'g');
-    this.m7_1 = new RegExp('\\$', 'g');
+  function Companion_3() {
+    Companion_instance_3 = this;
+    this.o6_1 = new RegExp('[\\\\^$*+?.()|[\\]{}]', 'g');
+    this.p6_1 = new RegExp('[\\\\$]', 'g');
+    this.q6_1 = new RegExp('\\$', 'g');
   }
-  Companion_4.$metadata$ = objectMeta('Companion');
-  var Companion_instance_4;
-  function Companion_getInstance_4() {
-    if (Companion_instance_4 == null)
-      new Companion_4();
-    return Companion_instance_4;
+  Companion_3.$metadata$ = objectMeta('Companion');
+  var Companion_instance_3;
+  function Companion_getInstance_3() {
+    if (Companion_instance_3 == null)
+      new Companion_3();
+    return Companion_instance_3;
   }
   function Regex(pattern, options) {
-    Companion_getInstance_4();
-    this.x1_1 = pattern;
-    this.y1_1 = toSet(options);
-    this.z1_1 = new RegExp(pattern, toFlags(options, 'gu'));
-    this.a2_1 = null;
-    this.b2_1 = null;
+    Companion_getInstance_3();
+    this.s1_1 = pattern;
+    this.t1_1 = toSet(options);
+    this.u1_1 = new RegExp(pattern, toFlags(options, 'gu'));
+    this.v1_1 = null;
+    this.w1_1 = null;
   }
-  Regex.prototype.c2 = function (input) {
-    reset(this.z1_1);
-    var match = this.z1_1.exec(toString_2(input));
-    return (!(match == null) ? match.index === 0 : false) ? this.z1_1.lastIndex === charSequenceLength(input) : false;
+  Regex.prototype.x1 = function (input) {
+    reset(this.u1_1);
+    var match = this.u1_1.exec(toString_2(input));
+    return (!(match == null) ? match.index === 0 : false) ? this.u1_1.lastIndex === charSequenceLength(input) : false;
   };
   Regex.prototype.toString = function () {
-    return this.z1_1.toString();
+    return this.u1_1.toString();
   };
   Regex.$metadata$ = classMeta('Regex');
   function toFlags(_this__u8e3s4, prepend) {
-    return joinToString$default_0(_this__u8e3s4, '', prepend, null, 0, null, toFlags$lambda, 28, null);
+    return joinToString$default(_this__u8e3s4, '', prepend, null, 0, null, toFlags$lambda, 28, null);
   }
   function toFlags$lambda(it) {
-    return it.p7_1;
+    return it.t6_1;
   }
   var STRING_CASE_INSENSITIVE_ORDER;
-  function nativeLastIndexOf(_this__u8e3s4, str, fromIndex) {
-    init_properties_string_kt_z8k4s7();
-    var tmp$ret$0;
-    // Inline function 'kotlin.js.asDynamic' call
-    tmp$ret$0 = _this__u8e3s4;
-    return tmp$ret$0.lastIndexOf(str, fromIndex);
-  }
   function substring(_this__u8e3s4, startIndex, endIndex) {
     init_properties_string_kt_z8k4s7();
     var tmp$ret$0;
     // Inline function 'kotlin.js.asDynamic' call
     tmp$ret$0 = _this__u8e3s4;
     return tmp$ret$0.substring(startIndex, endIndex);
-  }
-  function substring_0(_this__u8e3s4, startIndex) {
-    init_properties_string_kt_z8k4s7();
-    var tmp$ret$0;
-    // Inline function 'kotlin.js.asDynamic' call
-    tmp$ret$0 = _this__u8e3s4;
-    return tmp$ret$0.substring(startIndex);
   }
   function compareTo(_this__u8e3s4, other, ignoreCase) {
     init_properties_string_kt_z8k4s7();
@@ -3110,13 +2663,13 @@ if (typeof Math.imul === 'undefined') {
     return encodeUtf8(_this__u8e3s4, 0, _this__u8e3s4.length, false);
   }
   function sam$kotlin_Comparator$0(function_0) {
-    this.q7_1 = function_0;
+    this.u6_1 = function_0;
   }
-  sam$kotlin_Comparator$0.prototype.r7 = function (a, b) {
-    return this.q7_1(a, b);
+  sam$kotlin_Comparator$0.prototype.v6 = function (a, b) {
+    return this.u6_1(a, b);
   };
   sam$kotlin_Comparator$0.prototype.compare = function (a, b) {
-    return this.r7(a, b);
+    return this.v6(a, b);
   };
   sam$kotlin_Comparator$0.$metadata$ = classMeta('sam$kotlin_Comparator$0', [Comparator]);
   function STRING_CASE_INSENSITIVE_ORDER$lambda(a, b) {
@@ -3265,8 +2818,8 @@ if (typeof Math.imul === 'undefined') {
     return _get_value__a43j40($this) - _get_value__a43j40(other) | 0;
   }
   function Char__compareTo_impl_ypi4mb_0($this, other) {
-    var tmp = $this.r_1;
-    return Char__compareTo_impl_ypi4mb(tmp, other instanceof Char_0 ? other.r_1 : THROW_CCE());
+    var tmp = $this.n_1;
+    return Char__compareTo_impl_ypi4mb(tmp, other instanceof Char_0 ? other.n_1 : THROW_CCE());
   }
   function Char__minus_impl_a2frrh($this, other) {
     return _get_value__a43j40($this) - _get_value__a43j40(other) | 0;
@@ -3277,7 +2830,7 @@ if (typeof Math.imul === 'undefined') {
   function Char__equals_impl_x6719k($this, other) {
     if (!(other instanceof Char_0))
       return false;
-    return _get_value__a43j40($this) === _get_value__a43j40(other.r_1);
+    return _get_value__a43j40($this) === _get_value__a43j40(other.n_1);
   }
   function Char__hashCode_impl_otmys($this) {
     return _get_value__a43j40($this);
@@ -3289,44 +2842,44 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$0 = tmp0_unsafeCast;
     return tmp$ret$0;
   }
-  function Companion_5() {
-    Companion_instance_5 = this;
-    this.s7_1 = _Char___init__impl__6a9atx(0);
-    this.t7_1 = _Char___init__impl__6a9atx(65535);
-    this.u7_1 = _Char___init__impl__6a9atx(55296);
-    this.v7_1 = _Char___init__impl__6a9atx(56319);
-    this.w7_1 = _Char___init__impl__6a9atx(56320);
-    this.x7_1 = _Char___init__impl__6a9atx(57343);
-    this.y7_1 = _Char___init__impl__6a9atx(55296);
-    this.z7_1 = _Char___init__impl__6a9atx(57343);
-    this.a8_1 = 2;
-    this.b8_1 = 16;
+  function Companion_4() {
+    Companion_instance_4 = this;
+    this.w6_1 = _Char___init__impl__6a9atx(0);
+    this.x6_1 = _Char___init__impl__6a9atx(65535);
+    this.y6_1 = _Char___init__impl__6a9atx(55296);
+    this.z6_1 = _Char___init__impl__6a9atx(56319);
+    this.a7_1 = _Char___init__impl__6a9atx(56320);
+    this.b7_1 = _Char___init__impl__6a9atx(57343);
+    this.c7_1 = _Char___init__impl__6a9atx(55296);
+    this.d7_1 = _Char___init__impl__6a9atx(57343);
+    this.e7_1 = 2;
+    this.f7_1 = 16;
   }
-  Companion_5.$metadata$ = objectMeta('Companion');
-  var Companion_instance_5;
-  function Companion_getInstance_5() {
-    if (Companion_instance_5 == null)
-      new Companion_5();
-    return Companion_instance_5;
+  Companion_4.$metadata$ = objectMeta('Companion');
+  var Companion_instance_4;
+  function Companion_getInstance_4() {
+    if (Companion_instance_4 == null)
+      new Companion_4();
+    return Companion_instance_4;
   }
   function Char_0(value) {
-    Companion_getInstance_5();
-    this.r_1 = value;
+    Companion_getInstance_4();
+    this.n_1 = value;
   }
-  Char_0.prototype.c8 = function (other) {
-    return Char__compareTo_impl_ypi4mb(this.r_1, other);
+  Char_0.prototype.g7 = function (other) {
+    return Char__compareTo_impl_ypi4mb(this.n_1, other);
   };
-  Char_0.prototype.h2 = function (other) {
+  Char_0.prototype.a2 = function (other) {
     return Char__compareTo_impl_ypi4mb_0(this, other);
   };
   Char_0.prototype.equals = function (other) {
-    return Char__equals_impl_x6719k(this.r_1, other);
+    return Char__equals_impl_x6719k(this.n_1, other);
   };
   Char_0.prototype.hashCode = function () {
-    return Char__hashCode_impl_otmys(this.r_1);
+    return Char__hashCode_impl_otmys(this.n_1);
   };
   Char_0.prototype.toString = function () {
-    return toString_0(this.r_1);
+    return toString_0(this.n_1);
   };
   Char_0.$metadata$ = classMeta('Char', [Comparable]);
   function Iterable() {
@@ -3335,24 +2888,21 @@ if (typeof Math.imul === 'undefined') {
   function List() {
   }
   List.$metadata$ = interfaceMeta('List', [Collection]);
-  function MutableList() {
-  }
-  MutableList.$metadata$ = interfaceMeta('MutableList', [List, MutableCollection]);
   function Entry() {
   }
   Entry.$metadata$ = interfaceMeta('Entry');
   function Map() {
   }
   Map.$metadata$ = interfaceMeta('Map');
+  function Set() {
+  }
+  Set.$metadata$ = interfaceMeta('Set', [Collection]);
   function Collection() {
   }
   Collection.$metadata$ = interfaceMeta('Collection', [Iterable]);
   function MutableCollection() {
   }
   MutableCollection.$metadata$ = interfaceMeta('MutableCollection', [Collection, MutableIterable]);
-  function Set() {
-  }
-  Set.$metadata$ = interfaceMeta('Set', [Collection]);
   function MutableIterable() {
   }
   MutableIterable.$metadata$ = interfaceMeta('MutableIterable', [Iterable]);
@@ -3365,32 +2915,32 @@ if (typeof Math.imul === 'undefined') {
   function MutableSet() {
   }
   MutableSet.$metadata$ = interfaceMeta('MutableSet', [Set, MutableCollection]);
-  function Companion_6() {
-    Companion_instance_6 = this;
+  function Companion_5() {
+    Companion_instance_5 = this;
   }
-  Companion_6.$metadata$ = objectMeta('Companion');
-  var Companion_instance_6;
-  function Companion_getInstance_6() {
-    if (Companion_instance_6 == null)
-      new Companion_6();
-    return Companion_instance_6;
+  Companion_5.$metadata$ = objectMeta('Companion');
+  var Companion_instance_5;
+  function Companion_getInstance_5() {
+    if (Companion_instance_5 == null)
+      new Companion_5();
+    return Companion_instance_5;
   }
   function Enum(name, ordinal) {
-    Companion_getInstance_6();
-    this.d8_1 = name;
-    this.e8_1 = ordinal;
+    Companion_getInstance_5();
+    this.h7_1 = name;
+    this.i7_1 = ordinal;
   }
-  Enum.prototype.f8 = function () {
-    return this.d8_1;
+  Enum.prototype.j7 = function () {
+    return this.h7_1;
   };
-  Enum.prototype.g8 = function () {
-    return this.e8_1;
+  Enum.prototype.k7 = function () {
+    return this.i7_1;
   };
-  Enum.prototype.h8 = function (other) {
-    return compareTo_0(this.e8_1, other.e8_1);
+  Enum.prototype.l7 = function (other) {
+    return compareTo_0(this.i7_1, other.i7_1);
   };
-  Enum.prototype.h2 = function (other) {
-    return this.h8(other instanceof Enum ? other : THROW_CCE());
+  Enum.prototype.a2 = function (other) {
+    return this.l7(other instanceof Enum ? other : THROW_CCE());
   };
   Enum.prototype.equals = function (other) {
     return this === other;
@@ -3399,7 +2949,7 @@ if (typeof Math.imul === 'undefined') {
     return identityHashCode(this);
   };
   Enum.prototype.toString = function () {
-    return this.d8_1;
+    return this.h7_1;
   };
   Enum.$metadata$ = classMeta('Enum', [Comparable]);
   function byteArrayOf(elements) {
@@ -3434,30 +2984,6 @@ if (typeof Math.imul === 'undefined') {
        while (!(i === last));
     return array;
   }
-  function intArrayIterator(array) {
-    return new intArrayIterator$1(array);
-  }
-  function intArrayIterator$1($array) {
-    this.j8_1 = $array;
-    IntIterator.call(this);
-    this.i8_1 = 0;
-  }
-  intArrayIterator$1.prototype.d = function () {
-    return !(this.i8_1 === this.j8_1.length);
-  };
-  intArrayIterator$1.prototype.m1 = function () {
-    var tmp;
-    if (!(this.i8_1 === this.j8_1.length)) {
-      var tmp0_this = this;
-      var tmp1 = tmp0_this.i8_1;
-      tmp0_this.i8_1 = tmp1 + 1 | 0;
-      tmp = this.j8_1[tmp1];
-    } else {
-      throw NoSuchElementException_init_$Create$_0('' + this.i8_1);
-    }
-    return tmp;
-  };
-  intArrayIterator$1.$metadata$ = classMeta(undefined, undefined, undefined, undefined, undefined, IntIterator.prototype);
   function get_buf() {
     init_properties_bitUtils_kt_cxtw9i();
     return buf;
@@ -3557,7 +3083,7 @@ if (typeof Math.imul === 'undefined') {
       var tmp_0;
       var tmp$ret$2;
       // Inline function 'kotlin.code' call
-      Companion_getInstance_5();
+      Companion_getInstance_4();
       var tmp0__get_code__88qj9g = _Char___init__impl__6a9atx(0);
       tmp$ret$2 = Char__toInt_impl_vasixd(tmp0__get_code__88qj9g);
       if (tmp1_Char < tmp$ret$2) {
@@ -3565,7 +3091,7 @@ if (typeof Math.imul === 'undefined') {
       } else {
         var tmp$ret$3;
         // Inline function 'kotlin.code' call
-        Companion_getInstance_5();
+        Companion_getInstance_4();
         var tmp1__get_code__adl84j = _Char___init__impl__6a9atx(65535);
         tmp$ret$3 = Char__toInt_impl_vasixd(tmp1__get_code__adl84j);
         tmp_0 = tmp1_Char > tmp$ret$3;
@@ -3576,7 +3102,7 @@ if (typeof Math.imul === 'undefined') {
       tmp$ret$4 = numberToChar(tmp1_Char);
       tmp = tmp$ret$4;
     } else {
-      tmp = a.g2(index);
+      tmp = a.z1(index);
     }
     return tmp;
   }
@@ -3595,15 +3121,9 @@ if (typeof Math.imul === 'undefined') {
       tmp$ret$1 = tmp0_unsafeCast;
       tmp = tmp$ret$1;
     } else {
-      tmp = a.f2();
+      tmp = a.y1();
     }
     return tmp;
-  }
-  function arrayToString(array) {
-    return joinToString$default(array, ', ', '[', ']', 0, null, arrayToString$lambda, 24, null);
-  }
-  function arrayToString$lambda(it) {
-    return toString_2(it);
   }
   function compareTo_0(a, b) {
     var tmp0_subject = typeof a;
@@ -3615,7 +3135,7 @@ if (typeof Math.imul === 'undefined') {
           tmp_0 = doubleCompareTo(a, b);
         } else {
           if (b instanceof Long) {
-            tmp_0 = doubleCompareTo(a, b.m8());
+            tmp_0 = doubleCompareTo(a, b.o7());
           } else {
             tmp_0 = primitiveCompareTo(a, b);
           }
@@ -3675,7 +3195,7 @@ if (typeof Math.imul === 'undefined') {
     return a < b ? -1 : a > b ? 1 : 0;
   }
   function compareToDoNotIntrinsicify(a, b) {
-    return a.h2(b);
+    return a.a2(b);
   }
   function identityHashCode(obj) {
     return getObjectHashCode(obj);
@@ -3889,52 +3409,52 @@ if (typeof Math.imul === 'undefined') {
   function emptyArray() {
     return [];
   }
-  function Companion_7() {
-    Companion_instance_7 = this;
-    this.n8_1 = new Long(0, -2147483648);
-    this.o8_1 = new Long(-1, 2147483647);
-    this.p8_1 = 8;
-    this.q8_1 = 64;
+  function Companion_6() {
+    Companion_instance_6 = this;
+    this.p7_1 = new Long(0, -2147483648);
+    this.q7_1 = new Long(-1, 2147483647);
+    this.r7_1 = 8;
+    this.s7_1 = 64;
   }
-  Companion_7.$metadata$ = objectMeta('Companion');
-  var Companion_instance_7;
-  function Companion_getInstance_7() {
-    if (Companion_instance_7 == null)
-      new Companion_7();
-    return Companion_instance_7;
+  Companion_6.$metadata$ = objectMeta('Companion');
+  var Companion_instance_6;
+  function Companion_getInstance_6() {
+    if (Companion_instance_6 == null)
+      new Companion_6();
+    return Companion_instance_6;
   }
   function Long(low, high) {
-    Companion_getInstance_7();
+    Companion_getInstance_6();
     Number_0.call(this);
-    this.k8_1 = low;
-    this.l8_1 = high;
+    this.m7_1 = low;
+    this.n7_1 = high;
   }
-  Long.prototype.r8 = function (other) {
+  Long.prototype.t7 = function (other) {
     return compare(this, other);
   };
-  Long.prototype.h2 = function (other) {
-    return this.r8(other instanceof Long ? other : THROW_CCE());
+  Long.prototype.a2 = function (other) {
+    return this.t7(other instanceof Long ? other : THROW_CCE());
   };
-  Long.prototype.s8 = function (other) {
+  Long.prototype.u7 = function (other) {
     return add(this, other);
   };
-  Long.prototype.t8 = function (other) {
+  Long.prototype.v7 = function (other) {
     return divide(this, other);
   };
-  Long.prototype.u8 = function () {
-    return this.v8().s8(new Long(1, 0));
+  Long.prototype.w7 = function () {
+    return this.x7().u7(new Long(1, 0));
   };
-  Long.prototype.v8 = function () {
-    return new Long(~this.k8_1, ~this.l8_1);
+  Long.prototype.x7 = function () {
+    return new Long(~this.m7_1, ~this.n7_1);
   };
-  Long.prototype.w8 = function () {
-    return this.k8_1;
+  Long.prototype.y7 = function () {
+    return this.m7_1;
   };
-  Long.prototype.m8 = function () {
+  Long.prototype.o7 = function () {
     return toNumber(this);
   };
   Long.prototype.valueOf = function () {
-    return this.m8();
+    return this.o7();
   };
   Long.prototype.equals = function (other) {
     var tmp;
@@ -3993,14 +3513,14 @@ if (typeof Math.imul === 'undefined') {
   }
   function add(_this__u8e3s4, other) {
     init_properties_longjs_kt_ttk8rv();
-    var a48 = _this__u8e3s4.l8_1 >>> 16 | 0;
-    var a32 = _this__u8e3s4.l8_1 & 65535;
-    var a16 = _this__u8e3s4.k8_1 >>> 16 | 0;
-    var a00 = _this__u8e3s4.k8_1 & 65535;
-    var b48 = other.l8_1 >>> 16 | 0;
-    var b32 = other.l8_1 & 65535;
-    var b16 = other.k8_1 >>> 16 | 0;
-    var b00 = other.k8_1 & 65535;
+    var a48 = _this__u8e3s4.n7_1 >>> 16 | 0;
+    var a32 = _this__u8e3s4.n7_1 & 65535;
+    var a16 = _this__u8e3s4.m7_1 >>> 16 | 0;
+    var a00 = _this__u8e3s4.m7_1 & 65535;
+    var b48 = other.n7_1 >>> 16 | 0;
+    var b32 = other.n7_1 & 65535;
+    var b16 = other.m7_1 >>> 16 | 0;
+    var b00 = other.m7_1 & 65535;
     var c48 = 0;
     var c32 = 0;
     var c16 = 0;
@@ -4020,7 +3540,7 @@ if (typeof Math.imul === 'undefined') {
   }
   function subtract(_this__u8e3s4, other) {
     init_properties_longjs_kt_ttk8rv();
-    return add(_this__u8e3s4, other.u8());
+    return add(_this__u8e3s4, other.w7());
   }
   function multiply(_this__u8e3s4, other) {
     init_properties_longjs_kt_ttk8rv();
@@ -4048,14 +3568,14 @@ if (typeof Math.imul === 'undefined') {
     if (lessThan(_this__u8e3s4, get_TWO_PWR_24_()) ? lessThan(other, get_TWO_PWR_24_()) : false) {
       return fromNumber(toNumber(_this__u8e3s4) * toNumber(other));
     }
-    var a48 = _this__u8e3s4.l8_1 >>> 16 | 0;
-    var a32 = _this__u8e3s4.l8_1 & 65535;
-    var a16 = _this__u8e3s4.k8_1 >>> 16 | 0;
-    var a00 = _this__u8e3s4.k8_1 & 65535;
-    var b48 = other.l8_1 >>> 16 | 0;
-    var b32 = other.l8_1 & 65535;
-    var b16 = other.k8_1 >>> 16 | 0;
-    var b00 = other.k8_1 & 65535;
+    var a48 = _this__u8e3s4.n7_1 >>> 16 | 0;
+    var a32 = _this__u8e3s4.n7_1 & 65535;
+    var a16 = _this__u8e3s4.m7_1 >>> 16 | 0;
+    var a00 = _this__u8e3s4.m7_1 & 65535;
+    var b48 = other.n7_1 >>> 16 | 0;
+    var b32 = other.n7_1 & 65535;
+    var b16 = other.m7_1 >>> 16 | 0;
+    var b00 = other.m7_1 & 65535;
     var c48 = 0;
     var c32 = 0;
     var c16 = 0;
@@ -4096,12 +3616,12 @@ if (typeof Math.imul === 'undefined') {
         return get_ONE();
       } else {
         var halfThis = shiftRight(_this__u8e3s4, 1);
-        var approx = shiftLeft(halfThis.t8(other), 1);
+        var approx = shiftLeft(halfThis.v7(other), 1);
         if (equalsLong(approx, get_ZERO())) {
           return isNegative(other) ? get_ONE() : get_NEG_ONE();
         } else {
           var rem = subtract(_this__u8e3s4, multiply(other, approx));
-          return add(approx, rem.t8(other));
+          return add(approx, rem.v7(other));
         }
       }
     } else if (equalsLong(other, get_MIN_VALUE())) {
@@ -4110,13 +3630,13 @@ if (typeof Math.imul === 'undefined') {
     if (isNegative(_this__u8e3s4)) {
       var tmp;
       if (isNegative(other)) {
-        tmp = negate(_this__u8e3s4).t8(negate(other));
+        tmp = negate(_this__u8e3s4).v7(negate(other));
       } else {
-        tmp = negate(negate(_this__u8e3s4).t8(other));
+        tmp = negate(negate(_this__u8e3s4).v7(other));
       }
       return tmp;
     } else if (isNegative(other)) {
-      return negate(_this__u8e3s4.t8(negate(other)));
+      return negate(_this__u8e3s4.v7(negate(other)));
     }
     var res = get_ZERO();
     var rem_0 = _this__u8e3s4;
@@ -4147,9 +3667,9 @@ if (typeof Math.imul === 'undefined') {
       return _this__u8e3s4;
     } else {
       if (numBits_0 < 32) {
-        return new Long(_this__u8e3s4.k8_1 << numBits_0, _this__u8e3s4.l8_1 << numBits_0 | (_this__u8e3s4.k8_1 >>> (32 - numBits_0 | 0) | 0));
+        return new Long(_this__u8e3s4.m7_1 << numBits_0, _this__u8e3s4.n7_1 << numBits_0 | (_this__u8e3s4.m7_1 >>> (32 - numBits_0 | 0) | 0));
       } else {
-        return new Long(0, _this__u8e3s4.k8_1 << (numBits_0 - 32 | 0));
+        return new Long(0, _this__u8e3s4.m7_1 << (numBits_0 - 32 | 0));
       }
     }
   }
@@ -4160,23 +3680,23 @@ if (typeof Math.imul === 'undefined') {
       return _this__u8e3s4;
     } else {
       if (numBits_0 < 32) {
-        return new Long(_this__u8e3s4.k8_1 >>> numBits_0 | 0 | _this__u8e3s4.l8_1 << (32 - numBits_0 | 0), _this__u8e3s4.l8_1 >> numBits_0);
+        return new Long(_this__u8e3s4.m7_1 >>> numBits_0 | 0 | _this__u8e3s4.n7_1 << (32 - numBits_0 | 0), _this__u8e3s4.n7_1 >> numBits_0);
       } else {
-        return new Long(_this__u8e3s4.l8_1 >> (numBits_0 - 32 | 0), _this__u8e3s4.l8_1 >= 0 ? 0 : -1);
+        return new Long(_this__u8e3s4.n7_1 >> (numBits_0 - 32 | 0), _this__u8e3s4.n7_1 >= 0 ? 0 : -1);
       }
     }
   }
   function toNumber(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.l8_1 * 4.294967296E9 + getLowBitsUnsigned(_this__u8e3s4);
+    return _this__u8e3s4.n7_1 * 4.294967296E9 + getLowBitsUnsigned(_this__u8e3s4);
   }
   function equalsLong(_this__u8e3s4, other) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.l8_1 === other.l8_1 ? _this__u8e3s4.k8_1 === other.k8_1 : false;
+    return _this__u8e3s4.n7_1 === other.n7_1 ? _this__u8e3s4.m7_1 === other.m7_1 : false;
   }
   function hashCode_0(l) {
     init_properties_longjs_kt_ttk8rv();
-    return l.k8_1 ^ l.l8_1;
+    return l.m7_1 ^ l.n7_1;
   }
   function toStringImpl(_this__u8e3s4, radix) {
     init_properties_longjs_kt_ttk8rv();
@@ -4189,8 +3709,8 @@ if (typeof Math.imul === 'undefined') {
     if (isNegative(_this__u8e3s4)) {
       if (equalsLong(_this__u8e3s4, get_MIN_VALUE())) {
         var radixLong = fromInt(radix);
-        var div = _this__u8e3s4.t8(radixLong);
-        var rem = subtract(multiply(div, radixLong), _this__u8e3s4).w8();
+        var div = _this__u8e3s4.v7(radixLong);
+        var rem = subtract(multiply(div, radixLong), _this__u8e3s4).y7();
         var tmp = toStringImpl(div, radix);
         var tmp$ret$1;
         // Inline function 'kotlin.js.unsafeCast' call
@@ -4209,8 +3729,8 @@ if (typeof Math.imul === 'undefined') {
     var rem_0 = _this__u8e3s4;
     var result = '';
     while (true) {
-      var remDiv = rem_0.t8(radixToPower);
-      var intval = subtract(rem_0, multiply(remDiv, radixToPower)).w8();
+      var remDiv = rem_0.v7(radixToPower);
+      var intval = subtract(rem_0, multiply(remDiv, radixToPower)).y7();
       var tmp$ret$3;
       // Inline function 'kotlin.js.unsafeCast' call
       var tmp$ret$2;
@@ -4236,19 +3756,19 @@ if (typeof Math.imul === 'undefined') {
   }
   function isNegative(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.l8_1 < 0;
+    return _this__u8e3s4.n7_1 < 0;
   }
   function isZero(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.l8_1 === 0 ? _this__u8e3s4.k8_1 === 0 : false;
+    return _this__u8e3s4.n7_1 === 0 ? _this__u8e3s4.m7_1 === 0 : false;
   }
   function isOdd(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return (_this__u8e3s4.k8_1 & 1) === 1;
+    return (_this__u8e3s4.m7_1 & 1) === 1;
   }
   function negate(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.u8();
+    return _this__u8e3s4.w7();
   }
   function lessThan(_this__u8e3s4, other) {
     init_properties_longjs_kt_ttk8rv();
@@ -4279,7 +3799,7 @@ if (typeof Math.imul === 'undefined') {
   }
   function getLowBitsUnsigned(_this__u8e3s4) {
     init_properties_longjs_kt_ttk8rv();
-    return _this__u8e3s4.k8_1 >= 0 ? _this__u8e3s4.k8_1 : 4.294967296E9 + _this__u8e3s4.k8_1;
+    return _this__u8e3s4.m7_1 >= 0 ? _this__u8e3s4.m7_1 : 4.294967296E9 + _this__u8e3s4.m7_1;
   }
   var properties_initialized_longjs_kt_5aju7t;
   function init_properties_longjs_kt_ttk8rv() {
@@ -4304,7 +3824,7 @@ if (typeof Math.imul === 'undefined') {
   function numberToInt(a) {
     var tmp;
     if (a instanceof Long) {
-      tmp = a.w8();
+      tmp = a.y7();
     } else {
       tmp = doubleToInt(a);
     }
@@ -4641,8 +4161,8 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.code' call
     tmp$ret$0 = Char__toInt_impl_vasixd(_this__u8e3s4);
     var ch = tmp$ret$0;
-    var index = binarySearchRange(Digit_getInstance().x8_1, ch);
-    var diff = ch - Digit_getInstance().x8_1[index] | 0;
+    var index = binarySearchRange(Digit_getInstance().z7_1, ch);
+    var diff = ch - Digit_getInstance().z7_1[index] | 0;
     return diff < 10 ? diff : -1;
   }
   function binarySearchRange(array, needle) {
@@ -4668,7 +4188,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp$ret$0;
     // Inline function 'kotlin.intArrayOf' call
     tmp$ret$0 = new Int32Array([48, 1632, 1776, 1984, 2406, 2534, 2662, 2790, 2918, 3046, 3174, 3302, 3430, 3558, 3664, 3792, 3872, 4160, 4240, 6112, 6160, 6470, 6608, 6784, 6800, 6992, 7088, 7232, 7248, 42528, 43216, 43264, 43472, 43504, 43600, 44016, 65296]);
-    tmp.x8_1 = tmp$ret$0;
+    tmp.z7_1 = tmp$ret$0;
   }
   Digit.$metadata$ = objectMeta('Digit');
   var Digit_instance;
@@ -4696,18 +4216,13 @@ if (typeof Math.imul === 'undefined') {
     captureStack(this, Exception);
   }
   Exception.$metadata$ = classMeta('Exception', undefined, undefined, undefined, undefined, Error.prototype);
-  function Error_init_$Init$(message, $this) {
-    extendThrowable($this, message, void 1);
-    Error_0.call($this);
-    return $this;
-  }
-  function Error_init_$Init$_0(message, cause, $this) {
+  function Error_init_$Init$(message, cause, $this) {
     extendThrowable($this, message, cause);
     Error_0.call($this);
     return $this;
   }
   function Error_init_$Create$(message, cause) {
-    var tmp = Error_init_$Init$_0(message, cause, Object.create(Error_0.prototype));
+    var tmp = Error_init_$Init$(message, cause, Object.create(Error_0.prototype));
     captureStack(tmp, Error_init_$Create$);
     return tmp;
   }
@@ -4761,16 +4276,6 @@ if (typeof Math.imul === 'undefined') {
   function NoSuchElementException_init_$Create$() {
     var tmp = NoSuchElementException_init_$Init$(Object.create(NoSuchElementException.prototype));
     captureStack(tmp, NoSuchElementException_init_$Create$);
-    return tmp;
-  }
-  function NoSuchElementException_init_$Init$_0(message, $this) {
-    RuntimeException_init_$Init$_0(message, $this);
-    NoSuchElementException.call($this);
-    return $this;
-  }
-  function NoSuchElementException_init_$Create$_0(message) {
-    var tmp = NoSuchElementException_init_$Init$_0(message, Object.create(NoSuchElementException.prototype));
-    captureStack(tmp, NoSuchElementException_init_$Create$_0);
     return tmp;
   }
   function NoSuchElementException() {
@@ -4843,20 +4348,6 @@ if (typeof Math.imul === 'undefined') {
     captureStack(this, NumberFormatException);
   }
   NumberFormatException.$metadata$ = classMeta('NumberFormatException', undefined, undefined, undefined, undefined, IllegalArgumentException.prototype);
-  function ArithmeticException_init_$Init$(message, $this) {
-    RuntimeException_init_$Init$_0(message, $this);
-    ArithmeticException.call($this);
-    return $this;
-  }
-  function ArithmeticException_init_$Create$(message) {
-    var tmp = ArithmeticException_init_$Init$(message, Object.create(ArithmeticException.prototype));
-    captureStack(tmp, ArithmeticException_init_$Create$);
-    return tmp;
-  }
-  function ArithmeticException() {
-    captureStack(this, ArithmeticException);
-  }
-  ArithmeticException.$metadata$ = classMeta('ArithmeticException', undefined, undefined, undefined, undefined, RuntimeException.prototype);
   function NullPointerException_init_$Init$($this) {
     RuntimeException_init_$Init$($this);
     NullPointerException.call($this);
@@ -4934,32 +4425,32 @@ if (typeof Math.imul === 'undefined') {
     if (!(($mask0 & 2) === 0))
       errorCorrectionLevel = ErrorCorrectionLevel_M_getInstance();
     if (!(($mask0 & 4) === 0))
-      dataType = QRUtil_getInstance().d9(data);
+      dataType = QRUtil_getInstance().getDataType(data);
     QRCode.call($this, data, errorCorrectionLevel, dataType);
     return $this;
   }
   function QRCode_init_$Create$(data, errorCorrectionLevel, dataType, $mask0, $marker) {
     return QRCode_init_$Init$(data, errorCorrectionLevel, dataType, $mask0, $marker, Object.create(QRCode.prototype));
   }
-  function Companion_8() {
-    Companion_instance_8 = this;
-    this.e9_1 = 25;
-    this.f9_1 = 0;
-    this.g9_1 = 236;
-    this.h9_1 = 17;
+  function Companion_7() {
+    Companion_instance_7 = this;
+    this.a8_1 = 25;
+    this.b8_1 = 0;
+    this.c8_1 = 236;
+    this.d8_1 = 17;
   }
-  Companion_8.prototype.i9 = function () {
-    return this.e9_1;
+  Companion_7.prototype.e8 = function () {
+    return this.a8_1;
   };
-  Companion_8.prototype.j9 = function () {
-    return this.f9_1;
+  Companion_7.prototype.f8 = function () {
+    return this.b8_1;
   };
-  Companion_8.prototype.typeForDataAndECL = function (data, errorCorrectionLevel, dataType) {
-    return this.k9(data, errorCorrectionLevel, dataType === void 1 ? QRUtil_getInstance().d9(data) : dataType);
+  Companion_7.prototype.typeForDataAndECL = function (data, errorCorrectionLevel, dataType) {
+    return this.g8(data, errorCorrectionLevel, dataType === void 1 ? QRUtil_getInstance().getDataType(data) : dataType);
   };
-  Companion_8.prototype.k9 = function (data, errorCorrectionLevel, dataType) {
+  Companion_7.prototype.g8 = function (data, errorCorrectionLevel, dataType) {
     var tmp0_subject = dataType;
-    var tmp0 = tmp0_subject.e8_1;
+    var tmp0 = tmp0_subject.i7_1;
     var tmp;
     switch (tmp0) {
       case 0:
@@ -4976,80 +4467,83 @@ if (typeof Math.imul === 'undefined') {
         break;
     }
     var qrCodeData = tmp;
-    var dataLength = qrCodeData.n9();
+    var dataLength = qrCodeData.length();
     var inductionVariable = 1;
-    var last = errorCorrectionLevel.r9_1;
+    var last = errorCorrectionLevel.k8_1;
     if (inductionVariable < last)
       do {
         var typeNum = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        if (dataLength <= QRUtil_getInstance().s9(typeNum, dataType, errorCorrectionLevel)) {
+        if (dataLength <= QRUtil_getInstance().getMaxLength(typeNum, dataType, errorCorrectionLevel)) {
           return typeNum;
         }
       }
        while (inductionVariable < last);
     return 40;
   };
-  Companion_8.prototype.t9 = function (data, errorCorrectionLevel, dataType, $mask0, $handler) {
+  Companion_7.prototype.l8 = function (data, errorCorrectionLevel, dataType, $mask0, $handler) {
     if (!(($mask0 & 4) === 0))
-      dataType = QRUtil_getInstance().d9(data);
-    return this.k9(data, errorCorrectionLevel, dataType);
+      dataType = QRUtil_getInstance().getDataType(data);
+    return this.g8(data, errorCorrectionLevel, dataType);
   };
-  Companion_8.$metadata$ = objectMeta('Companion');
-  Object.defineProperty(Companion_8.prototype, 'DEFAULT_CELL_SIZE', {
+  Companion_7.$metadata$ = objectMeta('Companion');
+  Object.defineProperty(Companion_7.prototype, 'DEFAULT_CELL_SIZE', {
     configurable: true,
-    get: Companion_8.prototype.i9
+    get: Companion_7.prototype.e8
   });
-  Object.defineProperty(Companion_8.prototype, 'DEFAULT_MARGIN', {
+  Object.defineProperty(Companion_7.prototype, 'DEFAULT_MARGIN', {
     configurable: true,
-    get: Companion_8.prototype.j9
+    get: Companion_7.prototype.f8
   });
-  var Companion_instance_8;
-  function Companion_getInstance_8() {
-    if (Companion_instance_8 == null)
-      new Companion_8();
-    return Companion_instance_8;
+  var Companion_instance_7;
+  function Companion_getInstance_7() {
+    if (Companion_instance_7 == null)
+      new Companion_7();
+    return Companion_instance_7;
   }
   function createData($this, type) {
-    var rsBlocks = Companion_getInstance_10().aa(type, $this.v9_1);
+    var rsBlocks = Companion_getInstance_9().getRSBlocks(type, $this.n8_1);
     var buffer = new BitBuffer();
-    buffer.ha($this.x9_1.l9_1.da_1, 4);
-    buffer.ha($this.x9_1.n9(), $this.x9_1.ia(type));
-    $this.x9_1.ja(buffer);
+    buffer.put($this.p8_1.u8_1.t8_1, 4);
+    buffer.put($this.p8_1.length(), $this.p8_1.getLengthInBits(type));
+    $this.p8_1.write(buffer);
     var tmp$ret$1;
     // Inline function 'kotlin.collections.sumOf' call
     var sum = 0;
-    var tmp0_iterator = rsBlocks.c();
-    while (tmp0_iterator.d()) {
-      var element = tmp0_iterator.e();
+    var indexedObject = rsBlocks;
+    var inductionVariable = 0;
+    var last = indexedObject.length;
+    while (inductionVariable < last) {
+      var element = indexedObject[inductionVariable];
+      inductionVariable = inductionVariable + 1 | 0;
       var tmp = sum;
       var tmp$ret$0;
       // Inline function 'io.github.g0dkar.qrcode.QRCode.createData.<anonymous>' call
-      tmp$ret$0 = element.la_1;
+      tmp$ret$0 = element.x8_1;
       sum = tmp + tmp$ret$0 | 0;
     }
     tmp$ret$1 = sum;
     var totalDataCount = imul(tmp$ret$1, 8);
-    if (buffer.fa_1 > totalDataCount) {
-      throw IllegalArgumentException_init_$Create$('Code length overflow (' + buffer.fa_1 + ' > ' + totalDataCount + ')');
+    if (buffer.z8_1 > totalDataCount) {
+      throw IllegalArgumentException_init_$Create$('Code length overflow (' + buffer.z8_1 + ' > ' + totalDataCount + ')');
     }
-    if ((buffer.fa_1 + 4 | 0) <= totalDataCount) {
-      buffer.ha(0, 4);
+    if ((buffer.z8_1 + 4 | 0) <= totalDataCount) {
+      buffer.put(0, 4);
     }
-    while (!((buffer.fa_1 % 8 | 0) === 0)) {
-      buffer.ma(false);
+    while (!((buffer.z8_1 % 8 | 0) === 0)) {
+      buffer.putBit(false);
     }
     $l$loop_0: while (true) {
-      if (buffer.fa_1 >= totalDataCount) {
+      if (buffer.z8_1 >= totalDataCount) {
         break $l$loop_0;
       }
-      Companion_getInstance_8();
-      buffer.ha(236, 8);
-      if (buffer.fa_1 >= totalDataCount) {
+      Companion_getInstance_7();
+      buffer.put(236, 8);
+      if (buffer.z8_1 >= totalDataCount) {
         break $l$loop_0;
       }
-      Companion_getInstance_8();
-      buffer.ha(17, 8);
+      Companion_getInstance_7();
+      buffer.put(17, 8);
     }
     return createBytes($this, buffer, rsBlocks);
   }
@@ -5059,7 +4553,7 @@ if (typeof Math.imul === 'undefined') {
     var maxEcCount = 0;
     var totalCodeCount = 0;
     var tmp = 0;
-    var tmp_0 = rsBlocks.f();
+    var tmp_0 = rsBlocks.length;
     var tmp$ret$0;
     // Inline function 'kotlin.arrayOfNulls' call
     tmp$ret$0 = fillArrayVal(Array(tmp_0), null);
@@ -5074,7 +4568,7 @@ if (typeof Math.imul === 'undefined') {
     }
     var dcData = tmp_1;
     var tmp_3 = 0;
-    var tmp_4 = rsBlocks.f();
+    var tmp_4 = rsBlocks.length;
     var tmp$ret$2;
     // Inline function 'kotlin.arrayOfNulls' call
     tmp$ret$2 = fillArrayVal(Array(tmp_4), null);
@@ -5090,16 +4584,19 @@ if (typeof Math.imul === 'undefined') {
     var ecData = tmp_5;
     // Inline function 'kotlin.collections.forEachIndexed' call
     var index = 0;
-    var tmp0_iterator = rsBlocks.c();
-    while (tmp0_iterator.d()) {
-      var item = tmp0_iterator.e();
+    var indexedObject = rsBlocks;
+    var inductionVariable = 0;
+    var last = indexedObject.length;
+    while (inductionVariable < last) {
+      var item = indexedObject[inductionVariable];
+      inductionVariable = inductionVariable + 1 | 0;
       // Inline function 'io.github.g0dkar.qrcode.QRCode.createBytes.<anonymous>' call
       var tmp1 = index;
       index = tmp1 + 1 | 0;
-      var tmp0__anonymous__q1qw7t = checkIndexOverflow(tmp1);
-      var dcCount = item.la_1;
-      var ecCount = item.ka_1 - dcCount | 0;
-      totalCodeCount = totalCodeCount + item.ka_1 | 0;
+      var tmp0__anonymous__q1qw7t = tmp1;
+      var dcCount = item.x8_1;
+      var ecCount = item.w8_1 - dcCount | 0;
+      totalCodeCount = totalCodeCount + item.w8_1 | 0;
       maxDcCount = coerceAtLeast(maxDcCount, dcCount);
       maxEcCount = coerceAtLeast(maxEcCount, ecCount);
       var tmp_7 = 0;
@@ -5109,16 +4606,16 @@ if (typeof Math.imul === 'undefined') {
         var tmp_10 = tmp_7;
         var tmp$ret$4;
         // Inline function 'io.github.g0dkar.qrcode.QRCode.createBytes.<anonymous>.<anonymous>' call
-        tmp$ret$4 = 255 & buffer.ea_1[tmp_10 + offset | 0];
+        tmp$ret$4 = 255 & buffer.y8_1[tmp_10 + offset | 0];
         tmp_9[tmp_10] = tmp$ret$4;
         tmp_7 = tmp_7 + 1 | 0;
       }
       dcData[tmp0__anonymous__q1qw7t] = tmp_9;
       offset = offset + dcCount | 0;
-      var rsPoly = QRUtil_getInstance().na(ecCount);
-      var rawPoly = new Polynomial(dcData[tmp0__anonymous__q1qw7t], rsPoly.pa() - 1 | 0);
-      var modPoly = rawPoly.qa(rsPoly);
-      var ecDataSize = rsPoly.pa() - 1 | 0;
+      var rsPoly = QRUtil_getInstance().getErrorCorrectPolynomial(ecCount);
+      var rawPoly = new Polynomial(dcData[tmp0__anonymous__q1qw7t], rsPoly.len() - 1 | 0);
+      var modPoly = rawPoly.mod(rsPoly);
+      var ecDataSize = rsPoly.len() - 1 | 0;
       var tmp_11 = 0;
       var tmp_12 = ecDataSize;
       var tmp_13 = new Int32Array(tmp_12);
@@ -5126,8 +4623,8 @@ if (typeof Math.imul === 'undefined') {
         var tmp_14 = tmp_11;
         var tmp$ret$5;
         // Inline function 'io.github.g0dkar.qrcode.QRCode.createBytes.<anonymous>.<anonymous>' call
-        var modIndex = (tmp_14 + modPoly.pa() | 0) - ecDataSize | 0;
-        tmp$ret$5 = modIndex >= 0 ? modPoly.g(modIndex) : 0;
+        var modIndex = (tmp_14 + modPoly.len() | 0) - ecDataSize | 0;
+        tmp$ret$5 = modIndex >= 0 ? modPoly.get(modIndex) : 0;
         tmp_13[tmp_14] = tmp$ret$5;
         tmp_11 = tmp_11 + 1 | 0;
       }
@@ -5135,59 +4632,59 @@ if (typeof Math.imul === 'undefined') {
     }
     var index_0 = 0;
     var data = new Int32Array(totalCodeCount);
-    var inductionVariable = 0;
-    var last = maxDcCount;
-    if (inductionVariable < last)
+    var inductionVariable_0 = 0;
+    var last_0 = maxDcCount;
+    if (inductionVariable_0 < last_0)
       do {
-        var i = inductionVariable;
-        inductionVariable = inductionVariable + 1 | 0;
-        var inductionVariable_0 = 0;
-        var last_0 = rsBlocks.f() - 1 | 0;
-        if (inductionVariable_0 <= last_0)
+        var i = inductionVariable_0;
+        inductionVariable_0 = inductionVariable_0 + 1 | 0;
+        var inductionVariable_1 = 0;
+        var last_1 = rsBlocks.length - 1 | 0;
+        if (inductionVariable_1 <= last_1)
           do {
-            var r = inductionVariable_0;
-            inductionVariable_0 = inductionVariable_0 + 1 | 0;
+            var r = inductionVariable_1;
+            inductionVariable_1 = inductionVariable_1 + 1 | 0;
             if (i < dcData[r].length) {
               var tmp2 = index_0;
               index_0 = tmp2 + 1 | 0;
               data[tmp2] = dcData[r][i];
             }
           }
-           while (inductionVariable_0 <= last_0);
+           while (inductionVariable_1 <= last_1);
       }
-       while (inductionVariable < last);
-    var inductionVariable_1 = 0;
-    var last_1 = maxEcCount;
-    if (inductionVariable_1 < last_1)
+       while (inductionVariable_0 < last_0);
+    var inductionVariable_2 = 0;
+    var last_2 = maxEcCount;
+    if (inductionVariable_2 < last_2)
       do {
-        var i_0 = inductionVariable_1;
-        inductionVariable_1 = inductionVariable_1 + 1 | 0;
-        var inductionVariable_2 = 0;
-        var last_2 = rsBlocks.f() - 1 | 0;
-        if (inductionVariable_2 <= last_2)
+        var i_0 = inductionVariable_2;
+        inductionVariable_2 = inductionVariable_2 + 1 | 0;
+        var inductionVariable_3 = 0;
+        var last_3 = rsBlocks.length - 1 | 0;
+        if (inductionVariable_3 <= last_3)
           do {
-            var r_0 = inductionVariable_2;
-            inductionVariable_2 = inductionVariable_2 + 1 | 0;
+            var r_0 = inductionVariable_3;
+            inductionVariable_3 = inductionVariable_3 + 1 | 0;
             if (i_0 < ecData[r_0].length) {
               var tmp5 = index_0;
               index_0 = tmp5 + 1 | 0;
               data[tmp5] = ecData[r_0][i_0];
             }
           }
-           while (inductionVariable_2 <= last_2);
+           while (inductionVariable_3 <= last_3);
       }
-       while (inductionVariable_1 < last_1);
+       while (inductionVariable_2 < last_2);
     return data;
   }
   function QRCode$render$lambda($darkColor, $brightColor, $marginColor) {
     return function (cellData, graphics) {
       var tmp;
-      if (cellData.ta_1) {
+      if (cellData.d9_1) {
         graphics.fill($darkColor);
         tmp = Unit_getInstance();
       } else {
         var tmp_0;
-        if (!cellData.xa_1.ra_1.equals(QRCodeSquareType_MARGIN_getInstance())) {
+        if (!cellData.h9_1.b9_1.equals(QRCodeSquareType_MARGIN_getInstance())) {
           graphics.fill($brightColor);
           tmp_0 = Unit_getInstance();
         } else {
@@ -5200,43 +4697,43 @@ if (typeof Math.imul === 'undefined') {
     };
   }
   function QRCode(data, errorCorrectionLevel, dataType) {
-    Companion_getInstance_8();
+    Companion_getInstance_7();
     var errorCorrectionLevel_0 = errorCorrectionLevel === void 1 ? ErrorCorrectionLevel_M_getInstance() : errorCorrectionLevel;
-    var dataType_0 = dataType === void 1 ? QRUtil_getInstance().d9(data) : dataType;
-    this.u9_1 = data;
-    this.v9_1 = errorCorrectionLevel_0;
-    this.w9_1 = dataType_0;
+    var dataType_0 = dataType === void 1 ? QRUtil_getInstance().getDataType(data) : dataType;
+    this.m8_1 = data;
+    this.n8_1 = errorCorrectionLevel_0;
+    this.o8_1 = dataType_0;
     var tmp = this;
-    var tmp0_subject = this.w9_1;
-    var tmp0 = tmp0_subject.e8_1;
+    var tmp0_subject = this.o8_1;
+    var tmp0 = tmp0_subject.i7_1;
     var tmp_0;
     switch (tmp0) {
       case 0:
-        tmp_0 = new QRNumber(this.u9_1);
+        tmp_0 = new QRNumber(this.m8_1);
         break;
       case 1:
-        tmp_0 = new QRAlphaNum(this.u9_1);
+        tmp_0 = new QRAlphaNum(this.m8_1);
         break;
       case 2:
-        tmp_0 = new QR8BitByte(this.u9_1);
+        tmp_0 = new QR8BitByte(this.m8_1);
         break;
       default:
         noWhenBranchMatchedException();
         break;
     }
-    tmp.x9_1 = tmp_0;
-    this.y9_1 = new QRCodeGraphicsFactory();
+    tmp.p8_1 = tmp_0;
+    this.q8_1 = new QRCodeGraphicsFactory();
   }
-  QRCode.prototype.ya = function (_set____db54di) {
-    this.y9_1 = _set____db54di;
+  QRCode.prototype.i9 = function (_set____db54di) {
+    this.q8_1 = _set____db54di;
   };
-  QRCode.prototype.za = function () {
-    return this.y9_1;
+  QRCode.prototype.j9 = function () {
+    return this.q8_1;
   };
   QRCode.prototype.computeImageSizeFromRawData = function (cellSize, margin, rawData) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
@@ -5245,31 +4742,31 @@ if (typeof Math.imul === 'undefined') {
     var tmp_1 = margin === void 1 ? 0 : margin;
     var tmp_2;
     if (rawData === void 1) {
-      tmp_2 = this.ab(0, null, 3, null);
+      tmp_2 = this.k9(0, null, 3, null);
     } else {
       tmp_2 = rawData;
     }
-    return this.bb(tmp_0, tmp_1, tmp_2);
+    return this.l9(tmp_0, tmp_1, tmp_2);
   };
-  QRCode.prototype.bb = function (cellSize, margin, rawData) {
-    return this.cb(cellSize, margin, rawData.length);
+  QRCode.prototype.l9 = function (cellSize, margin, rawData) {
+    return this.m9(cellSize, margin, rawData.length);
   };
-  QRCode.prototype.db = function (cellSize, margin, rawData, $mask0, $handler) {
+  QRCode.prototype.n9 = function (cellSize, margin, rawData, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
     if (!(($mask0 & 2) === 0))
       margin = 0;
     if (!(($mask0 & 4) === 0)) {
-      rawData = this.ab(0, null, 3, null);
+      rawData = this.k9(0, null, 3, null);
     }
-    return this.bb(cellSize, margin, rawData);
+    return this.l9(cellSize, margin, rawData);
   };
   QRCode.prototype.computeImageSize = function (cellSize, margin, size) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
@@ -5277,31 +4774,31 @@ if (typeof Math.imul === 'undefined') {
     var tmp_0 = tmp;
     var tmp_1;
     if (margin === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp_1 = 0;
     } else {
       tmp_1 = margin;
     }
-    return this.cb(tmp_0, tmp_1, size);
+    return this.m9(tmp_0, tmp_1, size);
   };
-  QRCode.prototype.cb = function (cellSize, margin, size) {
+  QRCode.prototype.m9 = function (cellSize, margin, size) {
     return imul(size, cellSize) + imul(margin, 2) | 0;
   };
-  QRCode.prototype.eb = function (cellSize, margin, size, $mask0, $handler) {
+  QRCode.prototype.o9 = function (cellSize, margin, size, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
     if (!(($mask0 & 2) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       margin = 0;
     }
-    return this.cb(cellSize, margin, size);
+    return this.m9(cellSize, margin, size);
   };
-  QRCode.prototype.renderSimple = function (cellSize, margin, brightColor, darkColor, marginColor) {
+  QRCode.prototype.render = function (cellSize, margin, brightColor, darkColor, marginColor) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
@@ -5309,7 +4806,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp_0 = tmp;
     var tmp_1;
     if (margin === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp_1 = 0;
     } else {
       tmp_1 = margin;
@@ -5338,19 +4835,19 @@ if (typeof Math.imul === 'undefined') {
     } else {
       tmp_7 = marginColor;
     }
-    return this.fb(tmp_0, tmp_2, tmp_4, tmp_6, tmp_7);
+    return this.p9(tmp_0, tmp_2, tmp_4, tmp_6, tmp_7);
   };
-  QRCode.prototype.fb = function (cellSize, margin, brightColor, darkColor, marginColor) {
-    var tmp = this.ab(0, null, 3, null);
-    return this.gb(cellSize, margin, tmp, null, brightColor, darkColor, marginColor, 8, null);
+  QRCode.prototype.p9 = function (cellSize, margin, brightColor, darkColor, marginColor) {
+    var tmp = this.k9(0, null, 3, null);
+    return this.q9(cellSize, margin, tmp, null, brightColor, darkColor, marginColor, 8, null);
   };
-  QRCode.prototype.hb = function (cellSize, margin, brightColor, darkColor, marginColor, $mask0, $handler) {
+  QRCode.prototype.r9 = function (cellSize, margin, brightColor, darkColor, marginColor, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
     if (!(($mask0 & 2) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       margin = 0;
     }
     if (!(($mask0 & 4) === 0)) {
@@ -5365,12 +4862,12 @@ if (typeof Math.imul === 'undefined') {
       Colors_getInstance();
       marginColor = -1;
     }
-    return this.fb(cellSize, margin, brightColor, darkColor, marginColor);
+    return this.p9(cellSize, margin, brightColor, darkColor, marginColor);
   };
-  QRCode.prototype.render = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
+  QRCode.prototype.renderComputed = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
@@ -5378,7 +4875,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp_0 = tmp;
     var tmp_1;
     if (margin === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp_1 = 0;
     } else {
       tmp_1 = margin;
@@ -5386,12 +4883,12 @@ if (typeof Math.imul === 'undefined') {
     var tmp_2 = tmp_1;
     var tmp_3;
     if (rawData === void 1) {
-      tmp_3 = this.ab(0, null, 3, null);
+      tmp_3 = this.k9(0, null, 3, null);
     } else {
       tmp_3 = rawData;
     }
     var tmp_4 = tmp_3;
-    var tmp_5 = qrCodeGraphics === void 1 ? this.y9_1.newGraphicsSquare(this.bb(cellSize, margin, rawData)) : qrCodeGraphics;
+    var tmp_5 = qrCodeGraphics === void 1 ? this.q8_1.newGraphicsSquare(this.l9(cellSize, margin, rawData)) : qrCodeGraphics;
     var tmp_6;
     if (brightColor === void 1) {
       Colors_getInstance();
@@ -5415,25 +4912,25 @@ if (typeof Math.imul === 'undefined') {
     } else {
       tmp_10 = marginColor;
     }
-    return this.ib(tmp_0, tmp_2, tmp_4, tmp_5, tmp_7, tmp_9, tmp_10);
+    return this.s9(tmp_0, tmp_2, tmp_4, tmp_5, tmp_7, tmp_9, tmp_10);
   };
-  QRCode.prototype.ib = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
-    return this.jb(cellSize, margin, rawData, qrCodeGraphics, QRCode$render$lambda(darkColor, brightColor, marginColor));
+  QRCode.prototype.s9 = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
+    return this.t9(cellSize, margin, rawData, qrCodeGraphics, QRCode$render$lambda(darkColor, brightColor, marginColor));
   };
-  QRCode.prototype.gb = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor, $mask0, $handler) {
+  QRCode.prototype.q9 = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
     if (!(($mask0 & 2) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       margin = 0;
     }
     if (!(($mask0 & 4) === 0)) {
-      rawData = this.ab(0, null, 3, null);
+      rawData = this.k9(0, null, 3, null);
     }
     if (!(($mask0 & 8) === 0))
-      qrCodeGraphics = this.y9_1.newGraphicsSquare(this.bb(cellSize, margin, rawData));
+      qrCodeGraphics = this.q8_1.newGraphicsSquare(this.l9(cellSize, margin, rawData));
     if (!(($mask0 & 16) === 0)) {
       Colors_getInstance();
       brightColor = -1;
@@ -5446,12 +4943,12 @@ if (typeof Math.imul === 'undefined') {
       Colors_getInstance();
       marginColor = -1;
     }
-    return this.ib(cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor);
+    return this.s9(cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor);
   };
   QRCode.prototype.renderShaded = function (cellSize, margin, rawData, qrCodeGraphics, renderer) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
@@ -5459,7 +4956,7 @@ if (typeof Math.imul === 'undefined') {
     var tmp_0 = tmp;
     var tmp_1;
     if (margin === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp_1 = 0;
     } else {
       tmp_1 = margin;
@@ -5467,15 +4964,15 @@ if (typeof Math.imul === 'undefined') {
     var tmp_2 = tmp_1;
     var tmp_3;
     if (rawData === void 1) {
-      tmp_3 = this.ab(0, null, 3, null);
+      tmp_3 = this.k9(0, null, 3, null);
     } else {
       tmp_3 = rawData;
     }
-    return this.jb(tmp_0, tmp_2, tmp_3, qrCodeGraphics === void 1 ? this.y9_1.newGraphicsSquare(this.bb(cellSize, margin, rawData)) : qrCodeGraphics, renderer);
+    return this.t9(tmp_0, tmp_2, tmp_3, qrCodeGraphics === void 1 ? this.q8_1.newGraphicsSquare(this.l9(cellSize, margin, rawData)) : qrCodeGraphics, renderer);
   };
-  QRCode.prototype.jb = function (cellSize, margin, rawData, qrCodeGraphics, renderer) {
+  QRCode.prototype.t9 = function (cellSize, margin, rawData, qrCodeGraphics, renderer) {
     if (margin > 0) {
-      var marginSquare = new QRCodeSquare(false, 0, 0, rawData.length, Companion_getInstance_9().kb());
+      var marginSquare = new QRCodeSquare(false, 0, 0, rawData.length, Companion_getInstance_8().u9());
       renderer(marginSquare, qrCodeGraphics);
     }
     // Inline function 'kotlin.collections.forEachIndexed' call
@@ -5503,7 +5000,7 @@ if (typeof Math.imul === 'undefined') {
         index_0 = tmp1_0 + 1 | 0;
         var tmp0__anonymous__q1qw7t_0 = tmp1_0;
         if (!(item_0 == null)) {
-          var squareCanvas = this.y9_1.newGraphicsSquare(cellSize);
+          var squareCanvas = this.q8_1.newGraphicsSquare(cellSize);
           renderer(item_0, squareCanvas);
           qrCodeGraphics.drawImage(squareCanvas, margin + imul(cellSize, tmp0__anonymous__q1qw7t_0) | 0, margin + imul(cellSize, tmp0__anonymous__q1qw7t) | 0);
         }
@@ -5511,33 +5008,33 @@ if (typeof Math.imul === 'undefined') {
     }
     return qrCodeGraphics;
   };
-  QRCode.prototype.lb = function (cellSize, margin, rawData, qrCodeGraphics, renderer, $mask0, $handler) {
+  QRCode.prototype.v9 = function (cellSize, margin, rawData, qrCodeGraphics, renderer, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
     if (!(($mask0 & 2) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       margin = 0;
     }
     if (!(($mask0 & 4) === 0)) {
-      rawData = this.ab(0, null, 3, null);
+      rawData = this.k9(0, null, 3, null);
     }
     if (!(($mask0 & 8) === 0))
-      qrCodeGraphics = this.y9_1.newGraphicsSquare(this.bb(cellSize, margin, rawData));
-    return this.jb(cellSize, margin, rawData, qrCodeGraphics, renderer);
+      qrCodeGraphics = this.q8_1.newGraphicsSquare(this.l9(cellSize, margin, rawData));
+    return this.t9(cellSize, margin, rawData, qrCodeGraphics, renderer);
   };
   QRCode.prototype.encode = function (type, maskPattern) {
     var tmp;
     if (type === void 1) {
-      var tmp_0 = Companion_getInstance_8();
-      tmp = tmp_0.t9(this.u9_1, this.v9_1, null, 4, null);
+      var tmp_0 = Companion_getInstance_7();
+      tmp = tmp_0.l8(this.m8_1, this.n8_1, null, 4, null);
     } else {
       tmp = type;
     }
-    return this.mb(tmp, maskPattern === void 1 ? MaskPattern_PATTERN000_getInstance() : maskPattern);
+    return this.w9(tmp, maskPattern === void 1 ? MaskPattern_PATTERN000_getInstance() : maskPattern);
   };
-  QRCode.prototype.mb = function (type, maskPattern) {
+  QRCode.prototype.w9 = function (type, maskPattern) {
     var moduleCount = imul(type, 4) + 17 | 0;
     var tmp = 0;
     var tmp_0 = moduleCount;
@@ -5569,38 +5066,38 @@ if (typeof Math.imul === 'undefined') {
     }
     var modules = tmp_1;
     var tmp_7 = QRCodeSetup_getInstance();
-    tmp_7.ob(modules, 0, 2, null);
+    tmp_7.y9(modules, 0, 2, null);
     var tmp_8 = QRCodeSetup_getInstance();
-    tmp_8.pb(modules, 0, 2, null);
+    tmp_8.z9(modules, 0, 2, null);
     var tmp_9 = QRCodeSetup_getInstance();
-    tmp_9.qb(modules, 0, 2, null);
-    QRCodeSetup_getInstance().rb(type, modules);
-    QRCodeSetup_getInstance().sb(moduleCount, modules);
-    QRCodeSetup_getInstance().tb(this.v9_1, maskPattern, moduleCount, modules);
+    tmp_9.aa(modules, 0, 2, null);
+    QRCodeSetup_getInstance().setupPositionAdjustPattern(type, modules);
+    QRCodeSetup_getInstance().setupTimingPattern(moduleCount, modules);
+    QRCodeSetup_getInstance().setupTypeInfo(this.n8_1, maskPattern, moduleCount, modules);
     if (type >= 7) {
-      QRCodeSetup_getInstance().ub(type, moduleCount, modules);
+      QRCodeSetup_getInstance().setupTypeNumber(type, moduleCount, modules);
     }
     var data = createData(this, type);
-    QRCodeSetup_getInstance().vb(data, maskPattern, moduleCount, modules);
+    QRCodeSetup_getInstance().applyMaskPattern(data, maskPattern, moduleCount, modules);
     return modules;
   };
-  QRCode.prototype.ab = function (type, maskPattern, $mask0, $handler) {
+  QRCode.prototype.k9 = function (type, maskPattern, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      var tmp = Companion_getInstance_8();
-      type = tmp.t9(this.u9_1, this.v9_1, null, 4, null);
+      var tmp = Companion_getInstance_7();
+      type = tmp.l8(this.m8_1, this.n8_1, null, 4, null);
     }
     if (!(($mask0 & 2) === 0))
       maskPattern = MaskPattern_PATTERN000_getInstance();
-    return this.mb(type, maskPattern);
+    return this.w9(type, maskPattern);
   };
   QRCode.prototype.toString = function () {
-    return 'QRCode(data=' + this.u9_1 + (', errorCorrectionLevel=' + this.v9_1) + (', dataType=' + this.w9_1) + (', qrCodeData=' + getKClassFromExpression(this.x9_1).n5()) + ')';
+    return 'QRCode(data=' + this.m8_1 + (', errorCorrectionLevel=' + this.n8_1) + (', dataType=' + this.o8_1) + (', qrCodeData=' + getKClassFromExpression(this.p8_1).p4()) + ')';
   };
   QRCode.$metadata$ = classMeta('QRCode');
   Object.defineProperty(QRCode.prototype, 'qrCodeGraphicsFactory', {
     configurable: true,
-    get: QRCode.prototype.za,
-    set: QRCode.prototype.ya
+    get: QRCode.prototype.j9,
+    set: QRCode.prototype.i9
   });
   var ErrorCorrectionLevel_L_instance;
   var ErrorCorrectionLevel_M_instance;
@@ -5637,31 +5134,31 @@ if (typeof Math.imul === 'undefined') {
   }
   function ErrorCorrectionLevel(name, ordinal, value, maxTypeNum) {
     Enum.call(this, name, ordinal);
-    this.q9_1 = value;
-    this.r9_1 = maxTypeNum;
+    this.j8_1 = value;
+    this.k8_1 = maxTypeNum;
   }
-  ErrorCorrectionLevel.prototype.b1 = function () {
-    return this.q9_1;
+  ErrorCorrectionLevel.prototype.t = function () {
+    return this.j8_1;
   };
-  ErrorCorrectionLevel.prototype.wb = function () {
-    return this.r9_1;
+  ErrorCorrectionLevel.prototype.ba = function () {
+    return this.k8_1;
   };
   ErrorCorrectionLevel.$metadata$ = classMeta('ErrorCorrectionLevel', undefined, undefined, undefined, undefined, Enum.prototype);
   Object.defineProperty(ErrorCorrectionLevel.prototype, 'value', {
     configurable: true,
-    get: ErrorCorrectionLevel.prototype.b1
+    get: ErrorCorrectionLevel.prototype.t
   });
   Object.defineProperty(ErrorCorrectionLevel.prototype, 'maxTypeNum', {
     configurable: true,
-    get: ErrorCorrectionLevel.prototype.wb
+    get: ErrorCorrectionLevel.prototype.ba
   });
   Object.defineProperty(ErrorCorrectionLevel.prototype, 'name', {
     configurable: true,
-    get: ErrorCorrectionLevel.prototype.f8
+    get: ErrorCorrectionLevel.prototype.j7
   });
   Object.defineProperty(ErrorCorrectionLevel.prototype, 'ordinal', {
     configurable: true,
-    get: ErrorCorrectionLevel.prototype.g8
+    get: ErrorCorrectionLevel.prototype.k7
   });
   var MaskPattern_PATTERN000_instance;
   var MaskPattern_PATTERN001_instance;
@@ -5718,11 +5215,11 @@ if (typeof Math.imul === 'undefined') {
   MaskPattern.$metadata$ = classMeta('MaskPattern', undefined, undefined, undefined, undefined, Enum.prototype);
   Object.defineProperty(MaskPattern.prototype, 'name', {
     configurable: true,
-    get: MaskPattern.prototype.f8
+    get: MaskPattern.prototype.j7
   });
   Object.defineProperty(MaskPattern.prototype, 'ordinal', {
     configurable: true,
-    get: MaskPattern.prototype.g8
+    get: MaskPattern.prototype.k7
   });
   var QRCodeDataType_NUMBERS_instance;
   var QRCodeDataType_UPPER_ALPHA_NUM_instance;
@@ -5755,23 +5252,23 @@ if (typeof Math.imul === 'undefined') {
   }
   function QRCodeDataType(name, ordinal, value) {
     Enum.call(this, name, ordinal);
-    this.da_1 = value;
+    this.t8_1 = value;
   }
-  QRCodeDataType.prototype.b1 = function () {
-    return this.da_1;
+  QRCodeDataType.prototype.t = function () {
+    return this.t8_1;
   };
   QRCodeDataType.$metadata$ = classMeta('QRCodeDataType', undefined, undefined, undefined, undefined, Enum.prototype);
   Object.defineProperty(QRCodeDataType.prototype, 'value', {
     configurable: true,
-    get: QRCodeDataType.prototype.b1
+    get: QRCodeDataType.prototype.t
   });
   Object.defineProperty(QRCodeDataType.prototype, 'name', {
     configurable: true,
-    get: QRCodeDataType.prototype.f8
+    get: QRCodeDataType.prototype.j7
   });
   Object.defineProperty(QRCodeDataType.prototype, 'ordinal', {
     configurable: true,
-    get: QRCodeDataType.prototype.g8
+    get: QRCodeDataType.prototype.k7
   });
   function ErrorCorrectionLevel_L_getInstance() {
     ErrorCorrectionLevel_initEntries();
@@ -5834,46 +5331,46 @@ if (typeof Math.imul === 'undefined') {
     return QRCodeDataType_DEFAULT_instance;
   }
   function get_0($this, index) {
-    return (($this.ea_1[index / 8 | 0] >>> (7 - (index % 8 | 0) | 0) | 0) & 1) === 1;
+    return (($this.y8_1[index / 8 | 0] >>> (7 - (index % 8 | 0) | 0) | 0) & 1) === 1;
   }
   function BitBuffer() {
-    this.ga_1 = 32;
-    this.ea_1 = new Int32Array(this.ga_1);
-    this.fa_1 = 0;
+    this.a9_1 = 32;
+    this.y8_1 = new Int32Array(this.a9_1);
+    this.z8_1 = 0;
   }
-  BitBuffer.prototype.zb = function () {
-    return this.ea_1;
+  BitBuffer.prototype.ea = function () {
+    return this.y8_1;
   };
-  BitBuffer.prototype.ha = function (num, length) {
+  BitBuffer.prototype.put = function (num, length) {
     var inductionVariable = 0;
     if (inductionVariable < length)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        this.ma(((num >>> ((length - i | 0) - 1 | 0) | 0) & 1) === 1);
+        this.putBit(((num >>> ((length - i | 0) - 1 | 0) | 0) & 1) === 1);
       }
        while (inductionVariable < length);
   };
-  BitBuffer.prototype.ma = function (bit) {
-    if (this.fa_1 === imul(this.ea_1.length, 8)) {
-      this.ea_1 = copyOf(this.ea_1, this.ea_1.length + this.ga_1 | 0);
+  BitBuffer.prototype.putBit = function (bit) {
+    if (this.z8_1 === imul(this.y8_1.length, 8)) {
+      this.y8_1 = copyOf(this.y8_1, this.y8_1.length + this.a9_1 | 0);
     }
     if (bit) {
-      this.ea_1[this.fa_1 / 8 | 0] = this.ea_1[this.fa_1 / 8 | 0] | (128 >>> (this.fa_1 % 8 | 0) | 0);
+      this.y8_1[this.z8_1 / 8 | 0] = this.y8_1[this.z8_1 / 8 | 0] | (128 >>> (this.z8_1 % 8 | 0) | 0);
     }
     var tmp0_this = this;
-    var tmp1 = tmp0_this.fa_1;
-    tmp0_this.fa_1 = tmp1 + 1 | 0;
+    var tmp1 = tmp0_this.z8_1;
+    tmp0_this.z8_1 = tmp1 + 1 | 0;
   };
   BitBuffer.prototype.toString = function () {
     var buffer = StringBuilder_init_$Create$();
     var inductionVariable = 0;
-    var last = this.fa_1;
+    var last = this.z8_1;
     if (inductionVariable < last)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        buffer.w1(get_0(this, i) ? _Char___init__impl__6a9atx(49) : _Char___init__impl__6a9atx(48));
+        buffer.r1(get_0(this, i) ? _Char___init__impl__6a9atx(49) : _Char___init__impl__6a9atx(48));
       }
        while (inductionVariable < last);
     return buffer.toString();
@@ -5899,6 +5396,7 @@ if (typeof Math.imul === 'undefined') {
        while (inductionVariable < length);
   }
   function Polynomial(num, shift) {
+    var shift_0 = shift === void 1 ? 0 : shift;
     var tmp$ret$1;
     $l$block: {
       // Inline function 'kotlin.collections.indexOfFirst' call
@@ -5923,7 +5421,7 @@ if (typeof Math.imul === 'undefined') {
     var offset = coerceAtLeast(tmp$ret$1, 0);
     var tmp = this;
     var tmp_0 = 0;
-    var tmp_1 = (num.length - offset | 0) + shift | 0;
+    var tmp_1 = (num.length - offset | 0) + shift_0 | 0;
     var tmp_2 = new Int32Array(tmp_1);
     while (tmp_0 < tmp_1) {
       var tmp_3 = tmp_0;
@@ -5933,20 +5431,20 @@ if (typeof Math.imul === 'undefined') {
       tmp_2[tmp_3] = tmp$ret$2;
       tmp_0 = tmp_0 + 1 | 0;
     }
-    tmp.oa_1 = tmp_2;
-    arraycopy(this, num, offset, this.oa_1, 0, num.length - offset | 0);
+    tmp.fa_1 = tmp_2;
+    arraycopy(this, num, offset, this.fa_1, 0, num.length - offset | 0);
   }
-  Polynomial.prototype.g = function (i) {
-    return this.oa_1[i];
+  Polynomial.prototype.get = function (i) {
+    return this.fa_1[i];
   };
-  Polynomial.prototype.pa = function () {
-    return this.oa_1.length;
+  Polynomial.prototype.len = function () {
+    return this.fa_1.length;
   };
-  Polynomial.prototype.ac = function (other) {
+  Polynomial.prototype.multiply = function (other) {
     var tmp$ret$2;
     // Inline function 'kotlin.let' call
     var tmp = 0;
-    var tmp_0 = (this.pa() + other.pa() | 0) - 1 | 0;
+    var tmp_0 = (this.len() + other.len() | 0) - 1 | 0;
     var tmp_1 = new Int32Array(tmp_0);
     while (tmp < tmp_0) {
       var tmp_2 = tmp;
@@ -5961,18 +5459,18 @@ if (typeof Math.imul === 'undefined') {
     var tmp$ret$1;
     // Inline function 'io.github.g0dkar.qrcode.internals.Polynomial.multiply.<anonymous>' call
     var inductionVariable = 0;
-    var last = this.pa();
+    var last = this.len();
     if (inductionVariable < last)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         var inductionVariable_0 = 0;
-        var last_0 = other.pa();
+        var last_0 = other.len();
         if (inductionVariable_0 < last_0)
           do {
             var j = inductionVariable_0;
             inductionVariable_0 = inductionVariable_0 + 1 | 0;
-            tmp0_let[i + j | 0] = tmp0_let[i + j | 0] ^ QRMath_getInstance().ec(QRMath_getInstance().dc(this.g(i)) + QRMath_getInstance().dc(other.g(j)) | 0);
+            tmp0_let[i + j | 0] = tmp0_let[i + j | 0] ^ QRMath_getInstance().gexp(QRMath_getInstance().glog(this.get(i)) + QRMath_getInstance().glog(other.get(j)) | 0);
           }
            while (inductionVariable_0 < last_0);
       }
@@ -5981,39 +5479,40 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$2 = tmp$ret$1;
     return tmp$ret$2;
   };
-  Polynomial.prototype.qa = function (other) {
+  Polynomial.prototype.mod = function (other) {
     var tmp;
-    if ((this.pa() - other.pa() | 0) < 0) {
+    if ((this.len() - other.len() | 0) < 0) {
       tmp = this;
     } else {
-      var ratio = QRMath_getInstance().dc(this.g(0)) - QRMath_getInstance().dc(other.g(0)) | 0;
+      var ratio = QRMath_getInstance().glog(this.get(0)) - QRMath_getInstance().glog(other.get(0)) | 0;
       var tmp$ret$1;
       // Inline function 'kotlin.collections.copyOf' call
-      var tmp0_copyOf = this.oa_1;
+      var tmp0_copyOf = this.fa_1;
       var tmp$ret$0;
       // Inline function 'kotlin.js.asDynamic' call
       tmp$ret$0 = tmp0_copyOf;
       tmp$ret$1 = tmp$ret$0.slice();
       var result = tmp$ret$1;
       // Inline function 'kotlin.collections.forEachIndexed' call
+      var tmp1_forEachIndexed = other.fa_1;
       var index = 0;
-      var tmp0_iterator = other.c();
-      while (tmp0_iterator.d()) {
-        var item = tmp0_iterator.e();
+      var indexedObject = tmp1_forEachIndexed;
+      var inductionVariable = 0;
+      var last = indexedObject.length;
+      while (inductionVariable < last) {
+        var item = indexedObject[inductionVariable];
+        inductionVariable = inductionVariable + 1 | 0;
         // Inline function 'io.github.g0dkar.qrcode.internals.Polynomial.mod.<anonymous>' call
         var tmp1 = index;
         index = tmp1 + 1 | 0;
-        var tmp1__anonymous__uwfjfc = checkIndexOverflow(tmp1);
-        result[tmp1__anonymous__uwfjfc] = result[tmp1__anonymous__uwfjfc] ^ QRMath_getInstance().ec(QRMath_getInstance().dc(item) + ratio | 0);
+        var tmp2__anonymous__z9zvc9 = tmp1;
+        result[tmp2__anonymous__z9zvc9] = result[tmp2__anonymous__z9zvc9] ^ QRMath_getInstance().gexp(QRMath_getInstance().glog(item) + ratio | 0);
       }
-      tmp = Polynomial_init_$Create$(result, 0, 2, null).qa(other);
+      tmp = Polynomial_init_$Create$(result, 0, 2, null).mod(other);
     }
     return tmp;
   };
-  Polynomial.prototype.c = function () {
-    return intArrayIterator(this.oa_1);
-  };
-  Polynomial.$metadata$ = classMeta('Polynomial', [Iterable]);
+  Polynomial.$metadata$ = classMeta('Polynomial');
   function isInsideModules($this, row, rowOffset, col, colOffset, modulesSize) {
     var tmp;
     var containsArg = row + rowOffset | 0;
@@ -6054,7 +5553,7 @@ if (typeof Math.imul === 'undefined') {
   function set($this, row, col, value, modules) {
     var qrCodeSquare = modules[row][col];
     if (!(qrCodeSquare == null)) {
-      qrCodeSquare.ta_1 = value;
+      qrCodeSquare.d9_1 = value;
     } else {
       var tmp = modules[row];
       var tmp_0 = modules.length;
@@ -6063,33 +5562,45 @@ if (typeof Math.imul === 'undefined') {
   }
   function QRCodeSetup() {
     QRCodeSetup_instance = this;
-    this.nb_1 = 7;
+    this.x9_1 = 7;
   }
-  QRCodeSetup.prototype.fc = function (modules, probeSize) {
-    this.gc(0, 0, modules, probeSize);
+  QRCodeSetup.prototype.setupTopLeftPositionProbePattern = function (modules, probeSize) {
+    return this.ga(modules, probeSize === void 1 ? 7 : probeSize);
   };
-  QRCodeSetup.prototype.ob = function (modules, probeSize, $mask0, $handler) {
+  QRCodeSetup.prototype.ga = function (modules, probeSize) {
+    this.ha(0, 0, modules, probeSize);
+  };
+  QRCodeSetup.prototype.y9 = function (modules, probeSize, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
       probeSize = 7;
-    return this.fc(modules, probeSize);
+    return this.ga(modules, probeSize);
   };
-  QRCodeSetup.prototype.hc = function (modules, probeSize) {
-    this.gc(modules.length - probeSize | 0, 0, modules, probeSize);
+  QRCodeSetup.prototype.setupTopRightPositionProbePattern = function (modules, probeSize) {
+    return this.ia(modules, probeSize === void 1 ? 7 : probeSize);
   };
-  QRCodeSetup.prototype.pb = function (modules, probeSize, $mask0, $handler) {
+  QRCodeSetup.prototype.ia = function (modules, probeSize) {
+    this.ha(modules.length - probeSize | 0, 0, modules, probeSize);
+  };
+  QRCodeSetup.prototype.z9 = function (modules, probeSize, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
       probeSize = 7;
-    return this.hc(modules, probeSize);
+    return this.ia(modules, probeSize);
   };
-  QRCodeSetup.prototype.ic = function (modules, probeSize) {
-    this.gc(0, modules.length - probeSize | 0, modules, probeSize);
+  QRCodeSetup.prototype.setupBottomLeftPositionProbePattern = function (modules, probeSize) {
+    return this.ja(modules, probeSize === void 1 ? 7 : probeSize);
   };
-  QRCodeSetup.prototype.qb = function (modules, probeSize, $mask0, $handler) {
+  QRCodeSetup.prototype.ja = function (modules, probeSize) {
+    this.ha(0, modules.length - probeSize | 0, modules, probeSize);
+  };
+  QRCodeSetup.prototype.aa = function (modules, probeSize, $mask0, $handler) {
     if (!(($mask0 & 2) === 0))
       probeSize = 7;
-    return this.ic(modules, probeSize);
+    return this.ja(modules, probeSize);
   };
-  QRCodeSetup.prototype.gc = function (rowOffset, colOffset, modules, probeSize) {
+  QRCodeSetup.prototype.setupPositionProbePattern = function (rowOffset, colOffset, modules, probeSize) {
+    return this.ha(rowOffset, colOffset, modules, probeSize === void 1 ? 7 : probeSize);
+  };
+  QRCodeSetup.prototype.ha = function (rowOffset, colOffset, modules, probeSize) {
     var modulesSize = modules.length;
     var inductionVariable = -1;
     if (inductionVariable <= probeSize)
@@ -6117,8 +5628,8 @@ if (typeof Math.imul === 'undefined') {
       }
        while (!(row === probeSize));
   };
-  QRCodeSetup.prototype.rb = function (type, modules) {
-    var pos = QRUtil_getInstance().jc(type);
+  QRCodeSetup.prototype.setupPositionAdjustPattern = function (type, modules) {
+    var pos = QRUtil_getInstance().getPatternPosition(type);
     var inductionVariable = 0;
     var last = pos.length - 1 | 0;
     if (inductionVariable <= last)
@@ -6163,7 +5674,7 @@ if (typeof Math.imul === 'undefined') {
       }
        while (inductionVariable <= last);
   };
-  QRCodeSetup.prototype.sb = function (moduleCount, modules) {
+  QRCodeSetup.prototype.setupTimingPattern = function (moduleCount, modules) {
     var inductionVariable = 8;
     var last = moduleCount - 8 | 0;
     if (inductionVariable < last)
@@ -6197,9 +5708,9 @@ if (typeof Math.imul === 'undefined') {
       }
        while (inductionVariable_0 < last_0);
   };
-  QRCodeSetup.prototype.tb = function (errorCorrectionLevel, maskPattern, moduleCount, modules) {
-    var data = errorCorrectionLevel.q9_1 << 3 | maskPattern.e8_1;
-    var bits = QRUtil_getInstance().kc(data);
+  QRCodeSetup.prototype.setupTypeInfo = function (errorCorrectionLevel, maskPattern, moduleCount, modules) {
+    var data = errorCorrectionLevel.j8_1 << 3 | maskPattern.i7_1;
+    var bits = QRUtil_getInstance().getBCHTypeInfo(data);
     var inductionVariable = 0;
     if (inductionVariable <= 14)
       do {
@@ -6232,8 +5743,8 @@ if (typeof Math.imul === 'undefined') {
        while (inductionVariable_0 <= 14);
     set(this, moduleCount - 8 | 0, 8, true, modules);
   };
-  QRCodeSetup.prototype.ub = function (type, moduleCount, modules) {
-    var bits = QRUtil_getInstance().lc(type);
+  QRCodeSetup.prototype.setupTypeNumber = function (type, moduleCount, modules) {
+    var bits = QRUtil_getInstance().getBCHTypeNumber(type);
     var inductionVariable = 0;
     if (inductionVariable <= 17)
       do {
@@ -6253,7 +5764,7 @@ if (typeof Math.imul === 'undefined') {
       }
        while (inductionVariable_0 <= 17);
   };
-  QRCodeSetup.prototype.vb = function (data, maskPattern, moduleCount, modules) {
+  QRCodeSetup.prototype.applyMaskPattern = function (data, maskPattern, moduleCount, modules) {
     var inc = -1;
     var bitIndex = 7;
     var byteIndex = 0;
@@ -6275,7 +5786,7 @@ if (typeof Math.imul === 'undefined') {
               if (byteIndex < data.length) {
                 dark = ((data[byteIndex] >>> bitIndex | 0) & 1) === 1;
               }
-              var mask = QRUtil_getInstance().mc(maskPattern, row, col - c | 0);
+              var mask = QRUtil_getInstance().getMask(maskPattern, row, col - c | 0);
               if (mask) {
                 dark = !dark;
               }
@@ -6318,113 +5829,113 @@ if (typeof Math.imul === 'undefined') {
   }
   function QRCodeSquare(dark, row, col, moduleSize, squareInfo) {
     var squareInfo_0 = squareInfo === void 1 ? new QRCodeSquareInfo(QRCodeSquareType_DEFAULT_getInstance(), QRCodeRegion_UNKNOWN_getInstance()) : squareInfo;
-    this.ta_1 = dark;
-    this.ua_1 = row;
-    this.va_1 = col;
-    this.wa_1 = moduleSize;
-    this.xa_1 = squareInfo_0;
+    this.d9_1 = dark;
+    this.e9_1 = row;
+    this.f9_1 = col;
+    this.g9_1 = moduleSize;
+    this.h9_1 = squareInfo_0;
   }
-  QRCodeSquare.prototype.nc = function (_set____db54di) {
-    this.ta_1 = _set____db54di;
+  QRCodeSquare.prototype.ka = function (_set____db54di) {
+    this.d9_1 = _set____db54di;
   };
-  QRCodeSquare.prototype.oc = function () {
-    return this.ta_1;
+  QRCodeSquare.prototype.la = function () {
+    return this.d9_1;
   };
-  QRCodeSquare.prototype.pc = function () {
-    return this.ua_1;
+  QRCodeSquare.prototype.ma = function () {
+    return this.e9_1;
   };
-  QRCodeSquare.prototype.qc = function () {
-    return this.va_1;
+  QRCodeSquare.prototype.na = function () {
+    return this.f9_1;
   };
-  QRCodeSquare.prototype.rc = function () {
-    return this.wa_1;
+  QRCodeSquare.prototype.oa = function () {
+    return this.g9_1;
   };
-  QRCodeSquare.prototype.sc = function () {
-    return this.xa_1;
+  QRCodeSquare.prototype.pa = function () {
+    return this.h9_1;
   };
   QRCodeSquare.prototype.absoluteX = function (cellSize) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
     }
-    return this.tc(tmp);
+    return this.qa(tmp);
   };
-  QRCodeSquare.prototype.tc = function (cellSize) {
-    return imul(this.va_1, cellSize);
+  QRCodeSquare.prototype.qa = function (cellSize) {
+    return imul(this.f9_1, cellSize);
   };
-  QRCodeSquare.prototype.uc = function (cellSize, $mask0, $handler) {
+  QRCodeSquare.prototype.ra = function (cellSize, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
-    return this.tc(cellSize);
+    return this.qa(cellSize);
   };
   QRCodeSquare.prototype.absoluteY = function (cellSize) {
     var tmp;
     if (cellSize === void 1) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       tmp = 25;
     } else {
       tmp = cellSize;
     }
-    return this.vc(tmp);
+    return this.sa(tmp);
   };
-  QRCodeSquare.prototype.vc = function (cellSize) {
-    return imul(this.ua_1, cellSize);
+  QRCodeSquare.prototype.sa = function (cellSize) {
+    return imul(this.e9_1, cellSize);
   };
-  QRCodeSquare.prototype.wc = function (cellSize, $mask0, $handler) {
+  QRCodeSquare.prototype.ta = function (cellSize, $mask0, $handler) {
     if (!(($mask0 & 1) === 0)) {
-      Companion_getInstance_8();
+      Companion_getInstance_7();
       cellSize = 25;
     }
-    return this.vc(cellSize);
+    return this.sa(cellSize);
   };
   QRCodeSquare.prototype.component1 = function () {
-    return this.ta_1;
+    return this.d9_1;
   };
   QRCodeSquare.prototype.component2 = function () {
-    return this.ua_1;
+    return this.e9_1;
   };
   QRCodeSquare.prototype.component3 = function () {
-    return this.va_1;
+    return this.f9_1;
   };
   QRCodeSquare.prototype.component4 = function () {
-    return this.wa_1;
+    return this.g9_1;
   };
   QRCodeSquare.prototype.component5 = function () {
-    return this.xa_1;
+    return this.h9_1;
   };
   QRCodeSquare.prototype.copy = function (dark, row, col, moduleSize, squareInfo) {
-    return this.xc(dark === void 1 ? this.ta_1 : dark, row === void 1 ? this.ua_1 : row, col === void 1 ? this.va_1 : col, moduleSize === void 1 ? this.wa_1 : moduleSize, squareInfo === void 1 ? this.xa_1 : squareInfo);
+    return this.ua(dark === void 1 ? this.d9_1 : dark, row === void 1 ? this.e9_1 : row, col === void 1 ? this.f9_1 : col, moduleSize === void 1 ? this.g9_1 : moduleSize, squareInfo === void 1 ? this.h9_1 : squareInfo);
   };
-  QRCodeSquare.prototype.xc = function (dark, row, col, moduleSize, squareInfo) {
+  QRCodeSquare.prototype.ua = function (dark, row, col, moduleSize, squareInfo) {
     return new QRCodeSquare(dark, row, col, moduleSize, squareInfo);
   };
-  QRCodeSquare.prototype.yc = function (dark, row, col, moduleSize, squareInfo, $mask0, $handler) {
+  QRCodeSquare.prototype.va = function (dark, row, col, moduleSize, squareInfo, $mask0, $handler) {
     if (!(($mask0 & 1) === 0))
-      dark = this.ta_1;
+      dark = this.d9_1;
     if (!(($mask0 & 2) === 0))
-      row = this.ua_1;
+      row = this.e9_1;
     if (!(($mask0 & 4) === 0))
-      col = this.va_1;
+      col = this.f9_1;
     if (!(($mask0 & 8) === 0))
-      moduleSize = this.wa_1;
+      moduleSize = this.g9_1;
     if (!(($mask0 & 16) === 0))
-      squareInfo = this.xa_1;
-    return this.xc(dark, row, col, moduleSize, squareInfo);
+      squareInfo = this.h9_1;
+    return this.ua(dark, row, col, moduleSize, squareInfo);
   };
   QRCodeSquare.prototype.toString = function () {
-    return 'QRCodeSquare(dark=' + this.ta_1 + ', row=' + this.ua_1 + ', col=' + this.va_1 + ', moduleSize=' + this.wa_1 + ', squareInfo=' + this.xa_1 + ')';
+    return 'QRCodeSquare(dark=' + this.d9_1 + ', row=' + this.e9_1 + ', col=' + this.f9_1 + ', moduleSize=' + this.g9_1 + ', squareInfo=' + this.h9_1 + ')';
   };
   QRCodeSquare.prototype.hashCode = function () {
-    var result = this.ta_1 | 0;
-    result = imul(result, 31) + this.ua_1 | 0;
-    result = imul(result, 31) + this.va_1 | 0;
-    result = imul(result, 31) + this.wa_1 | 0;
-    result = imul(result, 31) + this.xa_1.hashCode() | 0;
+    var result = this.d9_1 | 0;
+    result = imul(result, 31) + this.e9_1 | 0;
+    result = imul(result, 31) + this.f9_1 | 0;
+    result = imul(result, 31) + this.g9_1 | 0;
+    result = imul(result, 31) + this.h9_1.hashCode() | 0;
     return result;
   };
   QRCodeSquare.prototype.equals = function (other) {
@@ -6433,89 +5944,89 @@ if (typeof Math.imul === 'undefined') {
     if (!(other instanceof QRCodeSquare))
       return false;
     var tmp0_other_with_cast = other instanceof QRCodeSquare ? other : THROW_CCE();
-    if (!(this.ta_1 === tmp0_other_with_cast.ta_1))
+    if (!(this.d9_1 === tmp0_other_with_cast.d9_1))
       return false;
-    if (!(this.ua_1 === tmp0_other_with_cast.ua_1))
+    if (!(this.e9_1 === tmp0_other_with_cast.e9_1))
       return false;
-    if (!(this.va_1 === tmp0_other_with_cast.va_1))
+    if (!(this.f9_1 === tmp0_other_with_cast.f9_1))
       return false;
-    if (!(this.wa_1 === tmp0_other_with_cast.wa_1))
+    if (!(this.g9_1 === tmp0_other_with_cast.g9_1))
       return false;
-    if (!this.xa_1.equals(tmp0_other_with_cast.xa_1))
+    if (!this.h9_1.equals(tmp0_other_with_cast.h9_1))
       return false;
     return true;
   };
   QRCodeSquare.$metadata$ = classMeta('QRCodeSquare');
   Object.defineProperty(QRCodeSquare.prototype, 'dark', {
     configurable: true,
-    get: QRCodeSquare.prototype.oc,
-    set: QRCodeSquare.prototype.nc
+    get: QRCodeSquare.prototype.la,
+    set: QRCodeSquare.prototype.ka
   });
   Object.defineProperty(QRCodeSquare.prototype, 'row', {
     configurable: true,
-    get: QRCodeSquare.prototype.pc
+    get: QRCodeSquare.prototype.ma
   });
   Object.defineProperty(QRCodeSquare.prototype, 'col', {
     configurable: true,
-    get: QRCodeSquare.prototype.qc
+    get: QRCodeSquare.prototype.na
   });
   Object.defineProperty(QRCodeSquare.prototype, 'moduleSize', {
     configurable: true,
-    get: QRCodeSquare.prototype.rc
+    get: QRCodeSquare.prototype.oa
   });
   Object.defineProperty(QRCodeSquare.prototype, 'squareInfo', {
     configurable: true,
-    get: QRCodeSquare.prototype.sc
+    get: QRCodeSquare.prototype.pa
   });
-  function Companion_9() {
-    Companion_instance_9 = this;
+  function Companion_8() {
+    Companion_instance_8 = this;
   }
-  Companion_9.prototype.kb = function () {
+  Companion_8.prototype.u9 = function () {
     return new QRCodeSquareInfo(QRCodeSquareType_MARGIN_getInstance(), QRCodeRegion_MARGIN_getInstance());
   };
-  Companion_9.$metadata$ = objectMeta('Companion');
-  var Companion_instance_9;
-  function Companion_getInstance_9() {
-    if (Companion_instance_9 == null)
-      new Companion_9();
-    return Companion_instance_9;
+  Companion_8.$metadata$ = objectMeta('Companion');
+  var Companion_instance_8;
+  function Companion_getInstance_8() {
+    if (Companion_instance_8 == null)
+      new Companion_8();
+    return Companion_instance_8;
   }
   function QRCodeSquareInfo(type, region) {
-    Companion_getInstance_9();
-    this.ra_1 = type;
-    this.sa_1 = region;
+    Companion_getInstance_8();
+    this.b9_1 = type;
+    this.c9_1 = region;
   }
-  QRCodeSquareInfo.prototype.zc = function () {
-    return this.ra_1;
+  QRCodeSquareInfo.prototype.wa = function () {
+    return this.b9_1;
   };
-  QRCodeSquareInfo.prototype.ad = function () {
-    return this.sa_1;
+  QRCodeSquareInfo.prototype.xa = function () {
+    return this.c9_1;
   };
   QRCodeSquareInfo.prototype.component1 = function () {
-    return this.ra_1;
+    return this.b9_1;
   };
   QRCodeSquareInfo.prototype.component2 = function () {
-    return this.sa_1;
+    return this.c9_1;
   };
   QRCodeSquareInfo.prototype.copy = function (type, region) {
-    return this.bd(type === void 1 ? this.ra_1 : type, region === void 1 ? this.sa_1 : region);
+    return this.ya(type === void 1 ? this.b9_1 : type, region === void 1 ? this.c9_1 : region);
   };
-  QRCodeSquareInfo.prototype.bd = function (type, region) {
+  QRCodeSquareInfo.prototype.ya = function (type, region) {
     return new QRCodeSquareInfo(type, region);
   };
-  QRCodeSquareInfo.prototype.cd = function (type, region, $mask0, $handler) {
+  QRCodeSquareInfo.prototype.za = function (type, region, $mask0, $handler) {
     if (!(($mask0 & 1) === 0))
-      type = this.ra_1;
+      type = this.b9_1;
     if (!(($mask0 & 2) === 0))
-      region = this.sa_1;
-    return this.bd(type, region);
+      region = this.c9_1;
+    return this.ya(type, region);
   };
   QRCodeSquareInfo.prototype.toString = function () {
-    return 'QRCodeSquareInfo(type=' + this.ra_1 + ', region=' + this.sa_1 + ')';
+    return 'QRCodeSquareInfo(type=' + this.b9_1 + ', region=' + this.c9_1 + ')';
   };
   QRCodeSquareInfo.prototype.hashCode = function () {
-    var result = this.ra_1.hashCode();
-    result = imul(result, 31) + this.sa_1.hashCode() | 0;
+    var result = this.b9_1.hashCode();
+    result = imul(result, 31) + this.c9_1.hashCode() | 0;
     return result;
   };
   QRCodeSquareInfo.prototype.equals = function (other) {
@@ -6524,20 +6035,20 @@ if (typeof Math.imul === 'undefined') {
     if (!(other instanceof QRCodeSquareInfo))
       return false;
     var tmp0_other_with_cast = other instanceof QRCodeSquareInfo ? other : THROW_CCE();
-    if (!this.ra_1.equals(tmp0_other_with_cast.ra_1))
+    if (!this.b9_1.equals(tmp0_other_with_cast.b9_1))
       return false;
-    if (!this.sa_1.equals(tmp0_other_with_cast.sa_1))
+    if (!this.c9_1.equals(tmp0_other_with_cast.c9_1))
       return false;
     return true;
   };
   QRCodeSquareInfo.$metadata$ = classMeta('QRCodeSquareInfo');
   Object.defineProperty(QRCodeSquareInfo.prototype, 'type', {
     configurable: true,
-    get: QRCodeSquareInfo.prototype.zc
+    get: QRCodeSquareInfo.prototype.wa
   });
   Object.defineProperty(QRCodeSquareInfo.prototype, 'region', {
     configurable: true,
-    get: QRCodeSquareInfo.prototype.ad
+    get: QRCodeSquareInfo.prototype.xa
   });
   var QRCodeSquareType_POSITION_PROBE_instance;
   var QRCodeSquareType_POSITION_ADJUST_instance;
@@ -6582,11 +6093,11 @@ if (typeof Math.imul === 'undefined') {
   QRCodeSquareType.$metadata$ = classMeta('QRCodeSquareType', undefined, undefined, undefined, undefined, Enum.prototype);
   Object.defineProperty(QRCodeSquareType.prototype, 'name', {
     configurable: true,
-    get: QRCodeSquareType.prototype.f8
+    get: QRCodeSquareType.prototype.j7
   });
   Object.defineProperty(QRCodeSquareType.prototype, 'ordinal', {
     configurable: true,
-    get: QRCodeSquareType.prototype.g8
+    get: QRCodeSquareType.prototype.k7
   });
   var QRCodeRegion_TOP_LEFT_CORNER_instance;
   var QRCodeRegion_TOP_RIGHT_CORNER_instance;
@@ -6655,11 +6166,11 @@ if (typeof Math.imul === 'undefined') {
   QRCodeRegion.$metadata$ = classMeta('QRCodeRegion', undefined, undefined, undefined, undefined, Enum.prototype);
   Object.defineProperty(QRCodeRegion.prototype, 'name', {
     configurable: true,
-    get: QRCodeRegion.prototype.f8
+    get: QRCodeRegion.prototype.j7
   });
   Object.defineProperty(QRCodeRegion.prototype, 'ordinal', {
     configurable: true,
-    get: QRCodeRegion.prototype.g8
+    get: QRCodeRegion.prototype.k7
   });
   function QRCodeSquareType_POSITION_PROBE_getInstance() {
     QRCodeSquareType_initEntries();
@@ -6726,15 +6237,15 @@ if (typeof Math.imul === 'undefined') {
     return QRCodeRegion_UNKNOWN_instance;
   }
   function QRData(dataType, data) {
-    this.l9_1 = dataType;
-    this.m9_1 = data;
+    this.u8_1 = dataType;
+    this.v8_1 = data;
   }
-  QRData.prototype.ia = function (type) {
+  QRData.prototype.getLengthInBits = function (type) {
     var tmp0_subject = type;
     var tmp;
     if (1 <= tmp0_subject ? tmp0_subject <= 9 : false) {
-      var tmp1_subject = this.l9_1;
-      var tmp0 = tmp1_subject.e8_1;
+      var tmp1_subject = this.u8_1;
+      var tmp0 = tmp1_subject.i7_1;
       var tmp_0;
       switch (tmp0) {
         case 0:
@@ -6752,8 +6263,8 @@ if (typeof Math.imul === 'undefined') {
       }
       tmp = tmp_0;
     } else if (1 <= tmp0_subject ? tmp0_subject <= 26 : false) {
-      var tmp2_subject = this.l9_1;
-      var tmp0_0 = tmp2_subject.e8_1;
+      var tmp2_subject = this.u8_1;
+      var tmp0_0 = tmp2_subject.i7_1;
       var tmp_1;
       switch (tmp0_0) {
         case 0:
@@ -6771,8 +6282,8 @@ if (typeof Math.imul === 'undefined') {
       }
       tmp = tmp_1;
     } else if (1 <= tmp0_subject ? tmp0_subject <= 40 : false) {
-      var tmp3_subject = this.l9_1;
-      var tmp0_1 = tmp3_subject.e8_1;
+      var tmp3_subject = this.u8_1;
+      var tmp0_1 = tmp3_subject.i7_1;
       var tmp_2;
       switch (tmp0_1) {
         case 0:
@@ -6797,21 +6308,21 @@ if (typeof Math.imul === 'undefined') {
   QRData.$metadata$ = classMeta('QRData');
   function QR8BitByte(data) {
     QRData.call(this, QRCodeDataType_DEFAULT_getInstance(), data);
-    this.jd_1 = encodeToByteArray(data);
+    this.gb_1 = encodeToByteArray(data);
   }
-  QR8BitByte.prototype.ja = function (buffer) {
+  QR8BitByte.prototype.write = function (buffer) {
     var inductionVariable = 0;
-    var last = this.jd_1.length - 1 | 0;
+    var last = this.gb_1.length - 1 | 0;
     if (inductionVariable <= last)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        buffer.ha(this.jd_1[i], 8);
+        buffer.put(this.gb_1[i], 8);
       }
        while (inductionVariable <= last);
   };
-  QR8BitByte.prototype.n9 = function () {
-    return this.jd_1.length;
+  QR8BitByte.prototype.length = function () {
+    return this.gb_1.length;
   };
   QR8BitByte.$metadata$ = classMeta('QR8BitByte', undefined, undefined, undefined, undefined, QRData.prototype);
   function charCode($this, c) {
@@ -6852,31 +6363,31 @@ if (typeof Math.imul === 'undefined') {
   function QRAlphaNum(data) {
     QRData.call(this, QRCodeDataType_UPPER_ALPHA_NUM_getInstance(), data);
   }
-  QRAlphaNum.prototype.ja = function (buffer) {
+  QRAlphaNum.prototype.write = function (buffer) {
     var i = 0;
-    var dataLength = this.m9_1.length;
+    var dataLength = this.v8_1.length;
     while ((i + 1 | 0) < dataLength) {
-      buffer.ha(imul(charCode(this, charSequenceGet(this.m9_1, i)), 45) + charCode(this, charSequenceGet(this.m9_1, i + 1 | 0)) | 0, 11);
+      buffer.put(imul(charCode(this, charSequenceGet(this.v8_1, i)), 45) + charCode(this, charSequenceGet(this.v8_1, i + 1 | 0)) | 0, 11);
       i = i + 2 | 0;
     }
     if (i < dataLength) {
-      buffer.ha(charCode(this, charSequenceGet(this.m9_1, i)), 6);
+      buffer.put(charCode(this, charSequenceGet(this.v8_1, i)), 6);
     }
   };
-  QRAlphaNum.prototype.n9 = function () {
-    return this.m9_1.length;
+  QRAlphaNum.prototype.length = function () {
+    return this.v8_1.length;
   };
   QRAlphaNum.$metadata$ = classMeta('QRAlphaNum', undefined, undefined, undefined, undefined, QRData.prototype);
   function QRNumber(data) {
     QRData.call(this, QRCodeDataType_NUMBERS_getInstance(), data);
   }
-  QRNumber.prototype.ja = function (buffer) {
+  QRNumber.prototype.write = function (buffer) {
     var i = 0;
-    var len = this.n9();
+    var len = this.length();
     while ((i + 2 | 0) < len) {
       var tmp$ret$1;
       // Inline function 'kotlin.text.substring' call
-      var tmp0_substring = this.m9_1;
+      var tmp0_substring = this.v8_1;
       var tmp1_substring = i;
       var tmp2_substring = i + 3 | 0;
       var tmp$ret$0;
@@ -6884,14 +6395,14 @@ if (typeof Math.imul === 'undefined') {
       tmp$ret$0 = tmp0_substring;
       tmp$ret$1 = tmp$ret$0.substring(tmp1_substring, tmp2_substring);
       var num = toInt(tmp$ret$1);
-      buffer.ha(num, 10);
+      buffer.put(num, 10);
       i = i + 3 | 0;
     }
     if (i < len) {
       if ((len - i | 0) === 1) {
         var tmp$ret$3;
         // Inline function 'kotlin.text.substring' call
-        var tmp3_substring = this.m9_1;
+        var tmp3_substring = this.v8_1;
         var tmp4_substring = i;
         var tmp5_substring = i + 1 | 0;
         var tmp$ret$2;
@@ -6899,11 +6410,11 @@ if (typeof Math.imul === 'undefined') {
         tmp$ret$2 = tmp3_substring;
         tmp$ret$3 = tmp$ret$2.substring(tmp4_substring, tmp5_substring);
         var num_0 = toInt(tmp$ret$3);
-        buffer.ha(num_0, 4);
+        buffer.put(num_0, 4);
       } else if ((len - i | 0) === 2) {
         var tmp$ret$5;
         // Inline function 'kotlin.text.substring' call
-        var tmp6_substring = this.m9_1;
+        var tmp6_substring = this.v8_1;
         var tmp7_substring = i;
         var tmp8_substring = i + 2 | 0;
         var tmp$ret$4;
@@ -6911,24 +6422,24 @@ if (typeof Math.imul === 'undefined') {
         tmp$ret$4 = tmp6_substring;
         tmp$ret$5 = tmp$ret$4.substring(tmp7_substring, tmp8_substring);
         var num_1 = toInt(tmp$ret$5);
-        buffer.ha(num_1, 7);
+        buffer.put(num_1, 7);
       }
     }
   };
-  QRNumber.prototype.n9 = function () {
-    return this.m9_1.length;
+  QRNumber.prototype.length = function () {
+    return this.v8_1.length;
   };
   QRNumber.$metadata$ = classMeta('QRNumber', undefined, undefined, undefined, undefined, QRData.prototype);
   function QRMath() {
     QRMath_instance = this;
-    this.bc_1 = new Int32Array(256);
-    this.cc_1 = new Int32Array(256);
+    this.hb_1 = new Int32Array(256);
+    this.ib_1 = new Int32Array(256);
     var inductionVariable = 0;
     if (inductionVariable <= 7)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        this.bc_1[i] = 1 << i;
+        this.hb_1[i] = 1 << i;
       }
        while (inductionVariable <= 7);
     var inductionVariable_0 = 8;
@@ -6936,7 +6447,7 @@ if (typeof Math.imul === 'undefined') {
       do {
         var i_0 = inductionVariable_0;
         inductionVariable_0 = inductionVariable_0 + 1 | 0;
-        this.bc_1[i_0] = this.bc_1[i_0 - 4 | 0] ^ this.bc_1[i_0 - 5 | 0] ^ this.bc_1[i_0 - 6 | 0] ^ this.bc_1[i_0 - 8 | 0];
+        this.hb_1[i_0] = this.hb_1[i_0 - 4 | 0] ^ this.hb_1[i_0 - 5 | 0] ^ this.hb_1[i_0 - 6 | 0] ^ this.hb_1[i_0 - 8 | 0];
       }
        while (inductionVariable_0 <= 255);
     var inductionVariable_1 = 0;
@@ -6944,14 +6455,14 @@ if (typeof Math.imul === 'undefined') {
       do {
         var i_1 = inductionVariable_1;
         inductionVariable_1 = inductionVariable_1 + 1 | 0;
-        this.cc_1[this.bc_1[i_1]] = i_1;
+        this.ib_1[this.hb_1[i_1]] = i_1;
       }
        while (inductionVariable_1 <= 254);
   }
-  QRMath.prototype.dc = function (n) {
-    return this.cc_1[n];
+  QRMath.prototype.glog = function (n) {
+    return this.ib_1[n];
   };
-  QRMath.prototype.ec = function (n) {
+  QRMath.prototype.gexp = function (n) {
     var i = n;
     while (i < 0) {
       i = i + 255 | 0;
@@ -6959,7 +6470,7 @@ if (typeof Math.imul === 'undefined') {
     while (i >= 256) {
       i = i - 255 | 0;
     }
-    return this.bc_1[i];
+    return this.hb_1[i];
   };
   QRMath.$metadata$ = objectMeta('QRMath');
   var QRMath_instance;
@@ -6972,14 +6483,14 @@ if (typeof Math.imul === 'undefined') {
     var tmp$ret$0;
     // Inline function 'kotlin.text.matches' call
     var tmp0_matches = Regex_init_$Create$('^\\d+$');
-    tmp$ret$0 = tmp0_matches.c2(s);
+    tmp$ret$0 = tmp0_matches.x1(s);
     return tmp$ret$0;
   }
   function isAlphaNum($this, s) {
     var tmp$ret$0;
     // Inline function 'kotlin.text.matches' call
     var tmp0_matches = Regex_init_$Create$('^[0-9A-Z $%*+\\-./:]+$');
-    tmp$ret$0 = tmp0_matches.c2(s);
+    tmp$ret$0 = tmp0_matches.x1(s);
     return tmp$ret$0;
   }
   function getBCHDigit($this, data) {
@@ -7164,7 +6675,7 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$40 = tmp0_arrayOf;
     tmp$ret$41 = tmp$ret$40;
     tmp$ret$42 = tmp$ret$41;
-    tmp.y8_1 = tmp$ret$42;
+    tmp.jb_1 = tmp$ret$42;
     var tmp_39 = this;
     var tmp$ret$283;
     // Inline function 'kotlin.arrayOf' call
@@ -8059,18 +7570,18 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$281 = tmp34_arrayOf;
     tmp$ret$282 = tmp$ret$281;
     tmp$ret$283 = tmp$ret$282;
-    tmp_39.z8_1 = tmp$ret$283;
-    this.a9_1 = 1335;
-    this.b9_1 = 7973;
-    this.c9_1 = 21522;
+    tmp_39.kb_1 = tmp$ret$283;
+    this.lb_1 = 1335;
+    this.mb_1 = 7973;
+    this.nb_1 = 21522;
   }
-  QRUtil.prototype.jc = function (typeNumber) {
-    return this.y8_1[typeNumber - 1 | 0];
+  QRUtil.prototype.getPatternPosition = function (typeNumber) {
+    return this.jb_1[typeNumber - 1 | 0];
   };
-  QRUtil.prototype.s9 = function (typeNumber, dataType, errorCorrectionLevel) {
-    return this.z8_1[typeNumber - 1 | 0][errorCorrectionLevel.e8_1][dataType.e8_1];
+  QRUtil.prototype.getMaxLength = function (typeNumber, dataType, errorCorrectionLevel) {
+    return this.kb_1[typeNumber - 1 | 0][errorCorrectionLevel.i7_1][dataType.i7_1];
   };
-  QRUtil.prototype.na = function (errorCorrectLength) {
+  QRUtil.prototype.getErrorCorrectPolynomial = function (errorCorrectLength) {
     var tmp$ret$0;
     // Inline function 'kotlin.intArrayOf' call
     tmp$ret$0 = new Int32Array([1]);
@@ -8084,17 +7595,17 @@ if (typeof Math.imul === 'undefined') {
         var tmp_0 = a;
         var tmp$ret$1;
         // Inline function 'kotlin.intArrayOf' call
-        var tmp0_intArrayOf = new Int32Array([1, QRMath_getInstance().ec(i)]);
+        var tmp0_intArrayOf = new Int32Array([1, QRMath_getInstance().gexp(i)]);
         tmp$ret$1 = tmp0_intArrayOf;
         var tmp_1 = tmp$ret$1;
-        a = tmp_0.ac(Polynomial_init_$Create$(tmp_1, 0, 2, null));
+        a = tmp_0.multiply(Polynomial_init_$Create$(tmp_1, 0, 2, null));
       }
        while (inductionVariable < errorCorrectLength);
     return a;
   };
-  QRUtil.prototype.mc = function (maskPattern, i, j) {
+  QRUtil.prototype.getMask = function (maskPattern, i, j) {
     var tmp0_subject = maskPattern;
-    var tmp0 = tmp0_subject.e8_1;
+    var tmp0 = tmp0_subject.i7_1;
     var tmp;
     switch (tmp0) {
       case 0:
@@ -8127,7 +7638,7 @@ if (typeof Math.imul === 'undefined') {
     }
     return tmp;
   };
-  QRUtil.prototype.d9 = function (s) {
+  QRUtil.prototype.getDataType = function (s) {
     var tmp;
     if (isAlphaNum(this, s)) {
       var tmp_0;
@@ -8142,14 +7653,14 @@ if (typeof Math.imul === 'undefined') {
     }
     return tmp;
   };
-  QRUtil.prototype.kc = function (data) {
+  QRUtil.prototype.getBCHTypeInfo = function (data) {
     var d = data << 10;
     while ((getBCHDigit(this, d) - getBCHDigit(this, 1335) | 0) >= 0) {
       d = d ^ 1335 << (getBCHDigit(this, d) - getBCHDigit(this, 1335) | 0);
     }
     return (data << 10 | d) ^ 21522;
   };
-  QRUtil.prototype.lc = function (data) {
+  QRUtil.prototype.getBCHTypeNumber = function (data) {
     var d = data << 12;
     while ((getBCHDigit(this, d) - getBCHDigit(this, 7973) | 0) >= 0) {
       d = d ^ 7973 << (getBCHDigit(this, d) - getBCHDigit(this, 7973) | 0);
@@ -8163,8 +7674,8 @@ if (typeof Math.imul === 'undefined') {
       new QRUtil();
     return QRUtil_instance;
   }
-  function Companion_10() {
-    Companion_instance_10 = this;
+  function Companion_9() {
+    Companion_instance_9 = this;
     var tmp = this;
     var tmp$ret$162;
     // Inline function 'kotlin.arrayOf' call
@@ -8815,74 +8326,93 @@ if (typeof Math.imul === 'undefined') {
     tmp$ret$160 = tmp0_arrayOf;
     tmp$ret$161 = tmp$ret$160;
     tmp$ret$162 = tmp$ret$161;
-    tmp.z9_1 = tmp$ret$162;
+    tmp.ob_1 = tmp$ret$162;
   }
-  Companion_10.prototype.aa = function (typeNumber, errorCorrectionLevel) {
-    var tmp$ret$3;
+  Companion_9.prototype.getRSBlocks = function (typeNumber, errorCorrectionLevel) {
+    var tmp$ret$5;
     // Inline function 'kotlin.let' call
-    var tmp0_let = this.z9_1[imul(typeNumber - 1 | 0, 4) + errorCorrectionLevel.e8_1 | 0];
+    var tmp0_let = this.ob_1[imul(typeNumber - 1 | 0, 4) + errorCorrectionLevel.i7_1 | 0];
     // Inline function 'kotlin.contracts.contract' call
-    var tmp$ret$2;
+    var tmp$ret$4;
     // Inline function 'io.github.g0dkar.qrcode.internals.Companion.getRSBlocks.<anonymous>' call
-    var tmp$ret$1;
-    // Inline function 'kotlin.apply' call
-    var tmp$ret$0;
-    // Inline function 'kotlin.collections.mutableListOf' call
-    tmp$ret$0 = ArrayList_init_$Create$();
-    var tmp0_apply = tmp$ret$0;
-    // Inline function 'kotlin.contracts.contract' call
-    // Inline function 'io.github.g0dkar.qrcode.internals.Companion.getRSBlocks.<anonymous>.<anonymous>' call
-    var nestedLast = tmp0_let.length - 1 | 0;
-    var inductionVariable = 0;
-    var last = getProgressionLastElement(0, nestedLast, 3);
-    if (inductionVariable <= last)
-      do {
-        var i = inductionVariable;
-        inductionVariable = inductionVariable + 3 | 0;
-        var currentRSBlock = new RSBlock(tmp0_let[i + 1 | 0], tmp0_let[i + 2 | 0]);
-        // Inline function 'kotlin.repeat' call
-        var tmp0_repeat = tmp0_let[i];
-        // Inline function 'kotlin.contracts.contract' call
-        var inductionVariable_0 = 0;
-        if (inductionVariable_0 < tmp0_repeat)
-          do {
-            var index = inductionVariable_0;
-            inductionVariable_0 = inductionVariable_0 + 1 | 0;
-            // Inline function 'io.github.g0dkar.qrcode.internals.Companion.getRSBlocks.<anonymous>.<anonymous>.<anonymous>' call
-            tmp0_apply.a(currentRSBlock);
-          }
-           while (inductionVariable_0 < tmp0_repeat);
+    var tmp;
+    if (tmp0_let.length === 3) {
+      var block = new RSBlock(tmp0_let[1], tmp0_let[2]);
+      var tmp_0 = 0;
+      var tmp_1 = tmp0_let[0];
+      var tmp$ret$0;
+      // Inline function 'kotlin.arrayOfNulls' call
+      tmp$ret$0 = fillArrayVal(Array(tmp_1), null);
+      var tmp_2 = tmp$ret$0;
+      while (tmp_0 < tmp_1) {
+        var tmp_3 = tmp_0;
+        var tmp$ret$1;
+        // Inline function 'io.github.g0dkar.qrcode.internals.Companion.getRSBlocks.<anonymous>.<anonymous>' call
+        tmp$ret$1 = block;
+        tmp_2[tmp_3] = tmp$ret$1;
+        tmp_0 = tmp_0 + 1 | 0;
       }
-       while (!(i === last));
-    tmp$ret$1 = tmp0_apply;
-    tmp$ret$2 = tmp$ret$1;
-    tmp$ret$3 = tmp$ret$2;
-    return tmp$ret$3;
+      tmp = tmp_2;
+    } else {
+      var blocksSize = tmp0_let[0] + tmp0_let[3] | 0;
+      var firstBlock = new RSBlock(tmp0_let[1], tmp0_let[2]);
+      var secondBlock = new RSBlock(tmp0_let[4], tmp0_let[5]);
+      var tmp_4 = 0;
+      var tmp_5 = blocksSize;
+      var tmp$ret$2;
+      // Inline function 'kotlin.arrayOfNulls' call
+      tmp$ret$2 = fillArrayVal(Array(tmp_5), null);
+      var tmp_6 = tmp$ret$2;
+      while (tmp_4 < tmp_5) {
+        var tmp_7 = tmp_4;
+        var tmp$ret$3;
+        // Inline function 'io.github.g0dkar.qrcode.internals.Companion.getRSBlocks.<anonymous>.<anonymous>' call
+        var tmp_8;
+        if (tmp_7 < tmp0_let[0]) {
+          tmp_8 = firstBlock;
+        } else {
+          tmp_8 = secondBlock;
+        }
+        tmp$ret$3 = tmp_8;
+        tmp_6[tmp_7] = tmp$ret$3;
+        tmp_4 = tmp_4 + 1 | 0;
+      }
+      tmp = tmp_6;
+    }
+    tmp$ret$4 = tmp;
+    tmp$ret$5 = tmp$ret$4;
+    return tmp$ret$5;
   };
-  Companion_10.$metadata$ = objectMeta('Companion');
-  var Companion_instance_10;
-  function Companion_getInstance_10() {
-    if (Companion_instance_10 == null)
-      new Companion_10();
-    return Companion_instance_10;
+  Companion_9.$metadata$ = objectMeta('Companion');
+  var Companion_instance_9;
+  function Companion_getInstance_9() {
+    if (Companion_instance_9 == null)
+      new Companion_9();
+    return Companion_instance_9;
   }
   function RSBlock(totalCount, dataCount) {
-    Companion_getInstance_10();
-    this.ka_1 = totalCount;
-    this.la_1 = dataCount;
+    Companion_getInstance_9();
+    this.w8_1 = totalCount;
+    this.x8_1 = dataCount;
   }
-  RSBlock.prototype.od = function () {
-    return this.ka_1;
+  RSBlock.prototype.pb = function () {
+    return this.w8_1;
   };
-  RSBlock.prototype.pd = function () {
-    return this.la_1;
+  RSBlock.prototype.qb = function () {
+    return this.x8_1;
+  };
+  RSBlock.prototype.copy = function (totalCount, dataCount) {
+    return this.rb(totalCount === void 1 ? this.w8_1 : totalCount, dataCount === void 1 ? this.x8_1 : dataCount);
+  };
+  RSBlock.prototype.rb = function (totalCount, dataCount) {
+    return new RSBlock(totalCount, dataCount);
   };
   RSBlock.prototype.toString = function () {
-    return 'RSBlock(totalCount=' + this.ka_1 + ', dataCount=' + this.la_1 + ')';
+    return 'RSBlock(totalCount=' + this.w8_1 + ', dataCount=' + this.x8_1 + ')';
   };
   RSBlock.prototype.hashCode = function () {
-    var result = this.ka_1;
-    result = imul(result, 31) + this.la_1 | 0;
+    var result = this.w8_1;
+    result = imul(result, 31) + this.x8_1 | 0;
     return result;
   };
   RSBlock.prototype.equals = function (other) {
@@ -8891,163 +8421,163 @@ if (typeof Math.imul === 'undefined') {
     if (!(other instanceof RSBlock))
       return false;
     var tmp0_other_with_cast = other instanceof RSBlock ? other : THROW_CCE();
-    if (!(this.ka_1 === tmp0_other_with_cast.ka_1))
+    if (!(this.w8_1 === tmp0_other_with_cast.w8_1))
       return false;
-    if (!(this.la_1 === tmp0_other_with_cast.la_1))
+    if (!(this.x8_1 === tmp0_other_with_cast.x8_1))
       return false;
     return true;
   };
   RSBlock.$metadata$ = classMeta('RSBlock');
   function Colors() {
     Colors_instance = this;
-    this.qd_1 = -984833;
-    this.rd_1 = -332841;
-    this.sd_1 = -16711681;
-    this.td_1 = -8388652;
-    this.ud_1 = -983041;
-    this.vd_1 = -657956;
-    this.wd_1 = -6972;
-    this.xd_1 = -16777216;
-    this.yd_1 = -5171;
-    this.zd_1 = -16776961;
-    this.ae_1 = -7722014;
-    this.be_1 = -5952982;
-    this.ce_1 = -2180985;
-    this.de_1 = -10510688;
-    this.ee_1 = -8388864;
-    this.fe_1 = -2987746;
-    this.ge_1 = -32944;
-    this.he_1 = -10185235;
-    this.ie_1 = -1828;
-    this.je_1 = -2354116;
-    this.ke_1 = -16711681;
-    this.le_1 = -16777077;
-    this.me_1 = -16741493;
-    this.ne_1 = -4684277;
-    this.oe_1 = -5658199;
-    this.pe_1 = -5658199;
-    this.qe_1 = -16751616;
-    this.re_1 = -4343957;
-    this.se_1 = -7667573;
-    this.te_1 = -11179217;
-    this.ue_1 = -29696;
-    this.ve_1 = -6737204;
-    this.we_1 = -7667712;
-    this.xe_1 = -1468806;
-    this.ye_1 = -7357297;
-    this.ze_1 = -12042869;
-    this.af_1 = -13676721;
-    this.bf_1 = -13676721;
-    this.cf_1 = -16724271;
-    this.df_1 = -7077677;
-    this.ef_1 = -60269;
-    this.ff_1 = -16728065;
-    this.gf_1 = -9868951;
-    this.hf_1 = -9868951;
-    this.if_1 = -14774017;
-    this.jf_1 = -5103070;
-    this.kf_1 = -1296;
-    this.lf_1 = -14513374;
-    this.mf_1 = -65281;
-    this.nf_1 = -2302756;
-    this.of_1 = -460545;
-    this.pf_1 = -10496;
-    this.qf_1 = -2448096;
-    this.rf_1 = -8355712;
-    this.sf_1 = -8355712;
-    this.tf_1 = -16744448;
-    this.uf_1 = -5374161;
-    this.vf_1 = -983056;
-    this.wf_1 = -38476;
-    this.xf_1 = -3318692;
-    this.yf_1 = -11861886;
-    this.zf_1 = -16;
-    this.ag_1 = -989556;
-    this.bg_1 = -1644806;
-    this.cg_1 = -3851;
-    this.dg_1 = -8586240;
-    this.eg_1 = -1331;
-    this.fg_1 = -5383962;
-    this.gg_1 = -1015680;
-    this.hg_1 = -2031617;
-    this.ig_1 = -329006;
-    this.jg_1 = -2894893;
-    this.kg_1 = -2894893;
-    this.lg_1 = -7278960;
-    this.mg_1 = -18751;
-    this.ng_1 = -24454;
-    this.og_1 = -14634326;
-    this.pg_1 = -7876870;
-    this.qg_1 = -8943463;
-    this.rg_1 = -8943463;
-    this.sg_1 = -5192482;
-    this.tg_1 = -32;
-    this.ug_1 = -16711936;
-    this.vg_1 = -13447886;
-    this.wg_1 = -331546;
-    this.xg_1 = -65281;
-    this.yg_1 = -8388608;
-    this.zg_1 = -10039894;
-    this.ah_1 = -16777011;
-    this.bh_1 = -4565549;
-    this.ch_1 = -7114533;
-    this.dh_1 = -12799119;
-    this.eh_1 = -8689426;
-    this.fh_1 = -16713062;
-    this.gh_1 = -12004916;
-    this.hh_1 = -3730043;
-    this.ih_1 = -15132304;
-    this.jh_1 = -655366;
-    this.kh_1 = -6943;
-    this.lh_1 = -6987;
-    this.mh_1 = -8531;
-    this.nh_1 = -16777088;
-    this.oh_1 = -133658;
-    this.ph_1 = -8355840;
-    this.qh_1 = -9728477;
-    this.rh_1 = -23296;
-    this.sh_1 = -47872;
-    this.th_1 = -2461482;
-    this.uh_1 = -1120086;
-    this.vh_1 = -6751336;
-    this.wh_1 = -5247250;
-    this.xh_1 = -2396013;
-    this.yh_1 = -4139;
-    this.zh_1 = -9543;
-    this.ai_1 = -3308225;
-    this.bi_1 = -16181;
-    this.ci_1 = -2252579;
-    this.di_1 = -5185306;
-    this.ei_1 = -8388480;
-    this.fi_1 = -10079335;
-    this.gi_1 = -65536;
-    this.hi_1 = -4419697;
-    this.ii_1 = -12490271;
-    this.ji_1 = -7650029;
-    this.ki_1 = -360334;
-    this.li_1 = -744352;
-    this.mi_1 = -13726889;
-    this.ni_1 = -2578;
-    this.oi_1 = -6270419;
-    this.pi_1 = -4144960;
-    this.qi_1 = -7876885;
-    this.ri_1 = -9807155;
-    this.si_1 = -9404272;
-    this.ti_1 = -9404272;
-    this.ui_1 = -1286;
-    this.vi_1 = -16711809;
-    this.wi_1 = -12156236;
-    this.xi_1 = -2968436;
-    this.yi_1 = -16744320;
-    this.zi_1 = -2572328;
-    this.aj_1 = -40121;
-    this.bj_1 = -12525360;
-    this.cj_1 = -1146130;
-    this.dj_1 = -663885;
-    this.ej_1 = -1;
-    this.fj_1 = -657931;
-    this.gj_1 = -256;
-    this.hj_1 = -6632142;
+    this.sb_1 = -984833;
+    this.tb_1 = -332841;
+    this.ub_1 = -16711681;
+    this.vb_1 = -8388652;
+    this.wb_1 = -983041;
+    this.xb_1 = -657956;
+    this.yb_1 = -6972;
+    this.zb_1 = -16777216;
+    this.ac_1 = -5171;
+    this.bc_1 = -16776961;
+    this.cc_1 = -7722014;
+    this.dc_1 = -5952982;
+    this.ec_1 = -2180985;
+    this.fc_1 = -10510688;
+    this.gc_1 = -8388864;
+    this.hc_1 = -2987746;
+    this.ic_1 = -32944;
+    this.jc_1 = -10185235;
+    this.kc_1 = -1828;
+    this.lc_1 = -2354116;
+    this.mc_1 = -16711681;
+    this.nc_1 = -16777077;
+    this.oc_1 = -16741493;
+    this.pc_1 = -4684277;
+    this.qc_1 = -5658199;
+    this.rc_1 = -5658199;
+    this.sc_1 = -16751616;
+    this.tc_1 = -4343957;
+    this.uc_1 = -7667573;
+    this.vc_1 = -11179217;
+    this.wc_1 = -29696;
+    this.xc_1 = -6737204;
+    this.yc_1 = -7667712;
+    this.zc_1 = -1468806;
+    this.ad_1 = -7357297;
+    this.bd_1 = -12042869;
+    this.cd_1 = -13676721;
+    this.dd_1 = -13676721;
+    this.ed_1 = -16724271;
+    this.fd_1 = -7077677;
+    this.gd_1 = -60269;
+    this.hd_1 = -16728065;
+    this.id_1 = -9868951;
+    this.jd_1 = -9868951;
+    this.kd_1 = -14774017;
+    this.ld_1 = -5103070;
+    this.md_1 = -1296;
+    this.nd_1 = -14513374;
+    this.od_1 = -65281;
+    this.pd_1 = -2302756;
+    this.qd_1 = -460545;
+    this.rd_1 = -10496;
+    this.sd_1 = -2448096;
+    this.td_1 = -8355712;
+    this.ud_1 = -8355712;
+    this.vd_1 = -16744448;
+    this.wd_1 = -5374161;
+    this.xd_1 = -983056;
+    this.yd_1 = -38476;
+    this.zd_1 = -3318692;
+    this.ae_1 = -11861886;
+    this.be_1 = -16;
+    this.ce_1 = -989556;
+    this.de_1 = -1644806;
+    this.ee_1 = -3851;
+    this.fe_1 = -8586240;
+    this.ge_1 = -1331;
+    this.he_1 = -5383962;
+    this.ie_1 = -1015680;
+    this.je_1 = -2031617;
+    this.ke_1 = -329006;
+    this.le_1 = -2894893;
+    this.me_1 = -2894893;
+    this.ne_1 = -7278960;
+    this.oe_1 = -18751;
+    this.pe_1 = -24454;
+    this.qe_1 = -14634326;
+    this.re_1 = -7876870;
+    this.se_1 = -8943463;
+    this.te_1 = -8943463;
+    this.ue_1 = -5192482;
+    this.ve_1 = -32;
+    this.we_1 = -16711936;
+    this.xe_1 = -13447886;
+    this.ye_1 = -331546;
+    this.ze_1 = -65281;
+    this.af_1 = -8388608;
+    this.bf_1 = -10039894;
+    this.cf_1 = -16777011;
+    this.df_1 = -4565549;
+    this.ef_1 = -7114533;
+    this.ff_1 = -12799119;
+    this.gf_1 = -8689426;
+    this.hf_1 = -16713062;
+    this.if_1 = -12004916;
+    this.jf_1 = -3730043;
+    this.kf_1 = -15132304;
+    this.lf_1 = -655366;
+    this.mf_1 = -6943;
+    this.nf_1 = -6987;
+    this.of_1 = -8531;
+    this.pf_1 = -16777088;
+    this.qf_1 = -133658;
+    this.rf_1 = -8355840;
+    this.sf_1 = -9728477;
+    this.tf_1 = -23296;
+    this.uf_1 = -47872;
+    this.vf_1 = -2461482;
+    this.wf_1 = -1120086;
+    this.xf_1 = -6751336;
+    this.yf_1 = -5247250;
+    this.zf_1 = -2396013;
+    this.ag_1 = -4139;
+    this.bg_1 = -9543;
+    this.cg_1 = -3308225;
+    this.dg_1 = -16181;
+    this.eg_1 = -2252579;
+    this.fg_1 = -5185306;
+    this.gg_1 = -8388480;
+    this.hg_1 = -10079335;
+    this.ig_1 = -65536;
+    this.jg_1 = -4419697;
+    this.kg_1 = -12490271;
+    this.lg_1 = -7650029;
+    this.mg_1 = -360334;
+    this.ng_1 = -744352;
+    this.og_1 = -13726889;
+    this.pg_1 = -2578;
+    this.qg_1 = -6270419;
+    this.rg_1 = -4144960;
+    this.sg_1 = -7876885;
+    this.tg_1 = -9807155;
+    this.ug_1 = -9404272;
+    this.vg_1 = -9404272;
+    this.wg_1 = -1286;
+    this.xg_1 = -16711809;
+    this.yg_1 = -12156236;
+    this.zg_1 = -2968436;
+    this.ah_1 = -16744320;
+    this.bh_1 = -2572328;
+    this.ch_1 = -40121;
+    this.dh_1 = -12525360;
+    this.eh_1 = -1146130;
+    this.fh_1 = -663885;
+    this.gh_1 = -1;
+    this.hh_1 = -657931;
+    this.ih_1 = -256;
+    this.jh_1 = -6632142;
   }
   Colors.$metadata$ = objectMeta('Colors');
   var Colors_instance;
@@ -9065,16 +8595,29 @@ if (typeof Math.imul === 'undefined') {
     return new QRCodeGraphics(width, height);
   };
   QRCodeGraphicsFactory.$metadata$ = classMeta('QRCodeGraphicsFactory');
-  function Companion_11() {
-    Companion_instance_11 = this;
-    this.ij_1 = 'Canvas seems to not be supported :(';
+  function Companion_10() {
+    Companion_instance_10 = this;
+    this.kh_1 = 'Canvas seems to not be supported :(';
   }
-  Companion_11.$metadata$ = objectMeta('Companion');
-  var Companion_instance_11;
-  function Companion_getInstance_11() {
-    if (Companion_instance_11 == null)
-      new Companion_11();
-    return Companion_instance_11;
+  Companion_10.$metadata$ = objectMeta('Companion');
+  var Companion_instance_10;
+  function Companion_getInstance_10() {
+    if (Companion_instance_10 == null)
+      new Companion_10();
+    return Companion_instance_10;
+  }
+  function rgba($this, color) {
+    var r = color >> 16 & 255;
+    var g = color >> 8 & 255;
+    var b = color >> 0 & 255;
+    var a = (color >> 24 & 255) / 255.0;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+  function draw($this, color, action) {
+    var colorString = rgba($this, color);
+    $this.oh_1.fillStyle = colorString;
+    $this.oh_1.strokeStyle = colorString;
+    action();
   }
   function tryGet($this, what) {
     var tmp;
@@ -9083,7 +8626,7 @@ if (typeof Math.imul === 'undefined') {
     } catch ($p) {
       var tmp_0;
       if ($p instanceof Error) {
-        Companion_getInstance_11();
+        Companion_getInstance_10();
         throw Error_init_$Create$('Canvas seems to not be supported :(', $p);
       } else {
         throw $p;
@@ -9102,31 +8645,61 @@ if (typeof Math.imul === 'undefined') {
       return tmp instanceof CanvasRenderingContext2D ? tmp : THROW_CCE();
     };
   }
-  function QRCodeGraphics(width, height) {
-    Companion_getInstance_11();
-    this.jj_1 = width;
-    this.kj_1 = height;
-    var canvas = tryGet(this, QRCodeGraphics$lambda);
-    canvas.width = this.jj_1;
-    canvas.height = this.kj_1;
-    var context = tryGet(this, QRCodeGraphics$lambda_0(canvas));
-    println('canvas=' + canvas);
-    println('context=' + context + ' (jsType=' + typeof context + ', ktType=' + context + ')');
-    this.lj_1 = canvas;
-    this.mj_1 = context;
+  function QRCodeGraphics$drawLine$lambda(this$0, $x1, $y1, $x2, $y2) {
+    return function () {
+      this$0.oh_1.moveTo($x1, $y1);
+      this$0.oh_1.lineTo($x2, $y2);
+      return Unit_getInstance();
+    };
   }
-  QRCodeGraphics.prototype.nj = function () {
-    return this.jj_1;
+  function QRCodeGraphics$drawRect$lambda(this$0, $x, $y, $width, $height) {
+    return function () {
+      this$0.oh_1.strokeRect($x, $y, $width, $height);
+      return Unit_getInstance();
+    };
+  }
+  function QRCodeGraphics$fillRect$lambda(this$0, $x, $y, $width, $height) {
+    return function () {
+      this$0.oh_1.fillRect($x, $y, $width, $height);
+      return Unit_getInstance();
+    };
+  }
+  function QRCodeGraphics(width, height) {
+    Companion_getInstance_10();
+    this.lh_1 = width;
+    this.mh_1 = height;
+    var canvas = tryGet(this, QRCodeGraphics$lambda);
+    canvas.width = this.lh_1;
+    canvas.height = this.mh_1;
+    var context = tryGet(this, QRCodeGraphics$lambda_0(canvas));
+    this.nh_1 = canvas;
+    this.oh_1 = context;
+  }
+  QRCodeGraphics.prototype.ph = function () {
+    return this.lh_1;
   };
-  QRCodeGraphics.prototype.oj = function () {
-    return this.kj_1;
+  QRCodeGraphics.prototype.qh = function () {
+    return this.mh_1;
+  };
+  QRCodeGraphics.prototype.toDataURL = function (format) {
+    return this.rh(format === void 1 ? 'png' : format);
+  };
+  QRCodeGraphics.prototype.rh = function (format) {
+    return this.nh_1.toDataURL(format);
+  };
+  QRCodeGraphics.prototype.sh = function (format, $mask0, $handler) {
+    if (!(($mask0 & 1) === 0))
+      format = 'png';
+    return $handler == null ? this.rh(format) : $handler(format);
+  };
+  QRCodeGraphics.prototype.toBlob = function (callback) {
+    return this.nh_1.toBlob(callback);
   };
   QRCodeGraphics.prototype.getBytes = function () {
-    return new Int8Array(0);
+    return this.getBytesForFormat('png');
   };
   QRCodeGraphics.prototype.getBytesForFormat = function (format) {
-    // Inline function 'kotlin.TODO' call
-    throw new NotImplementedError('An operation is not implemented: Not yet implemented');
+    return encodeToByteArray(this.nh_1.toDataURL(format));
   };
   QRCodeGraphics.prototype.availableFormats = function () {
     var tmp$ret$2;
@@ -9135,39 +8708,46 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.js.unsafeCast' call
     var tmp$ret$0;
     // Inline function 'kotlin.js.asDynamic' call
-    tmp$ret$0 = ['PNG'];
+    tmp$ret$0 = ['png'];
     tmp$ret$1 = tmp$ret$0;
     tmp$ret$2 = tmp$ret$1;
     return tmp$ret$2;
   };
   QRCodeGraphics.prototype.nativeImage = function () {
-    return this.lj_1;
+    return this.nh_1;
   };
   QRCodeGraphics.prototype.drawLine = function (x1, y1, x2, y2, color) {
+    draw(this, color, QRCodeGraphics$drawLine$lambda(this, x1, y1, x2, y2));
   };
   QRCodeGraphics.prototype.drawRect = function (x, y, width, height, color) {
+    draw(this, color, QRCodeGraphics$drawRect$lambda(this, x, y, width, height));
   };
   QRCodeGraphics.prototype.fillRect = function (x, y, width, height, color) {
+    draw(this, color, QRCodeGraphics$fillRect$lambda(this, x, y, width, height));
   };
   QRCodeGraphics.prototype.fill = function (color) {
+    this.fillRect(0, 0, this.lh_1, this.mh_1, color);
   };
   QRCodeGraphics.prototype.drawRoundRect = function (x, y, width, height, borderRadius, color) {
+    this.drawRect(x, y, width, height, color);
   };
   QRCodeGraphics.prototype.fillRoundRect = function (x, y, width, height, borderRadius, color) {
+    this.fillRect(x, y, width, height, color);
   };
   QRCodeGraphics.prototype.drawImage = function (img, x, y) {
+    this.oh_1.drawImage(img.nh_1, x, y);
   };
   QRCodeGraphics.$metadata$ = classMeta('QRCodeGraphics');
   Object.defineProperty(QRCodeGraphics.prototype, 'width', {
     configurable: true,
-    get: QRCodeGraphics.prototype.nj
+    get: QRCodeGraphics.prototype.ph
   });
   Object.defineProperty(QRCodeGraphics.prototype, 'height', {
     configurable: true,
-    get: QRCodeGraphics.prototype.oj
+    get: QRCodeGraphics.prototype.qh
   });
   //region block: post-declaration
-  InternalHashCodeMap.prototype.k4 = createJsMap;
+  InternalHashCodeMap.prototype.s3 = createJsMap;
   //endregion
   //region block: init
   interfacesCounter = 0;
@@ -9181,7 +8761,7 @@ if (typeof Math.imul === 'undefined') {
     $io$github$g0dkar$qrcode.QRCode = QRCode;
     Object.defineProperty($io$github$g0dkar$qrcode.QRCode, 'Companion', {
       configurable: true,
-      get: Companion_getInstance_8
+      get: Companion_getInstance_7
     });
     var $io = _.io || (_.io = {});
     var $io$github = $io.github || ($io.github = {});
@@ -9265,7 +8845,7 @@ if (typeof Math.imul === 'undefined') {
     $io$github$g0dkar$qrcode$internals.QRCodeSquareInfo = QRCodeSquareInfo;
     Object.defineProperty($io$github$g0dkar$qrcode$internals.QRCodeSquareInfo, 'Companion', {
       configurable: true,
-      get: Companion_getInstance_9
+      get: Companion_getInstance_8
     });
     $io$github$g0dkar$qrcode$internals.QRCodeSquareType = QRCodeSquareType;
     $io$github$g0dkar$qrcode$internals.QRCodeSquareType.values = values_2;
@@ -9351,7 +8931,7 @@ if (typeof Math.imul === 'undefined') {
     $io$github$g0dkar$qrcode$render.QRCodeGraphics = QRCodeGraphics;
     Object.defineProperty($io$github$g0dkar$qrcode$render.QRCodeGraphics, 'Companion', {
       configurable: true,
-      get: Companion_getInstance_11
+      get: Companion_getInstance_10
     });
   }
   $jsExportAll$(_);

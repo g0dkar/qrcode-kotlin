@@ -1,5 +1,6 @@
 package io.github.g0dkar.qrcode
 
+import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 /**
@@ -25,6 +26,7 @@ import kotlin.js.JsExport
  * @author Kazuhiko Arase - kazuhikoarase
  */
 @JsExport
+@OptIn(ExperimentalJsExport::class)
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
     L(1, 21),
     M(0, 25),
@@ -41,6 +43,7 @@ enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
  * @author Kazuhiko Arase - kazuhikoarase
  */
 @JsExport
+@OptIn(ExperimentalJsExport::class)
 enum class MaskPattern {
     /** This is the default pattern (no pattern is applied) */
     PATTERN000,
@@ -62,6 +65,7 @@ enum class MaskPattern {
  * @author Kazuhiko Arase - kazuhikoarase
  */
 @JsExport
+@OptIn(ExperimentalJsExport::class)
 enum class QRCodeDataType(val value: Int) {
     /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
     NUMBERS(1 shl 0),
