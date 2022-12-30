@@ -1,0 +1,154 @@
+<!doctype html>
+<html class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script src="qrcode-kotlin.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            display: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-slate-500">
+<div class="container mx-auto p-4">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="mt-5 md:col-span-2 md:mt-0">
+            <div class="shadow sm:overflow-hidden sm:rounded-md">
+                <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+                    <div>
+                        <label for="qrcodeData" class="block text-sm font-medium text-gray-700">QRCode Content:</label>
+                        <div class="mt-1">
+                            <textarea id="qrcodeData" rows="3"
+                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      placeholder="Data to Encode into the QR Code"
+                                      autofocus>https://qrcodekotlin.com</textarea>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">You can encode strings (general text), numbers, URLs,
+                            emails, pretty much anything. <span class="text-indigo-600">The more data you encode, the slower it'll be!</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <label for="qrcodeCellSize" class="block text-sm font-medium text-gray-700">Cell Size:</label>
+                        <div class="mt-1">
+                            <input type="number" min="5" max="250" id="qrcodeCellSize" name="qrcodeCellSize" value="25"
+                                   class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                   placeholder="How big each square on the resulting QRCode will be"/>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">How big each square in the QRCode will be, in pixels. Default is 25. The
+                            bigger this is, the larger the resulting QRCode will be. <span class="text-indigo-600">Increasing this should not affect much how long it takes to generate the QRCode ;)</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                    <a id="downloadBtn" download="qrcode.png"
+                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <span class="pr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                 class="w-5 h-5">
+                                <path
+                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z"/>
+                                <path
+                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/>
+                            </svg>
+                        </span>
+
+                        Download QRCode
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-1 sm:overflow-hidden">
+            <div class="space-y-6 shadow bg-white px-4 py-5 sm:p-6 sm:rounded-md">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Generated QR Code</h3>
+                    <p class="mt-1 text-sm text-gray-600">This QR Code is being generated via JavaScript, in your
+                        browser.
+                        With the power of Kotlin! Know more about this
+                        <a href="https://qrcodekotlin.com"
+                           class="text-indigo-600 hover:text-indigo-900 after:content-['_↗']" target="_blank">
+                            <span
+                                class="underline decoration-indigo-600 decoration-2">here</span>
+                        </a>
+                        :)</p>
+
+                    <div aria-hidden="true">
+                        <div class="py-5">
+                            <div class="border-t border-gray-200"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <img id="qrcodeResult" width="100%" alt="QRCode Result"/>
+                    </div>
+
+                    <div class="text-sm text-gray-600">
+                        <p>Image size: <span id="imgSize">...</span></p>
+                        <p>Generated in: <span id="generatedTime">...</span></p>
+                        <p class="pt-1 text-xs"><span class="italic">Tip: Right-click the QRCode above and "Save Image As..."</span>
+                            😉</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
+  const qrcodeData = document.getElementById("qrcodeData")
+  const timeEl = document.getElementById("generatedTime")
+  const imgSizeEl = document.getElementById("imgSize")
+  const imgEl = document.getElementById("qrcodeResult")
+  const sizeEl = document.getElementById("qrcodeCellSize")
+  const downloadBtn = document.getElementById("downloadBtn")
+
+  const doRender = (data) => {
+    const size = sizeEl.value
+
+    const start = Date.now()
+    const result = new QRCode(data).render(size)
+    const finish = Date.now()
+
+    const dataURL = result.toDataURL()
+    downloadBtn.href = dataURL
+    imgEl.src = dataURL
+    timeEl.textContent = `${finish - start}ms`
+    imgSizeEl.textContent = `${result.width}x${result.height}, each square is ${size}x${size}`
+  }
+
+  qrcodeData.onkeyup = (evt) => {
+    const data = evt.target.value
+    const prev = evt.target.$prev
+
+    if (data !== prev) {
+      if (evt.target.$timer) {
+        clearTimeout(evt.target.$timer)
+      }
+
+      evt.target.$prev = data
+
+      evt.target.$timer = setTimeout(() => {
+        doRender(data)
+      }, 500)
+    }
+  }
+
+  sizeEl.onchange = () => {
+    doRender(qrcodeData.value)
+  }
+
+  doRender(qrcodeData.value)
+</script>
+</body>
+</html>

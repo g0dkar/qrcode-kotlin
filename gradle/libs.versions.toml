@@ -1,0 +1,27 @@
+[versions]
+kotlin = "1.7.22"
+coroutines = "1.7.22"
+dokka = "1.7.20"
+kotest = "5.5.4"
+spotless = "6.11.0"
+mavenNexus = "1.1.0"
+ktlint = "0.47.1"
+nodejsPlugin = "3.5.0"
+androidPlugin = "7.2.2"
+
+[libraries]
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
+[plugins]
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
+android-library = { id = "com.android.library", version.ref = "androidPlugin" }
+kotlin-android-extensions = { id = "kotlin-android-extensions", version.ref = "kotlin" }
+nexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "mavenNexus" }
+nodejs = { id = "com.github.node-gradle.node", version.ref = "nodejsPlugin" }

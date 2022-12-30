@@ -11,6 +11,8 @@ import io.github.g0dkar.qrcode.MaskPattern.PATTERN101
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN110
 import io.github.g0dkar.qrcode.MaskPattern.PATTERN111
 import io.github.g0dkar.qrcode.QRCodeDataType
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
@@ -18,6 +20,8 @@ import io.github.g0dkar.qrcode.QRCodeDataType
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
+@OptIn(ExperimentalJsExport::class)
 internal object QRUtil {
     fun getPatternPosition(typeNumber: Int): IntArray = PATTERN_POSITION_TABLE[typeNumber - 1]
 
