@@ -16,6 +16,5 @@
     - **Still needs some improvements** on how people use it, but it is a step in the right direction
     - **Help in this regard is much appreciated!** If interested, this is the domain of Developer Experience, aka
       DevEx/DevX/DX/IDontKnowWhyAcronymsForEverything
-- Internal changes to use `Array`s instead of `Collection`s in a number of places, to try and be more
-  performant and have a smaller JavaScript file
+- Changed uses of `Collection`s to `Array`s instead to try and be more performant and have a smaller library as a result
 - **WIP:** Started work on Native targets (Windows, Linux, macOS, iOS)
