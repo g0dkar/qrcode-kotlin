@@ -14,7 +14,7 @@
 - Added JavaScript (Browser) into Multiplatform support
     - Added Browser JS QRCode Generation example ([link](examples/js/qrcode-example.html))
     - **Still needs some improvements** on how people use it, but it is a step in the right direction
-    - **Help in this regard is much appreciated!** If interested, this is the domain of Developer Experience, aka
-      DevEx/DevX/DX/IDontKnowWhyAcronymsForEverything
+    - **Help in this regard is much appreciated!** If interested, this is in the domain of Developer Experience, aka
+      DevX/DX
 - Changed uses of `Collection`s to `Array`s instead to try and be more performant and have a smaller library as a result
 - **WIP:** Started work on Native targets (Windows, Linux, macOS, iOS)
