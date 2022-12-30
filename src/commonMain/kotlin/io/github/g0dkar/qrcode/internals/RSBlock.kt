@@ -1,6 +1,8 @@
 package io.github.g0dkar.qrcode.internals
 
 import io.github.g0dkar.qrcode.ErrorCorrectionLevel
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)
@@ -8,6 +10,9 @@ import io.github.g0dkar.qrcode.ErrorCorrectionLevel
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
+@OptIn(ExperimentalJsExport::class)
+@Suppress("NON_EXPORTABLE_TYPE")
 internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
     companion object {
         private val RS_BLOCK_TABLE = arrayOf(
@@ -173,18 +178,25 @@ internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
             intArrayOf(20, 45, 15, 61, 46, 16)
         )
 
-        fun getRSBlocks(typeNumber: Int, errorCorrectionLevel: ErrorCorrectionLevel): List<RSBlock> =
+        fun getRSBlocks(typeNumber: Int, errorCorrectionLevel: ErrorCorrectionLevel): Array<RSBlock> =
             RS_BLOCK_TABLE[(typeNumber - 1) * 4 + errorCorrectionLevel.ordinal]
                 .let { rsBlock ->
-                    mutableListOf<RSBlock>()
-                        .apply {
-                            for (i in rsBlock.indices step 3) {
-                                val currentRSBlock = RSBlock(rsBlock[i + 1], rsBlock[i + 2])
-                                repeat(rsBlock[i]) {
-                                    add(currentRSBlock)
-                                }
+                    if (rsBlock.size == 3) {
+                        val block = RSBlock(rsBlock[1], rsBlock[2])
+                        Array(rsBlock[0]) { block }
+                    } else {
+                        val blocksSize = rsBlock[0] + rsBlock[3]
+                        val firstBlock = RSBlock(rsBlock[1], rsBlock[2])
+                        val secondBlock = RSBlock(rsBlock[4], rsBlock[5])
+
+                        Array(blocksSize) {
+                            if (it < rsBlock[0]) {
+                                firstBlock
+                            } else {
+                                secondBlock
                             }
                         }
+                    }
                 }
     }
 }

@@ -1,29 +1,29 @@
 package io.github.g0dkar.qrcode.render
 
 import io.github.g0dkar.qrcode.QRCode
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * A class used by [QRCode] to build instances of [QRCodeGraphics].
  *
+ * It builds the default [QRCodeGraphics] available for the platform.
+ *
+ * You might extend it to generate customized [QRCodeGraphics] instances.
+ *
  * @author Rafael Lins - g0dkar
  */
-abstract class QRCodeGraphicsFactory<out T : QRCodeGraphics> {
+@JsExport
+@OptIn(ExperimentalJsExport::class)
+@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
+open class QRCodeGraphicsFactory {
     /**
      * Creates a `size` by `size` square [QRCodeGraphics] instance.
      */
-    open fun newGraphics(size: Int) = newGraphics(size, size)
+    fun newGraphicsSquare(size: Int) = newGraphics(size, size)
 
     /**
      * Creates a new [QRCodeGraphics] instance.
      */
-    abstract fun newGraphics(width: Int, height: Int): T
-}
-
-/**
- * The default implementation of [QRCodeGraphicsFactory]. It builds the default [QRCodeGraphics] available for the platform.
- *
- * @author Rafael Lins - g0dkar
- */
-class DefaultQRCodeGraphicsFactory : QRCodeGraphicsFactory<QRCodeGraphics>() {
-    override fun newGraphics(width: Int, height: Int): QRCodeGraphics = QRCodeGraphics(width, height)
+    fun newGraphics(width: Int, height: Int): QRCodeGraphics = QRCodeGraphics(width, height)
 }

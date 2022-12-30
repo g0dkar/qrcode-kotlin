@@ -1,11 +1,17 @@
 package io.github.g0dkar.qrcode.internals
 
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
+import kotlin.js.JsName
+
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/BitBuffer.java)
  *
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
+@JsExport
+@OptIn(ExperimentalJsExport::class)
 internal class BitBuffer {
     var buffer: IntArray
         private set
@@ -22,6 +28,7 @@ internal class BitBuffer {
         }
     }
 
+    @JsName("putBit")
     fun put(bit: Boolean) {
         if (lengthInBits == buffer.size * 8) {
             buffer = buffer.copyOf(buffer.size + increments)

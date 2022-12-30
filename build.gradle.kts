@@ -1,49 +1,59 @@
-import org.jetbrains.dokka.gradle.DokkaTask
+import com.github.gradle.node.npm.task.NpxTask
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 
 buildscript {
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+        classpath(libs.kotlin.gradle.plugin)
     }
 }
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-    google()
-}
-
+/*
+ * IntelliJ is currently (2022-12-22) bugged if you use this "alias(libs...)" here on plugins.
+ *
+ * Solution found here: https://youtrack.jetbrains.com/issue/KTIJ-19369/False-positive-cant-be-called-in-this-context-by-implicit-receiver-with-plugins-in-Gradle-version-catalogs-as-a-TOML-file#focus=Comments-27-5860112.0-0
+ */
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Dev Plugins
     id("idea")
+    alias(libs.plugins.spotless)
 
     // Base Plugins
-    kotlin("multiplatform") version "1.7.10"
-    id("com.android.library") version "7.2.1"
-    id("kotlin-android-extensions") version "1.7.10"
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android.extensions)
+
+    // Kotest
+    alias(libs.plugins.kotest.multiplatform)
 
     // Publishing Plugins
     signing
     `maven-publish`
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    alias(libs.plugins.nexus)
+    alias(libs.plugins.nodejs)
 
     // Docs Plugins
-    id("org.jetbrains.dokka") version "1.7.10"
+    alias(libs.plugins.dokka)
+}
+
+repositories {
+    mavenCentral()
+    google()
 }
 
 group = "io.github.g0dkar"
-version = "3.2.0"
+version = "3.3.0"
 
 kotlin {
     jvm {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
-                freeCompilerArgs = listOf("-Xjsr305=strict")
+                freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.js.ExperimentalJsExport")
             }
-        }
-
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
         }
     }
 
@@ -51,43 +61,128 @@ kotlin {
         publishLibraryVariants("release")
     }
 
+    js(IR) {
+        compilations.all {
+            kotlinOptions {
+                main = "noCall"
+            }
+        }
+
+        browser {
+            commonWebpackConfig {
+                mode = PRODUCTION
+                sourceMaps = true
+            }
+
+            testTask {
+                enabled = false
+            }
+
+            binaries.library()
+        }
+    }
+
+    val nativeArtifactName = name.replace(Regex("-(\\w)")) { it.groupValues[1].toUpperCase() }
+    val hostOS = System.getProperty("os.name")
+    val isMingwX64 = hostOS.startsWith("Windows")
+    val nativeTarget = when {
+        hostOS == "Mac OS X" -> macosX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
+        hostOS == "Linux" -> linuxX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
+        isMingwX64 -> mingwX64("native") { binaries { sharedLib { baseName = "lib$nativeArtifactName" } } }
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+    }
+
     sourceSets {
         val commonTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-assertions-core:5.3.0")
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation(kotlin("test"))
+                implementation(libs.kotest.assertions.core)
+                implementation(libs.kotest.framework.engine)
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-                implementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation(libs.kotest.runner.junit5)
             }
         }
     }
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+/**
+ * Kotest Configuration
+ */
+tasks {
+    named<Test>("jvmTest") {
+        useJUnitPlatform()
+        filter {
+            isFailOnNoMatchingTests = false
+        }
+        testLogging {
+            showExceptions = true
+            showStandardStreams = true
+            events = setOf(FAILED, PASSED)
+            exceptionFormat = FULL
+        }
+    }
+}
+
+/* *********************** */
+/* After Build Publishing  */
+/* *********************** */
+tasks {
+    register<NpxTask>("minifyReleaseJS") {
+        val baseFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js").get().asFile.path
+        val minFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js").get().asFile.path
+        val cmdArgs = listOf(
+            baseFile,
+            "--compress",
+            "--mangle",
+            "--timings",
+            "--keep-classnames",
+            "--keep-fnames",
+            "--source-map",
+            "--output",
+            minFile
+        )
+
+        command.set("terser")
+        args.set(cmdArgs)
+    }
+
+    /** Copies release files into /release dir */
+    register<Copy>("copyToReleaseDir") {
+        doFirst {
+            layout.projectDirectory.dir("release").asFile.deleteRecursively()
+        }
+
+        from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js.map"))
+        into(layout.projectDirectory.dir("release"))
+    }
+}
+
+node {
+    download.set(true)
+    version.set("16.14.0")
+    allowInsecureProtocol.set(false)
+    nodeProjectDir.set(layout.buildDirectory.dir("tmp"))
 }
 
 /* **************** */
@@ -103,52 +198,39 @@ idea {
 /* **************** */
 /* Docs             */
 /* **************** */
-val dokkaOutputDir = "$projectDir/dokka"
+tasks {
+    dokkaHtml {
+        outputDirectory.set(buildDir.resolve("javadoc"))
 
-tasks.getByName<DokkaTask>("dokkaHtml") {
-    outputDirectory.set(file(dokkaOutputDir))
+        dokkaSourceSets {
+            configureEach {
+                includeNonPublic.set(false)
+                skipDeprecated.set(true)
+                reportUndocumented.set(true)
+                skipEmptyPackages.set(true)
+            }
+        }
+    }
 }
 
-val javadocJar = tasks.register<Jar>("javadocJar") {
-    dependsOn(tasks.dokkaHtml)
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
-    from(dokkaOutputDir)
+    from(tasks.dokkaHtml)
 }
 
 /* **************** */
 /* Lint             */
 /* **************** */
-val ktlint by configurations.creating
+spotless {
+    val ktlintVersion = libs.versions.ktlint.getOrElse("0.47.1")
 
-dependencies {
-    ktlint("com.pinterest:ktlint:0.46.1") {
-        attributes {
-            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
-        }
+    kotlin {
+        ktlint(ktlintVersion)
     }
-}
-
-val ktlintCheck by tasks.creating(JavaExec::class) {
-    description = "Check Kotlin code style."
-    mainClass.set("com.pinterest.ktlint.Main")
-    classpath = ktlint
-    args = listOf("--editorconfig=$projectDir/.editorconfig", "--color", "--relative", "src/**/*.kt")
-}
-
-val ktlintFormat by tasks.creating(JavaExec::class) {
-    description = "Fix Kotlin code style deviations."
-    mainClass.set("com.pinterest.ktlint.Main")
-    classpath = ktlint
-    args = listOf("--editorconfig=$projectDir/.editorconfig", "--format", "--color", "--relative", "src/**/*.kt")
-}
-
-tasks {
-    publish {
-        dependsOn(ktlintCheck)
-    }
-
-    publishToMavenLocal {
-        dependsOn(ktlintCheck)
+    kotlinGradle {
+        ktlint(ktlintVersion)
     }
 }
 
@@ -182,7 +264,7 @@ signing {
 publishing {
     publications {
         withType<MavenPublication> {
-            artifact(javadocJar)
+            artifact(dokkaJar)
 
             pom {
                 val projectGitUrl = "https://github.com/g0dkar/qrcode-kotlin"

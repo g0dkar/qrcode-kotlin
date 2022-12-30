@@ -10,6 +10,7 @@ package io.github.g0dkar.qrcode.render
  * @see withAlpha
  * @see allColors
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
     fun css(str: String): Int =
@@ -23,8 +24,8 @@ object Colors {
             (b.coerceIn(0..255) and 0xFF shl 0)
 
     /** Compute the R, G, B and Alpha components of a color. All values between `0..255`. */
-    fun getRGBA(color: Int): List<Int> =
-        listOf(
+    fun getRGBA(color: Int): IntArray =
+        intArrayOf(
             (color shr 16) and 0xFF,
             (color shr 8) and 0xFF,
             (color shr 0) and 0xFF,
@@ -188,169 +189,4 @@ object Colors {
     const val WHITE_SMOKE = 0xFFF5F5F5.toInt()
     const val YELLOW = 0xFFFFFF00.toInt()
     const val YELLOW_GREEN = 0xFF9ACD32.toInt()
-
-    /**
-     * Just a convenience for developers to go through all colors and see which is nicer :)
-     *
-     * Try something like this:
-     *
-     * ```kotlin
-     * Colors.allColors().forEach { (color, value) ->
-     *     val file = FileOutputStream("qrcode_$color.png")
-     *     QRCode(color).render(darkColor = value).writeImage(file)
-     * }
-     * ```
-     *
-     */
-    fun allColors(): Map<String, Int> =
-        mapOf(
-            "ALICE_BLUE" to ALICE_BLUE,
-            "ANTIQUE_WHITE" to ANTIQUE_WHITE,
-            "AQUA" to AQUA,
-            "AQUAMARINE" to AQUAMARINE,
-            "AZURE" to AZURE,
-            "BEIGE" to BEIGE,
-            "BISQUE" to BISQUE,
-            "BLACK" to BLACK,
-            "BLANCHED_ALMOND" to BLANCHED_ALMOND,
-            "BLUE" to BLUE,
-            "BLUE_VIOLET" to BLUE_VIOLET,
-            "BROWN" to BROWN,
-            "BURLY_WOOD" to BURLY_WOOD,
-            "CADET_BLUE" to CADET_BLUE,
-            "CHARTREUSE" to CHARTREUSE,
-            "CHOCOLATE" to CHOCOLATE,
-            "CORAL" to CORAL,
-            "CORNFLOWER_BLUE" to CORNFLOWER_BLUE,
-            "CORNSILK" to CORNSILK,
-            "CRIMSON" to CRIMSON,
-            "CYAN" to CYAN,
-            "DARK_BLUE" to DARK_BLUE,
-            "DARK_CYAN" to DARK_CYAN,
-            "DARK_GOLDEN_ROD" to DARK_GOLDEN_ROD,
-            "DARK_GRAY" to DARK_GRAY,
-            "DARK_GREY" to DARK_GREY,
-            "DARK_GREEN" to DARK_GREEN,
-            "DARK_KHAKI" to DARK_KHAKI,
-            "DARK_MAGENTA" to DARK_MAGENTA,
-            "DARK_OLIVE_GREEN" to DARK_OLIVE_GREEN,
-            "DARK_ORANGE" to DARK_ORANGE,
-            "DARK_ORCHID" to DARK_ORCHID,
-            "DARK_RED" to DARK_RED,
-            "DARK_SALMON" to DARK_SALMON,
-            "DARK_SEA_GREEN" to DARK_SEA_GREEN,
-            "DARK_SLATE_BLUE" to DARK_SLATE_BLUE,
-            "DARK_SLATE_GRAY" to DARK_SLATE_GRAY,
-            "DARK_SLATE_GREY" to DARK_SLATE_GREY,
-            "DARK_TURQUOISE" to DARK_TURQUOISE,
-            "DARK_VIOLET" to DARK_VIOLET,
-            "DEEP_PINK" to DEEP_PINK,
-            "DEEP_SKY_BLUE" to DEEP_SKY_BLUE,
-            "DIM_GRAY" to DIM_GRAY,
-            "DIM_GREY" to DIM_GREY,
-            "DODGER_BLUE" to DODGER_BLUE,
-            "FIRE_BRICK" to FIRE_BRICK,
-            "FLORAL_WHITE" to FLORAL_WHITE,
-            "FOREST_GREEN" to FOREST_GREEN,
-            "FUCHSIA" to FUCHSIA,
-            "GAINSBORO" to GAINSBORO,
-            "GHOST_WHITE" to GHOST_WHITE,
-            "GOLD" to GOLD,
-            "GOLDEN_ROD" to GOLDEN_ROD,
-            "GRAY" to GRAY,
-            "GREY" to GREY,
-            "GREEN" to GREEN,
-            "GREEN_YELLOW" to GREEN_YELLOW,
-            "HONEY_DEW" to HONEY_DEW,
-            "HOT_PINK" to HOT_PINK,
-            "INDIAN_RED" to INDIAN_RED,
-            "INDIGO" to INDIGO,
-            "IVORY" to IVORY,
-            "KHAKI" to KHAKI,
-            "LAVENDER" to LAVENDER,
-            "LAVENDER_BLUSH" to LAVENDER_BLUSH,
-            "LAWN_GREEN" to LAWN_GREEN,
-            "LEMON_CHIFFON" to LEMON_CHIFFON,
-            "LIGHT_BLUE" to LIGHT_BLUE,
-            "LIGHT_CORAL" to LIGHT_CORAL,
-            "LIGHT_CYAN" to LIGHT_CYAN,
-            "LIGHT_GOLDEN_ROD_YELLOW" to LIGHT_GOLDEN_ROD_YELLOW,
-            "LIGHT_GRAY" to LIGHT_GRAY,
-            "LIGHT_GREY" to LIGHT_GREY,
-            "LIGHT_GREEN" to LIGHT_GREEN,
-            "LIGHT_PINK" to LIGHT_PINK,
-            "LIGHT_SALMON" to LIGHT_SALMON,
-            "LIGHT_SEA_GREEN" to LIGHT_SEA_GREEN,
-            "LIGHT_SKY_BLUE" to LIGHT_SKY_BLUE,
-            "LIGHT_SLATE_GRAY" to LIGHT_SLATE_GRAY,
-            "LIGHT_SLATE_GREY" to LIGHT_SLATE_GREY,
-            "LIGHT_STEEL_BLUE" to LIGHT_STEEL_BLUE,
-            "LIGHT_YELLOW" to LIGHT_YELLOW,
-            "LIME" to LIME,
-            "LIME_GREEN" to LIME_GREEN,
-            "LINEN" to LINEN,
-            "MAGENTA" to MAGENTA,
-            "MAROON" to MAROON,
-            "MEDIUM_AQUA_MARINE" to MEDIUM_AQUA_MARINE,
-            "MEDIUM_BLUE" to MEDIUM_BLUE,
-            "MEDIUM_ORCHID" to MEDIUM_ORCHID,
-            "MEDIUM_PURPLE" to MEDIUM_PURPLE,
-            "MEDIUM_SEA_GREEN" to MEDIUM_SEA_GREEN,
-            "MEDIUM_SLATE_BLUE" to MEDIUM_SLATE_BLUE,
-            "MEDIUM_SPRING_GREEN" to MEDIUM_SPRING_GREEN,
-            "MEDIUM_TURQUOISE" to MEDIUM_TURQUOISE,
-            "MEDIUM_VIOLET_RED" to MEDIUM_VIOLET_RED,
-            "MIDNIGHT_BLUE" to MIDNIGHT_BLUE,
-            "MINT_CREAM" to MINT_CREAM,
-            "MISTY_ROSE" to MISTY_ROSE,
-            "MOCCASIN" to MOCCASIN,
-            "NAVAJO_WHITE" to NAVAJO_WHITE,
-            "NAVY" to NAVY,
-            "OLD_LACE" to OLD_LACE,
-            "OLIVE" to OLIVE,
-            "OLIVE_DRAB" to OLIVE_DRAB,
-            "ORANGE" to ORANGE,
-            "ORANGE_RED" to ORANGE_RED,
-            "ORCHID" to ORCHID,
-            "PALE_GOLDEN_ROD" to PALE_GOLDEN_ROD,
-            "PALE_GREEN" to PALE_GREEN,
-            "PALE_TURQUOISE" to PALE_TURQUOISE,
-            "PALE_VIOLET_RED" to PALE_VIOLET_RED,
-            "PAPAYA_WHIP" to PAPAYA_WHIP,
-            "PEACH_PUFF" to PEACH_PUFF,
-            "PERU" to PERU,
-            "PINK" to PINK,
-            "PLUM" to PLUM,
-            "POWDER_BLUE" to POWDER_BLUE,
-            "PURPLE" to PURPLE,
-            "REBECCA_PURPLE" to REBECCA_PURPLE,
-            "RED" to RED,
-            "ROSY_BROWN" to ROSY_BROWN,
-            "ROYAL_BLUE" to ROYAL_BLUE,
-            "SADDLE_BROWN" to SADDLE_BROWN,
-            "SALMON" to SALMON,
-            "SANDY_BROWN" to SANDY_BROWN,
-            "SEA_GREEN" to SEA_GREEN,
-            "SEA_SHELL" to SEA_SHELL,
-            "SIENNA" to SIENNA,
-            "SILVER" to SILVER,
-            "SKY_BLUE" to SKY_BLUE,
-            "SLATE_BLUE" to SLATE_BLUE,
-            "SLATE_GRAY" to SLATE_GRAY,
-            "SLATE_GREY" to SLATE_GREY,
-            "SNOW" to SNOW,
-            "SPRING_GREEN" to SPRING_GREEN,
-            "STEEL_BLUE" to STEEL_BLUE,
-            "TAN" to TAN,
-            "TEAL" to TEAL,
-            "THISTLE" to THISTLE,
-            "TOMATO" to TOMATO,
-            "TURQUOISE" to TURQUOISE,
-            "VIOLET" to VIOLET,
-            "WHEAT" to WHEAT,
-            "WHITE" to WHITE,
-            "WHITE_SMOKE" to WHITE_SMOKE,
-            "YELLOW" to YELLOW,
-            "YELLOW_GREEN" to YELLOW_GREEN
-        )
 }
