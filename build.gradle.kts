@@ -45,7 +45,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.3.1"
+version = "3.3.0"
 
 kotlin {
     jvm {
@@ -75,6 +75,14 @@ kotlin {
                 outputFileName = "qrcode-kotlin-$version.js"
             }
 
+            testTask {
+                enabled = false
+            }
+
+            binaries.library()
+        }
+
+        nodejs {
             testTask {
                 enabled = false
             }
