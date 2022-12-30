@@ -37,6 +37,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 * **Server friendly:** This isn't a library for Mobile applications, but it is extensible. This is a library thought by
   backend developers for backend developers.
 * ![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical?style=flat) **Android is Supported:** Since this library is now a Kotlin Multiplatform one, Android is now natively supported as well!
+* ![new on v3.3.0](https://img.shields.io/badge/new!-v3.3.0-critical?style=flat) **JavaScript is Supported:** Now a Browser-Compatible JavaScript version is also available. Check an example [here](examples/js/qrcode-example.html)!
 
 >\* Well, except maybe the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
@@ -86,6 +87,18 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
 implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.3.0'
 // Or this one for Android apps 👀
 implementation 'io.github.g0dkar:qrcode-kotlin-android:3.3.0'
+```
+
+**Or if you're using it on your Browser:**
+
+```html
+<!-- Step 1: Import the library -->
+<script src="qrcode-kotlin.min.js"></script>
+
+<!-- Step 2: Recommended to do this to make it easier to use -->
+<script>
+    const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
+</script>
 ```
 
 ## Examples and Usage
