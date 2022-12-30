@@ -10,7 +10,7 @@
 ## 3.3.0
 
 - Started doing the Changelog 🥲
-- Added JavaScript (Browser and NodeJS) into Multiplatform support
+- Added JavaScript (Browser) into Multiplatform support
     - Added Browser JS QRCode Generation example ([link](examples/js/qrcode-example.html))
 - Internal changes to use `Array` instead of `List` and `Collection` in a number of places, to try and be more
   performant

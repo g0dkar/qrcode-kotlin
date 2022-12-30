@@ -72,17 +72,8 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
-                outputFileName = "qrcode-kotlin-$version.js"
             }
 
-            testTask {
-                enabled = false
-            }
-
-            binaries.library()
-        }
-
-        nodejs {
             testTask {
                 enabled = false
             }
@@ -164,11 +155,6 @@ tasks {
             "--keep-fnames"
         )
 
-        println("baseFile=$baseFile")
-        println("minFile=$minFile")
-        println("sourceMap=$sourceMap")
-        println("args=$argss")
-
         command.set("terser")
         args.set(argss)
         inputs.files(baseFile, sourceMap)
@@ -177,8 +163,6 @@ tasks {
 
     /** Copies release files into /release dir */
     register<Copy>("copyToReleaseDir") {
-        dependsOn(minifyReleaseJS)
-
         doFirst {
             layout.projectDirectory.dir("release").asFile.deleteRecursively()
         }

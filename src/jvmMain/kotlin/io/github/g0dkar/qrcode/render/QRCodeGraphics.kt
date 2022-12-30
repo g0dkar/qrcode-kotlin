@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import javax.imageio.ImageIO
 
+@Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int
