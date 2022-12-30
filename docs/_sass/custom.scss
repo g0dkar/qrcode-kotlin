@@ -1,0 +1,102 @@
+span.icon {
+  display: inline-block;
+  width: 1.8em;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.maven-version-badge {
+  text-align: center;
+  height: 20px;
+}
+
+header {
+  h1 {
+    text-align: center;
+    margin: 0;
+    padding: .75em 0;
+  }
+
+  p {
+    font-size: .8em;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+ul.link {
+  a {
+    color: var(--clr-h1-and-bold);
+    text-decoration: none;
+  }
+
+  a:hover, a:focus {
+    color: var(--clr-a-text-hvr);
+  }
+}
+
+.link-wrapper {
+  padding-top: 1em;
+}
+
+#link-wrapper-mobile a {
+  color: var(--clr-h1-and-bold);
+  text-decoration: none;
+}
+
+#link-wrapper-mobile a:hover, a:focus {
+  color: var(--clr-a-text-hvr);
+}
+
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -20px;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+.tab > * {
+  flex: none;
+  padding-left: 20px;
+  position: relative;
+}
+
+.tab > * > a {
+  display: block;
+  text-align: center;
+  padding: 9px 20px;
+  color: var(--clr-text);
+  border-bottom: 2px solid transparent;
+  border-bottom-color: transparent;
+  font-size: 12px;
+  text-transform: uppercase;
+  transition: color .1s ease-in-out;
+  line-height: 20px;
+}
+
+.tab > .active > a {
+  color: var(--clr-h1-and-bold);
+  border-color: var(--clr-a-text);
+}
+
+.tab li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tab-content{
+  padding: 0;
+}
+
+.tab-content li {
+  display: none;
+}
+.tab-content li.active {
+  display: initial;
+}
+

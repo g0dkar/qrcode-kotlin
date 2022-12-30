@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+group :jekyll_plugins do
+    gem "jemoji"
+    gem "jekyll-sitemap"
+    gem "jekyll-seo-tag"
+    gem "jekyll-minifier"
+    gem "jekyll-mentions"
+    gem "jekyll-redirect-from"
+    gem "jekyll-include-cache"
+    gem "webrick"
+    gem "kramdown-parser-gfm"
+end
