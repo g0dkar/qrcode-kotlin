@@ -2885,12 +2885,12 @@ if (typeof Math.imul === 'undefined') {
   function Iterable() {
   }
   Iterable.$metadata$ = interfaceMeta('Iterable');
-  function List() {
-  }
-  List.$metadata$ = interfaceMeta('List', [Collection]);
   function Set() {
   }
   Set.$metadata$ = interfaceMeta('Set', [Collection]);
+  function List() {
+  }
+  List.$metadata$ = interfaceMeta('List', [Collection]);
   function Collection() {
   }
   Collection.$metadata$ = interfaceMeta('Collection', [Iterable]);

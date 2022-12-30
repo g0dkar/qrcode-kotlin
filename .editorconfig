@@ -8,7 +8,6 @@ end_of_line = lf
 [*.{kt,kts,md}]
 indent_size = 4
 continuation_indent_size = 4
-#disabled_rules = import-ordering
 indent_style = space
 insert_final_newline = true
 

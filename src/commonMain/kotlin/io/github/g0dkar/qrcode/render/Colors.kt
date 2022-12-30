@@ -24,8 +24,8 @@ object Colors {
             (b.coerceIn(0..255) and 0xFF shl 0)
 
     /** Compute the R, G, B and Alpha components of a color. All values between `0..255`. */
-    fun getRGBA(color: Int): List<Int> =
-        listOf(
+    fun getRGBA(color: Int): IntArray =
+        intArrayOf(
             (color shr 16) and 0xFF,
             (color shr 8) and 0xFF,
             (color shr 0) and 0xFF,

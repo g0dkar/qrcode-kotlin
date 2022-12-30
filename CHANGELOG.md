@@ -5,13 +5,17 @@
 # Change Log
 
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
-> should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/pulls) :)
+> should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-## 3.3.0
+## 3.3.0 - Latest
 
 - Started doing the Changelog 🥲
+- Added plain release files to the [release](release) directory (only the latest version will be there)
 - Added JavaScript (Browser) into Multiplatform support
     - Added Browser JS QRCode Generation example ([link](examples/js/qrcode-example.html))
-- Internal changes to use `Array` instead of `List` and `Collection` in a number of places, to try and be more
-  performant
-- Started work on Native targets
+    - **Still needs some improvements** on how people use it, but it is a step in the right direction
+    - **Help in this regard is much appreciated!** If interested, this is the domain of Developer Experience, aka
+      DevEx/DevX/DX/IDontKnowWhyAcronymsForEverything
+- Internal changes to use `Array`s instead of `Collection`s in a number of places, to try and be more
+  performant and have a smaller JavaScript file
+- **WIP:** Started work on Native targets (Windows, Linux, macOS, iOS)

@@ -634,6 +634,9 @@ if (typeof Math.imul === 'undefined') {
   function emptySet() {
     return EmptySet_getInstance();
   }
+  function hashSetOf(elements) {
+    return toCollection(elements, HashSet_init_$Create$(mapCapacity(elements.length)));
+  }
   function EmptySet() {
     EmptySet_instance = this;
     this.f1_1 = new Long(1993859828, 793161749);
@@ -674,9 +677,6 @@ if (typeof Math.imul === 'undefined') {
     if (EmptySet_instance == null)
       new EmptySet();
     return EmptySet_instance;
-  }
-  function hashSetOf(elements) {
-    return toCollection(elements, HashSet_init_$Create$(mapCapacity(elements.length)));
   }
   function optimizeReadOnlySet(_this__u8e3s4) {
     var tmp0_subject = _this__u8e3s4.b();
@@ -2885,18 +2885,12 @@ if (typeof Math.imul === 'undefined') {
   function Iterable() {
   }
   Iterable.$metadata$ = interfaceMeta('Iterable');
-  function List() {
-  }
-  List.$metadata$ = interfaceMeta('List', [Collection]);
-  function Entry() {
-  }
-  Entry.$metadata$ = interfaceMeta('Entry');
-  function Map() {
-  }
-  Map.$metadata$ = interfaceMeta('Map');
   function Set() {
   }
   Set.$metadata$ = interfaceMeta('Set', [Collection]);
+  function List() {
+  }
+  List.$metadata$ = interfaceMeta('List', [Collection]);
   function Collection() {
   }
   Collection.$metadata$ = interfaceMeta('Collection', [Iterable]);
@@ -2906,15 +2900,21 @@ if (typeof Math.imul === 'undefined') {
   function MutableIterable() {
   }
   MutableIterable.$metadata$ = interfaceMeta('MutableIterable', [Iterable]);
+  function MutableSet() {
+  }
+  MutableSet.$metadata$ = interfaceMeta('MutableSet', [Set, MutableCollection]);
+  function Entry() {
+  }
+  Entry.$metadata$ = interfaceMeta('Entry');
+  function Map() {
+  }
+  Map.$metadata$ = interfaceMeta('Map');
   function MutableEntry() {
   }
   MutableEntry.$metadata$ = interfaceMeta('MutableEntry', [Entry]);
   function MutableMap() {
   }
   MutableMap.$metadata$ = interfaceMeta('MutableMap', [Map]);
-  function MutableSet() {
-  }
-  MutableSet.$metadata$ = interfaceMeta('MutableSet', [Set, MutableCollection]);
   function Companion_5() {
     Companion_instance_5 = this;
   }

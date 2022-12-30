@@ -143,22 +143,23 @@ tasks {
 /* After Build Publishing  */
 /* *********************** */
 tasks {
-    val minifyReleaseJS by register<NpxTask>("minifyReleaseJS") {
+    register<NpxTask>("minifyReleaseJS") {
         val baseFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js").get().asFile.path
         val minFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js").get().asFile.path
-        val sourceMap = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map").get().asFile.path
-        val argss = listOf(
+        val cmdArgs = listOf(
             baseFile,
-            "--output",
-            minFile,
+            "--compress",
+            "--mangle",
+            "--timings",
             "--keep-classnames",
-            "--keep-fnames"
+            "--keep-fnames",
+            "--source-map",
+            "--output",
+            minFile
         )
 
         command.set("terser")
-        args.set(argss)
-        inputs.files(baseFile, sourceMap)
-        outputs.files(minFile)
+        args.set(cmdArgs)
     }
 
     /** Copies release files into /release dir */
@@ -168,9 +169,9 @@ tasks {
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
+        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js"))
         from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js.map"))
         into(layout.projectDirectory.dir("release"))

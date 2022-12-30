@@ -6,8 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <script src="qrcode-kotlin.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script src="qrcode-kotlin.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -41,17 +41,17 @@
                     <div>
                         <label for="qrcodeCellSize" class="block text-sm font-medium text-gray-700">Cell Size:</label>
                         <div class="mt-1">
-                            <input type="number" min="5" max="100" id="qrcodeCellSize" name="qrcodeCellSize" value="25"
+                            <input type="number" min="5" max="250" id="qrcodeCellSize" name="qrcodeCellSize" value="25"
                                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                    placeholder="How big each square on the resulting QRCode will be"/>
                         </div>
                         <p class="mt-2 text-sm text-gray-500">How big each square in the QRCode will be, in pixels. Default is 25. The
-                            bigger this is, the larger the resulting QRCode will be. <span class="text-indigo-600">Increasing this will also affect how long it takes to generate the QRCode, just not as much as how big the data is :)</span>
+                            bigger this is, the larger the resulting QRCode will be. <span class="text-indigo-600">Increasing this should not affect much how long it takes to generate the QRCode ;)</span>
                         </p>
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    <button type="button" id="downloadBtn"
+                    <a id="downloadBtn" download="qrcode.png"
                             class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="pr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -64,7 +64,7 @@
                         </span>
 
                         Download QRCode
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -111,13 +111,19 @@
   const imgSizeEl = document.getElementById("imgSize")
   const imgEl = document.getElementById("qrcodeResult")
   const sizeEl = document.getElementById("qrcodeCellSize")
+  const downloadBtn = document.getElementById("downloadBtn")
 
   const doRender = (data) => {
     const size = sizeEl.value
+
     const start = Date.now()
     const result = new QRCode(data).render(size)
-    imgEl.src = result.toDataURL()
-    timeEl.textContent = `${Date.now() - start}ms`
+    const finish = Date.now()
+
+    const dataURL = result.toDataURL()
+    downloadBtn.href = dataURL
+    imgEl.src = dataURL
+    timeEl.textContent = `${finish - start}ms`
     imgSizeEl.textContent = `${result.width}x${result.height}, each square is ${size}x${size}`
   }
 
