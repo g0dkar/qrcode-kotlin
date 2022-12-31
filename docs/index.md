@@ -14,6 +14,7 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 <!-- toc -->
 
 - [Advantages of QRCode-Kotlin](#advantages-of-qrcode-kotlin)
+- [Try it Out](#try-it-out)
 - [Installation](#installation)
 - [Usage](#usage)
   * [Just a plain, simple QRCode](#just-a-plain-simple-qrcode)
@@ -44,9 +45,19 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 >\* Well, except maybe the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
+## Try it Out
+
+Since `v3.3.0`, there's a Browser-compatible JavaScript version available. With that, you can try out the library on your browser!
+
+<div>
+    <div><label for="qrcodeContent">QRCode Content:</label></div>
+    <div><input type="text" id="qrcodeContent" placeholder="QRCode Content" value="https://qrcodekotlin.com" /></div>
+    <div><img id="qrcodeResult" alt="Resulting QRCode" width="100%" style="max-width: 625px" /></div>
+</div>
+
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.2.0/qrcode-kotlin),
+This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.3.0/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 <ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
@@ -59,12 +70,12 @@ so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 <ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
 <li class="active" markdown="block">
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.2.0")
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
 ```
 </li>
 <li markdown="block">
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
 ```
 </li>
 <li markdown="block">
@@ -72,7 +83,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
 </dependency>
 ```
 </li>
@@ -81,7 +92,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
 </dependency>
 ```
 </li>
