@@ -51,8 +51,8 @@ Since `v3.3.0`, there's a Browser-compatible JavaScript version available. With 
 
 <div>
     <div><label for="qrcodeContent">QRCode Content:</label></div>
-    <div><input type="text" id="qrcodeContent" placeholder="QRCode Content" value="https://qrcodekotlin.com" /></div>
-    <div><img id="qrcodeResult" alt="Resulting QRCode" width="100%" style="max-width: 625px" /></div>
+    <div><input type="text" id="qrcodeContent" placeholder="QRCode Content" value="https://qrcodekotlin.com" style="width: 100%" /></div>
+    <div style="margin-top: 1rem"><img id="qrcodeResult" alt="Resulting QRCode" width="100%" style="max-width: 625px; border-radius: 5px;" /></div>
 </div>
 
 ## Installation

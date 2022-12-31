@@ -24,3 +24,5 @@ qrcodeContent.onkeyup = (evt) => {
         }, 500)
     }
 }
+
+createQRCode(qrcodeContent.value)
