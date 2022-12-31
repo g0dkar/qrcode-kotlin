@@ -13,6 +13,7 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 <!-- toc -->
 
 - [Vantagens do QRCode-Kotlin](#vantagens-do-qrcode-kotlin)
+- [Experimente](#experimente)
 - [Instalação](#instalação)
 - [Usos](#usos)
   * [Um QRCode simples](#um-qrcode-simples)
@@ -38,8 +39,14 @@ personalizável de se criar QRCodes para o domínio da JVM, especialmente no bac
 * **Amigável aos Servidores:** Esta não é uma biblioteca para aplicações Mobile. Esta biblioteca foi pensada por devs
   backend para devs backend.
 * **Android é Suportado:** Agora que a biblioteca utiliza Kotlin Multiplatforma, Android é suportado nativamente!
+* **JavaScript Nativo:** A partir da `v3.3.0` JavaScript compatível com browsers também é suportado
 
 >\* Bom, exceto talvez a `org.jetbrains.kotlin:kotlin-stdlib-jdk8` se você estiver usando Java...
+
+## Experimente
+
+A partir da `v3.3.0` a biblioteca está sendo disponibilzada em JavaScript compatível com o navegador. Por esta razão, é
+possível [experimentar](example) (página em inglês) a biblioteca diretamente no seu navegador!
 
 ## Instalação
 
@@ -47,38 +54,46 @@ Esta biblioteca está disponível a partir da [Central Maven](https://search.mav
 então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
 
 <ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
-    <li class="active"><a href="#">Gradle (JVM)</a></li>
-    <li><a href="#">Gradle (Android)</a></li>
-    <li><a href="#">Maven (JVM)</a></li>
-    <li><a href="#">Maven (Android)</a></li>
+    <li class="active"><a href="#">Gradle</a></li>
+    <li><a href="#">Maven</a></li>
+    <li><a href="#">JavaScript</a></li>
 </ul>
 <ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
 <li class="active" markdown="block">
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.2.0")
-```
-</li>
-<li markdown="block">
-```groovy
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
+// Para projetos Kotlin ou Java
+implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
+
+// Para projetos Android
+implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
 ```
 </li>
 <li markdown="block">
 ```xml
+<!-- Para projetos Kotlin ou Java -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
+</dependency>
+
+<!-- Para projetos Android -->
+<dependency>
+    <groupId>io.github.g0dkar</groupId>
+    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <version>3.3.0</version>
 </dependency>
 ```
 </li>
 <li markdown="block">
-```xml
-<dependency>
-    <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.2.0</version>
-</dependency>
+```html
+<!-- Step 1: Importe a biblioteca -->
+<script src="qrcode-kotlin.min.js"></script>
+
+<!-- Step 2: Recomendado adicionar esta linha para deixar mais fácil de utilizá-la -->
+<script>
+    const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
+</script>
 ```
 </li>
 </ul>
@@ -86,7 +101,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.2.0")
 ## Usos
 
 Aqui estão alguns exemplos de como utilizar a biblioteca. Se tiver interesse em usos mais avançados ou QRCodes mais
-sofisticados, por favor veja os [Exemplos](/exemplos)! Também há vários [exemplos no GitHub](https://github.com/g0dkar/qrcode-kotlin/tree/main/examples).
+sofisticados, por favor veja os [exemplos no GitHub](https://github.com/g0dkar/qrcode-kotlin/tree/main/examples).
 
 ### Um QRCode simples
 
@@ -95,6 +110,7 @@ Para gerar um QRCode simples:
 <ul class="tab" data-tab="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
     <li class="active"><a href="#">Kotlin</a></li>
     <li><a href="#">Java</a></li>
+    <li><a href="#">JavaScript</a></li>
 </ul>
 <ul class="tab-content" id="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
 <li class="active" markdown="block">
@@ -117,6 +133,17 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo01.png")) {
 }
 ```
 </li>
+<li markdown="block">
+```js
+// Assumindo "const QRCode = window[...]", como sugerido:
+const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render()
+    .toDataURL()
+
+// Exibir em uma tag <img>
+document.getElementById("someImg").src = dataURL
+```
+</li>
 </ul>
 
 ### Ajustando o tamanho
@@ -130,6 +157,7 @@ Seu valor padrão é `0`:
 <ul class="tab" data-tab="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
     <li class="active"><a href="#">Kotlin</a></li>
     <li><a href="#">Java</a></li>
+    <li><a href="#">JavaScript</a></li>
 </ul>
 <ul class="tab-content" id="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
 <li class="active" markdown="block">
@@ -150,6 +178,17 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo02.png")) {
 }
 ```
 </li>
+<li markdown="block">
+```js
+// Assumindo "const QRCode = window[...]", como sugerido:
+const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(50, 25)
+    .toDataURL()
+
+// Exibir em uma tag <img>
+document.getElementById("someImg").src = dataURL
+```
+</li>
 </ul>
 
 ### QRCodes coloridos
@@ -166,6 +205,7 @@ Por diversão, este código cria um QRCode com as cores do Modo Escuro do GitHub
 <ul class="tab" data-tab="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
     <li class="active"><a href="#">Kotlin</a></li>
     <li><a href="#">Java</a></li>
+    <li><a href="#">JavaScript</a></li>
 </ul>
 <ul class="tab-content" id="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
 <li class="active" markdown="block">
@@ -195,6 +235,20 @@ try (FileOutputStream fileOut = new FileOutputStream("exemplo03.png")){
         .render(25, 0, background.getRGB(), foreground.getRGB())
         .writeImage(fileOut);
 }
+```
+</li>
+<li markdown="block">
+```js
+// Assumindo "const QRCode = window[...]", como sugerido:
+const bg = 0xff8b949e // ARGB
+const fg = 0xff0d1117 // ARGB
+
+const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
+    .render(25, 0, bg, fg)
+    .toDataURL()
+
+// Exibir em uma tag <img>
+document.getElementById("someImg").src = dataURL
 ```
 </li>
 </ul>
