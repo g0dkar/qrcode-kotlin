@@ -47,51 +47,43 @@ and customizable way to create QRCodes into the JVM domain, especially in the ba
 
 ## Try it Out
 
-Since `v3.3.0`, there's a Browser-compatible JavaScript version available. With that, you can try out the library on your browser!
-
-<div>
-    <div><label for="qrcodeContent">QRCode Content:</label></div>
-    <div><input type="text" id="qrcodeContent" placeholder="QRCode Content" value="https://qrcodekotlin.com" style="width: 100%" /></div>
-    <div style="margin-top: 1rem;margin-bottom: 1rem"><img id="qrcodeResult" alt="Resulting QRCode" width="100%" style="max-width: 625px; border-radius: 5px;" /></div>
-</div>
+Since `v3.3.0`, there's a Browser-compatible JavaScript version available. With that, you can [try out](example) the
+library on your browser!
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.3.0/qrcode-kotlin),
+This library is available
+from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.3.0/qrcode-kotlin),
 so you can add `QRCode-Kotlin` to your project as a dependency like any other:
 
 <ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
-    <li class="active"><a href="#">Gradle (JVM)</a></li>
-    <li><a href="#">Gradle (Android)</a></li>
-    <li><a href="#">Maven (JVM)</a></li>
-    <li><a href="#">Maven (Android)</a></li>
+    <li class="active"><a href="#">Gradle</a></li>
+    <li><a href="#">Maven</a></li>
     <li><a href="#">JavaScript</a></li>
 </ul>
 <ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
 <li class="active" markdown="block">
 ```groovy
+// For Kotlin or Java Projects
 implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
-```
-</li>
-<li markdown="block">
-```groovy
+
+// For Android Projects
 implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
 ```
 </li>
 <li markdown="block">
 ```xml
+<!-- For Kotlin or Java Projects -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
     <version>3.3.0</version>
 </dependency>
-```
-</li>
-<li markdown="block">
-```xml
+
+<!-- For Android Projects -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-android</artifactId>
+    <artifactId>qrcode-kotlin-jvm</artifactId>
     <version>3.3.0</version>
 </dependency>
 ```
@@ -112,8 +104,7 @@ implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
 ## Usage
 
 Here are a few examples of how to use the library. If you are interested in more advanced uses and/or fancier
-QRCodes, please check our [Examples](/examples) page! Also, we have a bunch of
-[examples over at GitHub](https://github.com/g0dkar/qrcode-kotlin/tree/main/examples).
+QRCodes, please check our [examples over at GitHub](https://github.com/g0dkar/qrcode-kotlin/tree/main/examples).
 
 ### Just a plain, simple QRCode
 
