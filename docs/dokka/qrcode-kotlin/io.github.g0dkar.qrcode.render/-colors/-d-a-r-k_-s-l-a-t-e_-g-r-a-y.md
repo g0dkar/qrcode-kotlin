@@ -1,0 +1,6 @@
+//[qrcode-kotlin](../../../index.md)/[io.github.g0dkar.qrcode.render](../index.md)/[Colors](index.md)/[DARK_SLATE_GRAY](-d-a-r-k_-s-l-a-t-e_-g-r-a-y.md)
+
+# DARK_SLATE_GRAY
+
+[common]\
+const val [DARK_SLATE_GRAY](-d-a-r-k_-s-l-a-t-e_-g-r-a-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)

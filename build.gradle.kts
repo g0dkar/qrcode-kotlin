@@ -211,6 +211,19 @@ tasks {
             }
         }
     }
+
+    dokkaGfm {
+        outputDirectory.set(rootDir.resolve("docs/dokka"))
+
+        dokkaSourceSets {
+            configureEach {
+                includeNonPublic.set(false)
+                skipDeprecated.set(true)
+                reportUndocumented.set(true)
+                skipEmptyPackages.set(true)
+            }
+        }
+    }
 }
 
 val dokkaJar by tasks.creating(Jar::class) {
