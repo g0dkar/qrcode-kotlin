@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.7.22"
 coroutines = "1.7.22"
-dokka = "1.7.20"
+dokka = "1.8.10"
 kotest = "5.5.5"
 spotless = "6.14.1"
 mavenNexus = "1.1.0"
