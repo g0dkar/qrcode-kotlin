@@ -27,7 +27,7 @@ class ZXingQRCode {
 
         val fileOut = FileOutputStream("kotlin-zxing-hello-world.png")
 
-        qrCode.renderIntoGraphics(cellSize, margin, qrCodeData).writeImage(fileOut)
+        qrCode.render(cellSize, margin, qrCodeData).writeImage(fileOut)
     }
 }
 

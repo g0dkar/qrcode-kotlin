@@ -109,6 +109,7 @@ kotlin {
 }
 
 android {
+    namespace = "io.github.g0dkar.qrcode"
     compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
