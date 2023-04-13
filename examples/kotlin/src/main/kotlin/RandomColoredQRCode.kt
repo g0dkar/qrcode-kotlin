@@ -29,6 +29,7 @@ class RandomColoredQRCode {
 }
 
 fun main() {
+    // Note: Colors.allColors() is defined at ColoredQRCode.kt (another example)
     RandomColoredQRCode()
-        .createQRCode("Hello, world!", Colors.allColors().values, Colors.WHITE)
+        .createQRCode("Hello, world!", Colors.allColors(), Colors.WHITE)
 }
