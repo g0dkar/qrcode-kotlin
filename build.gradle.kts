@@ -24,7 +24,6 @@ plugins {
     // Base Plugins
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android.extensions)
 
     // Kotest
     alias(libs.plugins.kotest.multiplatform)
@@ -46,18 +45,18 @@ repositories {
 
 group = "io.github.g0dkar"
 version = "3.3.0"
+val javaVersion = 8
 
 kotlin {
     jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.js.ExperimentalJsExport")
-            }
+        jvmToolchain(javaVersion)
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
         }
     }
 
     android {
+        jvmToolchain(javaVersion)
         publishLibraryVariants("release")
     }
 
@@ -110,15 +109,11 @@ kotlin {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 33
+    compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        targetSdk = 32
     }
 }
 
@@ -180,8 +175,10 @@ tasks {
 }
 
 node {
+    val nodejsVersion = libs.versions.nodejs.getOrElse("16.14.0")
+
     download.set(true)
-    version.set("16.14.0")
+    version.set(nodejsVersion)
     allowInsecureProtocol.set(false)
     nodeProjectDir.set(layout.buildDirectory.dir("tmp"))
 }
@@ -242,7 +239,8 @@ val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSR
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
 
 nexusPublishing {
-    repositories {
+    // Workaround from https://github.com/gradle-nexus/publish-plugin/issues/220
+    this.repositories {
         sonatype {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
@@ -254,9 +252,9 @@ nexusPublishing {
 }
 
 signing {
-    val key = properties.getOrDefault("signingKey", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
+    val key = properties.getOrDefault("signing.key", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
     val password =
-        properties.getOrDefault("signingPassword", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+        properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
 
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
@@ -268,16 +266,16 @@ publishing {
             artifact(dokkaJar)
 
             pom {
-                val projectGitUrl = "https://github.com/g0dkar/qrcode-kotlin"
+                val projectGitUrl = "github.com/g0dkar/qrcode-kotlin"
 
                 name.set(rootProject.name)
                 description.set("A Kotlin Library to generate QR Codes without any other dependencies.")
-                url.set(projectGitUrl)
+                url.set("https://$projectGitUrl")
                 inceptionYear.set("2021")
                 licenses {
                     license {
                         name.set("MIT")
-                        url.set("$projectGitUrl/blob/main/LICENSE")
+                        url.set("https://rafaellins.mit-license.org/2021/")
                     }
                 }
                 developers {
@@ -290,12 +288,12 @@ publishing {
                 }
                 issueManagement {
                     system.set("GitHub")
-                    url.set("$projectGitUrl/issues")
+                    url.set("https://$projectGitUrl/issues")
                 }
                 scm {
-                    connection.set("scm:git:$projectGitUrl")
-                    developerConnection.set("scm:git:$projectGitUrl")
-                    url.set(projectGitUrl)
+                    connection.set("scm:git://$projectGitUrl.git")
+                    developerConnection.set("scm:git://$projectGitUrl.git")
+                    url.set("https://$projectGitUrl")
                 }
             }
         }

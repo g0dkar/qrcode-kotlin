@@ -278,6 +278,7 @@ internal object QRUtil {
     fun getMaxLength(typeNumber: Int, dataType: QRCodeDataType, errorCorrectionLevel: ErrorCorrectionLevel): Int =
         MAX_LENGTH[typeNumber - 1][errorCorrectionLevel.ordinal][dataType.ordinal]
 
+    @Suppress("NON_EXPORTABLE_TYPE")
     fun getErrorCorrectPolynomial(errorCorrectLength: Int): Polynomial {
         var a = Polynomial(intArrayOf(1))
         for (i in 0 until errorCorrectLength) {
