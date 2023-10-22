@@ -10,12 +10,6 @@ buildscript {
     }
 }
 
-/*
- * IntelliJ is currently (2022-12-22) bugged if you use this "alias(libs...)" here on plugins.
- *
- * Solution found here: https://youtrack.jetbrains.com/issue/KTIJ-19369/False-positive-cant-be-called-in-this-context-by-implicit-receiver-with-plugins-in-Gradle-version-catalogs-as-a-TOML-file#focus=Comments-27-5860112.0-0
- */
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Dev Plugins
     id("idea")
@@ -50,17 +44,19 @@ val javaVersion = 8
 kotlin {
     jvm {
         jvmToolchain(javaVersion)
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
+        testRuns.named("test") {
+            executionTask.configure {
+                useJUnitPlatform()
+            }
         }
     }
 
-    android {
+    androidTarget {
         jvmToolchain(javaVersion)
         publishLibraryVariants("release")
     }
 
-    js(IR) {
+    js {
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -81,15 +77,7 @@ kotlin {
         }
     }
 
-    val nativeArtifactName = name.replace(Regex("-(\\w)")) { it.groupValues[1].toUpperCase() }
-    val hostOS = System.getProperty("os.name")
-    val isMingwX64 = hostOS.startsWith("Windows")
-    val nativeTarget = when {
-        hostOS == "Mac OS X" -> macosX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
-        hostOS == "Linux" -> linuxX64("native") { binaries { sharedLib { baseName = nativeArtifactName } } }
-        isMingwX64 -> mingwX64("native") { binaries { sharedLib { baseName = "lib$nativeArtifactName" } } }
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+    ios()
 
     sourceSets {
         val commonTest by getting {
@@ -99,6 +87,7 @@ kotlin {
                 implementation(libs.kotest.framework.engine)
             }
         }
+
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
@@ -112,7 +101,7 @@ android {
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
         targetSdk = 32
     }
 }
