@@ -1,12 +1,14 @@
-package io.github.g0dkar.qrcode.fancy
+package qrcode.fancy
 
-import io.github.g0dkar.qrcode.QRCode
 import io.github.g0dkar.qrcode.QRCodeRawData
-import io.github.g0dkar.qrcode.fancy.color.DefaultColorFunction
-import io.github.g0dkar.qrcode.fancy.color.QRCodeColorFunction
-import io.github.g0dkar.qrcode.render.Colors
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlin.jvm.JvmOverloads
+import qrcode.QRCode
+import qrcode.fancy.color.DefaultColorFunction
+import qrcode.fancy.color.QRCodeColorFunction
+import qrcode.fancy.shape.DefaultShapeFunction
+import qrcode.fancy.shape.QRCodeShapeFunction
 
 /**
  * A fun class to easily create some of the more fancy QRCodes people come up with these days.
@@ -26,11 +28,12 @@ import kotlin.js.JsExport
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
-class FancyQRCode(
+class FancyQRCode @JvmOverloads constructor(
     private val qrCode: QRCode,
     var cellSize: Int = QRCode.DEFAULT_CELL_SIZE,
     var margin: Int = QRCode.DEFAULT_MARGIN,
-    var colorFunction: QRCodeColorFunction = DefaultColorFunction(Colors.BLACK),
+    var colorFn: QRCodeColorFunction = DefaultColorFunction(),
+    var shapeFn: QRCodeShapeFunction = DefaultShapeFunction(),
 ) {
     private val rawData: QRCodeRawData = qrCode.encode()
 }

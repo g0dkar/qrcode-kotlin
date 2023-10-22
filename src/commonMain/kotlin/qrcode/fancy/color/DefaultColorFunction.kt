@@ -1,9 +1,9 @@
-package io.github.g0dkar.qrcode.fancy.color
+package qrcode.fancy.color
 
-import io.github.g0dkar.qrcode.internals.QRCodeSquare
-import io.github.g0dkar.qrcode.render.Colors
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import qrcode.Colors
+import qrcode.internals.QRCodeSquare
 
 @JsExport
 @OptIn(ExperimentalJsExport::class)

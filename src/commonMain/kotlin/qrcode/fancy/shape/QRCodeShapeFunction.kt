@@ -1,11 +1,11 @@
-package io.github.g0dkar.qrcode.fancy.shape
+package qrcode.fancy.shape
 
-import io.github.g0dkar.qrcode.fancy.FancyQRCode
-import io.github.g0dkar.qrcode.fancy.color.QRCodeColorFunction
-import io.github.g0dkar.qrcode.internals.QRCodeSquare
-import io.github.g0dkar.qrcode.render.QRCodeGraphics
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import qrcode.fancy.FancyQRCode
+import qrcode.fancy.color.QRCodeColorFunction
+import qrcode.internals.QRCodeSquare
+import qrcode.render.QRCodeGraphics
 
 @JsExport
 @OptIn(ExperimentalJsExport::class)
