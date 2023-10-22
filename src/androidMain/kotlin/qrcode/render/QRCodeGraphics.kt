@@ -1,8 +1,10 @@
 package qrcode.render
 
 import android.graphics.*
+import android.graphics.Bitmap.CompressFormat
 import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.Bitmap.Config.ARGB_8888
+import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import java.io.ByteArrayOutputStream
@@ -14,7 +16,7 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int
 ) {
     companion object {
-        val AVAILABLE_FORMATS: Array<String> = Bitmap.CompressFormat.values().map { it.name }.toTypedArray()
+        val AVAILABLE_FORMATS: Array<String> = CompressFormat.values().map { it.name }.toTypedArray()
     }
 
     protected fun createCanvas(image: Bitmap) = Canvas(image)
@@ -26,7 +28,7 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
      */
-    protected fun paintFromCache(color: Int, paintStyle: Paint.Style = STROKE): Paint {
+    protected fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
         val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
 
         return paint.apply {
@@ -75,7 +77,7 @@ actual open class QRCodeGraphics actual constructor(
      */
     private fun toCompressFormat(format: String) =
         try {
-            Bitmap.CompressFormat.valueOf(format.uppercase())
+            CompressFormat.valueOf(format.uppercase())
         } catch (e: Throwable) {
             PNG
         }
