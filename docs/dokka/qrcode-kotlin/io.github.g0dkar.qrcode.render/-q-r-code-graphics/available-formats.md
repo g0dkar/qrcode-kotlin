@@ -19,19 +19,12 @@ Returns the available formats to be passed as parameters to [getBytes](get-bytes
 
 #### See also
 
-android
-
 | |
 |---|
 | [Bitmap.CompressFormat](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html) |
 | [Bitmap.CompressFormat.PNG](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html#PNG) |
 | [Bitmap.CompressFormat.JPEG](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html#JPEG) |
 | [Bitmap.CompressFormat.WEBP](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html#WEBP) |
-
-jvm
-
-| |
-|---|
 | [ImageIO.getWriterFileSuffixes](https://docs.oracle.com/javase/8/docs/api/javax/imageio/ImageIO.html#getWriterFileSuffixes--) |
 
 [js]\

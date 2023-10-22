@@ -13,8 +13,6 @@ For app stability reasons if the specified [format](write-image.md) doesn't exis
 
 #### See also
 
-android
-
 | |
 |---|
 | [Bitmap.compress](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.html#compress) |
@@ -29,8 +27,6 @@ open fun [writeImage](write-image.md)(destination: [OutputStream](https://develo
 Writes the QRCode image in the specified [format](write-image.md) into the destination [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html).
 
 #### See also
-
-jvm
 
 | |
 |---|

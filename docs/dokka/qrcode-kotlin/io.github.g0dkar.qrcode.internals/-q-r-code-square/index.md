@@ -17,14 +17,7 @@ Rafael Lins - g0dkar
 
 | | |
 |---|---|
-| [QRCodeSquare](-q-r-code-square.md) | [common]<br>fun [QRCodeSquare](-q-r-code-square.md)(dark: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), row: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), col: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), moduleSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), squareInfo: [QRCodeSquareInfo](../-q-r-code-square-info/index.md) = QRCodeSquareInfo(DEFAULT, UNKNOWN)) |
-
-## Functions
-
-| Name | Summary |
-|---|---|
-| [absoluteX](absolute-x.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [absoluteX](absolute-x.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCode.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculates where is the X position where this square will be in the main QRCode image given a [cellSize](absolute-x.md). |
-| [absoluteY](absolute-y.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [absoluteY](absolute-y.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCode.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize](absolute-y.md). |
+| [QRCodeSquare](-q-r-code-square.md) | [common]<br>constructor(dark: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html), row: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), col: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), moduleSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), squareInfo: [QRCodeSquareInfo](../-q-r-code-square-info/index.md) = QRCodeSquareInfo(DEFAULT, UNKNOWN)) |
 
 ## Properties
 
@@ -35,3 +28,10 @@ Rafael Lins - g0dkar
 | [moduleSize](module-size.md) | [common]<br>val [moduleSize](module-size.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>How big is the whole QRCode matrix? (e.g. if this is &quot;16&quot; then this is part of a 16x16 matrix) |
 | [row](row.md) | [common]<br>val [row](row.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>The row (top-to-bottom) that this square represents. |
 | [squareInfo](square-info.md) | [common]<br>val [squareInfo](square-info.md): [QRCodeSquareInfo](../-q-r-code-square-info/index.md)<br>What does this square represent within the QRCode? |
+
+## Functions
+
+| Name | Summary |
+|---|---|
+| [absoluteX](absolute-x.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [absoluteX](absolute-x.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCode.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculates where is the X position where this square will be in the main QRCode image given a [cellSize](absolute-x.md). |
+| [absoluteY](absolute-y.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [absoluteY](absolute-y.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCode.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize](absolute-y.md). |

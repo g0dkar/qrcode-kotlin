@@ -19,7 +19,7 @@ Rafael Lins - g0dkar
 
 | | |
 |---|---|
-| [QRCodeGraphicsFactory](-q-r-code-graphics-factory.md) | [common]<br>fun [QRCodeGraphicsFactory](-q-r-code-graphics-factory.md)() |
+| [QRCodeGraphicsFactory](-q-r-code-graphics-factory.md) | [common]<br>constructor() |
 
 ## Functions
 

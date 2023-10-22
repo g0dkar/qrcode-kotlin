@@ -12,13 +12,20 @@ actual open class [QRCodeGraphics](index.md)(val width: [Int](https://kotlinlang
 
 | | |
 |---|---|
-| [QRCodeGraphics](-q-r-code-graphics.md) | [common]<br>expect fun [QRCodeGraphics](-q-r-code-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html))<br>[android, js, jvm, native]<br>actual fun [QRCodeGraphics](-q-r-code-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) |
+| [QRCodeGraphics](-q-r-code-graphics.md) | [common]<br>expect constructor(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html))<br>[android, js, jvm, native]<br>actual constructor(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) |
 
 ## Types
 
 | Name | Summary |
 |---|---|
 | Companion | [android, js]<br>[android]<br>object [Companion]([android]-companion/index.md)<br>[js]<br>object [Companion]([js]-companion/index.md) |
+
+## Properties
+
+| Name | Summary |
+|---|---|
+| height | [android, js, jvm, native]<br>[android]<br>val [height]([android]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[js]<br>val [height]([js]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[jvm]<br>val [height]([jvm]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[native]<br>val [height]([native]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| width | [android, js, jvm, native]<br>[android]<br>val [width]([android]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[js]<br>val [width]([js]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[jvm]<br>val [width]([jvm]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[native]<br>val [width]([native]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
 
 ## Functions
 
@@ -37,10 +44,3 @@ actual open class [QRCodeGraphics](index.md)(val width: [Int](https://kotlinlang
 | [toBlob](to-blob.md) | [js]<br>open fun [toBlob](to-blob.md)(callback: ([Blob](https://kotlinlang.org/api/latest/jvm/stdlib/org.w3c.files/-blob/index.html)?) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html))<br>Direct access to the `.toBlob()` function of the underlying canvas. |
 | [toDataURL](to-data-u-r-l.md) | [js]<br>open fun [toDataURL](to-data-u-r-l.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;png&quot;): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br>Returns a Data URL to this can be shown in an `<img/>` tag. |
 | [writeImage](write-image.md) | [jvm]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;PNG&quot;)<br>Writes the QRCode image in the specified [format](write-image.md) into the destination [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html).<br>[android]<br>open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;PNG&quot;, quality: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 100)<br>Writes the QRCode image in the specified [format](write-image.md) and [quality](write-image.md) into the destination [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html). |
-
-## Properties
-
-| Name | Summary |
-|---|---|
-| height | [android]<br>val [height]([android]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[js]<br>val [height]([js]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[jvm]<br>val [height]([jvm]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[native]<br>val [height]([native]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
-| width | [android]<br>val [width]([android]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[js]<br>val [width]([js]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[jvm]<br>val [width]([jvm]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>[native]<br>val [width]([native]width.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |

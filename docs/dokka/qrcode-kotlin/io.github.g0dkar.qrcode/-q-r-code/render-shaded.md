@@ -41,16 +41,6 @@ QRCode("example").renderShaded { cellData, graphics ->
 
 A [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) with the QR Code rendered on it. It can then be saved or manipulated as desired.
 
-#### See also
-
-common
-
-| |
-|---|
-| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
-| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
-| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |
-
 #### Parameters
 
 common
@@ -62,3 +52,11 @@ common
 | rawData | The data matrix of the QR Code. Defaults to [this.encode()](encode.md). |
 | qrCodeGraphics | The [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) where the QRCode will be painted into. |
 | renderer | Lambda that draws a single QRCode square. It receives as parameters the [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) being draw and a [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) for it to draw the square. |
+
+#### See also
+
+| |
+|---|
+| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
+| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
+| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |

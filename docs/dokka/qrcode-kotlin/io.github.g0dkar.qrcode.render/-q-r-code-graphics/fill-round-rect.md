@@ -16,9 +16,9 @@ If it helps, these would *in theory* draw the same thing:
 ```kotlin
 // CSS
 .roundRect {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
+    width: 100px
+    height: 100px
+    border-radius: 5px
 }
 
 // Kotlin
@@ -37,9 +37,9 @@ If it helps, these would *in theory* draw the same thing:
 ```kotlin
 // CSS
 .roundRect {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
+    width: 100px
+    height: 100px
+    border - radius: 5px
 }
 
 // Kotlin

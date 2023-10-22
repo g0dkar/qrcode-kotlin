@@ -2,7 +2,6 @@
 
 # Colors
 
-[common]\
 object [Colors](index.md)
 
 Just a lot of colors to use when drawing :)
@@ -15,22 +14,11 @@ Rafael Lins - g0dkar
 
 #### See also
 
-common
-
 | |
 |---|
 | [Colors.css](css.md) |
 | [Colors.withAlpha](with-alpha.md) |
 | allColors |
-
-## Functions
-
-| Name | Summary |
-|---|---|
-| [css](css.md) | [common]<br>fun [css](css.md)(str: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Very simple function to turn &quot;#cc0000&quot; into a color. |
-| [getRGBA](get-r-g-b-a.md) | [common]<br>fun [getRGBA](get-r-g-b-a.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [IntArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html)<br>Compute the R, G, B and Alpha components of a color. All values between `0..255`. |
-| [rgba](rgba.md) | [common]<br>fun [rgba](rgba.md)(r: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), g: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), b: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), a: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 255): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Builds an RGBA color value from its numerical components. All values must be between `0..255`. |
-| [withAlpha](with-alpha.md) | [common]<br>fun [withAlpha](with-alpha.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), alpha: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Returns the especified color with an added alpha channel. That means a transparent/opaque color. |
 
 ## Properties
 
@@ -184,3 +172,12 @@ common
 | [WHITE_SMOKE](-w-h-i-t-e_-s-m-o-k-e.md) | [common]<br>const val [WHITE_SMOKE](-w-h-i-t-e_-s-m-o-k-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
 | [YELLOW](-y-e-l-l-o-w.md) | [common]<br>const val [YELLOW](-y-e-l-l-o-w.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
 | [YELLOW_GREEN](-y-e-l-l-o-w_-g-r-e-e-n.md) | [common]<br>const val [YELLOW_GREEN](-y-e-l-l-o-w_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+
+## Functions
+
+| Name | Summary |
+|---|---|
+| [css](css.md) | [common]<br>fun [css](css.md)(str: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Very simple function to turn &quot;#cc0000&quot; into a color. |
+| [getRGBA](get-r-g-b-a.md) | [common]<br>fun [getRGBA](get-r-g-b-a.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [IntArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html)<br>Compute the R, G, B and Alpha components of a color. All values between `0..255`. |
+| [rgba](rgba.md) | [common]<br>fun [rgba](rgba.md)(r: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), g: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), b: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), a: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 255): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Builds an RGBA color value from its numerical components. All values must be between `0..255`. |
+| [withAlpha](with-alpha.md) | [common]<br>fun [withAlpha](with-alpha.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), alpha: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Returns the especified color with an added alpha channel. That means a transparent/opaque color. |

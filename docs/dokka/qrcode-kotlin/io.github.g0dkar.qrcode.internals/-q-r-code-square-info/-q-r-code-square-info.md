@@ -3,4 +3,4 @@
 # QRCodeSquareInfo
 
 [common]\
-fun [QRCodeSquareInfo](-q-r-code-square-info.md)(type: [QRCodeSquareType](../-q-r-code-square-type/index.md), region: [QRCodeRegion](../-q-r-code-region/index.md))
+constructor(type: [QRCodeSquareType](../-q-r-code-square-type/index.md), region: [QRCodeRegion](../-q-r-code-region/index.md))

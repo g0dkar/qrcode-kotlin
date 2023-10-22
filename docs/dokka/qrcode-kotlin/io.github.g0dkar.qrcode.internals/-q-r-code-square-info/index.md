@@ -13,7 +13,7 @@ For example, if `type = POSITION_PROBE` then [region](region.md) will represent 
 
 | | |
 |---|---|
-| [QRCodeSquareInfo](-q-r-code-square-info.md) | [common]<br>fun [QRCodeSquareInfo](-q-r-code-square-info.md)(type: [QRCodeSquareType](../-q-r-code-square-type/index.md), region: [QRCodeRegion](../-q-r-code-region/index.md)) |
+| [QRCodeSquareInfo](-q-r-code-square-info.md) | [common]<br>constructor(type: [QRCodeSquareType](../-q-r-code-square-type/index.md), region: [QRCodeRegion](../-q-r-code-region/index.md)) |
 
 ## Types
 

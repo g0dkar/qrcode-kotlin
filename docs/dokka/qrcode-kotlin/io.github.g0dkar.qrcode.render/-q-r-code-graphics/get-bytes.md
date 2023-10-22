@@ -18,16 +18,9 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 
 #### See also
 
-android
-
 | |
 |---|
 | [QRCodeGraphics.writeImage](write-image.md) |
-
-jvm
-
-| |
-|---|
 | [QRCodeGraphics.writeImage](write-image.md) |
 
 [jvm]\
@@ -37,16 +30,9 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 
 #### See also
 
-android
-
 | |
 |---|
 | [QRCodeGraphics.writeImage](write-image.md) |
-
-jvm
-
-| |
-|---|
 | [QRCodeGraphics.writeImage](write-image.md) |
 
 [common, js, native]\
@@ -65,17 +51,10 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 
 #### See also
 
-android
-
 | |
 |---|
 | [QRCodeGraphics.writeImage](write-image.md) |
 | [QRCodeGraphics.availableFormats](available-formats.md) |
-
-jvm
-
-| |
-|---|
 | [QRCodeGraphics.writeImage](write-image.md) |
 
 [jvm]\
@@ -85,15 +64,8 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 
 #### See also
 
-android
-
 | |
 |---|
 | [QRCodeGraphics.writeImage](write-image.md) |
 | [QRCodeGraphics.availableFormats](available-formats.md) |
-
-jvm
-
-| |
-|---|
 | [QRCodeGraphics.writeImage](write-image.md) |

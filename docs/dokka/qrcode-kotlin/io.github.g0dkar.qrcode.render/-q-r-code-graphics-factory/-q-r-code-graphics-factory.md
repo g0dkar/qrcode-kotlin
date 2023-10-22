@@ -3,4 +3,4 @@
 # QRCodeGraphicsFactory
 
 [common]\
-fun [QRCodeGraphicsFactory](-q-r-code-graphics-factory.md)()
+constructor()

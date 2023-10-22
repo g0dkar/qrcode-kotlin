@@ -13,6 +13,7 @@ $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.TOP_MID///Pointin
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.TOP_RIGHT_CORNER///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-t-o-p_-r-i-g-h-t_-c-o-r-n-e-r/index.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion.UNKNOWN///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/-u-n-k-n-o-w-n/index.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/index.md
+$dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion/entries/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/entries.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/value-of.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeRegion/values/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-region/values.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquare///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md
@@ -35,6 +36,7 @@ $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType.POSITION_ADJU
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType.POSITION_PROBE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/-p-o-s-i-t-i-o-n_-p-r-o-b-e/index.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType.TIMING_PATTERN///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/-t-i-m-i-n-g_-p-a-t-t-e-r-n/index.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/index.md
+$dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType/entries/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/entries.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/value-of.md
 $dokka.location:io.github.g0dkar.qrcode.internals/QRCodeSquareType/values/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.internals/-q-r-code-square-type/values.md
 $dokka.location:io.github.g0dkar.qrcode.render////PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode.render/index.md
@@ -222,6 +224,7 @@ $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel.L///PointingToDecla
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel.M///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/-m/index.md
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel.Q///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/-q/index.md
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/index.md
+$dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel/entries/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/entries.md
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel/maxTypeNum/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/max-type-num.md
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel/value/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/value.md
 $dokka.location:io.github.g0dkar.qrcode/ErrorCorrectionLevel/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-error-correction-level/value-of.md
@@ -235,6 +238,7 @@ $dokka.location:io.github.g0dkar.qrcode/MaskPattern.PATTERN101///PointingToDecla
 $dokka.location:io.github.g0dkar.qrcode/MaskPattern.PATTERN110///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/-p-a-t-t-e-r-n110/index.md
 $dokka.location:io.github.g0dkar.qrcode/MaskPattern.PATTERN111///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/-p-a-t-t-e-r-n111/index.md
 $dokka.location:io.github.g0dkar.qrcode/MaskPattern///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/index.md
+$dokka.location:io.github.g0dkar.qrcode/MaskPattern/entries/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/entries.md
 $dokka.location:io.github.g0dkar.qrcode/MaskPattern/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/value-of.md
 $dokka.location:io.github.g0dkar.qrcode/MaskPattern/values/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-mask-pattern/values.md
 $dokka.location:io.github.g0dkar.qrcode/QRCode.Companion///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code/-companion/index.md
@@ -255,6 +259,7 @@ $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType.DEFAULT///PointingToDecla
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType.NUMBERS///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/-n-u-m-b-e-r-s/index.md
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType.UPPER_ALPHA_NUM///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/-u-p-p-e-r_-a-l-p-h-a_-n-u-m/index.md
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType///PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/index.md
+$dokka.location:io.github.g0dkar.qrcode/QRCodeDataType/entries/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/entries.md
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType/value/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/value.md
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/value-of.md
 $dokka.location:io.github.g0dkar.qrcode/QRCodeDataType/values/#/PointingToDeclaration/qrcode-kotlin/io.github.g0dkar.qrcode/-q-r-code-data-type/values.md

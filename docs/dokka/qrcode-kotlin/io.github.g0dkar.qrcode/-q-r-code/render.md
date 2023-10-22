@@ -11,17 +11,6 @@ Renders a QR Code image based on its [computed data](encode.md). This function e
 
 A [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) with the QR Code rendered on it. It can then be saved or manipulated as desired.
 
-#### See also
-
-common
-
-| |
-|---|
-| [QRCode.renderShaded](render-shaded.md) |
-| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
-| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
-| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |
-
 #### Parameters
 
 common
@@ -33,6 +22,15 @@ common
 | brightColor | Color to be used for the &quot;bright&quot; parts of the QR Code. In RGBA space. Defaults to [white](../../io.github.g0dkar.qrcode.render/-colors/-w-h-i-t-e.md). |
 | darkColor | Color to be used for the &quot;dark&quot; parts of the QR Code. In RGBA space. Defaults to [black](../../io.github.g0dkar.qrcode.render/-colors/-b-l-a-c-k.md). |
 | marginColor | Color to be used for the &quot;margin&quot; part of the QR Code. In RGBA space. Defaults to [white](../../io.github.g0dkar.qrcode.render/-colors/-w-h-i-t-e.md). |
+
+#### See also
+
+| |
+|---|
+| [QRCode.renderShaded](render-shaded.md) |
+| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
+| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
+| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |
 
 [common]\
 
@@ -54,17 +52,6 @@ Renders a QR Code image based on its [computed data](encode.md).
 
 A [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) with the QR Code rendered on it. It can then be saved or manipulated as desired.
 
-#### See also
-
-common
-
-| |
-|---|
-| [QRCode.renderShaded](render-shaded.md) |
-| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
-| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
-| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |
-
 #### Parameters
 
 common
@@ -78,3 +65,12 @@ common
 | brightColor | Color to be used for the &quot;bright&quot; parts of the QR Code. In RGBA space. Defaults to [white](../../io.github.g0dkar.qrcode.render/-colors/-w-h-i-t-e.md). |
 | darkColor | Color to be used for the &quot;dark&quot; parts of the QR Code. In RGBA space. Defaults to [black](../../io.github.g0dkar.qrcode.render/-colors/-b-l-a-c-k.md). |
 | marginColor | Color to be used for the &quot;margin&quot; part of the QR Code. In RGBA space. Defaults to [white](../../io.github.g0dkar.qrcode.render/-colors/-w-h-i-t-e.md). |
+
+#### See also
+
+| |
+|---|
+| [QRCode.renderShaded](render-shaded.md) |
+| [QRCodeSquare](../../io.github.g0dkar.qrcode.internals/-q-r-code-square/index.md) |
+| [QRCodeGraphics](../../io.github.g0dkar.qrcode.render/-q-r-code-graphics/index.md) |
+| [Colors](../../io.github.g0dkar.qrcode.render/-colors/index.md) |
