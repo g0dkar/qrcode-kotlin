@@ -1,6 +1,9 @@
 package io.github.g0dkar.qrcode.render
 
 expect class QRCodeGraphics(width: Int, height: Int) {
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    fun dimensions(): Pair<Int, Int>
+
     /** Returns this image as a [ByteArray] encoded as PNG. */
     fun getBytes(): ByteArray
 

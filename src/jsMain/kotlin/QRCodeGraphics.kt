@@ -47,6 +47,9 @@ actual open class QRCodeGraphics actual constructor(
         action()
     }
 
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    actual open fun dimensions() = Pair(width, height)
+
     /**
      * Returns a Data URL to this can be shown in an `<img/>` tag.
      */

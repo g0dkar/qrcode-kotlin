@@ -42,6 +42,9 @@ actual open class QRCodeGraphics actual constructor(
         }
     }
 
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    actual open fun dimensions() = Pair(width, height)
+
     /**
      * Returns this image as a [ByteArray] encoded as PNG. Recommended to use [writeImage].
      *
