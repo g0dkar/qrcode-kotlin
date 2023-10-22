@@ -1,12 +1,12 @@
 package io.github.g0dkar.qrcode.render
 
 import kotlinx.browser.document
+import org.khronos.webgl.Uint8ClampedArray
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.ImageData
 import org.w3c.files.Blob
 
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
@@ -14,6 +14,7 @@ actual open class QRCodeGraphics actual constructor(
 ) {
     companion object {
         private const val CANVAS_UNSUPPORTED = "Canvas seems to not be supported :("
+        private const val FULL_CIRCLE = 3.141592653589793 * 2.0 // 2 * PI = Full circle
     }
 
     private val canvas: HTMLCanvasElement
@@ -177,4 +178,44 @@ actual open class QRCodeGraphics actual constructor(
         } catch (t: Throwable) {
             throw Error(CANVAS_UNSUPPORTED, cause = t)
         }
+
+    /**
+     * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
+     */
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        draw(color) {
+            val radiusX = width.toDouble() / 2.0
+            val radiusY = height.toDouble() / 2.0
+
+            context.beginPath()
+            context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
+            context.stroke()
+        }
+    }
+
+    /**
+     * Fills an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
+     *
+     */
+    actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        draw(color) {
+            val radiusX = width.toDouble() / 2.0
+            val radiusY = height.toDouble() / 2.0
+
+            context.beginPath()
+            context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
+            context.fill()
+        }
+    }
+
+    /**
+     * Reads the specified image from [rawData] and draws it at `(x,y)`.
+     *
+     * On JS this has a limitation that the [rawData] image will be loaded considering it has the same [width] as
+     * this object.
+     */
+    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
+        val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
+        context.putImageData(imageData, x.toDouble(), y.toDouble())
+    }
 }
