@@ -39,7 +39,7 @@ repositories {
 
 group = "io.github.g0dkar"
 version = "3.3.0"
-val javaVersion = 8
+val javaVersion = 11
 
 kotlin {
     jvm {
@@ -115,6 +115,7 @@ tasks {
         filter {
             isFailOnNoMatchingTests = false
         }
+
         testLogging {
             showExceptions = true
             showStandardStreams = true
