@@ -4,6 +4,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import javax.imageio.ImageIO
@@ -26,7 +27,11 @@ actual open class QRCodeGraphics actual constructor(
 
     protected open fun createGraphics(): Graphics2D = createImage().createGraphics()
 
-    private fun draw(color: Int, action: (Graphics2D) -> Unit) {
+    /**
+     * Handles the annoying parts of drawing. It sets up the specified [color] as the stroke, fill and background colors
+     * and then executes the given [action] passing the [Graphics2D] as a parameter to it.
+     */
+    protected fun draw(color: Int, action: (Graphics2D) -> Unit) {
         val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
@@ -156,8 +161,43 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
     actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
+        drawImage(img.createImage(), x, y)
+    }
+
+    /**
+     * Draw the edges of an ellipsis (aka "a circle") which occupies the area `(x,y,width,height)`
+     */
+    actual open fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        draw(color) {
+            // The docs say the dimensions are width+1 and height+1... why? because f.u.
+            it.drawOval(x, y, width - 1, height - 1)
+        }
+    }
+
+    /**
+     * Fills an ellipsis (aka "a circle") which occupies the area `(x,y,width,height)`
+     *
+     */
+    actual open fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        draw(color) {
+            it.fillOval(x, y, width, height)
+        }
+    }
+
+    /**
+     * Reads the specified image from [rawData] and draws it at `(x,y)`
+     */
+    actual open fun drawImage(rawData: ByteArray, x: Int, y: Int) {
         draw(0) {
-            it.drawImage(img.createImage(), x, y, null)
+            ByteArrayInputStream(rawData).use { inStream ->
+                drawImage(ImageIO.read(inStream), x, y)
+            }
+        }
+    }
+
+    open fun drawImage(image: BufferedImage, x: Int, y: Int) {
+        draw(0) {
+            it.drawImage(image, x, y, null)
         }
     }
 }
