@@ -1,7 +1,5 @@
 package com.d_project.qrcode;
 
-import io.github.g0dkar.qrcode.render.Colors;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public class QRCode {
 
     private int errorCorrectionLevel;
 
-    private List<QRData> qrDataList;
+    private final List<QRData> qrDataList;
 
     /**
      * コンストラクタ

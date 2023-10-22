@@ -77,7 +77,7 @@ kotlin {
         }
     }
 
-    ios()
+    //ios()
 
     sourceSets {
         val commonTest by getting {
