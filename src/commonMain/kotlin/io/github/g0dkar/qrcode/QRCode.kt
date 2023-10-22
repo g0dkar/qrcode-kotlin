@@ -79,6 +79,7 @@ class QRCode @JvmOverloads constructor(
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data)
 ) {
+
     private val qrCodeData: QRData = when (dataType) {
         NUMBERS -> QRNumber(data)
         UPPER_ALPHA_NUM -> QRAlphaNum(data)
@@ -131,7 +132,7 @@ class QRCode @JvmOverloads constructor(
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = 0,
-        rawData: Array<Array<QRCodeSquare?>> = encode()
+        rawData: QRCodeRawData = encode()
     ): Int = computeImageSize(cellSize, margin, rawData.size)
 
     /**
@@ -204,7 +205,7 @@ class QRCode @JvmOverloads constructor(
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
-        rawData: Array<Array<QRCodeSquare?>> = encode(),
+        rawData: QRCodeRawData = encode(),
         qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
             computeImageSize(
                 cellSize,
@@ -276,7 +277,7 @@ class QRCode @JvmOverloads constructor(
     fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
         margin: Int = DEFAULT_MARGIN,
-        rawData: Array<Array<QRCodeSquare?>> = encode(),
+        rawData: QRCodeRawData = encode(),
         qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
             computeImageSize(
                 cellSize,
@@ -300,15 +301,13 @@ class QRCode @JvmOverloads constructor(
 
         rawData.forEachIndexed { row, rowData ->
             rowData.forEachIndexed { col, cell ->
-                if (cell != null) {
-                    val squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
-                    renderer(cell, squareCanvas)
-                    qrCodeGraphics.drawImage(
-                        squareCanvas,
-                        margin + cellSize * col,
-                        margin + cellSize * row
-                    )
-                }
+                val squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
+                renderer(cell, squareCanvas)
+                qrCodeGraphics.drawImage(
+                    squareCanvas,
+                    margin + cellSize * col,
+                    margin + cellSize * row
+                )
             }
         }
 
@@ -336,7 +335,7 @@ class QRCode @JvmOverloads constructor(
     fun encode(
         type: Int = typeForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000
-    ): Array<Array<QRCodeSquare?>> {
+    ): QRCodeRawData {
         val moduleCount = type * 4 + 17
         val modules: Array<Array<QRCodeSquare?>> =
             Array(moduleCount) { Array(moduleCount) { null } }
@@ -357,7 +356,11 @@ class QRCode @JvmOverloads constructor(
 
         applyMaskPattern(data, maskPattern, moduleCount, modules)
 
-        return modules
+        return Array(moduleCount) { row ->
+            Array(moduleCount) { column ->
+                modules[row][column] ?: QRCodeSquare(false, row, column, moduleCount)
+            }
+        }
     }
 
     private fun createData(type: Int): IntArray {
