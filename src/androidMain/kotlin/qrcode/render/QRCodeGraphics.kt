@@ -1,6 +1,10 @@
 package qrcode.render
 
 import android.graphics.*
+import android.graphics.Bitmap.CompressFormat.PNG
+import android.graphics.Bitmap.Config.ARGB_8888
+import android.graphics.Paint.Style.FILL
+import android.graphics.Paint.Style.STROKE
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
@@ -15,14 +19,14 @@ actual open class QRCodeGraphics actual constructor(
 
     protected fun createCanvas(image: Bitmap) = Canvas(image)
 
-    private val image: Bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    private val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
     private val canvas: Canvas = createCanvas(image)
     private val paintCache = mutableMapOf<Int, Paint>()
 
     /**
      * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
      */
-    protected fun paintFromCache(color: Int, paintStyle: Paint.Style = Paint.Style.STROKE): Paint {
+    protected fun paintFromCache(color: Int, paintStyle: Paint.Style = STROKE): Paint {
         val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
 
         return paint.apply {
@@ -73,7 +77,7 @@ actual open class QRCodeGraphics actual constructor(
         try {
             Bitmap.CompressFormat.valueOf(format.uppercase())
         } catch (e: Throwable) {
-            Bitmap.CompressFormat.PNG
+            PNG
         }
 
     /**
@@ -101,7 +105,7 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, Paint.Style.FILL))
+        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, FILL))
     }
 
     /** Fill the whole area of this canvas with the specified [color]. */
@@ -171,7 +175,7 @@ actual open class QRCodeGraphics actual constructor(
             height.toFloat(),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
-            paintFromCache(color, Paint.Style.FILL)
+            paintFromCache(color, FILL)
         )
     }
 
@@ -203,7 +207,7 @@ actual open class QRCodeGraphics actual constructor(
             y.toFloat(),
             width.toFloat(),
             height.toFloat(),
-            paintFromCache(color, Paint.Style.FILL)
+            paintFromCache(color, FILL)
         )
     }
 
