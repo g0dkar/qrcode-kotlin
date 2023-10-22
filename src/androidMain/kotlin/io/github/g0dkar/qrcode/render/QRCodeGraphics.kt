@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Bitmap.CompressFormat.JPEG
 import android.graphics.Bitmap.CompressFormat.PNG
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.Style
@@ -28,12 +29,13 @@ actual open class QRCodeGraphics actual constructor(
     private val canvas: Canvas = createCanvas(image)
     private val paintCache = mutableMapOf<Int, Paint>()
 
-    private fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
-        if (!paintCache.containsKey(color)) {
-            paintCache[color] = Paint().apply { setColor(color) }
-        }
+    /**
+     * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
+     */
+    protected fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
+        val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
 
-        return paintCache[color]!!.apply {
+        return paint.apply {
             if (style != paintStyle) {
                 style = paintStyle
             }
@@ -112,7 +114,7 @@ actual open class QRCodeGraphics actual constructor(
         canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, FILL))
     }
 
-    /** Fill the whole area of this canvas with the especified [color]. */
+    /** Fill the whole area of this canvas with the specified [color]. */
     actual open fun fill(color: Int) {
         fillRect(0, 0, width, height, color)
     }
@@ -135,7 +137,7 @@ actual open class QRCodeGraphics actual constructor(
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
@@ -168,7 +170,7 @@ actual open class QRCodeGraphics actual constructor(
      * drawRoundRect(0, 0, 100, 100, 5)
      * ```
      *
-     * **Note:** you can't especify different sizes for different edges. This is just an example :)
+     * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
@@ -185,6 +187,45 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
     actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        canvas.drawBitmap(img.image, x.toFloat(), y.toFloat(), null)
+        drawImage(img.image, x, y)
+    }
+
+    /**
+     * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
+     */
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        canvas.drawOval(
+            x.toFloat(),
+            y.toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            paintFromCache(color)
+        )
+    }
+
+    /**
+     * Fills an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
+     *
+     */
+    actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        canvas.drawOval(
+            x.toFloat(),
+            y.toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            paintFromCache(color, FILL)
+        )
+    }
+
+    /**
+     * Reads the specified image from [rawData] and draws it at `(x,y)`
+     */
+    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
+        val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
+        drawImage(imgBitmap, x, y)
+    }
+
+    open fun drawImage(img: Bitmap, x: Int, y: Int) {
+        canvas.drawBitmap(img, x.toFloat(), y.toFloat(), null)
     }
 }
