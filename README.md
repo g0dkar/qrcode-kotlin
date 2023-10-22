@@ -1,7 +1,8 @@
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-[![Project is Building?](https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=main)](https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml)
+
+[//]: # ([![Project is Building?]&#40;https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=main&#41;]&#40;https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml&#41;)
 
 💚 [_**Disponível em Português (Brasil)**_](https://qrcodekotlin.com/pt_br) 💛
 
