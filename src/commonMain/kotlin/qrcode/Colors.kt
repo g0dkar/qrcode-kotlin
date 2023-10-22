@@ -8,7 +8,6 @@ package qrcode
  * @author Rafael Lins - g0dkar
  * @see css
  * @see withAlpha
- * @see allColors
  */
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
