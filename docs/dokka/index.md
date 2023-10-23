@@ -6,6 +6,6 @@
 
 | Name |
 |---|
-| [io.github.g0dkar.qrcode](qrcode-kotlin/io.github.g0dkar.qrcode/index.md) |
-| [io.github.g0dkar.qrcode.internals](qrcode-kotlin/io.github.g0dkar.qrcode.internals/index.md) |
-| [io.github.g0dkar.qrcode.render](qrcode-kotlin/io.github.g0dkar.qrcode.render/index.md) |
+| [qrcode](qrcode-kotlin/qrcode/index.md) |
+| [qrcode.internals](qrcode-kotlin/qrcode.internals/index.md) |
+| [qrcode.render](qrcode-kotlin/qrcode.render/index.md) |
