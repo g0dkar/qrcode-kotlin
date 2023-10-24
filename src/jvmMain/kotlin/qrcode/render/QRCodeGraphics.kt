@@ -16,6 +16,7 @@ actual open class QRCodeGraphics actual constructor(
 ) {
     private lateinit var image: BufferedImage
     private val colorCache = mutableMapOf<Int, Color>()
+    private var changed: Boolean = false
 
     protected open fun createImage(): BufferedImage {
         if (!this::image.isInitialized) {
@@ -32,6 +33,7 @@ actual open class QRCodeGraphics actual constructor(
      * and then executes the given [action] passing the [Graphics2D] as a parameter to it.
      */
     protected fun draw(color: Int, action: (Graphics2D) -> Unit) {
+        changed = true
         val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
@@ -44,6 +46,9 @@ actual open class QRCodeGraphics actual constructor(
 
         graphics.dispose()
     }
+
+    /** Returns `true` if **any** drawing was performed */
+    actual open fun changed() = changed
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)

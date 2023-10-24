@@ -2,6 +2,7 @@ package qrcode.internals
 
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlin.jvm.JvmOverloads
 import qrcode.QRCode
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
@@ -32,14 +33,21 @@ data class QRCodeSquare(
     /** How big is the whole QRCode matrix? (e.g. if this is "16" then this is part of a 16x16 matrix) */
     val moduleSize: Int,
     /** What does this square represent within the QRCode? */
-    val squareInfo: QRCodeSquareInfo = QRCodeSquareInfo(DEFAULT, UNKNOWN)
+    val squareInfo: QRCodeSquareInfo = QRCodeSquareInfo(DEFAULT, UNKNOWN),
+    /** How many actual QRCode squares this one take up? (1 = a single square, >1 = likely a probe) */
+    val rowSize: Int = 1,
+    /** How many actual QRCode squares this one take up? (1 = a single square, >1 = likely a probe) */
+    val colSize: Int = 1,
+    val parent: QRCodeSquare? = null,
 ) {
+    var rendered: Boolean = false
+
     /** Calculates where is the X position where this square will be in the main QRCode image given a [cellSize]. */
-    @kotlin.jvm.JvmOverloads
+    @JvmOverloads
     fun absoluteX(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = col * cellSize
 
     /** Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize]. */
-    @kotlin.jvm.JvmOverloads
+    @JvmOverloads
     fun absoluteY(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = row * cellSize
 }
 
@@ -54,7 +62,7 @@ data class QRCodeSquare(
 @OptIn(ExperimentalJsExport::class)
 data class QRCodeSquareInfo(
     val type: QRCodeSquareType,
-    val region: QRCodeRegion
+    val region: QRCodeRegion,
 ) {
     companion object {
         internal fun margin() = QRCodeSquareInfo(MARGIN, QRCodeRegion.MARGIN)

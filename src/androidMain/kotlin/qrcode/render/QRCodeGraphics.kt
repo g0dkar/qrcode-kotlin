@@ -24,11 +24,13 @@ actual open class QRCodeGraphics actual constructor(
     private val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
     private val canvas: Canvas = createCanvas(image)
     private val paintCache = mutableMapOf<Int, Paint>()
+    private var changed: Boolean = false
 
     /**
      * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
      */
     protected fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
+        changed = true
         val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
 
         return paint.apply {
@@ -37,6 +39,9 @@ actual open class QRCodeGraphics actual constructor(
             }
         }
     }
+
+    /** Returns `true` if **any** drawing was performed */
+    actual open fun changed() = changed
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)
@@ -186,6 +191,7 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
     actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
+        changed = true
         drawImage(img.image, x, y)
     }
 
@@ -225,6 +231,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     open fun drawImage(img: Bitmap, x: Int, y: Int) {
+        changed = true
         canvas.drawBitmap(img, x.toFloat(), y.toFloat(), null)
     }
 }

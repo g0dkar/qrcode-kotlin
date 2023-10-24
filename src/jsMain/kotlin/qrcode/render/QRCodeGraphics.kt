@@ -19,6 +19,7 @@ actual open class QRCodeGraphics actual constructor(
 
     private val canvas: HTMLCanvasElement
     private val context: CanvasRenderingContext2D
+    private var changed: Boolean = false
 
     init {
         val canvas = tryGet { document.createElement("canvas") as HTMLCanvasElement }
@@ -41,11 +42,15 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     private fun draw(color: Int, action: () -> Unit) {
+        changed = true
         val colorString = rgba(color)
         context.fillStyle = colorString
         context.strokeStyle = colorString
         action()
     }
+
+    /** Returns `true` if **any** drawing was performed */
+    actual open fun changed() = changed
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)
@@ -172,7 +177,9 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
     actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        context.drawImage(img.canvas, x.toDouble(), y.toDouble())
+        draw (0) {
+            context.drawImage(img.canvas, x.toDouble(), y.toDouble())
+        }
     }
 
     private fun <T> tryGet(what: () -> T): T =
@@ -218,7 +225,9 @@ actual open class QRCodeGraphics actual constructor(
      * this object.
      */
     actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
-        context.putImageData(imageData, x.toDouble(), y.toDouble())
+        draw(0) {
+            val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
+            context.putImageData(imageData, x.toDouble(), y.toDouble())
+        }
     }
 }

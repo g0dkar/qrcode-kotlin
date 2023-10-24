@@ -1,6 +1,9 @@
 package qrcode.render
 
 expect class QRCodeGraphics(width: Int, height: Int) {
+    /** Returns `true` if **any** drawing was performed */
+    fun changed(): Boolean
+
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     fun dimensions(): Pair<Int, Int>
 

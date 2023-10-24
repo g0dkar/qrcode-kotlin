@@ -2,7 +2,6 @@ package qrcode.fancy.shape
 
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.fancy.FancyQRCode
 import qrcode.fancy.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.render.QRCodeGraphics
@@ -12,14 +11,30 @@ import qrcode.render.QRCodeGraphics
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
-class DefaultShapeFunction : QRCodeShapeFunction {
-    override fun renderFn(
+open class DefaultShapeFunction : QRCodeShapeFunction {
+    override fun renderSquare(
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
-        graphics: QRCodeGraphics,
-        fancyQRCode: FancyQRCode
+        squareCanvas: QRCodeGraphics,
+        canvas: QRCodeGraphics,
     ) {
         val color = colorFn.colorFn(square)
-        graphics.fill(color)
+        squareCanvas.fill(color)
+    }
+
+    override fun renderControlSquare(
+        colorFn: QRCodeColorFunction,
+        squareCanvas: QRCodeGraphics,
+        canvas: QRCodeGraphics
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun renderTimingSquare(
+        colorFn: QRCodeColorFunction,
+        squareCanvas: QRCodeGraphics,
+        canvas: QRCodeGraphics
+    ) {
+        TODO("Not yet implemented")
     }
 }

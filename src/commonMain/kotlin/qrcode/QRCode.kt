@@ -85,7 +85,6 @@ class QRCode @JvmOverloads constructor(
         DEFAULT -> QR8BitByte(data)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
     var qrCodeGraphicsFactory = QRCodeGraphicsFactory()
 
     companion object {
@@ -298,15 +297,21 @@ class QRCode @JvmOverloads constructor(
             renderer(marginSquare, qrCodeGraphics)
         }
 
+        var squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
+
         rawData.forEachIndexed { row, rowData ->
             rowData.forEachIndexed { col, cell ->
-                val squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
                 renderer(cell, squareCanvas)
-                qrCodeGraphics.drawImage(
-                    squareCanvas,
-                    margin + cellSize * col,
-                    margin + cellSize * row
-                )
+
+                if (squareCanvas.changed()) {
+                    qrCodeGraphics.drawImage(
+                        squareCanvas,
+                        margin + cellSize * col,
+                        margin + cellSize * row
+                    )
+
+                    squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
+                }
             }
         }
 

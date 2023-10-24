@@ -1,6 +1,6 @@
-package io.github.g0dkar.qrcode
+package qrcode
 
-import io.github.g0dkar.qrcode.internals.QRCodeSquare
+import qrcode.internals.QRCodeSquare
 
 /**
  * Alias for a matrix of [QRCodeSquare]
