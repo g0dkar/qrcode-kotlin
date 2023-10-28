@@ -39,7 +39,7 @@ repositories {
 
 group = "io.github.g0dkar"
 version = "3.4.0"
-val javaVersion = 11
+val javaVersion = 17
 
 kotlin {
     jvm {

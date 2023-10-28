@@ -16,10 +16,14 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.namespace == "com.android" || requested.id.name == "kotlin-android-extensions") {
-                useModule("com.android.tools.build:gradle:7.3.1")
+                useModule("com.android.tools.build:gradle:8.1.2")
             }
         }
     }
 }
 
 rootProject.name = "qrcode-kotlin"
+
+// Examples
+// Kotlin Examples
+include("examples:kotlin", "examples:java", "examples:android")

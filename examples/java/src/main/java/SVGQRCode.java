@@ -1,6 +1,8 @@
 import io.github.g0dkar.qrcode.QRCode;
 import io.github.g0dkar.qrcode.internals.QRCodeSquare;
 import io.github.g0dkar.qrcode.render.Colors;
+import qrcode.QRCode;
+import qrcode.internals.QRCodeSquare;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

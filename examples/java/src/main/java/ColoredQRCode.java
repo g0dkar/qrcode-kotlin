@@ -1,6 +1,8 @@
 import static java.util.Optional.ofNullable;
 
 import io.github.g0dkar.qrcode.QRCode;
+import qrcode.QRCode;
+
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;

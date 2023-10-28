@@ -1,7 +1,8 @@
-import io.github.g0dkar.qrcode.QRCode;
-import io.github.g0dkar.qrcode.internals.QRCodeSquare;
-import io.github.g0dkar.qrcode.internals.QRCodeSquareType;
-import java.awt.Color;
+import qrcode.QRCode;
+import qrcode.internals.QRCodeSquare;
+import qrcode.internals.QRCodeSquareType;
+
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -33,9 +34,9 @@ public class GradientColoredQRCode {
     }
 
     public void createQRCode(
-        String content,
-        Color startColor,
-        Color endColor
+            String content,
+            Color startColor,
+            Color endColor
     ) throws IOException {
         FileOutputStream fileOut = new FileOutputStream("java-gradient.png");
         QRCode qrCode = new QRCode(content);
@@ -43,32 +44,32 @@ public class GradientColoredQRCode {
         int qrCodeSize = qrCode.computeImageSize(QRCode.DEFAULT_CELL_SIZE, QRCode.DEFAULT_MARGIN, rawData);
 
         new QRCode(content).renderShaded((cellData, canvas) -> {
-                               if (cellData.getSquareInfo().getType() != QRCodeSquareType.MARGIN) {
-                                   if (cellData.getDark()) {
-                                       int x = cellData.absoluteX();
-                                       int y = cellData.absoluteY();
+                    if (cellData.getSquareInfo().getType() != QRCodeSquareType.MARGIN) {
+                        if (cellData.getDark()) {
+                            int x = cellData.absoluteX();
+                            int y = cellData.absoluteY();
 
-                                       for (int currY = 0; currY < canvas.getHeight(); currY++) {
-                                           double topBottomPct = pct(x, y + currY, qrCodeSize, qrCodeSize);
-                                           double bottomTopPct = 1 - topBottomPct;
+                            for (int currY = 0; currY < canvas.getHeight(); currY++) {
+                                double topBottomPct = pct(x, y + currY, qrCodeSize, qrCodeSize);
+                                double bottomTopPct = 1 - topBottomPct;
 
-                                           Color lineColor = new Color(
-                                               (int) (startColor.getRed() * bottomTopPct + endColor.getRed() * topBottomPct),
-                                               (int) (startColor.getGreen() * bottomTopPct + endColor.getGreen() * topBottomPct),
-                                               (int) (startColor.getBlue() * bottomTopPct + endColor.getBlue() * topBottomPct)
-                                           );
+                                Color lineColor = new Color(
+                                        (int) (startColor.getRed() * bottomTopPct + endColor.getRed() * topBottomPct),
+                                        (int) (startColor.getGreen() * bottomTopPct + endColor.getGreen() * topBottomPct),
+                                        (int) (startColor.getBlue() * bottomTopPct + endColor.getBlue() * topBottomPct)
+                                );
 
-                                           canvas.drawLine(0, currY, canvas.getWidth(), currY, lineColor.getRGB());
-                                       }
-                                   } else {
-                                       canvas.fill(Color.white.getRGB());
-                                   }
-                               } else {
-                                   canvas.fill(Color.white.getRGB());
-                               }
-                               return null;
-                           })
-                           .writeImage(fileOut);
+                                canvas.drawLine(0, currY, canvas.getWidth(), currY, lineColor.getRGB());
+                            }
+                        } else {
+                            canvas.fill(Color.white.getRGB());
+                        }
+                    } else {
+                        canvas.fill(Color.white.getRGB());
+                    }
+                    return null;
+                })
+                .writeImage(fileOut);
     }
 
     public static void main(String[] args) throws Exception {
@@ -76,6 +77,6 @@ public class GradientColoredQRCode {
         Color endColor = new Color(0, 55, 120); // Dark Blue
 
         new GradientColoredQRCode()
-            .createQRCode("Hello, world!", startColor, endColor);
+                .createQRCode("Hello, world!", startColor, endColor);
     }
 }

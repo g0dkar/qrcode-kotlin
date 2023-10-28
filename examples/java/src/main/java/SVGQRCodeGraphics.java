@@ -1,7 +1,7 @@
-import io.github.g0dkar.qrcode.render.QRCodeGraphics;
-import io.github.g0dkar.qrcode.render.QRCodeGraphicsFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jfree.svg.SVGGraphics2D;
+import qrcode.render.QRCodeGraphics;
+import qrcode.render.QRCodeGraphicsFactory;
 
 import java.awt.*;
 import java.io.IOException;
