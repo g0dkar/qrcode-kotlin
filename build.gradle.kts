@@ -303,5 +303,5 @@ signing {
         properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
 
     useInMemoryPgpKeys(key, password)
-    sign(publishing.publications)
+    // sign(publishing.publications)
 }
