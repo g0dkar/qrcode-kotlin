@@ -1,10 +1,13 @@
-import io.github.g0dkar.qrcode.QRCode
-import io.github.g0dkar.qrcode.internals.QRCodeRegion
-import io.github.g0dkar.qrcode.internals.QRCodeSquareType.MARGIN
-import io.github.g0dkar.qrcode.internals.QRCodeSquareType.POSITION_PROBE
-import io.github.g0dkar.qrcode.render.Colors
-import io.github.g0dkar.qrcode.render.QRCodeGraphics
 import java.io.FileOutputStream
+import qrcode.Colors
+import qrcode.QRCode
+import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
+import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
+import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
+import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
+import qrcode.internals.QRCodeSquareType.MARGIN
+import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.render.QRCodeGraphics
 
 class RoundQRCode {
     fun createQRCode(content: String, radius: Int = 15) {
@@ -16,12 +19,13 @@ class RoundQRCode {
                 if (cellData.dark) {
                     when (cellData.squareInfo.type) {
                         POSITION_PROBE -> when (cellData.squareInfo.region) {
-                            QRCodeRegion.TOP_LEFT_CORNER -> drawTopLeftCorner(canvas)
-                            QRCodeRegion.TOP_RIGHT_CORNER -> drawTopRightCorner(canvas)
-                            QRCodeRegion.BOTTOM_LEFT_CORNER -> drawBottomLeftCorner(canvas)
-                            QRCodeRegion.BOTTOM_RIGHT_CORNER -> drawBottomRightCorner(canvas)
+                            TOP_LEFT_CORNER -> drawTopLeftCorner(canvas)
+                            TOP_RIGHT_CORNER -> drawTopRightCorner(canvas)
+                            BOTTOM_LEFT_CORNER -> drawBottomLeftCorner(canvas)
+                            BOTTOM_RIGHT_CORNER -> drawBottomRightCorner(canvas)
                             else -> canvas.fill(Colors.BLACK)
                         }
+
                         MARGIN -> canvas.fill(Colors.WHITE)
                         else -> canvas.fillRoundRect(0, 0, canvas.width, canvas.height, radius, Colors.BLACK)
                     }

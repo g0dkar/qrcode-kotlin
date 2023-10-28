@@ -1,6 +1,6 @@
-import io.github.g0dkar.qrcode.QRCode
-import io.github.g0dkar.qrcode.render.Colors
 import java.io.FileOutputStream
+import qrcode.Colors
+import qrcode.QRCode
 
 class SVGQRCode {
     fun createQRCode(content: String) {

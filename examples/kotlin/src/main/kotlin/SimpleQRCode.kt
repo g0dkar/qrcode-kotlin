@@ -1,5 +1,5 @@
-import io.github.g0dkar.qrcode.QRCode
 import java.io.FileOutputStream
+import qrcode.QRCode
 
 class SimpleQRCode {
     fun createQRCode(content: String) {

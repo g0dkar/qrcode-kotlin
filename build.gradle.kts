@@ -39,11 +39,12 @@ repositories {
 
 group = "io.github.g0dkar"
 version = "3.4.0"
-val javaVersion = 17
+val javaVersion = JavaVersion.VERSION_17
+val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
     jvm {
-        jvmToolchain(javaVersion)
+        jvmToolchain(javaVersionNumber)
         testRuns.named("test") {
             executionTask.configure {
                 useJUnitPlatform()
@@ -52,7 +53,7 @@ kotlin {
     }
 
     androidTarget {
-        jvmToolchain(javaVersion)
+        jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
     }
 
@@ -96,18 +97,17 @@ kotlin {
 }
 
 android {
-    namespace = "io.github.g0dkar.qrcode"
+    namespace = "qrcode"
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 }
 
@@ -193,7 +193,7 @@ idea {
 /* **************** */
 tasks {
     dokkaHtml {
-        outputDirectory.set(buildDir.resolve("javadoc"))
+        outputDirectory.set(layout.buildDirectory.dir("javadoc"))
 
         dokkaSourceSets {
             configureEach {

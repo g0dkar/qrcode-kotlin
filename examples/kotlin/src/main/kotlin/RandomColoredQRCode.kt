@@ -1,7 +1,7 @@
-import io.github.g0dkar.qrcode.QRCode
-import io.github.g0dkar.qrcode.internals.QRCodeSquareType
-import io.github.g0dkar.qrcode.render.Colors
 import java.io.FileOutputStream
+import qrcode.Colors
+import qrcode.QRCode
+import qrcode.internals.QRCodeSquareType
 
 class RandomColoredQRCode {
     fun createQRCode(
