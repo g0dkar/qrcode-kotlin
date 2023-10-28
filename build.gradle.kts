@@ -38,7 +38,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.3.0"
+version = "3.4.0"
 val javaVersion = 11
 
 kotlin {
@@ -77,7 +77,7 @@ kotlin {
         }
     }
 
-    //ios()
+    // ios()
 
     sourceSets {
         val commonTest by getting {
@@ -99,9 +99,15 @@ android {
     namespace = "io.github.g0dkar.qrcode"
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
         minSdk = 24
         targetSdk = 32
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
@@ -240,15 +246,6 @@ nexusPublishing {
     }
 }
 
-signing {
-    val key = properties.getOrDefault("signing.key", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
-    val password =
-        properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
-
-    useInMemoryPgpKeys(key, password)
-    sign(publishing.publications)
-}
-
 publishing {
     publications {
         withType<MavenPublication> {
@@ -298,4 +295,13 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    val key = properties.getOrDefault("signing.key", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
+    val password =
+        properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+
+    useInMemoryPgpKeys(key, password)
+    sign(publishing.publications)
 }

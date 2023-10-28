@@ -3,6 +3,7 @@ package qrcode.fancy
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
+import qrcode.Colors
 import qrcode.ErrorCorrectionLevel
 import qrcode.QRCode
 import qrcode.QRCodeRawData
@@ -41,6 +42,12 @@ class FancyQRCode @JvmOverloads constructor(
 ) {
     val qrCode: QRCode = QRCode(data, ErrorCorrectionLevel.H)
 
+    companion object {
+        private val red = DefaultColorFunction(foreground = Colors.RED)
+        private val green = DefaultColorFunction(foreground = Colors.GREEN)
+        private val blue = DefaultColorFunction(foreground = Colors.BLUE)
+    }
+
     fun draw(rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
         qrCode.renderShaded(
             cellSize = squareSize,
@@ -49,12 +56,12 @@ class FancyQRCode @JvmOverloads constructor(
             qrCodeGraphics = canvas,
         ) { currentSquare, currentCanvas ->
             when (currentSquare.squareInfo.type) {
-                POSITION_PROBE -> shapeFn.renderControlSquare(colorFn, canvas, canvas)
-                POSITION_ADJUST -> shapeFn.renderControlSquare(colorFn, canvas, canvas)
-                TIMING_PATTERN -> shapeFn.renderControlSquare(colorFn, canvas, canvas)
+                POSITION_PROBE -> shapeFn.renderSquare(red, currentSquare, currentCanvas, canvas)
+                POSITION_ADJUST -> shapeFn.renderSquare(green, currentSquare, currentCanvas, canvas)
+                TIMING_PATTERN -> shapeFn.renderSquare(blue, currentSquare, currentCanvas, canvas)
                 else -> shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas)
             }
-            shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas)
+            // shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas)
         }
 
     fun render(): ByteArray {
