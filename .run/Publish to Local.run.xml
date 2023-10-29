@@ -10,8 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="clean" />
-          <option value="publishToMavenLocal" />
+          <option value=":clean" />
+          <option value=":publishToMavenLocal" />
         </list>
       </option>
       <option name="vmOptions" />

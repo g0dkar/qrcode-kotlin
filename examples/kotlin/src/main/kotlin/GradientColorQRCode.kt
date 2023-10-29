@@ -41,7 +41,7 @@ class GradientColorQRCode(
                         (startB * bottomTopPct + endB * topBottomPct).toInt()
                     )
 
-                    cellCanvas.drawLine(0, currY, cellCanvas.width, currY, currColor)
+                    cellCanvas.drawLine(0, currY, cellCanvas.width, currY, currColor, 1.0)
                 }
             } else {
                 cellCanvas.fill(Colors.WHITE)

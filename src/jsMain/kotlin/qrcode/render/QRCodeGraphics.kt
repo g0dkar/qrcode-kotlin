@@ -52,6 +52,12 @@ actual open class QRCodeGraphics actual constructor(
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
 
+    /** Simply changes the `changed` flag to true without doing anything else */
+    actual fun touch(): Boolean {
+        changed = true
+        return true
+    }
+
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)
 
@@ -85,7 +91,7 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun nativeImage(): Any = canvas
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
         draw(color) {
             context.moveTo(x1.toDouble(), y1.toDouble())
             context.lineTo(x2.toDouble(), y2.toDouble())
@@ -93,7 +99,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
             context.strokeRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
         }
@@ -138,9 +144,10 @@ actual open class QRCodeGraphics actual constructor(
         width: Int,
         height: Int,
         borderRadius: Int,
-        color: Int
+        color: Int,
+        thickness: Double
     ) {
-        drawRect(x, y, width, height, color)
+        drawRect(x, y, width, height, color, 1)
     }
 
     /**
@@ -192,7 +199,7 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
             val radiusX = width.toDouble() / 2.0
             val radiusY = height.toDouble() / 2.0

@@ -40,6 +40,7 @@ object Colors {
     fun withAlpha(color: Int, alpha: Int): Int =
         (alpha.coerceIn(0..255) shl 24) + (color and 0xFFFFFF)
 
+    const val TRANSPARENT = 0x00000000
     const val ALICE_BLUE = 0xFFF0F8FF.toInt()
     const val ANTIQUE_WHITE = 0xFFFAEBD7.toInt()
     const val AQUA = 0xFF00FFFF.toInt()

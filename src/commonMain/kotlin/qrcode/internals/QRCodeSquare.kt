@@ -38,6 +38,7 @@ data class QRCodeSquare(
     val rowSize: Int = 1,
     /** How many actual QRCode squares this one take up? (1 = a single square, >1 = likely a probe) */
     val colSize: Int = 1,
+    /** Filled if this square is part of a larger one (like a [QRCodeSquareType.POSITION_PROBE]) */
     val parent: QRCodeSquare? = null,
 ) {
     var rendered: Boolean = false
@@ -49,6 +50,28 @@ data class QRCodeSquare(
     /** Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize]. */
     @JvmOverloads
     fun absoluteY(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = row * cellSize
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as QRCodeSquare
+
+        if (row != other.row) return false
+        if (col != other.col) return false
+        if (rowSize != other.rowSize) return false
+        if (colSize != other.colSize) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = row
+        result = 31 * result + col
+        result = 31 * result + rowSize
+        result = 31 * result + colSize
+        return result
+    }
 }
 
 /**

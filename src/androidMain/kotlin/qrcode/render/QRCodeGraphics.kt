@@ -23,7 +23,7 @@ actual open class QRCodeGraphics actual constructor(
 
     private val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
     private val canvas: Canvas = createCanvas(image)
-    private val paintCache = mutableMapOf<Int, Paint>()
+    private val paintCache = HashMap<Int, Paint>()
     private var changed: Boolean = false
 
     /**
@@ -42,6 +42,12 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
+
+    /** Simply changes the `changed` flag to true without doing anything else */
+    actual fun touch(): Boolean {
+        changed = true
+        return true
+    }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)
@@ -104,12 +110,12 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun nativeImage(): Any = image
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
         canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color))
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         canvas.drawRect(Rect(x, y, width, height), paintFromCache(color))
     }
 
@@ -144,7 +150,15 @@ actual open class QRCodeGraphics actual constructor(
      * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
-    actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
+    actual open fun drawRoundRect(
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        borderRadius: Int,
+        color: Int,
+        thickness: Double
+    ) {
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -198,7 +212,7 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),

@@ -1,5 +1,6 @@
 package qrcode.render
 
+import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.RenderingHints
@@ -8,6 +9,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import javax.imageio.ImageIO
+import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
@@ -15,7 +17,7 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int
 ) {
     private lateinit var image: BufferedImage
-    private val colorCache = mutableMapOf<Int, Color>()
+    private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
 
     protected open fun createImage(): BufferedImage {
@@ -32,11 +34,14 @@ actual open class QRCodeGraphics actual constructor(
      * Handles the annoying parts of drawing. It sets up the specified [color] as the stroke, fill and background colors
      * and then executes the given [action] passing the [Graphics2D] as a parameter to it.
      */
-    protected fun draw(color: Int, action: (Graphics2D) -> Unit) {
+    protected fun draw(color: Int, strokeThickness: Double? = null, action: (Graphics2D) -> Unit) {
         changed = true
         val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
+        if (strokeThickness != null && strokeThickness > 0) {
+            graphics.stroke = BasicStroke(strokeThickness.toFloat(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+        }
         graphics.paint = jdkColor
         graphics.color = jdkColor
         graphics.background = jdkColor
@@ -49,6 +54,12 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
+
+    /** Simply changes the `changed` flag to true without doing anything else */
+    actual fun touch(): Boolean {
+        changed = true
+        return true
+    }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     actual open fun dimensions() = Pair(width, height)
@@ -98,13 +109,16 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun nativeImage(): Any = createImage()
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
-        draw(color) { it.drawLine(x1, y1, x2, y2) }
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
+        draw(color, thickness) { it.drawLine(x1, y1, x2, y2) }
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        draw(color) { it.drawRect(x, y, width, height) }
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
+        draw(color, thickness) {
+            val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
+            it.drawRect(x + halfThickness, y + halfThickness, width - halfThickness * 2, height - halfThickness * 2)
+        }
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
@@ -138,8 +152,26 @@ actual open class QRCodeGraphics actual constructor(
      * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
-    actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
-        draw(color) { it.drawRoundRect(x, y, width, height, borderRadius, borderRadius) }
+    actual open fun drawRoundRect(
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        borderRadius: Int,
+        color: Int,
+        thickness: Double
+    ) {
+        draw(color, thickness) {
+            val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
+            it.drawRoundRect(
+                x + halfThickness,
+                y + halfThickness,
+                width - halfThickness * 2,
+                height - halfThickness * 2,
+                borderRadius,
+                borderRadius
+            )
+        }
     }
 
     /**
@@ -175,10 +207,11 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Draw the edges of an ellipsis (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    actual open fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        draw(color) {
+    actual open fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
+        draw(color, thickness) {
+            val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
             // The docs say the dimensions are width+1 and height+1... why? because f.u.
-            it.drawOval(x, y, width - 1, height - 1)
+            it.drawOval(x + halfThickness, y + halfThickness, width - 1 - halfThickness * 2, height - 1 - halfThickness * 2)
         }
     }
 

@@ -14,25 +14,25 @@ import qrcode.internals.QRCodeSquareType.MARGIN
 interface QRCodeColorFunction {
     fun colorFn(square: QRCodeSquare): Int =
         when (square.squareInfo.type) {
-            MARGIN -> margin()
+            MARGIN -> margin(square.row, square.col)
             else -> when (square.dark) {
-                true -> fg()
-                else -> bg()
+                true -> fg(square.row, square.col)
+                else -> bg(square.row, square.col)
             }
         }
 
     /**
      * What is the foreground color
      */
-    fun fg(): Int
+    fun fg(row: Int, col: Int): Int
 
     /**
      * What is the background color
      */
-    fun bg(): Int
+    fun bg(row: Int, col: Int): Int
 
     /**
      * What is the margin color. Defaults to [bg]
      */
-    fun margin(): Int = bg()
+    fun margin(row: Int, col: Int): Int = bg(row, col)
 }

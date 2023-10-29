@@ -3,56 +3,33 @@ package qrcode.fancy.shape
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
-import kotlin.math.round
 import kotlin.math.roundToInt
-import qrcode.fancy.color.QRCodeColorFunction
-import qrcode.internals.QRCodeSquare
+import qrcode.QRCode.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
 
 /**
- * Creates "rounded squares" (aka squircles or squares with rounded edges) as the shapes on the QRCode.
+ * Creates "rounded squares" as the shapes on the QRCode.
  *
- * The [round] value can be absolute or relative. If it is absolute, we'll use it as-is. If it is relative,
- * it'll be considered as a 0-100% of the square size. (0 = no roundness, 100 = a circle)
- *
- * By default, the value is considered absolute (meaning "radius = 5" is 5 pixels, not 5% round)
+ * By default, the value is set to `squareSize / 4`
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
+@Suppress("NON_EXPORTABLE_TYPE")
 open class RoundSquaresShapeFunction @JvmOverloads constructor(
-    private val radius: Int,
-    private val absolute: Boolean = true,
-) : QRCodeShapeFunction {
-    override fun renderSquare(
-        colorFn: QRCodeColorFunction,
-        square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics,
-    ) {
-        val color = colorFn.colorFn(square)
-        val (w, h) = squareCanvas.dimensions()
-
-        val radiusValue = when (absolute) {
-            true -> radius.coerceAtLeast(0)
-            else -> (w * (radius / 100.0).coerceIn(0.0..1.0)).roundToInt()
-        }
-
-        squareCanvas.fillRoundRect(0, 0, w, h, radiusValue, color)
+    squareSize: Int = DEFAULT_CELL_SIZE,
+    private val radius: Int = defaultRadius(squareSize),
+    innerSpace: Int = defaultInnerSpace(squareSize)
+) : DefaultShapeFunction(squareSize, innerSpace) {
+    companion object {
+        fun defaultRadius(squareSize: Int) = (squareSize / 1.75).roundToInt()
+        fun defaultInnerSpace(squareSize: Int) = (squareSize * 0.05).roundToInt()
     }
 
-    override fun renderControlSquare(
-        colorFn: QRCodeColorFunction,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics
-    ) {
-        TODO("Not yet implemented")
+    override fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int, canvas: QRCodeGraphics) {
+        canvas.fillRoundRect(x, y, width, height, radius, color)
     }
 
-    override fun renderTimingSquare(
-        colorFn: QRCodeColorFunction,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics
-    ) {
-        TODO("Not yet implemented")
+    override fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double, canvas: QRCodeGraphics) {
+        canvas.drawRoundRect(x, y, width, height, radius, color, thickness)
     }
 }

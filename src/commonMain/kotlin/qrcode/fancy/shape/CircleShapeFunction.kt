@@ -2,40 +2,24 @@ package qrcode.fancy.shape
 
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.fancy.color.QRCodeColorFunction
-import qrcode.internals.QRCodeSquare
-import qrcode.render.QRCodeGraphics
+import kotlin.jvm.JvmOverloads
+import kotlin.math.roundToInt
+import qrcode.QRCode.Companion.DEFAULT_CELL_SIZE
 
 /**
+ * Creates circles instead of squares while drawing the QRCode. By default, the circles will keep `8% of the squareSize`
+ * pixels away from each other, to have a more pleasing aesthetics.
  *
+ * @param squareSize How big each "square" will be, in pixels (defaults to [DEFAULT_CELL_SIZE])
+ * @param innerSpace How much space inside each "square" will be left empty (1 = 1px of the inner area won't be drawn)
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
-open class CircleShapeFunction : RoundSquaresShapeFunction(100, false) {
-    override fun renderSquare(
-        colorFn: QRCodeColorFunction,
-        square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics,
-    ) {
-        val color = colorFn.colorFn(square)
-        val (w, h) = squareCanvas.dimensions()
-        squareCanvas.fillEllipse(0, 0, w, h, color)
-    }
-
-    override fun renderControlSquare(
-        colorFn: QRCodeColorFunction,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun renderTimingSquare(
-        colorFn: QRCodeColorFunction,
-        squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics
-    ) {
-        TODO("Not yet implemented")
+open class CircleShapeFunction @JvmOverloads constructor(
+    squareSize: Int = DEFAULT_CELL_SIZE,
+    innerSpace: Int = defaultInnerSpace(squareSize)
+) : RoundSquaresShapeFunction(squareSize, radius = squareSize, innerSpace) {
+    companion object {
+        fun defaultInnerSpace(squareSize: Int) = (squareSize * 0.05).roundToInt()
     }
 }

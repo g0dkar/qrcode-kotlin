@@ -20,10 +20,5 @@ interface QRCodeShapeFunction {
     /**
      * Renders a control square (those bigger ones on the edges).
      */
-    fun renderControlSquare(colorFn: QRCodeColorFunction, squareCanvas: QRCodeGraphics, canvas: QRCodeGraphics)
-
-    /**
-     * Renders a timing square (those smaller ones all over the QRCode)
-     */
-    fun renderTimingSquare(colorFn: QRCodeColorFunction, squareCanvas: QRCodeGraphics, canvas: QRCodeGraphics)
+    fun renderControlSquare(colorFn: QRCodeColorFunction, square: QRCodeSquare, squareCanvas: QRCodeGraphics, canvas: QRCodeGraphics)
 }

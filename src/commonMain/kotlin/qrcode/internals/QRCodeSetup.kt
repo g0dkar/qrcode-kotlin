@@ -134,16 +134,6 @@ internal object QRCodeSetup {
     fun setupPositionAdjustPattern(type: Int, modules: Array<Array<QRCodeSquare?>>) {
         val pos = QRUtil.getPatternPosition(type)
 
-        val squareData = QRCodeSquare(
-            dark = false,
-            row = pos[0],
-            col = pos[0],
-            rowSize = pos.size,
-            colSize = pos.size,
-            squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
-            moduleSize = modules.size
-        )
-
         for (i in pos.indices) {
             for (j in pos.indices) {
                 val row = pos[i]
@@ -152,6 +142,16 @@ internal object QRCodeSetup {
                 if (modules[row][col] != null) {
                     continue
                 }
+
+                val squareData = QRCodeSquare(
+                    dark = false,
+                    row = row - 1,
+                    col = col - 1,
+                    rowSize = 5,
+                    colSize = 5,
+                    squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
+                    moduleSize = modules.size
+                )
 
                 for (r in -2..2) {
                     for (c in -2..2) {
