@@ -38,7 +38,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.4.0"
+version = "4.0.0"
 val javaVersion = JavaVersion.VERSION_17
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
