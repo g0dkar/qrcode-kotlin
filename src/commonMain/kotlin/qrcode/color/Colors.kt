@@ -1,4 +1,4 @@
-package qrcode
+package qrcode.color
 
 /**
  * Just a lot of colors to use when drawing :)

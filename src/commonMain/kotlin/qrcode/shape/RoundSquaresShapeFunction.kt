@@ -1,11 +1,11 @@
-package qrcode.fancy.shape
+package qrcode.shape
 
+import qrcode.raw.QRCodeBuilder.Companion.DEFAULT_CELL_SIZE
+import qrcode.render.QRCodeGraphics
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToInt
-import qrcode.QRCode.Companion.DEFAULT_CELL_SIZE
-import qrcode.render.QRCodeGraphics
 
 /**
  * Creates "rounded squares" as the shapes on the QRCode.

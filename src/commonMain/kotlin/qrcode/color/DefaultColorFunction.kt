@@ -1,8 +1,7 @@
-package qrcode.fancy.color
+package qrcode.color
 
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.Colors
 
 /**
  * Default function for the QRCode cell color. Returns a color for the foreground ("dark") and another for the

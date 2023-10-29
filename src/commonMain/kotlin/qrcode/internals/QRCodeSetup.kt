@@ -1,9 +1,5 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import qrcode.ErrorCorrectionLevel
-import qrcode.MaskPattern
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_MID
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
@@ -18,6 +14,10 @@ import qrcode.internals.QRCodeRegion.UNKNOWN
 import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.internals.QRCodeSquareType.TIMING_PATTERN
+import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Object with helper methods and constants to setup stuff into the QRCode such as Position Probes and Timing Probes.

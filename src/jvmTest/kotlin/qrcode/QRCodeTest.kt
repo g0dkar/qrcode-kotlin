@@ -2,6 +2,10 @@ package qrcode
 
 import com.d_project.qrcode.Mode
 import io.kotest.core.spec.style.FunSpec
+import qrcode.color.Colors
+import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeDataType
 import java.awt.image.BufferedImage
 
 class QRCodeTest : FunSpec({
@@ -12,7 +16,7 @@ class QRCodeTest : FunSpec({
                 val javaQRCode = generateJavaQRCode(input)
                 val expectedImage = javaQRCode.createImage(25, 0, Colors.WHITE, Colors.RED)
 
-                val underTest = QRCode(input)
+                val underTest = QRCodeBuilder(input)
 
                 val result = underTest.render(darkColor = Colors.RED)
 
@@ -27,7 +31,7 @@ class QRCodeTest : FunSpec({
                 val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
                 val expectedImage = javaQRCode.createImage(25, 0, Colors.WHITE, Colors.RED)
 
-                val underTest = QRCode(input, dataType = QRCodeDataType.DEFAULT)
+                val underTest = QRCodeBuilder(input, dataType = QRCodeDataType.DEFAULT)
 
                 val result = underTest.render(darkColor = Colors.RED)
 
@@ -43,7 +47,7 @@ class QRCodeTest : FunSpec({
             val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
             val expectedImage = javaQRCode.createImage(25, 0, Colors.WHITE, Colors.RED)
 
-            val underTest = QRCode(input)
+            val underTest = QRCodeBuilder(input)
 
             val result = underTest.render(darkColor = Colors.RED)
 
@@ -62,7 +66,7 @@ class QRCodeTest : FunSpec({
                     val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
                     val expectedImage = javaQRCode.createImage(25, 0, Colors.WHITE, color)
 
-                    val underTest = QRCode(input)
+                    val underTest = QRCodeBuilder(input)
 
                     val result = underTest.render(darkColor = color)
 
@@ -81,7 +85,7 @@ class QRCodeTest : FunSpec({
                     val javaQRCode = generateJavaQRCode(input, mode = Mode.MODE_8BIT_BYTE)
                     val expectedImage = javaQRCode.createImage(25, 0, color, Colors.RED)
 
-                    val underTest = QRCode(input)
+                    val underTest = QRCodeBuilder(input)
 
                     val result = underTest.render(brightColor = color, darkColor = Colors.RED)
 
@@ -99,7 +103,7 @@ private fun generateJavaQRCode(
     data: String,
     ecl: Int = com.d_project.qrcode.ErrorCorrectionLevel.M,
     type: Int = 1,
-    mode: Int = QRCode.typeForDataAndECL(data, ErrorCorrectionLevel.values().first { it.value == ecl })
+    mode: Int = QRCodeBuilder.typeForDataAndECL(data, ErrorCorrectionLevel.values().first { it.value == ecl })
 ): com.d_project.qrcode.QRCode =
     com.d_project.qrcode.QRCode().apply {
         errorCorrectionLevel = ecl

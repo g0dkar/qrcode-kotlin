@@ -1,4 +1,4 @@
-package qrcode
+package qrcode.raw
 
 import qrcode.internals.QRCodeSquare
 

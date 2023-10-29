@@ -16,13 +16,13 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int
 ) {
     companion object {
-        val AVAILABLE_FORMATS: Array<String> = CompressFormat.values().map { it.name }.toTypedArray()
+        val AVAILABLE_FORMATS: Array<String> = CompressFormat.entries.map { it.name }.toTypedArray()
     }
 
     protected fun createCanvas(image: Bitmap) = Canvas(image)
 
-    private val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
-    private val canvas: Canvas = createCanvas(image)
+    private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
+    private var canvas: Canvas = createCanvas(image)
     private val paintCache = HashMap<Int, Paint>()
     private var changed: Boolean = false
 
@@ -44,9 +44,12 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun changed() = changed
 
     /** Simply changes the `changed` flag to true without doing anything else */
-    actual fun touch(): Boolean {
-        changed = true
-        return true
+    actual fun reset() {
+        if (changed) {
+            changed = false
+            image = Bitmap.createBitmap(width, height, ARGB_8888)
+            canvas = createCanvas(image)
+        }
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */

@@ -46,16 +46,22 @@ actual open class QRCodeGraphics actual constructor(
         val colorString = rgba(color)
         context.fillStyle = colorString
         context.strokeStyle = colorString
+        val lineWidth = context.lineWidth
+
         action()
+
+        context.lineWidth = lineWidth
     }
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
 
     /** Simply changes the `changed` flag to true without doing anything else */
-    actual fun touch(): Boolean {
-        changed = true
-        return true
+    actual fun reset() {
+        if (changed) {
+            changed = false
+            context.clearRect(0.0, 0.0, width.toDouble(), height.toDouble())
+        }
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
@@ -101,6 +107,7 @@ actual open class QRCodeGraphics actual constructor(
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
+            context.lineWidth = thickness
             context.strokeRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
         }
     }
@@ -147,7 +154,7 @@ actual open class QRCodeGraphics actual constructor(
         color: Int,
         thickness: Double
     ) {
-        drawRect(x, y, width, height, color, 1)
+        drawRect(x, y, width, height, color, 1.0)
     }
 
     /**
@@ -204,6 +211,7 @@ actual open class QRCodeGraphics actual constructor(
             val radiusX = width.toDouble() / 2.0
             val radiusY = height.toDouble() / 2.0
 
+            context.lineWidth = thickness
             context.beginPath()
             context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
             context.stroke()

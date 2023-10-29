@@ -1,24 +1,23 @@
 package fancy
 
+import qrcode.QRCode
+import qrcode.color.Colors
 import java.io.FileOutputStream
 import javax.imageio.ImageIO
-import qrcode.Colors
-import qrcode.fancy.FancyQRCode
 
 fun main() {
     /*
-     * Built near halloween, so why not? :)
+     * Built near Halloween, so why not? :)
      */
     val logoBytes = ClassLoader.getSystemResourceAsStream("happy-halloween.png")?.readBytes() ?: ByteArray(0)
     val logo = ImageIO.read(logoBytes.inputStream())
 
-    val qrCode = FancyQRCode.newCircleBuilder()
+    val qrCode = QRCode.ofCircles()
         .withLogo(logoBytes, logo.width, logo.height)
         .withColor(Colors.ORANGE)
         .withBackgroundColor(Colors.TRANSPARENT)
-        .build("Boo!")
+        .build("https://getfirefox.com")
 
     val pngData = qrCode.render()
-
     FileOutputStream("examples/kotlin/fancy-halloween.png").write(pngData)
 }

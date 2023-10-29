@@ -1,10 +1,10 @@
 package fancy
 
+import qrcode.QRCode
 import java.io.FileOutputStream
-import qrcode.fancy.FancyQRCode
 
 fun main() {
-    val qrCode = FancyQRCode.newRoundedSquareBuilder()
+    val qrCode = QRCode.ofRoundedSquares()
         .build("Hello, rounded squares!")
 
     val pngData = qrCode.render()

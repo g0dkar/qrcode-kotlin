@@ -3,7 +3,8 @@ package qrcode.render
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Graphics2D
-import java.awt.RenderingHints
+import java.awt.RenderingHints.KEY_ANTIALIASING
+import java.awt.RenderingHints.VALUE_ANTIALIAS_ON
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -20,8 +21,8 @@ actual open class QRCodeGraphics actual constructor(
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
 
-    protected open fun createImage(): BufferedImage {
-        if (!this::image.isInitialized) {
+    protected open fun createImage(force: Boolean = false): BufferedImage {
+        if (force || !this::image.isInitialized) {
             image = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
         }
 
@@ -45,7 +46,7 @@ actual open class QRCodeGraphics actual constructor(
         graphics.paint = jdkColor
         graphics.color = jdkColor
         graphics.background = jdkColor
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+        graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
 
         action(graphics)
 
@@ -56,9 +57,11 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun changed() = changed
 
     /** Simply changes the `changed` flag to true without doing anything else */
-    actual fun touch(): Boolean {
-        changed = true
-        return true
+    actual fun reset() {
+        if (changed) {
+            changed = false
+            createImage(true)
+        }
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */

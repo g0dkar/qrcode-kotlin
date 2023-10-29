@@ -1,9 +1,9 @@
-package qrcode
+package qrcode.raw
 
+import qrcode.raw.ErrorCorrectionLevel.H
+import qrcode.raw.ErrorCorrectionLevel.Q
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.ErrorCorrectionLevel.H
-import qrcode.ErrorCorrectionLevel.Q
 
 /**
  * The level of Error Correction to apply to the QR Code image. The Higher the Error Correction, the lower quality

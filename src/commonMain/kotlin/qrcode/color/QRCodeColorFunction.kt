@@ -1,9 +1,9 @@
-package qrcode.fancy.color
+package qrcode.color
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import qrcode.internals.QRCodeSquare
 import qrcode.internals.QRCodeSquareType.MARGIN
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * A function that selects a color for a give square. The default implementation chooses between [fg], [bg] and [margin]

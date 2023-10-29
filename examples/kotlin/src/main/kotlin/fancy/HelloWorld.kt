@@ -1,10 +1,10 @@
 package fancy
 
+import qrcode.QRCode
 import java.io.FileOutputStream
-import qrcode.fancy.FancyQRCode
 
 fun main() {
-    val qrCode = FancyQRCode.newBuilder()
+    val qrCode = QRCode.ofSquares()
         .withInnerSpacing(1)
         .build("Hello, world!")
 

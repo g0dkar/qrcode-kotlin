@@ -1,12 +1,12 @@
-package qrcode.fancy.shape
+package qrcode.shape
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import qrcode.QRCode.Companion.DEFAULT_CELL_SIZE
-import qrcode.fancy.color.QRCodeColorFunction
+import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.raw.QRCodeBuilder.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  *

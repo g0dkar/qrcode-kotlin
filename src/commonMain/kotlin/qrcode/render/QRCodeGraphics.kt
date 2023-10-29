@@ -4,8 +4,8 @@ expect class QRCodeGraphics(width: Int, height: Int) {
     /** Returns `true` if **any** drawing was performed */
     fun changed(): Boolean
 
-    /** Simply changes the `changed` flag to true without doing anything else */
-    fun touch(): Boolean
+    /** Completely reset this object. It is expected that `changed()` returns false and the canvas is completely blank after invoking this. */
+    fun reset()
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
     fun dimensions(): Pair<Int, Int>

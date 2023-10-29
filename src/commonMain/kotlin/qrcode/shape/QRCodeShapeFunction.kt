@@ -1,10 +1,10 @@
-package qrcode.fancy.shape
+package qrcode.shape
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import qrcode.fancy.color.QRCodeColorFunction
+import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.render.QRCodeGraphics
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Function to render (draw) a single square.

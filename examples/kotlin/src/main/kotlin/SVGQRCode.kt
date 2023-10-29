@@ -1,11 +1,11 @@
+import qrcode.color.Colors
+import qrcode.raw.QRCodeBuilder
 import java.io.FileOutputStream
-import qrcode.Colors
-import qrcode.QRCode
 
 class SVGQRCode {
     fun createQRCode(content: String) {
         FileOutputStream("kotlin-svg.svg").use {
-            val qrCode = QRCode(content)
+            val qrCode = QRCodeBuilder(content)
             val computedSize = qrCode.computeImageSize()
             val graphics = SVGQRCodeGraphics(computedSize, computedSize)
 

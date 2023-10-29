@@ -1,7 +1,7 @@
-import java.io.FileOutputStream
-import qrcode.Colors
-import qrcode.QRCode
+import qrcode.color.Colors
 import qrcode.internals.QRCodeSquareType
+import qrcode.raw.QRCodeBuilder
+import java.io.FileOutputStream
 
 class RandomColoredQRCode {
     fun createQRCode(
@@ -12,7 +12,7 @@ class RandomColoredQRCode {
         val fileOut = FileOutputStream("kotlin-random-colored.png")
         val typeColorMap = mutableMapOf<QRCodeSquareType, Int>()
 
-        val qrCodeCanvas = QRCode(content).renderShaded { cellData, cellCanvas ->
+        val qrCodeCanvas = QRCodeBuilder(content).renderShaded { cellData, cellCanvas ->
             if (cellData.dark) {
                 if (cellData.squareInfo.type != QRCodeSquareType.DEFAULT) {
                     typeColorMap.putIfAbsent(cellData.squareInfo.type, colors.random())

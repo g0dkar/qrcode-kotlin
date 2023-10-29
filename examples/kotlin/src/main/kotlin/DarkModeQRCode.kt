@@ -1,4 +1,4 @@
-import qrcode.Colors
+import qrcode.color.Colors
 
 fun main() {
     val darkColor = Colors.css("#0D1117")

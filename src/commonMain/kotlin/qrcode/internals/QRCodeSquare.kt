@@ -1,9 +1,5 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import kotlin.jvm.JvmOverloads
-import qrcode.QRCode
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
 import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
@@ -11,6 +7,10 @@ import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeRegion.UNKNOWN
 import qrcode.internals.QRCodeSquareType.DEFAULT
 import qrcode.internals.QRCodeSquareType.MARGIN
+import qrcode.raw.QRCodeBuilder
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
+import kotlin.jvm.JvmOverloads
 
 /**
  * Represents a single QRCode square unit. It has information about its "color" (either dark or bright),
@@ -45,11 +45,11 @@ data class QRCodeSquare(
 
     /** Calculates where is the X position where this square will be in the main QRCode image given a [cellSize]. */
     @JvmOverloads
-    fun absoluteX(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = col * cellSize
+    fun absoluteX(cellSize: Int = QRCodeBuilder.DEFAULT_CELL_SIZE): Int = col * cellSize
 
     /** Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize]. */
     @JvmOverloads
-    fun absoluteY(cellSize: Int = QRCode.DEFAULT_CELL_SIZE): Int = row * cellSize
+    fun absoluteY(cellSize: Int = QRCodeBuilder.DEFAULT_CELL_SIZE): Int = row * cellSize
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

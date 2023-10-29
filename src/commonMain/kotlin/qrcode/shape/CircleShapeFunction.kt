@@ -1,10 +1,10 @@
-package qrcode.fancy.shape
+package qrcode.shape
 
+import qrcode.raw.QRCodeBuilder.Companion.DEFAULT_CELL_SIZE
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToInt
-import qrcode.QRCode.Companion.DEFAULT_CELL_SIZE
 
 /**
  * Creates circles instead of squares while drawing the QRCode. By default, the circles will keep `8% of the squareSize`
