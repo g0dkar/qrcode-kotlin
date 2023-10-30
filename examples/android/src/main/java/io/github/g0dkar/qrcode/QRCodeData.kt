@@ -2,6 +2,7 @@ package io.github.g0dkar.qrcode
 
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import qrcode.QRCode
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 

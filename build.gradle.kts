@@ -97,7 +97,7 @@ kotlin {
 }
 
 android {
-    namespace = "qrcode"
+    namespace = "io.github.g0dkar.qrcode"
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
@@ -135,8 +135,8 @@ tasks {
 /* *********************** */
 tasks {
     register<NpxTask>("minifyReleaseJS") {
-        val baseFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js").get().asFile.path
-        val minFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js").get().asFile.path
+        val baseFile = layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js").get().asFile.path
+        val minFile = layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js").get().asFile.path
         val cmdArgs = listOf(
             baseFile,
             "--compress",
@@ -146,7 +146,7 @@ tasks {
             "--keep-fnames",
             "--source-map",
             "--output",
-            minFile
+            minFile,
         )
 
         command.set("terser")
@@ -160,11 +160,10 @@ tasks {
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js.map"))
         into(layout.projectDirectory.dir("release"))
     }
 }

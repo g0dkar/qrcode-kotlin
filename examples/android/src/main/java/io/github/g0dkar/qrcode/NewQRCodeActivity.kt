@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.postDelayed
 import androidx.core.widget.doOnTextChanged
+import qrcode.QRCode
 
 class NewQRCodeActivity : AppCompatActivity() {
     private lateinit var qrCodeData: EditText
