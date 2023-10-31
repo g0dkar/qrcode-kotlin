@@ -1,5 +1,7 @@
+package old
+
 import qrcode.color.Colors
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import java.io.FileOutputStream
 
 class GradientColorQRCode(
@@ -19,7 +21,7 @@ class GradientColorQRCode(
     ) {
         val fileOut = FileOutputStream("kotlin-gradient.png")
 
-        val qrCode = QRCodeBuilder(content)
+        val qrCode = QRCodeProcessor(content)
         val qrCodeData = qrCode.encode()
         val qrCodeSize = qrCode.computeImageSize(rawData = qrCodeData)
 

@@ -11,7 +11,7 @@ import kotlin.js.JsExport
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
-class DefaultColorFunction(
+open class DefaultColorFunction(
     private val foreground: Int = Colors.BLACK,
     private val background: Int = Colors.WHITE,
 ) : QRCodeColorFunction {

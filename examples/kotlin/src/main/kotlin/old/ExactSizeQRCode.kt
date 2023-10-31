@@ -1,10 +1,12 @@
-import qrcode.raw.QRCodeBuilder
+package old
+
+import qrcode.raw.QRCodeProcessor
 import java.io.FileOutputStream
 
 class ExactSizeQRCode {
     fun createQRCode(content: String, size: Int) {
         FileOutputStream("kotlin-exact-$size.png").use {
-            val qrCode = QRCodeBuilder(content)
+            val qrCode = QRCodeProcessor(content)
             val qrCodeData = qrCode.encode()
 
             // qrCodeData[0].size = How many columns (X axis) the finished QRCode will have

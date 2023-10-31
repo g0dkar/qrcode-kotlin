@@ -78,7 +78,7 @@ kotlin {
         }
     }
 
-    // ios()
+    ios()
 
     sourceSets {
         val commonTest by getting {
@@ -216,12 +216,25 @@ val dokkaJar by tasks.creating(Jar::class) {
 /* Lint             */
 /* **************** */
 spotless {
-    val ktlintVersion = libs.versions.ktlint.getOrElse("0.47.1")
+    val spotlessFiles = properties["spotlessFiles"]?.toString()?.split(",")
+
+    isEnforceCheck = properties.getOrDefault("spotless.enforce", "false") == "true"
+
+    val ktlintVersion = libs.versions.ktlint.getOrElse("0.48.2")
 
     kotlin {
-        ktlint(ktlintVersion)
-    }
-    kotlinGradle {
+        val files = fileTree(project.projectDir) {
+            if (spotlessFiles.isNullOrEmpty()) {
+                include("**/*.kt")
+            } else {
+                include(spotlessFiles)
+            }
+
+            exclude("src/generated/**")
+        }
+
+        target(files)
+
         ktlint(ktlintVersion)
     }
 }

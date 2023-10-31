@@ -7,7 +7,7 @@ import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeRegion.UNKNOWN
 import qrcode.internals.QRCodeSquareType.DEFAULT
 import qrcode.internals.QRCodeSquareType.MARGIN
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
@@ -45,11 +45,11 @@ data class QRCodeSquare(
 
     /** Calculates where is the X position where this square will be in the main QRCode image given a [cellSize]. */
     @JvmOverloads
-    fun absoluteX(cellSize: Int = QRCodeBuilder.DEFAULT_CELL_SIZE): Int = col * cellSize
+    fun absoluteX(cellSize: Int = QRCodeProcessor.DEFAULT_CELL_SIZE): Int = col * cellSize
 
     /** Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize]. */
     @JvmOverloads
-    fun absoluteY(cellSize: Int = QRCodeBuilder.DEFAULT_CELL_SIZE): Int = row * cellSize
+    fun absoluteY(cellSize: Int = QRCodeProcessor.DEFAULT_CELL_SIZE): Int = row * cellSize
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

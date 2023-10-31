@@ -1,5 +1,3 @@
-package fancy
-
 import qrcode.QRCode
 import java.io.FileOutputStream
 

@@ -15,11 +15,13 @@ import kotlin.math.roundToInt
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
-    val height: Int
+    val height: Int,
 ) {
     private lateinit var image: BufferedImage
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
+
+    var beforeRenderAction: ((Graphics2D) -> Unit)? = null
 
     protected open fun createImage(force: Boolean = false): BufferedImage {
         if (force || !this::image.isInitialized) {
@@ -48,6 +50,7 @@ actual open class QRCodeGraphics actual constructor(
         graphics.background = jdkColor
         graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
 
+        beforeRenderAction?.invoke(graphics)
         action(graphics)
 
         graphics.dispose()
@@ -162,7 +165,7 @@ actual open class QRCodeGraphics actual constructor(
         height: Int,
         borderRadius: Int,
         color: Int,
-        thickness: Double
+        thickness: Double,
     ) {
         draw(color, thickness) {
             val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
@@ -172,7 +175,7 @@ actual open class QRCodeGraphics actual constructor(
                 width - halfThickness * 2,
                 height - halfThickness * 2,
                 borderRadius,
-                borderRadius
+                borderRadius,
             )
         }
     }
@@ -214,7 +217,12 @@ actual open class QRCodeGraphics actual constructor(
         draw(color, thickness) {
             val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
             // The docs say the dimensions are width+1 and height+1... why? because f.u.
-            it.drawOval(x + halfThickness, y + halfThickness, width - 1 - halfThickness * 2, height - 1 - halfThickness * 2)
+            it.drawOval(
+                x + halfThickness,
+                y + halfThickness,
+                width - 1 - halfThickness * 2,
+                height - 1 - halfThickness * 2,
+            )
         }
     }
 

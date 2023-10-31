@@ -1,5 +1,7 @@
+package old
+
 import qrcode.color.Colors
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import java.io.FileOutputStream
 
 class ColoredQRCode {
@@ -10,7 +12,7 @@ class ColoredQRCode {
         filename: String = "kotlin-colored.png"
     ) {
         val fileOut = FileOutputStream(filename)
-        val qrCodeCanvas = QRCodeBuilder(content).render(darkColor = squareColor, brightColor = backgroundColor)
+        val qrCodeCanvas = QRCodeProcessor(content).render(darkColor = squareColor, brightColor = backgroundColor)
 
         qrCodeCanvas.writeImage(fileOut)
     }

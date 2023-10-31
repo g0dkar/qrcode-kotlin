@@ -74,7 +74,7 @@ import kotlin.jvm.JvmStatic
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
-class QRCodeBuilder @JvmOverloads constructor(
+class QRCodeProcessor @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data),

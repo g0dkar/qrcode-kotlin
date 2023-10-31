@@ -3,7 +3,7 @@ package qrcode.shape
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
-import qrcode.raw.QRCodeBuilder.Companion.DEFAULT_CELL_SIZE
+import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport

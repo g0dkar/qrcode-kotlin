@@ -1,6 +1,8 @@
+package old
+
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import java.io.FileOutputStream
 
 /**
@@ -22,7 +24,7 @@ class ZXingQRCode {
     fun createQRCode(content: String) {
         val cellSize = 12
         val margin = 49
-        val qrCode = QRCodeBuilder(content, ErrorCorrectionLevel.M)
+        val qrCode = QRCodeProcessor(content, ErrorCorrectionLevel.M)
         val qrCodeData = qrCode.encode(type = 1, maskPattern = MaskPattern.PATTERN000)
 
         val fileOut = FileOutputStream("kotlin-zxing-hello-world.png")

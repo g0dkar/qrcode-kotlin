@@ -1,5 +1,3 @@
-package fancy
-
 import qrcode.QRCode
 import qrcode.color.Colors
 import java.io.FileOutputStream

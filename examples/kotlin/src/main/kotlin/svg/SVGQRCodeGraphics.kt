@@ -1,9 +1,11 @@
+package svg
+
+import org.jfree.svg.SVGGraphics2D
+import qrcode.render.QRCodeGraphics
 import java.awt.Graphics2D
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
-import org.jfree.svg.SVGGraphics2D
-import qrcode.render.QRCodeGraphics
 
 class SVGQRCodeGraphics(width: Int, height: Int) : QRCodeGraphics(width, height) {
     private val svgGraphics2D = SVGGraphics2D(width.toDouble(), height.toDouble())

@@ -1,3 +1,5 @@
+package old
+
 import qrcode.color.Colors
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
@@ -5,14 +7,14 @@ import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import qrcode.render.QRCodeGraphics
 import java.io.FileOutputStream
 
 class RoundQRCode {
     fun createQRCode(content: String, radius: Int = 15) {
         FileOutputStream("kotlin-round.png").use {
-            QRCodeBuilder(content).renderShaded { cellData, canvas ->
+            QRCodeProcessor(content).renderShaded { cellData, canvas ->
                 // Always paint it white to make sure there are no transparent pixels
                 canvas.fill(Colors.WHITE)
 

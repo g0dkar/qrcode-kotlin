@@ -1,3 +1,5 @@
+package old
+
 import qrcode.color.Colors
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
@@ -5,7 +7,7 @@ import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
-import qrcode.raw.QRCodeBuilder
+import qrcode.raw.QRCodeProcessor
 import qrcode.render.QRCodeGraphics
 import java.awt.Color
 import java.awt.MultipleGradientPaint.CycleMethod
@@ -29,7 +31,7 @@ class QRCodeKotlinLogo {
 
     fun createQRCodeKotlinLogo(cellSize: Int, margin: Int = (cellSize / 1.16).roundToInt()) {
         val renderedQrCodeImage =
-            QRCodeBuilder("QRCode Kotlin").renderShaded(cellSize, margin) { qrCodeSquare, qrCodeGraphics ->
+            QRCodeProcessor("QRCode Kotlin").renderShaded(cellSize, margin) { qrCodeSquare, qrCodeGraphics ->
                 if (qrCodeSquare.dark) {
                     when (qrCodeSquare.squareInfo.type) {
                         POSITION_PROBE -> when (qrCodeSquare.squareInfo.region) {

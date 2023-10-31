@@ -1,10 +1,12 @@
-import qrcode.raw.QRCodeBuilder
+package old
+
+import qrcode.raw.QRCodeProcessor
 import java.io.FileOutputStream
 
 class SimpleQRCode {
     fun createQRCode(content: String) {
         FileOutputStream("kotlin-simple.png").use {
-            QRCodeBuilder(content).render().writeImage(it)
+            QRCodeProcessor(content).render().writeImage(it)
         }
     }
 }

@@ -1,3 +1,5 @@
+package old
+
 import qrcode.color.Colors
 
 fun main() {
