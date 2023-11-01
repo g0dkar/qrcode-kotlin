@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
+import java.util.function.Consumer
 import javax.imageio.ImageIO
 import kotlin.math.roundToInt
 
@@ -259,8 +260,10 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Available so the user can implement their own, 100% custom drawing.
      */
-    fun directDraw(action: (Graphics2D) -> Unit) {
-        draw(0, null, action)
+    fun directDraw(action: Consumer<Graphics2D>) {
+        draw(0, null) {
+            action.accept(it)
+        }
     }
 
     /**

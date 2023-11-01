@@ -37,7 +37,7 @@ fun main() {
         .build("Hello, Triangles... from the JVM!")
     val customShapePngDataJVM = customShapeQRCodeJVM.render()
 
-    // ---------------------------
+    // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
     FileOutputStream("examples/kotlin/example01-squares.png").write(squarePngData)
     FileOutputStream("examples/kotlin/example01-circles.png").write(circlePngData)

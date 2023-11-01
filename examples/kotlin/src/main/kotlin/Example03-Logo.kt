@@ -3,7 +3,7 @@ import java.io.FileOutputStream
 
 fun main() {
     // Examples written around the time of the 2023 Halloween. So why not have some fun?
-    // ---------------------------
+    // -----------------------
     // JVM-only code: For our platform-independent code we just need a ByteArray of the PNG logo :)
     val logoBytes = ClassLoader.getSystemResourceAsStream("ghost.png")?.readBytes() ?: ByteArray(0)
 

@@ -140,6 +140,7 @@ class QRCode @JvmOverloads constructor(
             }
         }
 
+    /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     fun renderToGraphics(): QRCodeGraphics {
         val qrCodeGraphics = graphicsFactory.newGraphicsSquare(computedSize)
         colorFn.beforeRender(this, qrCodeGraphics)
@@ -148,6 +149,8 @@ class QRCode @JvmOverloads constructor(
         return draw(rawData, qrCodeGraphics).also { doAfter(it) }
     }
 
+    /** Calls [renderToGraphics] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */
+    @JvmOverloads
     fun render(format: String = "PNG"): ByteArray {
         return renderToGraphics().getBytes(format)
     }

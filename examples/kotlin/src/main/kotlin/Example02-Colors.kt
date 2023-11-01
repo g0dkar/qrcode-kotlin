@@ -30,7 +30,7 @@ fun main() {
         .build("You can put this on top of pretty much anything :)")
     val transparentPngData = transparentQRCode.render()
 
-    // ---------------------------
+    // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
     FileOutputStream("examples/kotlin/example02-color.png").write(orangePngData)
     FileOutputStream("examples/kotlin/example02-dark-mode.png").write(darkModePngData)

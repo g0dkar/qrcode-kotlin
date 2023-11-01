@@ -120,12 +120,19 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
     }
 
     /**
-     * The function to actually draw a square. Can be extended to easily have new Shape types :)
+     * The function to actually draw a filled cell. Extend this to easily create your own shape :)
+     *
+     * Used to draw ALL cells of the QRCode except the outline of the larger ones on the edges.
      */
     open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int, canvas: QRCodeGraphics) {
         canvas.fillRect(x, y, width, height, color)
     }
 
+    /**
+     * The function to actually draw the outline of a cell. Extend this to easily create your own shape :)
+     *
+     * ONLY used to draw those larger squares on the edges of the QRCode.
+     */
     open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double, canvas: QRCodeGraphics) {
         canvas.drawRect(x, y, width, height, color, thickness)
     }
