@@ -14,12 +14,12 @@ import kotlin.js.JsExport
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 interface QRCodeColorFunction {
-    fun colorFn(square: QRCodeSquare): Int =
+    fun colorFn(square: QRCodeSquare, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int =
         when (square.squareInfo.type) {
-            MARGIN -> margin(square.row, square.col)
+            MARGIN -> margin(square.row, square.col, qrCode, qrCodeGraphics)
             else -> when (square.dark) {
-                true -> fg(square.row, square.col)
-                else -> bg(square.row, square.col)
+                true -> fg(square.row, square.col, qrCode, qrCodeGraphics)
+                else -> bg(square.row, square.col, qrCode, qrCodeGraphics)
             }
         }
 
@@ -33,15 +33,15 @@ interface QRCodeColorFunction {
     /**
      * What is the foreground color
      */
-    fun fg(row: Int, col: Int): Int
+    fun fg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int
 
     /**
      * What is the background color
      */
-    fun bg(row: Int, col: Int): Int
+    fun bg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int
 
     /**
      * What is the margin color. Defaults to [bg]
      */
-    fun margin(row: Int, col: Int): Int = bg(row, col)
+    fun margin(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = bg(row, col, qrCode, qrCodeGraphics)
 }

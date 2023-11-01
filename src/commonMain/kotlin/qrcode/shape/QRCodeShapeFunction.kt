@@ -28,6 +28,7 @@ interface QRCodeShapeFunction {
         square: QRCodeSquare,
         squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
+        qrCode: QRCode,
     )
 
     /**
@@ -38,5 +39,6 @@ interface QRCodeShapeFunction {
         square: QRCodeSquare,
         squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
+        qrCode: QRCode,
     )
 }

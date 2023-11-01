@@ -1,5 +1,7 @@
 package qrcode.color
 
+import qrcode.QRCode
+import qrcode.render.QRCodeGraphics
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
@@ -15,9 +17,9 @@ open class DefaultColorFunction(
     private val foreground: Int = Colors.BLACK,
     private val background: Int = Colors.WHITE,
 ) : QRCodeColorFunction {
-    override fun fg(row: Int, col: Int): Int = foreground
+    override fun fg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = foreground
 
-    override fun bg(row: Int, col: Int): Int = background
+    override fun bg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = background
 
-    override fun margin(row: Int, col: Int): Int = background
+    override fun margin(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = background
 }

@@ -1,5 +1,6 @@
 package qrcode.shape
 
+import qrcode.QRCode
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
@@ -22,8 +23,12 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         square: QRCodeSquare,
         squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
+        qrCode: QRCode,
     ) {
-        squareCanvas.fill(colorFn.bg(square.row, square.col))
+        val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
+        val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
+
+        squareCanvas.fill(bg)
 
         if (square.dark) {
             fillRect(
@@ -31,8 +36,8 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
                 innerSpacing,
                 squareSize - innerSpacing * 2,
                 squareSize - innerSpacing * 2,
-                colorFn.fg(square.row, square.col),
-                squareCanvas
+                fg,
+                squareCanvas,
             )
         }
     }
@@ -41,17 +46,18 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
         squareCanvas: QRCodeGraphics,
-        canvas: QRCodeGraphics
+        canvas: QRCodeGraphics,
+        qrCode: QRCode,
     ) {
-        val bg = colorFn.bg(square.row, square.col)
-        val fg = colorFn.fg(square.row, square.col)
+        val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
+        val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
         val size = squareSize * square.rowSize
         val startX = square.absoluteX(squareSize)
         val startY = square.absoluteY(squareSize)
 
         when (square.squareInfo.type) {
             POSITION_PROBE -> {
-                val margin = colorFn.margin(square.row, square.col)
+                val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
 
                 // Fill the area of the whole square
                 canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, margin)
@@ -64,7 +70,7 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
                     size - innerSpacing * 2,
                     fg,
                     squareSize.toDouble(),
-                    canvas
+                    canvas,
                 )
 
                 // Draw inner square
@@ -74,7 +80,7 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
                     size - squareSize * 4,
                     size - squareSize * 4,
                     fg,
-                    canvas
+                    canvas,
                 )
             }
 
@@ -108,7 +114,7 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
                 squareSize - innerSpacing * 2,
                 squareSize - innerSpacing * 2,
                 color,
-                canvas
+                canvas,
             )
         }
     }

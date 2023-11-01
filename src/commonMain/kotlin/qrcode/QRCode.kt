@@ -4,6 +4,7 @@ import qrcode.QRCode.Companion.ofCircles
 import qrcode.QRCode.Companion.ofRoundedSquares
 import qrcode.QRCode.Companion.ofSquares
 import qrcode.QRCodeBuilder.QRCodeShapesEnum.CIRCLE
+import qrcode.QRCodeBuilder.QRCodeShapesEnum.CUSTOM
 import qrcode.QRCodeBuilder.QRCodeShapesEnum.ROUNDED_SQUARE
 import qrcode.QRCodeBuilder.QRCodeShapesEnum.SQUARE
 import qrcode.color.DefaultColorFunction
@@ -51,7 +52,7 @@ import kotlin.jvm.JvmStatic
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
     val data: String,
-    val squareSize: Int = DEFAULT_CELL_SIZE,
+    val squareSize: Int = DEFAULT_SQUARE_SIZE,
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
     val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize),
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
@@ -60,6 +61,9 @@ class QRCode @JvmOverloads constructor(
 ) {
     companion object {
         internal val EMPTY_FN: QRCode.(QRCodeGraphics) -> Unit = { }
+
+        /** Default value of [squareSize]. */
+        const val DEFAULT_SQUARE_SIZE = DEFAULT_CELL_SIZE
 
         /**
          * Creates a new [QRCodeBuilder] to build a Fancy QRCode which uses squares as the base shape (this is the default)
@@ -86,6 +90,15 @@ class QRCode @JvmOverloads constructor(
          */
         @JvmStatic
         fun ofRoundedSquares(): QRCodeBuilder = QRCodeBuilder(ROUNDED_SQUARE)
+
+        /**
+         * Creates a new [QRCodeBuilder] to build a QRCode which uses a custom shape function.
+         *
+         * @see QRCodeShapeFunction
+         * @see DefaultShapeFunction
+         */
+        @JvmStatic
+        fun ofCustomShape(customShapeFunction: QRCodeShapeFunction): QRCodeBuilder = QRCodeBuilder(CUSTOM, customShapeFunction)
     }
 
     /** The underlying [QRCodeProcessor] object that'll do all calculations */
@@ -117,9 +130,10 @@ class QRCode @JvmOverloads constructor(
                         actualSquare,
                         currentCanvas,
                         canvas,
+                        this,
                     )
 
-                    else -> shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas)
+                    else -> shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas, this)
                 }
 
                 actualSquare.rendered = true

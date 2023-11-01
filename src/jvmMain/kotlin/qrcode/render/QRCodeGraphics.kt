@@ -2,7 +2,9 @@ package qrcode.render
 
 import java.awt.BasicStroke
 import java.awt.Color
+import java.awt.GradientPaint
 import java.awt.Graphics2D
+import java.awt.Paint
 import java.awt.RenderingHints.KEY_ANTIALIASING
 import java.awt.RenderingHints.VALUE_ANTIALIAS_ON
 import java.awt.image.BufferedImage
@@ -20,6 +22,7 @@ actual open class QRCodeGraphics actual constructor(
     private lateinit var image: BufferedImage
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
+    private var nextDrawPaint: Paint? = null
 
     var beforeRenderAction: ((Graphics2D) -> Unit)? = null
 
@@ -45,15 +48,15 @@ actual open class QRCodeGraphics actual constructor(
         if (strokeThickness != null && strokeThickness > 0) {
             graphics.stroke = BasicStroke(strokeThickness.toFloat(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
         }
-        graphics.paint = jdkColor
         graphics.color = jdkColor
         graphics.background = jdkColor
+        graphics.paint = nextDrawPaint ?: jdkColor
         graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
 
-        beforeRenderAction?.invoke(graphics)
         action(graphics)
 
         graphics.dispose()
+        nextDrawPaint = null
     }
 
     /** Returns `true` if **any** drawing was performed */
@@ -251,5 +254,20 @@ actual open class QRCodeGraphics actual constructor(
         draw(0) {
             it.drawImage(image, x, y, null)
         }
+    }
+
+    /**
+     * Available so the user can implement their own, 100% custom drawing.
+     */
+    fun directDraw(action: (Graphics2D) -> Unit) {
+        draw(0, null, action)
+    }
+
+    /**
+     * An easy way to implement using [Paint]s like a [GradientPaint] for drawing something.
+     */
+    fun usePaintForNextDraw(paint: Paint): QRCodeGraphics {
+        nextDrawPaint = paint
+        return this
     }
 }
