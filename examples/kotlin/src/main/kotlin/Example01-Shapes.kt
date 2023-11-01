@@ -82,7 +82,7 @@ class JVMTriangleShapeFunction(
         val bottomRightX = x + width
         val bottomRightY = y + height
 
-        canvas.directDraw { // Platform-specific. On the JVM, it'll receive the raw Graphics2D object to draw on.
+        canvas.directDraw { // JVM only. We'll receive a raw Graphics2D object to draw on.
             val triangle = Polygon()
             triangle.addPoint(topCenterX, topCenterY)
             triangle.addPoint(bottomLeftX, bottomLeftY)

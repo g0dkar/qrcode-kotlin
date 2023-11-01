@@ -1,6 +1,5 @@
 import qrcode.QRCode
 import qrcode.color.Colors
-import qrcode.color.LinearGradientColorFunction
 import java.io.FileOutputStream
 
 fun main() {
@@ -19,19 +18,22 @@ fun main() {
         .build("Dark Mode QRCode")
     val darkModePngData = darkModeQRCode.render()
 
+    // Have the squares be a linear gradient from a color to another
     val gradientQRCode = QRCode.ofSquares()
-        .withCustomColorFunction(
-            LinearGradientColorFunction(
-                startForegroundColor = Colors.BISQUE,
-                endForegroundColor = Colors.BLUE,
-            ),
-        )
-        .build("Dark Mode QRCode")
+        .withGradientColor(Colors.BISQUE, Colors.BLUE) // <- See Here
+        .build("Weird gradient colors, but I think it's nice")
     val gradientPngData = gradientQRCode.render()
+
+    // Use "transparent" as a background color (meaning basically no background)
+    val transparentQRCode = QRCode.ofSquares()
+        .withBackgroundColor(Colors.TRANSPARENT)
+        .build("You can put this on top of pretty much anything :)")
+    val transparentPngData = transparentQRCode.render()
 
     // ---------------------------
     // JVM-only code (saves the PNG Bytes to a file)
     FileOutputStream("examples/kotlin/example02-color.png").write(orangePngData)
     FileOutputStream("examples/kotlin/example02-dark-mode.png").write(darkModePngData)
     FileOutputStream("examples/kotlin/example02-gradient.png").write(gradientPngData)
+    FileOutputStream("examples/kotlin/example02-transparent.png").write(transparentPngData)
 }

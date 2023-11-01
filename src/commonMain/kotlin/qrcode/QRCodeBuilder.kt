@@ -7,6 +7,7 @@ import qrcode.QRCodeBuilder.QRCodeShapesEnum.ROUNDED_SQUARE
 import qrcode.QRCodeBuilder.QRCodeShapesEnum.SQUARE
 import qrcode.color.Colors
 import qrcode.color.DefaultColorFunction
+import qrcode.color.LinearGradientColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRMath
 import qrcode.raw.QRCodeProcessor
@@ -26,6 +27,8 @@ class QRCodeBuilder @JvmOverloads constructor(
 
     private var squareSize: Int = QRCodeProcessor.DEFAULT_CELL_SIZE
     private var color: Int = Colors.BLACK
+    private var endColor: Int? = null
+    private var vertical: Boolean = true
     private var background: Int = Colors.WHITE
     private var innerSpace: Int = innerSpace()
     private var radiusInPixels: Int = RoundSquaresShapeFunction.defaultRadius(squareSize)
@@ -77,6 +80,23 @@ class QRCodeBuilder @JvmOverloads constructor(
      */
     fun withBackgroundColor(bgColor: Int): QRCodeBuilder {
         background = bgColor
+        return this
+    }
+
+    /**
+     * Uses a [LinearGradientColorFunction] to choose colors for the QRCode.
+     *
+     * By default, the gradient will be a vertical one (top-to-bottom)
+     *
+     * If [endColor] is `null`, a [DefaultColorFunction] will be used instead.
+     *
+     * @see Colors
+     */
+    @JvmOverloads
+    fun withGradientColor(startColor: Int, endColor: Int?, vertical: Boolean = true): QRCodeBuilder {
+        color = startColor
+        this.endColor = endColor
+        this.vertical = vertical
         return this
     }
 
@@ -202,7 +222,14 @@ class QRCodeBuilder @JvmOverloads constructor(
         }
 
     private val colorFunction: QRCodeColorFunction
-        get() = customColorFunction ?: DefaultColorFunction(foreground = color, background)
+        get() = when (endColor) {
+            null -> customColorFunction ?: DefaultColorFunction(foreground = color, background)
+            else -> customColorFunction ?: LinearGradientColorFunction(
+                startForegroundColor = color,
+                endForegroundColor = endColor!!,
+                background,
+            )
+        }
 
     private val shapeFunction: QRCodeShapeFunction
         get() = customShapeFunction ?: when (shape) {
