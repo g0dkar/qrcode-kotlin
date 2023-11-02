@@ -1,4 +1,3 @@
-import com.github.gradle.node.npm.task.NpxTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -26,7 +25,7 @@ plugins {
     signing
     `maven-publish`
     alias(libs.plugins.nexus)
-    alias(libs.plugins.nodejs)
+    alias(libs.plugins.npmPublish)
 
     // Docs Plugins
     alias(libs.plugins.dokka)
@@ -45,6 +44,7 @@ val javaVersionNumber = javaVersion.majorVersion.toInt()
 kotlin {
     jvm {
         jvmToolchain(javaVersionNumber)
+
         testRuns.named("test") {
             executionTask.configure {
                 useJUnitPlatform()
@@ -58,6 +58,8 @@ kotlin {
     }
 
     js {
+        moduleName = "qrcodeKotlin"
+
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -68,13 +70,16 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
+                output?.library = "qrcodeKotlin"
             }
 
             testTask {
                 enabled = false
             }
 
+//            binaries.executable()
             binaries.library()
+            generateTypeScriptDefinitions()
         }
     }
 
@@ -134,47 +139,19 @@ tasks {
 /* After Build Publishing  */
 /* *********************** */
 tasks {
-    register<NpxTask>("minifyReleaseJS") {
-        val baseFile = layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js").get().asFile.path
-        val minFile = layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js").get().asFile.path
-        val cmdArgs = listOf(
-            baseFile,
-            "--compress",
-            "--mangle",
-            "--timings",
-            "--keep-classnames",
-            "--keep-fnames",
-            "--source-map",
-            "--output",
-            minFile,
-        )
-
-        command.set("terser")
-        args.set(cmdArgs)
-    }
-
     /** Copies release files into /release dir */
     register<Copy>("copyToReleaseDir") {
+        dependsOn(build)
+
         doFirst {
             layout.projectDirectory.dir("release").asFile.deleteRecursively()
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js"))
-        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js.map"))
-        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js"))
-        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.min.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js.map"))
         into(layout.projectDirectory.dir("release"))
     }
-}
-
-node {
-    val nodejsVersion = libs.versions.nodejs.getOrElse("16.14.0")
-
-    download.set(true)
-    version.set(nodejsVersion)
-    allowInsecureProtocol.set(false)
-    nodeProjectDir.set(layout.buildDirectory.dir("tmp"))
 }
 
 /* **************** */
@@ -244,6 +221,7 @@ spotless {
 /* **************** */
 val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+val npmAccessKey = properties.getOrDefault("npmAccessKey", System.getenv("NPM_ACCESSKEY"))?.toString()
 
 nexusPublishing {
     // Workaround from https://github.com/gradle-nexus/publish-plugin/issues/220
@@ -315,5 +293,13 @@ signing {
         properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
 
     useInMemoryPgpKeys(key, password)
-    // sign(publishing.publications)
+}
+
+npmPublish {
+    registries {
+        register("npmjs") {
+            uri.set(uri("https://registry.npmjs.org"))
+            authToken.set(npmAccessKey)
+        }
+    }
 }

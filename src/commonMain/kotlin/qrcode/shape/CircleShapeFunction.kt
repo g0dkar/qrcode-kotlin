@@ -20,6 +20,8 @@ open class CircleShapeFunction @JvmOverloads constructor(
     innerSpace: Int = defaultInnerSpace(squareSize)
 ) : RoundSquaresShapeFunction(squareSize, radius = squareSize, innerSpace) {
     companion object {
+        // To avoid an error on the TypeScript side of things
+        fun defaultRadius(squareSize: Int) = (squareSize / 1.75).roundToInt()
         fun defaultInnerSpace(squareSize: Int) = (squareSize * 0.05).roundToInt()
     }
 }

@@ -1,5 +1,10 @@
 package qrcode.color
 
+import qrcode.color.Colors.css
+import qrcode.color.Colors.withAlpha
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
+
 /**
  * Just a lot of colors to use when drawing :)
  *
@@ -9,6 +14,8 @@ package qrcode.color
  * @see css
  * @see withAlpha
  */
+@JsExport
+@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */

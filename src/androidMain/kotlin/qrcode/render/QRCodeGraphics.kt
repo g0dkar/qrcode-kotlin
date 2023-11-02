@@ -1,12 +1,17 @@
 package qrcode.render
 
-import android.graphics.*
+import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.Bitmap.CompressFormat.JPEG
 import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.Bitmap.Config.ARGB_8888
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
+import android.graphics.Rect
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
@@ -53,7 +58,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
-    actual open fun dimensions() = Pair(width, height)
+    actual open fun dimensions() = arrayOf(width, height)
 
     /**
      * Returns this image as a [ByteArray] encoded as PNG. Recommended to use [writeImage].

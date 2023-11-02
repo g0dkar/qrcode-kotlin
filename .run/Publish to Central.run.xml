@@ -11,8 +11,9 @@
       <option name="taskNames">
         <list>
           <option value="clean" />
-          <option value="publishToSonatype" />
-          <option value="closeAndReleaseSonatypeStagingRepository" />
+          <option value=":publishToSonatype" />
+          <option value=":closeAndReleaseSonatypeStagingRepository" />
+          <option value=":publishJsPackageToNpmjsRegistry" />
         </list>
       </option>
       <option name="vmOptions" />
@@ -20,6 +21,7 @@
     <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
+    <RunAsTest>false</RunAsTest>
     <method v="2" />
   </configuration>
 </component>

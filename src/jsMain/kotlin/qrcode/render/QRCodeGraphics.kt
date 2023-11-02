@@ -7,6 +7,8 @@ import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.ImageData
 import org.w3c.files.Blob
 
+@JsExport
+@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
@@ -65,7 +67,7 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
-    actual open fun dimensions() = Pair(width, height)
+    actual open fun dimensions() = arrayOf(width, height)
 
     /**
      * Returns a Data URL to this can be shown in an `<img/>` tag.
@@ -239,6 +241,7 @@ actual open class QRCodeGraphics actual constructor(
      * On JS this has a limitation that the [rawData] image will be loaded considering it has the same [width] as
      * this object.
      */
+    @JsName("drawImageFromBytes")
     actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
         draw(0) {
             val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
