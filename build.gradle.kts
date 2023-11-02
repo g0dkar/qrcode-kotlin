@@ -77,7 +77,20 @@ kotlin {
                 enabled = false
             }
 
-//            binaries.executable()
+            binaries.executable()
+        }
+
+        nodejs {
+//            commonWebpackConfig {
+//                mode = PRODUCTION
+//                sourceMaps = true
+//                output?.library = "qrcodeKotlin"
+//            }
+
+            testTask {
+                enabled = false
+            }
+
             binaries.library()
             generateTypeScriptDefinitions()
         }
