@@ -42,6 +42,8 @@ version = "3.3.0"
 val javaVersion = 11
 
 kotlin {
+    applyDefaultHierarchyTemplate()
+
     jvm {
         jvmToolchain(javaVersion)
         testRuns.named("test") {
@@ -76,8 +78,6 @@ kotlin {
             binaries.library()
         }
     }
-
-    ios()
 
     sourceSets {
         val commonTest by getting {

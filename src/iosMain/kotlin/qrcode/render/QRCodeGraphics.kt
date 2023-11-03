@@ -1,4 +1,4 @@
-package io.github.g0dkar.qrcode.render
+package qrcode.render
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
@@ -17,6 +17,7 @@ import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererContext
 import platform.UIKit.UIImage
+import qrcode.Colors
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("MemberVisibilityCanBePrivate")
