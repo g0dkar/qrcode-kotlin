@@ -2,9 +2,7 @@ package qrcode.render
 
 import java.awt.BasicStroke
 import java.awt.Color
-import java.awt.GradientPaint
 import java.awt.Graphics2D
-import java.awt.Paint
 import java.awt.RenderingHints.KEY_ANTIALIASING
 import java.awt.RenderingHints.VALUE_ANTIALIAS_ON
 import java.awt.image.BufferedImage
@@ -23,9 +21,7 @@ actual open class QRCodeGraphics actual constructor(
     private lateinit var image: BufferedImage
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
-    private var nextDrawPaint: Paint? = null
-
-    var beforeRenderAction: ((Graphics2D) -> Unit)? = null
+//    private var nextDrawPaint: Paint? = null
 
     protected open fun createImage(force: Boolean = false): BufferedImage {
         if (force || !this::image.isInitialized) {
@@ -41,7 +37,7 @@ actual open class QRCodeGraphics actual constructor(
      * Handles the annoying parts of drawing. It sets up the specified [color] as the stroke, fill and background colors
      * and then executes the given [action] passing the [Graphics2D] as a parameter to it.
      */
-    protected fun draw(color: Int, strokeThickness: Double? = null, action: (Graphics2D) -> Unit) {
+    protected open fun draw(color: Int, strokeThickness: Double? = null, action: (Graphics2D) -> Unit) {
         changed = true
         val graphics = createGraphics()
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
@@ -51,13 +47,12 @@ actual open class QRCodeGraphics actual constructor(
         }
         graphics.color = jdkColor
         graphics.background = jdkColor
-        graphics.paint = nextDrawPaint ?: jdkColor
+        graphics.paint = jdkColor
         graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
 
         action(graphics)
 
         graphics.dispose()
-        nextDrawPaint = null
     }
 
     /** Returns `true` if **any** drawing was performed */
@@ -259,13 +254,5 @@ actual open class QRCodeGraphics actual constructor(
         draw(0, null) {
             action.accept(it)
         }
-    }
-
-    /**
-     * An easy way to implement using [Paint]s like a [GradientPaint] for drawing something.
-     */
-    fun usePaintForNextDraw(paint: Paint): QRCodeGraphics {
-        nextDrawPaint = paint
-        return this
     }
 }
