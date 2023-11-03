@@ -84,16 +84,21 @@ kotlin {
         }
     }
 
+    val currentPlatform = System.getProperty("os.name")
+
+    // This is in place just because my main development machine is NOT a MacOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    if (currentPlatform.lowercase() == "mac os x") {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
 //    watchosX64() <- Still have to figure out how to do it for watchOS x_x
 //    watchosArm64()
 //    watchosSimulatorArm64()
-    tvosX64()
-    tvosArm64()
-    tvosSimulatorArm64()
+        tvosX64()
+        tvosArm64()
+        tvosSimulatorArm64()
+    }
     // iOS Family of targets... since you can't just "ios()" anymore.
 
     sourceSets {
