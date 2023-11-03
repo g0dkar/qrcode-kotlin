@@ -37,7 +37,6 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "4.0.0"
 val javaVersion = JavaVersion.VERSION_17
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
@@ -77,21 +76,8 @@ kotlin {
                 enabled = false
             }
 
-            binaries.executable()
-        }
-
-        nodejs {
-//            commonWebpackConfig {
-//                mode = PRODUCTION
-//                sourceMaps = true
-//                output?.library = "qrcodeKotlin"
-//            }
-
-            testTask {
-                enabled = false
-            }
-
             binaries.library()
+//            binaries.executable()
             generateTypeScriptDefinitions()
         }
     }
