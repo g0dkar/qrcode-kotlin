@@ -209,11 +209,6 @@ actual open class QRCodeGraphics actual constructor(
         draw(color) { it.fillRoundRect(x, y, width, height, borderRadius, borderRadius) }
     }
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        drawImage(img.createImage(), x, y)
-    }
-
     /**
      * Draw the edges of an ellipsis (aka "a circle") which occupies the area `(x,y,width,height)`
      */

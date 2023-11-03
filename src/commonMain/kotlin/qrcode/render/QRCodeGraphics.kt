@@ -91,9 +91,6 @@ expect class QRCodeGraphics(width: Int, height: Int) {
      */
     fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int)
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    fun drawImage(img: QRCodeGraphics, x: Int, y: Int)
-
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */

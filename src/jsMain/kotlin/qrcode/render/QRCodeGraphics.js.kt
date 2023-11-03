@@ -191,20 +191,6 @@ actual open class QRCodeGraphics actual constructor(
         fillRect(x, y, width, height, color)
     }
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        draw (0) {
-            context.drawImage(img.canvas, x.toDouble(), y.toDouble())
-        }
-    }
-
-    private fun <T> tryGet(what: () -> T): T =
-        try {
-            what()
-        } catch (t: Throwable) {
-            throw Error(CANVAS_UNSUPPORTED, cause = t)
-        }
-
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
@@ -248,4 +234,11 @@ actual open class QRCodeGraphics actual constructor(
             context.putImageData(imageData, x.toDouble(), y.toDouble())
         }
     }
+
+    private fun <T> tryGet(what: () -> T): T =
+        try {
+            what()
+        } catch (t: Throwable) {
+            throw Error(CANVAS_UNSUPPORTED, cause = t)
+        }
 }

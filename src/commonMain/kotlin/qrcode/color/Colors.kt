@@ -4,6 +4,7 @@ import qrcode.color.Colors.css
 import qrcode.color.Colors.withAlpha
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlin.jvm.JvmStatic
 
 /**
  * Just a lot of colors to use when drawing :)
@@ -19,10 +20,12 @@ import kotlin.js.JsExport
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
+    @JvmStatic
     fun css(str: String): Int =
         str.substring(1..6).toInt(16) or 0xFF000000.toInt()
 
     /** Builds an RGBA color value from its numerical components. All values must be between `0..255`. */
+    @JvmStatic
     fun rgba(r: Int, g: Int, b: Int, a: Int = 255): Int =
         a.coerceIn(0..255) and 0xFF shl 24 or
             (r.coerceIn(0..255) and 0xFF shl 16) or
@@ -30,6 +33,7 @@ object Colors {
             (b.coerceIn(0..255) and 0xFF shl 0)
 
     /** Compute the R, G, B and Alpha components of a color. All values between `0..255`. */
+    @JvmStatic
     fun getRGBA(color: Int): IntArray =
         intArrayOf(
             (color shr 16) and 0xFF,
@@ -44,6 +48,7 @@ object Colors {
      * `alpha` ranges from 0 (completely transparent) to 255 (completely visible). Values outside this
      * range are [coerced][coerceIn] into it.
      */
+    @JvmStatic
     fun withAlpha(color: Int, alpha: Int): Int =
         (alpha.coerceIn(0..255) shl 24) + (color and 0xFFFFFF)
 

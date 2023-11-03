@@ -211,12 +211,6 @@ actual open class QRCodeGraphics actual constructor(
         )
     }
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        changed = true
-        drawImage(img.image, x, y)
-    }
-
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */

@@ -14,7 +14,7 @@ import kotlin.js.JsExport
 @OptIn(ExperimentalJsExport::class)
 interface QRCodeShapeFunction {
     /**
-     * Called before rendering starts, to setup something if needed
+     * Called before rendering starts, to set up something if needed
      */
     fun beforeRender(qrCode: QRCode, qrCodeGraphics: QRCodeGraphics) {
         // Do nothing
@@ -24,9 +24,10 @@ interface QRCodeShapeFunction {
      * Renders a single square.
      */
     fun renderSquare(
+        x: Int,
+        y: Int,
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     )
@@ -37,7 +38,6 @@ interface QRCodeShapeFunction {
     fun renderControlSquare(
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     )

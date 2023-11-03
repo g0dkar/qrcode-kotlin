@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns='http://www.w3.org/2000/svg'
+     width='1075.0' height='1075.0'>
+    <rect x='0.0' y='0.0' width='1075.0' height='1075.0' style='fill:rgb(255,255,255)'/>
+    <rect x='0.0' y='0.0' width='225.0' height='225.0' style='fill:rgb(255,255,255)'/>
+    <line x1='39.0' y1='39.0' x2='185.0' y2='39.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='186.0' y1='39.0' x2='186.0' y2='185.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='186.0' y1='186.0' x2='40.0' y2='186.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='39.0' y1='186.0' x2='39.0' y2='40.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <rect x='75.0' y='75.0' width='75.0' height='75.0' style='fill:rgb(0,0,0)'/>
+    <rect x='850.0' y='0.0' width='225.0' height='225.0' style='fill:rgb(255,255,255)'/>
+    <line x1='889.0' y1='39.0' x2='1035.0' y2='39.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='1036.0' y1='39.0' x2='1036.0' y2='185.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='1036.0' y1='186.0' x2='890.0' y2='186.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='889.0' y1='186.0' x2='889.0' y2='40.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <rect x='925.0' y='75.0' width='75.0' height='75.0' style='fill:rgb(0,0,0)'/>
+    <rect x='825.0' y='825.0' width='125.0' height='125.0' style='fill:rgb(255,255,255)'/>
+    <rect x='826.0' y='826.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='851.0' y='826.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='876.0' y='826.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='901.0' y='826.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='926.0' y='826.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='826.0' y='851.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='926.0' y='851.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='826.0' y='876.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='876.0' y='876.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='926.0' y='876.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='826.0' y='901.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='926.0' y='901.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='826.0' y='926.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='851.0' y='926.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='876.0' y='926.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='901.0' y='926.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='926.0' y='926.0' width='23.0' height='23.0' style='fill:rgb(0,0,0)'/>
+    <rect x='0.0' y='850.0' width='225.0' height='225.0' style='fill:rgb(255,255,255)'/>
+    <line x1='39.0' y1='889.0' x2='185.0' y2='889.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='186.0' y1='889.0' x2='186.0' y2='1035.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='186.0' y1='1036.0' x2='40.0' y2='1036.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <line x1='39.0' y1='1036.0' x2='39.0' y2='890.0'
+          style='stroke-width:25.0;stroke:rgb(0,0,0);stroke-opacity:1.0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10.0'/>
+    <rect x='75.0' y='925.0' width='75.0' height='75.0' style='fill:rgb(0,0,0)'/>
+</svg>

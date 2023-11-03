@@ -1,5 +1,6 @@
 package qrcode.raw
 
+import qrcode.QRCode
 import qrcode.color.Colors
 import qrcode.internals.BitBuffer
 import qrcode.internals.Polynomial
@@ -219,14 +220,14 @@ class QRCodeProcessor @JvmOverloads constructor(
             margin,
             rawData,
             qrCodeGraphics,
-        ) { cellData, graphics ->
+        ) { x, y, cellData, graphics ->
             if (cellData.dark) {
-                graphics.fill(darkColor)
+                graphics.fillRect(x, y, cellSize, cellSize, darkColor)
             } else {
                 if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
-                    graphics.fill(brightColor)
+                    graphics.fillRect(x, y, cellSize, cellSize, brightColor)
                 } else {
-                    graphics.fill(marginColor)
+                    graphics.fillRect(x, y, cellSize, cellSize, marginColor)
                 }
             }
         }
@@ -235,37 +236,24 @@ class QRCodeProcessor @JvmOverloads constructor(
      * Renders a QR Code image based on its [computed data][encode].
      *
      * This function provides a way to implement more artistic QRCodes. The [renderer] is a function that draws a single
-     * square of the QRCode. It receives 2 parameters: [cellData][QRCodeSquare] and a [QRCodeGraphics] for it to freely
-     * draw. After finished, the canvas will be placed into the final image in its respective place.
+     * square of the QRCode. It receives 4 parameters: the `(x, y)` coordinates where the square is, the
+     * [cellData][QRCodeSquare] and the [QRCodeGraphics] for it to freely draw.
      *
-     * To show this, here's a renderer that makes a QR Code that is half [blue][Colors.BLUE] and half [red][Colors.RED]:
-     *
-     * ```kotlin
-     * QRCode("example").renderShaded { cellData, graphics ->
-     *     if (cellData.type != QRCodeSquareType.MARGIN && cellData.dark) {
-     *         if (cellData.row > cellData.size / 2) {
-     *             graphics.fill(Colors.BLUE)
-     *         }
-     *         else {
-     *             graphics.fill(Colors.RED)
-     *         }
-     *     } else {
-     *         graphics.fill(Colors.WHITE)
-     *     }
-     * }
-     * ```
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, try setting [margin] equal to [cellSize]._
+     * _Tip: for better looking QR Codes, try using [QRCode] instead ;)_
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
      * @param qrCodeGraphics The [QRCodeGraphics] where the QRCode will be painted into.
-     * @param renderer Lambda that draws a single QRCode square. It receives as parameters the [QRCodeSquare] being draw
-     * and a [QRCodeGraphics] for it to draw the square.
+     * @param renderer Lambda that draws a single QRCode square. It receives as parameters the `(x, y)` of the cell,
+     * the [QRCodeSquare] (aka "cell") being drawn and a [QRCodeGraphics] for it to draw the square.
      *
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
+     * @see QRCode
+     * @see QRCode.ofSquares
+     * @see QRCode.ofCircles
+     * @see QRCode.ofRoundedSquares
      * @see QRCodeSquare
      * @see QRCodeGraphics
      * @see Colors
@@ -282,7 +270,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 rawData,
             ),
         ),
-        renderer: (QRCodeSquare, QRCodeGraphics) -> Unit,
+        renderer: (Int, Int, QRCodeSquare, QRCodeGraphics) -> Unit,
     ): QRCodeGraphics {
         if (margin > 0) {
             val marginSquare = QRCodeSquare(
@@ -293,27 +281,14 @@ class QRCodeProcessor @JvmOverloads constructor(
                 squareInfo = QRCodeSquareInfo.margin(),
             )
 
-            renderer(marginSquare, qrCodeGraphics)
+            renderer(marginSquare.absoluteX(cellSize), marginSquare.absoluteY(cellSize), marginSquare, qrCodeGraphics)
         }
 
-        val squareCanvas = graphicsFactory.newGraphicsSquare(cellSize)
-
-        rawData.forEachIndexed { row, rowData ->
-            rowData.forEachIndexed { col, cell ->
+        rawData.forEach { rowData ->
+            rowData.forEach { cell ->
                 if (!cell.rendered) {
-                    renderer(cell, squareCanvas)
-
+                    renderer(cell.absoluteX(cellSize), cell.absoluteY(cellSize), cell, qrCodeGraphics)
                     cell.rendered = true
-
-                    if (squareCanvas.changed()) {
-                        qrCodeGraphics.drawImage(
-                            squareCanvas,
-                            margin + cellSize * col,
-                            margin + cellSize * row,
-                        )
-
-                        squareCanvas.reset()
-                    }
                 }
             }
         }

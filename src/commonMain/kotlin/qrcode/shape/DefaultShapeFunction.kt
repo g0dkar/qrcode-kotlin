@@ -19,25 +19,26 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
     private val innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
 
     override fun renderSquare(
+        x: Int,
+        y: Int,
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     ) {
         val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
 
-        squareCanvas.fill(bg)
+        canvas.fill(bg)
 
         if (square.dark) {
             fillRect(
-                innerSpacing,
-                innerSpacing,
+                x + innerSpacing,
+                y + innerSpacing,
                 squareSize - innerSpacing * 2,
                 squareSize - innerSpacing * 2,
                 fg,
-                squareCanvas,
+                canvas,
             )
         }
     }
@@ -45,7 +46,6 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
     override fun renderControlSquare(
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
-        squareCanvas: QRCodeGraphics,
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     ) {

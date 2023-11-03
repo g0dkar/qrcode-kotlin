@@ -27,15 +27,15 @@ import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
 /**
- * A fun class to easily create some of the more fancy QRCodes people come up with these days.
+ * A simple class to create easily create aesthetic pleasing QRCodes.
  *
- * It gets a [QRCodeProcessor] on the constructor and builds a render function on top of it.
+ * It'll create a [QRCodeProcessor] and build a custom render function on top of it.
  *
  * It includes things like:
  *
- * - A QR Code with a logo at the center
- * - A QR Code with dots instead of squares
- * - Colorful QR Codes
+ * - QR Codes with a logo at the center
+ * - QR Codes with dots instead of squares
+ * - Colorful QR Codes (including linear gradient colors)
  *
  * If you have a suggestion for a nice QR Code style, feel free to open a PR, or an Issue with your suggestion :)
  *
@@ -120,7 +120,7 @@ class QRCode @JvmOverloads constructor(
             margin = squareSize,
             rawData = rawData,
             qrCodeGraphics = canvas,
-        ) { currentSquare, currentCanvas ->
+        ) { x, y, currentSquare, _ ->
             val actualSquare = currentSquare.parent ?: currentSquare
 
             if (!actualSquare.rendered) {
@@ -128,12 +128,11 @@ class QRCode @JvmOverloads constructor(
                     POSITION_PROBE, POSITION_ADJUST -> shapeFn.renderControlSquare(
                         colorFn,
                         actualSquare,
-                        currentCanvas,
                         canvas,
                         this,
                     )
 
-                    else -> shapeFn.renderSquare(colorFn, currentSquare, currentCanvas, canvas, this)
+                    else -> shapeFn.renderSquare(x, y, colorFn, currentSquare, canvas, this)
                 }
 
                 actualSquare.rendered = true
