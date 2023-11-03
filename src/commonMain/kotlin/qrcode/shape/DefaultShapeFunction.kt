@@ -3,6 +3,7 @@ package qrcode.shape
 import qrcode.QRCode
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
+import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
@@ -29,9 +30,10 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
 
-        canvas.fill(bg)
-
-        if (square.dark) {
+        if (square.squareInfo.type == MARGIN) {
+            canvas.fill(bg)
+        }
+        else if (square.dark) {
             fillRect(
                 x + innerSpacing,
                 y + innerSpacing,

@@ -287,7 +287,7 @@ class QRCodeProcessor @JvmOverloads constructor(
         rawData.forEach { rowData ->
             rowData.forEach { cell ->
                 if (!cell.rendered) {
-                    renderer(cell.absoluteX(cellSize), cell.absoluteY(cellSize), cell, qrCodeGraphics)
+                    renderer(cell.absoluteX(cellSize) + margin, cell.absoluteY(cellSize) + margin, cell, qrCodeGraphics)
                     cell.rendered = true
                 }
             }
