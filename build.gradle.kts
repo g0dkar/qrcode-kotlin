@@ -42,6 +42,8 @@ version = "3.3.0"
 val javaVersion = 11
 
 kotlin {
+    applyDefaultHierarchyTemplate()
+
     jvm {
         jvmToolchain(javaVersion)
         testRuns.named("test") {
@@ -77,7 +79,17 @@ kotlin {
         }
     }
 
-    ios()
+    // iOS Family of targets... since you can't just "ios()" anymore.
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    watchosX64()
+    watchosArm64()
+    watchosSimulatorArm64()
+    tvosX64()
+    tvosArm64()
+    tvosSimulatorArm64()
+    // iOS Family of targets... since you can't just "ios()" anymore.
 
     sourceSets {
         val commonTest by getting {
@@ -87,6 +99,7 @@ kotlin {
                 implementation(libs.kotest.framework.engine)
             }
         }
+
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
