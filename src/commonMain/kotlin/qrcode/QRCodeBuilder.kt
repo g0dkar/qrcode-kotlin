@@ -127,39 +127,41 @@ class QRCodeBuilder @JvmOverloads constructor(
      *
      */
     @JvmOverloads
-    fun withLogo(logo: ByteArray, width: Int, height: Int, clearLogoArea: Boolean = true): QRCodeBuilder {
-        if (clearLogoArea) {
-            drawLogoBeforeAction = {
+    fun withLogo(logo: ByteArray?, width: Int, height: Int, clearLogoArea: Boolean = true): QRCodeBuilder {
+        if (logo != null) {
+            if (clearLogoArea) {
+                drawLogoBeforeAction = {
+                    val logoX = (computedSize - width) / 2
+                    val logoY = (computedSize - height) / 2
+
+                    rawData.forEach { row ->
+                        row.forEach { cell ->
+                            val cellX = cell.absoluteX(squareSize) + squareSize
+                            val cellY = cell.absoluteY(squareSize) + squareSize
+
+                            cell.rendered = !QRMath.rectsIntersect(
+                                logoX,
+                                logoY,
+                                width,
+                                height,
+                                cellX,
+                                cellY,
+                                squareSize,
+                                squareSize,
+                            )
+                        }
+                    }
+                }
+            } else {
+                drawLogoBeforeAction = EMPTY_FN
+            }
+
+            drawLogoAction = { canvas ->
                 val logoX = (computedSize - width) / 2
                 val logoY = (computedSize - height) / 2
 
-                rawData.forEach { row ->
-                    row.forEach { cell ->
-                        val cellX = cell.absoluteX(squareSize) + squareSize
-                        val cellY = cell.absoluteY(squareSize) + squareSize
-
-                        cell.rendered = !QRMath.rectsIntersect(
-                            logoX,
-                            logoY,
-                            width,
-                            height,
-                            cellX,
-                            cellY,
-                            squareSize,
-                            squareSize,
-                        )
-                    }
-                }
+                canvas.drawImage(logo, logoX, logoY)
             }
-        } else {
-            drawLogoBeforeAction = EMPTY_FN
-        }
-
-        drawLogoAction = { canvas ->
-            val logoX = (computedSize - width) / 2
-            val logoY = (computedSize - height) / 2
-
-            canvas.drawImage(logo, logoX, logoY)
         }
 
         return this

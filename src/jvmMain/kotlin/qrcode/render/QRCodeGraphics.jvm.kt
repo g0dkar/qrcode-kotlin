@@ -233,17 +233,21 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    actual open fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        draw(0) {
-            ByteArrayInputStream(rawData).use { inStream ->
-                drawImage(ImageIO.read(inStream), x, y)
+    actual open fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            draw(0) {
+                ByteArrayInputStream(rawData).use { inStream ->
+                    drawImage(ImageIO.read(inStream), x, y)
+                }
             }
         }
     }
 
-    open fun drawImage(image: BufferedImage, x: Int, y: Int) {
-        draw(0) {
-            it.drawImage(image, x, y, null)
+    open fun drawImage(image: BufferedImage?, x: Int, y: Int) {
+        if (image != null) {
+            draw(0) {
+                it.drawImage(image, x, y, null)
+            }
         }
     }
 

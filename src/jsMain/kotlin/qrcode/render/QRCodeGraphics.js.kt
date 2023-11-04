@@ -228,10 +228,12 @@ actual open class QRCodeGraphics actual constructor(
      * this object.
      */
     @JsName("drawImageFromBytes")
-    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        draw(0) {
-            val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
-            context.putImageData(imageData, x.toDouble(), y.toDouble())
+    actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            draw(0) {
+                val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
+                context.putImageData(imageData, x.toDouble(), y.toDouble())
+            }
         }
     }
 

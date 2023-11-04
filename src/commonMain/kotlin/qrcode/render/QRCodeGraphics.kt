@@ -94,5 +94,5 @@ expect class QRCodeGraphics(width: Int, height: Int) {
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    fun drawImage(rawData: ByteArray, x: Int, y: Int)
+    fun drawImage(rawData: ByteArray?, x: Int, y: Int)
 }

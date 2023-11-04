@@ -241,9 +241,11 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
-        drawImage(imgBitmap, x, y)
+    actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
+            drawImage(imgBitmap, x, y)
+        }
     }
 
     open fun drawImage(img: Bitmap, x: Int, y: Int) {

@@ -221,15 +221,17 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        renderActions.add {
-            rawData.usePinned {
-                val imgData = NSMutableData()
-                imgData.appendBytes(it.addressOf(0), rawData.size.toULong())
+    actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            renderActions.add {
+                rawData.usePinned {
+                    val imgData = NSMutableData()
+                    imgData.appendBytes(it.addressOf(0), rawData.size.toULong())
 
-                val image = UIImage(imgData)
-                val point = CGPointMake(x = x.toDouble(), y = y.toDouble())
-                image.drawAtPoint(point)
+                    val image = UIImage(imgData)
+                    val point = CGPointMake(x = x.toDouble(), y = y.toDouble())
+                    image.drawAtPoint(point)
+                }
             }
         }
     }
