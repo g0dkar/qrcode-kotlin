@@ -46,6 +46,8 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
     }
 
     override fun renderControlSquare(
+        xOffset: Int,
+        yOffset: Int,
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
         canvas: QRCodeGraphics,
@@ -54,8 +56,8 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
         val size = squareSize * square.rowSize
-        val startX = square.absoluteX(squareSize)
-        val startY = square.absoluteY(squareSize)
+        val startX = xOffset + square.absoluteX(squareSize)
+        val startY = yOffset + square.absoluteY(squareSize)
 
         when (square.squareInfo.type) {
             POSITION_PROBE -> {

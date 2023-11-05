@@ -56,11 +56,11 @@ class QRCode @JvmOverloads constructor(
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
     val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize),
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
-    private val doBefore: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN,
-    private val doAfter: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN,
+    private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
+    private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
 ) {
     companion object {
-        internal val EMPTY_FN: QRCode.(QRCodeGraphics) -> Unit = { }
+        internal val EMPTY_FN: QRCode.(QRCodeGraphics, Int, Int) -> Unit = { _, _, _ -> }
 
         /** Default value of [squareSize]. */
         const val DEFAULT_SQUARE_SIZE = DEFAULT_CELL_SIZE
@@ -117,7 +117,7 @@ class QRCode @JvmOverloads constructor(
     /** The [QRCodeGraphics] (aka "canvas") where all the drawing will happen */
     val graphics = graphicsFactory.newGraphicsSquare(computedSize)
 
-    private fun draw(rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
+    private fun draw(xOffset: Int, yOffset: Int, rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
         qrCodeProcessor.renderShaded(
             cellSize = squareSize,
             margin = squareSize,
@@ -129,27 +129,28 @@ class QRCode @JvmOverloads constructor(
             if (!actualSquare.rendered) {
                 when (currentSquare.squareInfo.type) {
                     POSITION_PROBE, POSITION_ADJUST -> shapeFn.renderControlSquare(
+                        xOffset,
+                        yOffset,
                         colorFn,
                         actualSquare,
                         canvas,
                         this,
                     )
 
-                    else -> shapeFn.renderSquare(x, y, colorFn, currentSquare, canvas, this)
+                    else -> shapeFn.renderSquare(xOffset + x, yOffset + y, colorFn, currentSquare, canvas, this)
                 }
 
                 actualSquare.rendered = true
             }
         }
 
-    fun render
-
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
-    fun renderToGraphics(): QRCodeGraphics {
-        colorFn.beforeRender(this, graphics)
-        shapeFn.beforeRender(this, graphics)
-        doBefore(graphics)
-        return draw(rawData, graphics).also { doAfter(it) }
+    @JvmOverloads
+    fun renderToGraphics(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0): QRCodeGraphics {
+        colorFn.beforeRender(this, qrCodeGraphics)
+        shapeFn.beforeRender(this, qrCodeGraphics)
+        doBefore(qrCodeGraphics, xOffset, yOffset)
+        return draw(xOffset, yOffset, rawData, qrCodeGraphics).also { doAfter(it, xOffset, yOffset) }
     }
 
     /** Calls [renderToGraphics] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */

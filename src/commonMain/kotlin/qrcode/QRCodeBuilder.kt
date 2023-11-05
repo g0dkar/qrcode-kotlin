@@ -36,10 +36,10 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var background: Int = Colors.WHITE
     private var innerSpace: Int = innerSpace()
     private var radiusInPixels: Int = RoundSquaresShapeFunction.defaultRadius(squareSize)
-    private var drawLogoAction: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN
-    private var drawLogoBeforeAction: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN
-    private var userDoAfter: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN
-    private var userDoBefore: QRCode.(QRCodeGraphics) -> Unit = EMPTY_FN
+    private var drawLogoAction: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
+    private var drawLogoBeforeAction: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
+    private var userDoAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
+    private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
 
     enum class QRCodeShapesEnum {
@@ -133,7 +133,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     fun withLogo(logo: ByteArray?, width: Int, height: Int, clearLogoArea: Boolean = true): QRCodeBuilder {
         if (logo != null) {
             if (clearLogoArea) {
-                drawLogoBeforeAction = {
+                drawLogoBeforeAction = { _, _, _ ->
                     val logoX = (computedSize - width) / 2
                     val logoY = (computedSize - height) / 2
 
@@ -159,9 +159,9 @@ class QRCodeBuilder @JvmOverloads constructor(
                 drawLogoBeforeAction = EMPTY_FN
             }
 
-            drawLogoAction = { canvas ->
-                val logoX = (computedSize - width) / 2
-                val logoY = (computedSize - height) / 2
+            drawLogoAction = { canvas, xOffset, yOffset ->
+                val logoX = xOffset + (computedSize - width) / 2
+                val logoY = yOffset + (computedSize - height) / 2
 
                 canvas.drawImage(logo, logoX, logoY)
             }
@@ -172,13 +172,13 @@ class QRCodeBuilder @JvmOverloads constructor(
 
     /** Run a piece of code after the rendering is done. */
     fun withAfterRenderAction(action: QRCode.(QRCodeGraphics) -> Unit): QRCodeBuilder {
-        userDoAfter = action
+        userDoAfter = { it, _, _ -> action(it) }
         return this
     }
 
     /** Run a piece of code before the rendering is done. */
     fun withBeforeRenderAction(action: QRCode.(QRCodeGraphics) -> Unit): QRCodeBuilder {
-        userDoBefore = action
+        userDoBefore = { it, _, _ -> action(it) }
         return this
     }
 
@@ -218,16 +218,16 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
-    private val beforeFn: QRCode.(QRCodeGraphics) -> Unit
-        get() = { canvas ->
-            drawLogoBeforeAction(canvas)
-            userDoBefore(canvas)
+    private val beforeFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
+        get() = { canvas, xOffset, yOffset ->
+            drawLogoBeforeAction(canvas, xOffset, yOffset)
+            userDoBefore(canvas, xOffset, yOffset)
         }
 
-    private val afterFn: QRCode.(QRCodeGraphics) -> Unit
-        get() = { canvas ->
-            drawLogoAction(canvas)
-            userDoAfter(canvas)
+    private val afterFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
+        get() = { canvas, xOffset, yOffset ->
+            drawLogoAction(canvas, xOffset, yOffset)
+            userDoAfter(canvas, xOffset, yOffset)
         }
 
     private val colorFunction: QRCodeColorFunction

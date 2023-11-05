@@ -35,15 +35,18 @@ fun main() {
     // Create a new 1280x640 image
     val w = 1280
     val h = 640
-    val wholeImage = qrCode.graphicsFactory.newGraphics(w, h)
+    val banner = qrCode.graphicsFactory.newGraphics(w, h)
 
-
-    wholeImage.directDraw {
+    banner.directDraw {
         it.paint = kotlinGradient(w)
         it.fillRect(0, 0, w, h)
     }
-    wholeImage.drawImage(qrCodePngData, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
-    val pngData = wholeImage.getBytes()
+
+    // Draw the QRCode on our banner canvas
+    qrCode.renderToGraphics(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
+
+    // Get the bytes to save it to a file :)
+    val pngData = banner.getBytes()
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)

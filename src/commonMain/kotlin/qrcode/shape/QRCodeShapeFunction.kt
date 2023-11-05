@@ -36,6 +36,8 @@ interface QRCodeShapeFunction {
      * Renders a control square (those bigger ones on the edges).
      */
     fun renderControlSquare(
+        xOffset: Int,
+        yOffset: Int,
         colorFn: QRCodeColorFunction,
         square: QRCodeSquare,
         canvas: QRCodeGraphics,

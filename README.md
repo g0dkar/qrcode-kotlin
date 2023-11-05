@@ -25,11 +25,16 @@ that we can provide a better tool/API for them. Please, feel free to share if an
 
 ## Table of Contents
 
-<!-- toc -->
+<!-- TOC -->
 
-[toc]
+* [Installation](#installation)
+* [Usage](#usage)
+    * [Spring Framework and/or Spring Boot](#spring-framework-andor-spring-boot)
+* [License](#license)
+* [Thanks and Acknowledgements](#thanks-and-acknowledgements)
+* [Support and Links](#support-and-links)
 
-<!-- /toc -->
+<!-- TOC -->
 
 ## Installation
 
@@ -50,7 +55,7 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
 
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <artifactId>qrcode-kotlin-jvm</artifactId> <!-- or qrcode-kotlin-android -->
     <version>4.0.1</version>
 </dependency>
 ```
@@ -104,23 +109,28 @@ FileOutputStream("hello-world.png").use { it.write(pngBytes) }
 
 We highly recommend that you check out some examples:
 
-* [All sorts of shapes](examples/kotlin/src/main/kotlin/Example01-Shapes.kt): Squares, Circles, Rounded Squares and Custom shapes
-* [All about colors](examples/kotlin/src/main/kotlin/Example02-Colors.kt): Foreground, Background, Transparent backgrounds, Linear Gradient colors
-* [Adding a Logo](examples/kotlin/src/main/kotlin/Example03-Logo.kt): Add a logo and remove the cells behind it, or don't :)
-* [SVG QRCodes](examples/kotlin/src/main/kotlin/Example04-SVG.kt): How to extend the rendered to render SVG (uses [JFree SVG](https://github.com/jfree/jfreesvg))
-* [The banner on the top of this README](examples/kotlin/src/main/kotlin/ProjectLogo.kt): Yup, all done with the library ^^
+* [All sorts of shapes](examples/kotlin/src/main/kotlin/Example01-Shapes.kt): Squares, Circles, Rounded Squares and
+  Custom shapes
+* [All about colors](examples/kotlin/src/main/kotlin/Example02-Colors.kt): Foreground, Background, Transparent
+  backgrounds, Linear Gradient colors
+* [Adding a Logo](examples/kotlin/src/main/kotlin/Example03-Logo.kt): Add a logo and remove the cells behind it, or
+  don't :)
+* [SVG QRCodes](examples/kotlin/src/main/kotlin/Example04-SVG.kt): How to extend the rendered to render SVG (
+  uses [JFree SVG](https://github.com/jfree/jfreesvg))
+* [The banner on the top of this README](examples/kotlin/src/main/kotlin/ProjectLogo.kt): Yup, all done with the
+  library ^^
 
 The examples show pretty much all that can be done with the library! Even how to extend it so that it can create SVG
 QRCodes ;)
 
-You can mix and match all those together. Try generating the library logo with gradients and all in SVG ;)
+You can mix and match all those together. Try generating the library logo and banner with gradients and all in SVG ;)
 
 ### Spring Framework and/or Spring Boot
 
 As said earlier, one of the main reasons I developed this library was to use it on a backend application. So it is only
 natural to show how to do that :)
 
-This Spring Framework/Boot controller method can generate
+This Spring Framework/Boot controller method can generate QRCodes of a given content:
 
 ```kotlin
 import org.springframework.core.io.ByteArrayResource
@@ -139,6 +149,21 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
         .body(resource)
 }
 ```
+
+## Changes from v3
+
+The main changes coming from `v3.3.0` are:
+
+1. The main package of the classes was changed from `io.github.g0dkar.qrcode` to simply `qrcode`
+    * It doesn't help languages that don't have the "package" concept, and other Kotlin libraries already name their
+      main package this way.
+2. The old `QRCode` class was rewritten to be easier to create nice QRCodes
+   from. The previous `QRCode` class was renamed
+   to [QRCodeProcessor](src/commonMain/kotlin/qrcode/raw/QRCodeProcessor.kt), with very minor API changes.
+    * **For most of the simple cases, the new `QRCode` class is compatible with the old one!**
+3. A bunch of optimizations on how the QRCode is drawn. Previously, we'd had a canvas for each square, which would then
+   be copied into the QRCode. This was changed to have just one large canvas where each square will be individually
+   drawn directly.
 
 ## License
 
@@ -165,7 +190,7 @@ QR Code is trademarked by Denso Wave, inc.
   can [make them](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
   as well!
 
-If you enjoyed the library and want to get me some coffee, use the button below :love_you_gesture:
+If you enjoyed the library and want to get me some coffee, use the buttons below :love_you_gesture:
 
 [<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Buy me a coffee over at Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
 
