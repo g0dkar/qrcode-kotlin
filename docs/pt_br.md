@@ -5,265 +5,131 @@ sidebar: pt
 feature_image: /assets/img/logo.png
 feature_text: QRCode-Kotlin é uma biblioteca para criação de QRCodes em Kotlin e Java
 ---
-Criar QRCodes em Kotlin e Java é mais difícil do que deveria. O QRCode-Kotlin tenta trazer uma forma simples, direta e
-personalizável de se criar QRCodes para o domínio da JVM, especialmente no backend.
+
+:uk: [_**Also available in English**_](/) :uk:
+
+![QRCode Kotlin Logo](/assets/img/banner.png)
+
+Criar QRCodes em Kotlin (e Java) é mais difícil do que deveria ser. **A QRCode-Kotlin tenta trazer uma forma
+personalizável, simples e direta de se criar QRCodes**, especialmente no backend.
+
+É com esta missão em mente que continuamos a fazer o nosso melhor para aprender como pessoas desenvolvedoras utilizam
+essa biblioteca nos seus projetos e quais os seus objetivos, para podermos prover uma ferramenta/API melhor para todos.
+Por favor, sinta-se livre para compartilhar se e como você utiliza este projeto ^^
+
+* **Puro Kotlin:** Reescrita em puro Kotlin de uma implementação de referência da spec QRCode
+  por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
+* **Leve:** Sem dependencias, `~115KB` e faz o que promete no rótulo.
+* **Fácil de usar:** Rápida e facilmente tenha QRCodes com pouquíssimas linhas de código.
+* **Bonito:** Muitas pessoas desenvolvedoras não têm tempo e às vezes conhecimento para implementar o QRCode perfeito,
+  por isso esta biblioteca tenta gerar códigos bonitos por padrão.
+* **Amigável aos servidores:** A versão da JVM é fortemente focada em um caso de uso pessoal onde eu precisei criar
+  QRCodes no backend, mas todas as bibliotecas que encontrei eram complexas ou enormes, normalmente os dois.
+* **Multiplatforma:** Esta é uma bilioteca KMP com suporte a Java, JavaScript, Android, iOS e tvOS.
 
 ## Sumário
 
-<!-- toc -->
-
-- [Vantagens do QRCode-Kotlin](#vantagens-do-qrcode-kotlin)
-- [Experimente](#experimente)
-- [Instalação](#instalação)
-- [Usos](#usos)
-  * [Um QRCode simples](#um-qrcode-simples)
-  * [Ajustando o tamanho](#ajustando-o-tamanho)
-  * [QRCodes coloridos](#qrcodes-coloridos)
-  * [Server-side: Spring Framework/Boot](#server-side-spring-frameworkboot)
-- [Licença](#licença)
-- [Agradecimentos e Reconhecimentos](#agradecimentos-e-reconhecimentos)
-- [Suporte e Links](#suporte-e-links)
-
-<!-- tocstop -->
-
-## Vantagens do QRCode-Kotlin
-
-* **Kotlin Puro:** Reimplementação em puro Kotlin a partir da implementação de referência da especificação do QRCode
-  por [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Leve:** Sem dependencias*, `~65KB` e faz exatamente o que promete fazer.
-* **Fácil de usar:** Instancie um objeto, chame um método e pronto :)
-* **Compacta:** Não adiciona nenhum "inchaço" como quando se usa bibliotecas como a Google ZXing (que fazem bem mais que
-  gerar QRCodes)
-* **Saída Personalizada:** Quer um QRCode colorido? Nós temos! Um arredondado? Claro! [Nosso logo](/assets/img/logo.png){:target="_blank"}
-  foi construído com a [própria biblioteca](https://github.com/g0dkar/qrcode-kotlin/blob/main/examples/kotlin/src/main/kotlin/QRCodeKotlinLogo.kt) 😉
-* **Amigável aos Servidores:** Esta não é uma biblioteca para aplicações Mobile. Esta biblioteca foi pensada por devs
-  backend para devs backend.
-* **Android é Suportado:** Agora que a biblioteca utiliza Kotlin Multiplatforma, Android é suportado nativamente!
-* **JavaScript Nativo:** A partir da `v3.3.0` JavaScript compatível com browsers também é suportado
-
->\* Bom, exceto talvez a `org.jetbrains.kotlin:kotlin-stdlib-jdk8` se você estiver usando Java...
-
-## Experimente
-
-A partir da `v3.3.0` a biblioteca está sendo disponibilzada em JavaScript compatível com o navegador. Por esta razão, é
-possível [experimentar](example) (página em inglês) a biblioteca diretamente no seu navegador!
+<!-- TOC -->
+* [Instalação](#instalação)
+* [Uso](#uso)
+    * [Spring Framework e/ou Spring Boot](#spring-framework-eou-spring-boot)
+* [Mudanças da v3](#mudanças-da-v3)
+* [Licença](#licença)
+* [Agradecimentos e Reconhecimentos](#agradecimentos-e-reconhecimentos)
+* [Suporte e Links](#suporte-e-links)
+<!-- TOC -->
 
 ## Instalação
 
-Esta biblioteca está disponível a partir da [Central Maven](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.2.0/qrcode-kotlin),
-então basta adicionar o `QRCode-Kotlin` a seu projeto como qualquer outra dependência:
+A biblioteca está disponível através
+da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.0.1/qrcode-kotlin) e
+do [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), portanto basta adicioná-la a seu projeto como qualquer outra:
 
-<ul class="tab" data-tab="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
-    <li class="active"><a href="#">Gradle</a></li>
-    <li><a href="#">Maven</a></li>
-    <li><a href="#">JavaScript</a></li>
-</ul>
-<ul class="tab-content" id="736c69e9-16ec-4d21-b16b-0f2ed22bcfcf" data-name="deps">
-<li class="active" markdown="block">
+**Gradle:**
+
 ```groovy
-// Para projetos Kotlin ou Java
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
-
-// Para projetos Android
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
+implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
 ```
-</li>
-<li markdown="block">
+
+**Maven:**
+
 ```xml
-<!-- Para projetos Kotlin ou Java -->
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.3.0</version>
-</dependency>
-
-<!-- Para projetos Android -->
-<dependency>
-    <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.3.0</version>
+    <artifactId>qrcode-kotlin-jvm</artifactId> <!-- ou qrcode-kotlin-android -->
+    <version>4.0.1</version>
 </dependency>
 ```
-</li>
-<li markdown="block">
+
+**NodeJS:**
+
+```shell
+npm install qrcode-kotlin@4.0.1
+```
+
+**Browser:**
+
 ```html
-<!-- Step 1: Importe a biblioteca -->
-<script src="qrcode-kotlin.min.js"></script>
-
-<!-- Step 2: Recomendado adicionar esta linha para deixar mais fácil de utilizá-la -->
-<script>
-    const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
-</script>
+<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.1/release/qrcode-kotlin.min.js" type="application/javascript"></script>
 ```
-</li>
-</ul>
 
-## Usos
+## Uso
 
-Aqui estão alguns exemplos de como utilizar a biblioteca. Se tiver interesse em usos mais avançados ou QRCodes mais
-sofisticados, por favor veja os [exemplos no GitHub](https://github.com/g0dkar/qrcode-kotlin/tree/main/examples).
+Para criar QRCodes, a principal classe que deve ser usada é a `qrcode.render.QRCode`. Ela tem métodos estáticos para
+ajudar na criação de um QRCode da forma que você quiser:
 
-### Um QRCode simples
-
-Para gerar um QRCode simples:
-
-<ul class="tab" data-tab="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
-    <li class="active"><a href="#">Kotlin</a></li>
-    <li><a href="#">Java</a></li>
-    <li><a href="#">JavaScript</a></li>
-</ul>
-<ul class="tab-content" id="900b518b-69c9-470b-80ca-8573b8396a41" data-name="exemplo01">
-<li class="active" markdown="block">
 ```kotlin
-// Por padrão, the writeImage() escreve PNGs
-FileOutputStream("exemplo01.png").use {
-    QRCode("https://github.com/g0dkar/qrcode-kotlin")
-        .render()
-        .writeImage(it)
-}
+// Use qualquer um desses:
+
+val quadrados = QRCode.ofSquares()
+
+val circulos = QRCode.ofCircles()
+
+val quadradosArredondados = QRCode.ofRoundedSquares()
 ```
-</li>
-<li markdown="block">
-```java
-// Por padrão, the writeImage() escreve PNGs
-try (FileOutputStream fileOut = new FileOutputStream("exemplo01.png")) {
-    new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-        .render()
-        .writeImage(fileOut);
-}
-```
-</li>
-<li markdown="block">
-```js
-// Assumindo "const QRCode = window[...]", como sugerido:
-const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render()
-    .toDataURL()
 
-// Exibir em uma tag <img>
-document.getElementById("someImg").src = dataURL
-```
-</li>
-</ul>
+Com isso, você terá uma instância de [QRCodeBuilder](src/commonMain/kotlin/qrcode/QRCodeBuilder.kt). Esta classe tem
+métodos para ajustar cores, tamanho, espaçamento, adicionar um logo e mais! Certifique-se de ver também a
+classe [Colors](src/commonMain/kotlin/qrcode/color/Colors.kt).
 
-### Ajustando o tamanho
+Aqui tem um código para ajudar você a começar:
 
-A função `render()` pode receber o parâmetro `cellSize` para ajustar o tamanho do QRCode resultante. Este parâmetro
-representa o tamanho em pixels de cada quadrado no QRCode resultante. Seu valor padrão é `25`.
-
-Ela também aceita o parâmetro `margin` (margem) o qual é um espaço, em pixels, que será deixado ao redor do QRCode.
-Seu valor padrão é `0`:
-
-<ul class="tab" data-tab="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
-    <li class="active"><a href="#">Kotlin</a></li>
-    <li><a href="#">Java</a></li>
-    <li><a href="#">JavaScript</a></li>
-</ul>
-<ul class="tab-content" id="2ca78d92-b6cd-40dd-8b1c-ec031b180a8b" data-name="exemplo02">
-<li class="active" markdown="block">
 ```kotlin
-FileOutputStream("exemplo02.png").use {
-    QRCode("https://github.com/g0dkar/qrcode-kotlin")
-        .render(cellSize = 50, margin = 25)
-        .writeImage(it)
-}
+val helloWorld = QRCode.ofSquares()
+    .withColor(Colors.DEEP_SKY_BLUE) // Padrão é Colors.BLACK
+    .withSize(10) // Padrão é 25px
+    .build("Hello world!")
+
+// Por padrão, os QRCodes serão gerados como PNG
+val pngBytes = helloWorld.render()
+
+FileOutputStream("hello-world.png").use { it.write(pngBytes) }
 ```
-</li>
-<li markdown="block">
-```java
-try (FileOutputStream fileOut = new FileOutputStream("exemplo02.png")) {
-    new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-        .render(50, 25)
-        .writeImage(fileOut);
-}
-```
-</li>
-<li markdown="block">
-```js
-// Assumindo "const QRCode = window[...]", como sugerido:
-const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(50, 25)
-    .toDataURL()
 
-// Exibir em uma tag <img>
-document.getElementById("someImg").src = dataURL
-```
-</li>
-</ul>
+Recomendamos fortemente que você veja os exemplos disponíveis:
 
-### QRCodes coloridos
+* [Todas as formas](examples/kotlin/src/main/kotlin/Example01-Shapes.kt): Quadrados, Círculos, Quadrados Arredondados e
+  formas personalizadas
+* [Tudo sobre cores](examples/kotlin/src/main/kotlin/Example02-Colors.kt): Frente, Fundo, Fundos transparentes, cores em
+  Gradiente Linear
+* [Adicionando um Logo](examples/kotlin/src/main/kotlin/Example03-Logo.kt): Adicione um logo e remova as células atrás
+  dele, ou não :)
+* [QRCodes em SVG](examples/kotlin/src/main/kotlin/Example04-SVG.kt): Como estender o renderizador para criar SVG (utilizando [JFree SVG](https://github.com/jfree/jfreesvg))
+* [O banner no topo deste README](examples/kotlin/src/main/kotlin/ProjectLogo.kt): Sim, feito com essa biblioteca ^^
 
-Quer um QRCode colorido? Fácil, fácil! A Função `render()` também tem os parâmetros `brightColor`, `darkColor` e
-`marginColor` para isso. Os seus valores padrão são para quadrados Preto-e-Branco com uma margem Branca.
+Os exemplos mostram praticamente tudo que pode ser feito com a biblioteca! Até mesmo como estender a mesma para criar
+QRCodes em SVG ;)
 
-A partir da **v2.0.0** estes valores são simplesmente `Int` no espaço RGBA. Esses valores podem ser criados
-facilmente se utilizando a nova classe utilitária [`Colors`](https://github.com/g0dkar/qrcode-kotlin/blob/main/src/commonMain/kotlin/io/github/g0dkar/qrcode/render/Colors.kt)
-ou, se estiver na JRE, utilizando as simples e _(bastante)_ velhas classes `java.awt.Color` :)
+Você pode utilizar todas essas funcionalidades juntas e misturadas. Tente gerar o logo e banner com gradientes e tudo
+mais em SVG ;)
 
-Por diversão, este código cria um QRCode com as cores do Modo Escuro do GitHub:
+### Spring Framework e/ou Spring Boot
 
-<ul class="tab" data-tab="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
-    <li class="active"><a href="#">Kotlin</a></li>
-    <li><a href="#">Java</a></li>
-    <li><a href="#">JavaScript</a></li>
-</ul>
-<ul class="tab-content" id="7c04714b-8dd3-47ed-90cb-0baaf44d8daa" data-name="exemplo03">
-<li class="active" markdown="block">
-```kotlin
-import io.github.g0dkar.qrcode.render.Colors
+Como dito anteriormente, uma das razões principais para o desenvolvimento dessa biblioteca foi para ser usada em
+aplicações backend. Portanto, é natural mostrar como fazer exatamente isso :)
 
-val background = Colors.css("#8b949e")
-val foreground = Colors.css("#0d1117")
+Este método de um controller do Spring Framework/Boot mostra como gerar QRCodes dado o conteúdo do mesmo:
 
-FileOutputStream("exemplo03.png").use {
-    QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
-        brightColor = background, // Background (fundo)
-        darkColor = foreground    // Foreground (os quadrados)
-    ).writeImage(it)
-}
-```
-</li>
-<li markdown="block">
-```java
-import java.awt.Color;
-
-Color background = new Color(13, 17, 23);
-Color foreground = new Color(139, 148, 158);
-
-try (FileOutputStream fileOut = new FileOutputStream("exemplo03.png")){
-    new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-        .render(25, 0, background.getRGB(), foreground.getRGB())
-        .writeImage(fileOut);
-}
-```
-</li>
-<li markdown="block">
-```js
-// Assumindo "const QRCode = window[...]", como sugerido:
-const bg = 0xff8b949e // ARGB
-const fg = 0xff0d1117 // ARGB
-
-const dataURL = new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(25, 0, bg, fg)
-    .toDataURL()
-
-// Exibir em uma tag <img>
-document.getElementById("someImg").src = dataURL
-```
-</li>
-</ul>
-
-### Server-side: Spring Framework/Boot
-
-Uma das razões principais que desenvolvi essa biblioteca foi para utilizá-la numa API Spring Boot que necessitava
-gerar QRCodes, então é apenas natural mostrar como se fazer isso :)
-
-<ul class="tab" data-tab="013583aa-c7bd-48a8-9d9f-d463669ac699" data-name="exemplo04">
-    <li class="active"><a href="#">Kotlin</a></li>
-    <li><a href="#">Java</a></li>
-</ul>
-<ul class="tab-content" id="013583aa-c7bd-48a8-9d9f-d463669ac699" data-name="exemplo04">
-<li class="active" markdown="block">
 ```kotlin
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION
@@ -271,62 +137,58 @@ import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
 @GetMapping("/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
-val imageOut = ByteArrayOutputStream()
-
-    QRCode(content).render().writeImage(imageOut)
-
-    val imageBytes = imageOut.toByteArray()
-    val resource = ByteArrayResource(imageBytes, IMAGE_PNG_VALUE)
+    val pngData = QRCode().ofSquares()
+        .build(content)
+        .render()
+    val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
 
     return ResponseEntity.ok()
         .header(CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
         .body(resource)
 }
 ```
-</li>
-<li markdown="block">
-```java
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
-import org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
-@GetMapping("/qrcode")
-public ResponseEntity<ByteArrayResource> generateQrCode(String content) {
-    ByteArrayOutputStream imageOut = new ByteArrayOutputStream();
+## Mudanças da v3
 
-    new QRCode(content).render().writeImage(imageOut);
+As principais mudanças vindo da versão `v3.3.0` são:
 
-    return ResponseEntity.ok()
-        .header(CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")
-        .body(new ByteArrayResource(imageOut.toByteArray(), IMAGE_PNG_VALUE))
-}
-```
-</li>
-</ul>
+1. O pacote principal das classes foi mudado de `io.github.g0dkar.qrcode` para simplesmente `qrcode`
+    * O nome anterior não ajuda linguagens que não têm esse conceito de "pacote", e outras bibliotecas Kotlin já nomeiam
+      os seus pacotes principais dessa forma.
+2. A antiga classe `QRCode` foi reescrita para ser mais fácil de se criar QRCodes mais bonitos. A antiga classe `QRCode`
+   foi renomeada para [QRCodeProcessor](src/commonMain/kotlin/qrcode/raw/QRCodeProcessor.kt), com pouquíssimas mudanças na API.
+    * **Para a maioria dos casos de uso simples, a nova `QRCode` é compatível com a antiga!**
+3. Uma grande quantidade de otimizações em como o QRCode é desenhado. Anteriormente, tínhamos um canvas (ecrã) para cada
+   quadrado, o qual era copiado no canvas do QRCode principal. Isto foi mudado para termos apenas um grande canvas onde
+   cada quadrado individual será desenhado diretamente.
+4. ![Experimental](https://img.shields.io/badge/Experimental-critical) Suporte a iOS e tvOS: A partir da
+   versão `v4.0.1`, uma implementação experimental inicial da classe `QRCodeGraphics` foi criada para que o iOS e tvOS
+   sejam suportados. **Todo e qualquer [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) é muito bem-vindo!** (pode comentar em português mesmo)
 
 ## Licença
 
-Direito Autoral desde 2021 Rafael M. Lins, Licenciado pela [Licença MIT (texto em inglês)](https://rafaellins.mit-license.org/2021/).
+Copyright desde 2021 Rafael M. Lins, Licenciado sob a [Licença MIT](https://rafaellins.mit-license.org/2021/).
 
-QR Code é marca registrada de Denso Wave, inc.
+QR Code é marca registrada de Denso Wave, Inc.
 
 ## Agradecimentos e Reconhecimentos
 
-* [Kazuhiko Arase](https://github.com/kazuhikoarase): Autor da implementação de referência!
-* [Paul Varry](https://github.com/pvarry): Por abrir as primeiras issues no repositório e ajudar a fazer a biblioteca
-  melhor para todo o mundo! 😁
-* [Renan Lukas](https://github.com/RenanLukas): Por sua amizade, paciência e ajuda com Android, Gradle e outras coisas
-  durante o desenvolvimento da v2.0.0 e v3.0.0!
-* [Doomsdayrs](https://github.com/Doomsdayrs): Por mostrar como a biblioteca poderia melhorar ao utilizar Kotlin
-  Multiplataforma, e ajudar com a implementação do mesmo no projeto.
+* [Kazuhiko Arase](https://github.com/kazuhikoarase): Por sua implementação de referência!
+* [Paul Varry](https://github.com/pvarry): Por abrir as primeiras _issues_ do repositório e ajudar a fazer a biblioteca melhor para todo mundo! :grin:
+* [Renan Lukas](https://github.com/RenanLukas): Por sua amizade, paciência e ajuda com Android, Gradle e várias outras coisas mais durante o desenvolvimento das versões v2.0.0 e v3.0.0!
+* [Doomsdayrs](https://github.com/Doomsdayrs): Por apontar como a biblioteca podería melhorar se tornando um projeto KMP, entre outras contribuições.
+* Um incrível e peludo amigo por todo o suporte através dos anos :)
 
 ## Suporte e Links
 
-* Se encontrou bugs, por
-  favor [abra uma Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=)
-  😁
-* Tem sugestões?
-  Você [pode fazê-las](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
+* Se você encontrar algum bug, sinta-se livre
+  para [abrir uma Issue](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=g0dkar&labels=bug&template=bug_report.md&title=)
+* Tem sugestões? Você
+  pode [fazê-las](https://github.com/g0dkar/qrcode-kotlin/issues/new?assignees=&labels=&template=feature_request.md&title=)
   também!
 
-Se curtiu a biblioteca e quiser pagar-me um café, utilize um dos botões abaixo ✌️
+Se você gostou da biblioteca e quiser ajudar pagando um cafézinho, use os botões abaixo :love_you_gesture:
+
+[<img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Me pague um cafézinho via Ko-fi!" width="200"/>](https://ko-fi.com/g0dkar)
+
+[<img src="https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg" alt="Me pague um cafézinho via PayPal!" width="200"/>](https://www.paypal.com/donate/?business=EFVC68BFJQWSC&no_recurring=0&item_name=Rafael+is+working+on+Open+Source+software+in+his+free+time.+This+helps+him+keep+this+up+for+longer%2C+and+with+higher+quality%21&currency_code=BRL)
