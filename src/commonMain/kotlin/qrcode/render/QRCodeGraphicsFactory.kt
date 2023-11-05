@@ -19,10 +19,10 @@ open class QRCodeGraphicsFactory {
     /**
      * Creates a `size` by `size` square [QRCodeGraphics] instance.
      */
-    fun newGraphicsSquare(size: Int) = newGraphics(size, size)
+    open fun newGraphicsSquare(size: Int) = newGraphics(size, size)
 
     /**
      * Creates a new [QRCodeGraphics] instance.
      */
-    fun newGraphics(width: Int, height: Int): QRCodeGraphics = QRCodeGraphics(width, height)
+    open fun newGraphics(width: Int, height: Int): QRCodeGraphics = QRCodeGraphics(width, height)
 }

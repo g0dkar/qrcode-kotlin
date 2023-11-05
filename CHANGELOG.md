@@ -7,7 +7,16 @@
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-## 3.3.0 - Latest
+## 3.4.0 - Latest
+
+- Added the `FancyQRCode` part of the code, to generate cool QRCodes: [Check it out!](src/commonMain/kotlin/qrcode/fancy/FancyQRCode.kt)
+- Added the first version of the iOS Support
+- Changed the base package of the classes from `io.github.g0dkar.qrcode` to `qrcode`
+  - This was done to better support JavaScript
+  - And because I don't really see much use in those Java-ish package names 😅
+- A bunch of improvements and optimizations
+
+## 3.3.0
 
 - Started doing the Changelog 🥲
 - Added plain release files to the [release](release) directory (only the latest version will be there)

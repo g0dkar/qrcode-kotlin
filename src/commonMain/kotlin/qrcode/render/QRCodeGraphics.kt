@@ -1,6 +1,15 @@
 package qrcode.render
 
 expect class QRCodeGraphics(width: Int, height: Int) {
+    /** Returns `true` if **any** drawing was performed */
+    fun changed(): Boolean
+
+    /** Completely reset this object. It is expected that `changed()` returns false and the canvas is completely blank after invoking this. */
+    fun reset()
+
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    fun dimensions(): Array<Int>
+
     /** Returns this image as a [ByteArray] encoded as PNG. */
     fun getBytes(): ByteArray
 
@@ -14,10 +23,10 @@ expect class QRCodeGraphics(width: Int, height: Int) {
     fun nativeImage(): Any
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int)
+    fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double)
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int)
+    fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double)
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int)
@@ -46,7 +55,7 @@ expect class QRCodeGraphics(width: Int, height: Int) {
      * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
-    fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int)
+    fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int, thickness: Double)
 
     /**
      * Fills the round rectangle starting at point `(x,y)` and having `width` by `height`
@@ -74,7 +83,7 @@ expect class QRCodeGraphics(width: Int, height: Int) {
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int)
+    fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double)
 
     /**
      * Fills an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
@@ -82,11 +91,8 @@ expect class QRCodeGraphics(width: Int, height: Int) {
      */
     fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int)
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    fun drawImage(img: QRCodeGraphics, x: Int, y: Int)
-
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    fun drawImage(rawData: ByteArray, x: Int, y: Int)
+    fun drawImage(rawData: ByteArray?, x: Int, y: Int)
 }

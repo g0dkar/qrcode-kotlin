@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.22"
+    kotlin("jvm")
 }
 
 repositories {
@@ -8,6 +8,6 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
-    implementation("org.jfree:org.jfree.svg:5.0.3")
+    implementation(project.rootProject) // <- On your project, use: implementation("io.github.g0dkar:qrcode-kotlin:4.0.0")
+    implementation("org.jfree:org.jfree.svg:5.0.5")
 }

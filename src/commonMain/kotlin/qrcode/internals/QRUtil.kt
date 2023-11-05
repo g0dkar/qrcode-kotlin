@@ -1,18 +1,18 @@
 package qrcode.internals
 
+import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
+import qrcode.raw.MaskPattern.PATTERN000
+import qrcode.raw.MaskPattern.PATTERN001
+import qrcode.raw.MaskPattern.PATTERN010
+import qrcode.raw.MaskPattern.PATTERN011
+import qrcode.raw.MaskPattern.PATTERN100
+import qrcode.raw.MaskPattern.PATTERN101
+import qrcode.raw.MaskPattern.PATTERN110
+import qrcode.raw.MaskPattern.PATTERN111
+import qrcode.raw.QRCodeDataType
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.ErrorCorrectionLevel
-import qrcode.MaskPattern
-import qrcode.MaskPattern.PATTERN000
-import qrcode.MaskPattern.PATTERN001
-import qrcode.MaskPattern.PATTERN010
-import qrcode.MaskPattern.PATTERN011
-import qrcode.MaskPattern.PATTERN100
-import qrcode.MaskPattern.PATTERN101
-import qrcode.MaskPattern.PATTERN110
-import qrcode.MaskPattern.PATTERN111
-import qrcode.QRCodeDataType
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRUtil.java)
