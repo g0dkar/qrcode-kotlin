@@ -1,8 +1,8 @@
 package qrcode.internals
 
+import qrcode.raw.ErrorCorrectionLevel
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.ErrorCorrectionLevel
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)

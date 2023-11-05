@@ -1,4 +1,3 @@
-import com.github.gradle.node.npm.task.NpxTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
@@ -26,7 +25,7 @@ plugins {
     signing
     `maven-publish`
     alias(libs.plugins.nexus)
-    alias(libs.plugins.nodejs)
+    alias(libs.plugins.npmPublish)
 
     // Docs Plugins
     alias(libs.plugins.dokka)
@@ -38,14 +37,15 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-version = "3.3.0"
-val javaVersion = 11
+val javaVersion = JavaVersion.VERSION_17
+val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
     applyDefaultHierarchyTemplate()
 
     jvm {
-        jvmToolchain(javaVersion)
+        jvmToolchain(javaVersionNumber)
+
         testRuns.named("test") {
             executionTask.configure {
                 useJUnitPlatform()
@@ -54,11 +54,13 @@ kotlin {
     }
 
     androidTarget {
-        jvmToolchain(javaVersion)
+        jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
     }
 
     js {
+        moduleName = "qrcodeKotlin"
+
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -69,6 +71,7 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
+                output?.library = "qrcodeKotlin"
             }
 
             testTask {
@@ -76,19 +79,26 @@ kotlin {
             }
 
             binaries.library()
+//            binaries.executable()
+            generateTypeScriptDefinitions()
         }
     }
 
+    val currentPlatform = System.getProperty("os.name")
+
+    // This is in place just because my main development machine is NOT a MacOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-    watchosX64()
-    watchosArm64()
-    watchosSimulatorArm64()
-    tvosX64()
-    tvosArm64()
-    tvosSimulatorArm64()
+    if (currentPlatform.lowercase() == "mac os x") {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
+//    watchosX64() <- Still have to figure out how to do it for watchOS x_x
+//    watchosArm64()
+//    watchosSimulatorArm64()
+        tvosX64()
+        tvosArm64()
+        tvosSimulatorArm64()
+    }
     // iOS Family of targets... since you can't just "ios()" anymore.
 
     sourceSets {
@@ -112,9 +122,14 @@ android {
     namespace = "io.github.g0dkar.qrcode"
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
         minSdk = 24
-        targetSdk = 32
+    }
+
+    compileOptions {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 }
 
@@ -141,48 +156,19 @@ tasks {
 /* After Build Publishing  */
 /* *********************** */
 tasks {
-    register<NpxTask>("minifyReleaseJS") {
-        val baseFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js").get().asFile.path
-        val minFile = layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js").get().asFile.path
-        val cmdArgs = listOf(
-            baseFile,
-            "--compress",
-            "--mangle",
-            "--timings",
-            "--keep-classnames",
-            "--keep-fnames",
-            "--source-map",
-            "--output",
-            minFile
-        )
-
-        command.set("terser")
-        args.set(cmdArgs)
-    }
-
     /** Copies release files into /release dir */
     register<Copy>("copyToReleaseDir") {
+        dependsOn(build)
+
         doFirst {
             layout.projectDirectory.dir("release").asFile.deleteRecursively()
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.d.ts"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.js.map"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js"))
-        from(layout.buildDirectory.file("productionLibrary/qrcode-kotlin.min.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js.map"))
         into(layout.projectDirectory.dir("release"))
     }
-}
-
-node {
-    val nodejsVersion = libs.versions.nodejs.getOrElse("16.14.0")
-
-    download.set(true)
-    version.set(nodejsVersion)
-    allowInsecureProtocol.set(false)
-    nodeProjectDir.set(layout.buildDirectory.dir("tmp"))
 }
 
 /* **************** */
@@ -200,7 +186,7 @@ idea {
 /* **************** */
 tasks {
     dokkaHtml {
-        outputDirectory.set(buildDir.resolve("javadoc"))
+        outputDirectory.set(layout.buildDirectory.dir("javadoc"))
 
         dokkaSourceSets {
             configureEach {
@@ -224,12 +210,25 @@ val dokkaJar by tasks.creating(Jar::class) {
 /* Lint             */
 /* **************** */
 spotless {
-    val ktlintVersion = libs.versions.ktlint.getOrElse("0.47.1")
+    val spotlessFiles = properties["spotlessFiles"]?.toString()?.split(",")
+
+    isEnforceCheck = properties.getOrDefault("spotless.enforce", "false") == "true"
+
+    val ktlintVersion = libs.versions.ktlint.getOrElse("0.48.2")
 
     kotlin {
-        ktlint(ktlintVersion)
-    }
-    kotlinGradle {
+        val files = fileTree(project.projectDir) {
+            if (spotlessFiles.isNullOrEmpty()) {
+                include("**/*.kt")
+            } else {
+                include(spotlessFiles)
+            }
+
+            exclude("src/generated/**")
+        }
+
+        target(files)
+
         ktlint(ktlintVersion)
     }
 }
@@ -239,6 +238,7 @@ spotless {
 /* **************** */
 val ossrhUsername = properties.getOrDefault("ossrhUsername", System.getenv("OSSRH_USER"))?.toString()
 val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSRH_PASSWORD"))?.toString()
+val npmAccessKey = properties.getOrDefault("npmAccessKey", System.getenv("NPM_ACCESSKEY"))?.toString()
 
 nexusPublishing {
     // Workaround from https://github.com/gradle-nexus/publish-plugin/issues/220
@@ -251,15 +251,6 @@ nexusPublishing {
             password.set(ossrhPassword ?: return@sonatype)
         }
     }
-}
-
-signing {
-    val key = properties.getOrDefault("signing.key", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
-    val password =
-        properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
-
-    useInMemoryPgpKeys(key, password)
-    sign(publishing.publications)
 }
 
 publishing {
@@ -309,6 +300,23 @@ publishing {
                 username = ossrhUsername
                 password = ossrhPassword
             }
+        }
+    }
+}
+
+signing {
+    val key = properties.getOrDefault("signing.key", System.getenv("SIGNING_KEY"))?.toString() ?: return@signing
+    val password =
+        properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
+
+    useInMemoryPgpKeys(key, password)
+}
+
+npmPublish {
+    registries {
+        register("npmjs") {
+            uri.set(uri("https://registry.npmjs.org"))
+            authToken.set(npmAccessKey)
         }
     }
 }

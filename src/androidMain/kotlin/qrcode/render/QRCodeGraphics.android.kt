@@ -1,12 +1,17 @@
 package qrcode.render
 
-import android.graphics.*
+import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.Bitmap.CompressFormat.JPEG
 import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.Bitmap.Config.ARGB_8888
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
+import android.graphics.Rect
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 
@@ -16,19 +21,21 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int
 ) {
     companion object {
-        val AVAILABLE_FORMATS: Array<String> = CompressFormat.values().map { it.name }.toTypedArray()
+        val AVAILABLE_FORMATS: Array<String> = CompressFormat.entries.map { it.name }.toTypedArray()
     }
 
     protected fun createCanvas(image: Bitmap) = Canvas(image)
 
-    private val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
-    private val canvas: Canvas = createCanvas(image)
-    private val paintCache = mutableMapOf<Int, Paint>()
+    private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
+    private var canvas: Canvas = createCanvas(image)
+    private val paintCache = HashMap<Int, Paint>()
+    private var changed: Boolean = false
 
     /**
      * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
      */
     protected fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
+        changed = true
         val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
 
         return paint.apply {
@@ -37,6 +44,21 @@ actual open class QRCodeGraphics actual constructor(
             }
         }
     }
+
+    /** Returns `true` if **any** drawing was performed */
+    actual open fun changed() = changed
+
+    /** Simply changes the `changed` flag to true without doing anything else */
+    actual fun reset() {
+        if (changed) {
+            changed = false
+            image = Bitmap.createBitmap(width, height, ARGB_8888)
+            canvas = createCanvas(image)
+        }
+    }
+
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    actual open fun dimensions() = arrayOf(width, height)
 
     /**
      * Returns this image as a [ByteArray] encoded as PNG. Recommended to use [writeImage].
@@ -96,12 +118,12 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun nativeImage(): Any = image
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
         canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color))
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         canvas.drawRect(Rect(x, y, width, height), paintFromCache(color))
     }
 
@@ -136,7 +158,15 @@ actual open class QRCodeGraphics actual constructor(
      * **Note:** you can't specify different sizes for different edges. This is just an example :)
      *
      */
-    actual open fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
+    actual open fun drawRoundRect(
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        borderRadius: Int,
+        color: Int,
+        thickness: Double
+    ) {
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -181,15 +211,10 @@ actual open class QRCodeGraphics actual constructor(
         )
     }
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        drawImage(img.image, x, y)
-    }
-
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),
@@ -216,12 +241,15 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
-    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
-        drawImage(imgBitmap, x, y)
+    actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
+            drawImage(imgBitmap, x, y)
+        }
     }
 
     open fun drawImage(img: Bitmap, x: Int, y: Int) {
+        changed = true
         canvas.drawBitmap(img, x.toFloat(), y.toFloat(), null)
     }
 }

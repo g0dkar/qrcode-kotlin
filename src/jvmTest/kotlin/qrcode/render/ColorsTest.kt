@@ -3,8 +3,8 @@ package qrcode.render
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import qrcode.color.Colors
 import java.awt.Color
-import qrcode.Colors
 
 class ColorsTest : FunSpec({
 

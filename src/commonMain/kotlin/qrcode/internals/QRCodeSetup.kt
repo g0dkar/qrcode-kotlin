@@ -1,9 +1,5 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import qrcode.ErrorCorrectionLevel
-import qrcode.MaskPattern
 import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.BOTTOM_MID
 import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
@@ -14,7 +10,14 @@ import qrcode.internals.QRCodeRegion.RIGHT_MID
 import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.TOP_MID
 import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
+import qrcode.internals.QRCodeRegion.UNKNOWN
+import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.internals.QRCodeSquareType.TIMING_PATTERN
+import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 /**
  * Object with helper methods and constants to setup stuff into the QRCode such as Position Probes and Timing Probes.
@@ -56,6 +59,16 @@ internal object QRCodeSetup {
     ) {
         val modulesSize = modules.size
 
+        val squareData = QRCodeSquare(
+            dark = false,
+            row = rowOffset,
+            col = colOffset,
+            rowSize = probeSize,
+            colSize = probeSize,
+            squareInfo = QRCodeSquareInfo(POSITION_PROBE, UNKNOWN),
+            moduleSize = modulesSize
+        )
+
         for (row in -1..probeSize) {
             for (col in -1..probeSize) {
                 if (!isInsideModules(row, rowOffset, col, colOffset, modulesSize)) {
@@ -73,7 +86,8 @@ internal object QRCodeSetup {
                     row = row + rowOffset,
                     col = col + colOffset,
                     squareInfo = QRCodeSquareInfo(POSITION_PROBE, region),
-                    moduleSize = modulesSize
+                    moduleSize = modulesSize,
+                    parent = squareData
                 )
             }
         }
@@ -108,6 +122,7 @@ internal object QRCodeSetup {
             }
 
             probeSize -> MARGIN // Outside boundaries
+
             else -> when (col) { // Inside boundaries but not in any edge
                 0 -> LEFT_MID
                 probeSize - 1 -> RIGHT_MID
@@ -128,14 +143,25 @@ internal object QRCodeSetup {
                     continue
                 }
 
+                val squareData = QRCodeSquare(
+                    dark = false,
+                    row = row - 1,
+                    col = col - 1,
+                    rowSize = 5,
+                    colSize = 5,
+                    squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
+                    moduleSize = modules.size
+                )
+
                 for (r in -2..2) {
                     for (c in -2..2) {
                         modules[row + r][col + c] = QRCodeSquare(
                             dark = r == -2 || r == 2 || c == -2 || c == 2 || r == 0 && c == 0,
                             row = row + r,
                             col = col + c,
-                            squareInfo = QRCodeSquareInfo(QRCodeSquareType.POSITION_ADJUST, QRCodeRegion.UNKNOWN),
-                            moduleSize = modules.size
+                            squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
+                            moduleSize = modules.size,
+                            parent = squareData
                         )
                     }
                 }
@@ -144,6 +170,16 @@ internal object QRCodeSetup {
     }
 
     fun setupTimingPattern(moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
+        val squareData = QRCodeSquare(
+            dark = false,
+            row = 8,
+            col = 6,
+            rowSize = moduleCount - 8,
+            colSize = moduleCount - 8,
+            squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
+            moduleSize = modules.size
+        )
+
         for (r in 8 until moduleCount - 8) {
             if (modules[r][6] != null) {
                 continue
@@ -153,8 +189,9 @@ internal object QRCodeSetup {
                 dark = r % 2 == 0,
                 row = r,
                 col = 6,
-                squareInfo = QRCodeSquareInfo(QRCodeSquareType.TIMING_PATTERN, QRCodeRegion.UNKNOWN),
-                moduleSize = modules.size
+                squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
+                moduleSize = modules.size,
+                parent = squareData
             )
         }
 
@@ -167,8 +204,9 @@ internal object QRCodeSetup {
                 dark = c % 2 == 0,
                 row = 6,
                 col = c,
-                squareInfo = QRCodeSquareInfo(QRCodeSquareType.TIMING_PATTERN, QRCodeRegion.UNKNOWN),
-                moduleSize = modules.size
+                squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
+                moduleSize = modules.size,
+                parent = squareData
             )
         }
     }
@@ -276,7 +314,7 @@ internal object QRCodeSetup {
         }
     }
 
-    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>) {
+    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>, parent: QRCodeSquare? = null) {
         val qrCodeSquare = modules[row][col]
 
         if (qrCodeSquare != null) {
@@ -286,7 +324,8 @@ internal object QRCodeSetup {
                 dark = value,
                 row = row,
                 col = col,
-                moduleSize = modules.size
+                moduleSize = modules.size,
+                parent = parent
             )
         }
     }

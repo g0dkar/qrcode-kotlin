@@ -1,461 +1,176 @@
 package qrcode
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import kotlin.js.JsName
-import kotlin.jvm.JvmOverloads
-import kotlin.jvm.JvmStatic
-import qrcode.QRCodeDataType.DEFAULT
-import qrcode.QRCodeDataType.NUMBERS
-import qrcode.QRCodeDataType.UPPER_ALPHA_NUM
-import qrcode.internals.BitBuffer
-import qrcode.internals.Polynomial
-import qrcode.internals.QR8BitByte
-import qrcode.internals.QRAlphaNum
-import qrcode.internals.QRCodeSetup.applyMaskPattern
-import qrcode.internals.QRCodeSetup.setupBottomLeftPositionProbePattern
-import qrcode.internals.QRCodeSetup.setupPositionAdjustPattern
-import qrcode.internals.QRCodeSetup.setupTimingPattern
-import qrcode.internals.QRCodeSetup.setupTopLeftPositionProbePattern
-import qrcode.internals.QRCodeSetup.setupTopRightPositionProbePattern
-import qrcode.internals.QRCodeSetup.setupTypeInfo
-import qrcode.internals.QRCodeSetup.setupTypeNumber
-import qrcode.internals.QRCodeSquare
-import qrcode.internals.QRCodeSquareInfo
-import qrcode.internals.QRCodeSquareType
-import qrcode.internals.QRData
-import qrcode.internals.QRNumber
-import qrcode.internals.QRUtil
-import qrcode.internals.RSBlock
+import qrcode.QRCode.Companion.ofCircles
+import qrcode.QRCode.Companion.ofRoundedSquares
+import qrcode.QRCode.Companion.ofSquares
+import qrcode.QRCodeBuilder.QRCodeShapesEnum.CIRCLE
+import qrcode.QRCodeBuilder.QRCodeShapesEnum.CUSTOM
+import qrcode.QRCodeBuilder.QRCodeShapesEnum.ROUNDED_SQUARE
+import qrcode.QRCodeBuilder.QRCodeShapesEnum.SQUARE
+import qrcode.color.DefaultColorFunction
+import qrcode.color.QRCodeColorFunction
+import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
+import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.QRCodeProcessor
+import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
+import qrcode.raw.QRCodeRawData
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
+import qrcode.shape.CircleShapeFunction
+import qrcode.shape.DefaultShapeFunction
+import qrcode.shape.QRCodeShapeFunction
+import qrcode.shape.RoundSquaresShapeFunction
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
+import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 /**
- * A Class/Library that helps encode data as QR Code images without any external dependencies.
+ * A simple class to create easily create aesthetic pleasing QRCodes.
  *
- * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRCode.java).
+ * It'll create a [QRCodeProcessor] and build a custom render function on top of it.
  *
- * To create a QR Code you can simply do the following:
+ * It includes things like:
  *
- * ```kotlin
- * val dataToEncode = "Hello QRCode!"
- * val eachQRCodeSquareSize = 10 // In Pixels!
- * val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
- * ```
+ * - QR Codes with a logo at the center
+ * - QR Codes with dots instead of squares
+ * - Colorful QR Codes (including linear gradient colors)
  *
- * You can now use `qrCodeRenderer` to render your QRCode into any `OutputStream` (as a PNG by default)
+ * If you have a suggestion for a nice QR Code style, feel free to open a PR, or an Issue with your suggestion :)
  *
- * For example, to simply save it on the disk:
- *
- * ```kotlin
- * val qrCodeFile = File("qrcode.png")
- * qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
- * ```
- *
- * Or maybe have it as a byte array, to be sent as a response to a server request:
- *
- * ```kotlin
- * val imageBytes = ByteArrayOutputStream()
- *     .also { qrCodeRenderer.writeImage(it) }
- *     .toByteArray()
- * ```
- *
- * @param data String that will be encoded in the QR Code.
- * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M].
- * @param dataType One of the available [QRCodeDataType]. By default, the code tries to guess which one is the best fitting one from your input data.
+ * @see QRCodeBuilder
+ * @see ofSquares
+ * @see ofCircles
+ * @see ofRoundedSquares
  *
  * @author Rafael Lins - g0dkar
- * @author Kazuhiko Arase - kazuhikoarase
  *
- * @see ErrorCorrectionLevel
- * @see QRUtil.getDataType
  */
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
-    private val data: String,
-    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
-    private val dataType: QRCodeDataType = QRUtil.getDataType(data)
+    val data: String,
+    val squareSize: Int = DEFAULT_SQUARE_SIZE,
+    val colorFn: QRCodeColorFunction = DefaultColorFunction(),
+    val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize),
+    var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
+    private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
+    private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
 ) {
-    private val qrCodeData: QRData = when (dataType) {
-        NUMBERS -> QRNumber(data)
-        UPPER_ALPHA_NUM -> QRAlphaNum(data)
-        DEFAULT -> QR8BitByte(data)
-    }
-
-    @Suppress("MemberVisibilityCanBePrivate")
-    var qrCodeGraphicsFactory = QRCodeGraphicsFactory()
-
     companion object {
-        const val DEFAULT_CELL_SIZE = 25
-        const val DEFAULT_MARGIN = 0
-        private const val PAD0 = 0xEC
-        private const val PAD1 = 0x11
+        internal val EMPTY_FN: QRCode.(QRCodeGraphics, Int, Int) -> Unit = { _, _, _ -> }
+
+        /** Default value of [squareSize]. */
+        const val DEFAULT_SQUARE_SIZE = DEFAULT_CELL_SIZE
 
         /**
-         * Calculates a suitable value for the [dataType] field for you.
+         * Creates a new [QRCodeBuilder] to build a Fancy QRCode which uses squares as the base shape (this is the default)
+         *
+         * @see DefaultShapeFunction
          */
         @JvmStatic
-        @JvmOverloads
-        fun typeForDataAndECL(
-            data: String,
-            errorCorrectionLevel: ErrorCorrectionLevel,
-            dataType: QRCodeDataType = QRUtil.getDataType(data)
-        ): Int {
-            val qrCodeData = when (dataType) {
-                NUMBERS -> QRNumber(data)
-                UPPER_ALPHA_NUM -> QRAlphaNum(data)
-                DEFAULT -> QR8BitByte(data)
-            }
-            val dataLength = qrCodeData.length()
+        fun ofSquares(): QRCodeBuilder = QRCodeBuilder(SQUARE)
 
-            for (typeNum in 1 until errorCorrectionLevel.maxTypeNum) {
-                if (dataLength <= QRUtil.getMaxLength(typeNum, dataType, errorCorrectionLevel)) {
-                    return typeNum
-                }
-            }
+        /**
+         * Creates a new [QRCodeBuilder] to build a Fancy QRCode which uses circles as the base shape.
+         *
+         * This one was based on an Apple Music QRCode.
+         *
+         * @see CircleShapeFunction
+         */
+        @JvmStatic
+        fun ofCircles(): QRCodeBuilder = QRCodeBuilder(CIRCLE)
 
-            return 40
-        }
+        /**
+         * Creates a new [QRCodeBuilder] to build a Fancy QRCode which uses rounded squares as the base shape.
+         *
+         * @see RoundSquaresShapeFunction
+         */
+        @JvmStatic
+        fun ofRoundedSquares(): QRCodeBuilder = QRCodeBuilder(ROUNDED_SQUARE)
+
+        /**
+         * Creates a new [QRCodeBuilder] to build a QRCode which uses a custom shape function.
+         *
+         * @see QRCodeShapeFunction
+         * @see DefaultShapeFunction
+         */
+        @JvmStatic
+        fun ofCustomShape(customShapeFunction: QRCodeShapeFunction): QRCodeBuilder = QRCodeBuilder(CUSTOM, customShapeFunction)
     }
 
-    /**
-     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
-     *
-     * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
-     * image will be 100x100 pixels.
-     */
-    @JsName("computeImageSizeFromRawData")
-    fun computeImageSize(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
-        rawData: Array<Array<QRCodeSquare?>> = encode()
-    ): Int = computeImageSize(cellSize, margin, rawData.size)
+    /** The underlying [QRCodeProcessor] object that'll do all calculations */
+    val qrCodeProcessor: QRCodeProcessor =
+        QRCodeProcessor(data, ErrorCorrectionLevel.H, graphicsFactory = graphicsFactory)
 
-    /**
-     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
-     *
-     * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
-     * image will be 100x100 pixels.
-     */
-    fun computeImageSize(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
-        size: Int
-    ): Int = size * cellSize + margin * 2
+    /** Computed type number for the given [data] parameter */
+    val typeNum = QRCodeProcessor.typeForDataAndECL(data, ErrorCorrectionLevel.H).coerceAtLeast(6)
 
-    /**
-     * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
-     * Java :)
-     *
-     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
-     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
-     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
-     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
-     *
-     * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
-     *
-     * @see renderShaded
-     * @see QRCodeSquare
-     * @see QRCodeGraphics
-     * @see Colors
-     */
-    fun render(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
-        brightColor: Int = Colors.WHITE,
-        darkColor: Int = Colors.BLACK,
-        marginColor: Int = Colors.WHITE
-    ) =
-        render(
-            cellSize = cellSize,
-            margin = margin,
-            rawData = encode(),
-            brightColor = brightColor,
-            darkColor = darkColor,
-            marginColor = marginColor
-        )
+    /** Raw QRCode data computed by [QRCodeProcessor] */
+    val rawData = qrCodeProcessor.encode(typeNum)
 
-    /**
-     * Renders a QR Code image based on its [computed data][encode].
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
-     *
-     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
-     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param qrCodeGraphics The [QRCodeGraphics] where the QRCode will be painted into.
-     * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
-     * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
-     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
-     *
-     * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
-     *
-     * @see renderShaded
-     * @see QRCodeSquare
-     * @see QRCodeGraphics
-     * @see Colors
-     */
-    @JvmOverloads
-    @JsName("renderComputed")
-    fun render(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
-        rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
-            computeImageSize(
-                cellSize,
-                margin,
-                rawData
-            )
-        ),
-        brightColor: Int = Colors.WHITE,
-        darkColor: Int = Colors.BLACK,
-        marginColor: Int = Colors.WHITE
-    ) =
-        renderShaded(
-            cellSize,
-            margin,
-            rawData,
-            qrCodeGraphics
-        ) { cellData, graphics ->
-            if (cellData.dark) {
-                graphics.fill(darkColor)
-            } else {
-                if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
-                    graphics.fill(brightColor)
-                } else {
-                    graphics.fill(marginColor)
-                }
-            }
-        }
+    /** Calculated size of the whole QRCode (the final image will be a square of `computedSize` by `computedSize`) */
+    val computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
 
-    /**
-     * Renders a QR Code image based on its [computed data][encode].
-     *
-     * This function provides a way to implement more artistic QRCodes. The [renderer] is a function that draws a single
-     * square of the QRCode. It receives 2 parameters: [cellData][QRCodeSquare] and a [QRCodeGraphics] for it to freely
-     * draw. After finished, the canvas will be placed into the final image in its respective place.
-     *
-     * To show this, here's a renderer that makes a QR Code that is half [blue][Colors.BLUE] and half [red][Colors.RED]:
-     *
-     * ```kotlin
-     * QRCode("example").renderShaded { cellData, graphics ->
-     *     if (cellData.type != QRCodeSquareType.MARGIN && cellData.dark) {
-     *         if (cellData.row > cellData.size / 2) {
-     *             graphics.fill(Colors.BLUE)
-     *         }
-     *         else {
-     *             graphics.fill(Colors.RED)
-     *         }
-     *     } else {
-     *         graphics.fill(Colors.WHITE)
-     *     }
-     * }
-     * ```
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, try setting [margin] equal to [cellSize]._
-     *
-     * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
-     * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
-     * @param qrCodeGraphics The [QRCodeGraphics] where the QRCode will be painted into.
-     * @param renderer Lambda that draws a single QRCode square. It receives as parameters the [QRCodeSquare] being draw
-     * and a [QRCodeGraphics] for it to draw the square.
-     *
-     * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
-     *
-     * @see QRCodeSquare
-     * @see QRCodeGraphics
-     * @see Colors
-     */
-    @JvmOverloads
-    fun renderShaded(
-        cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
-        rawData: Array<Array<QRCodeSquare?>> = encode(),
-        qrCodeGraphics: QRCodeGraphics = qrCodeGraphicsFactory.newGraphicsSquare(
-            computeImageSize(
-                cellSize,
-                margin,
-                rawData
-            )
-        ),
-        renderer: (QRCodeSquare, QRCodeGraphics) -> Unit
-    ): QRCodeGraphics {
-        if (margin > 0) {
-            val marginSquare = QRCodeSquare(
-                dark = false,
-                row = 0,
-                col = 0,
-                moduleSize = rawData.size,
-                squareInfo = QRCodeSquareInfo.margin()
-            )
+    /** The [QRCodeGraphics] (aka "canvas") where all the drawing will happen */
+    val graphics = graphicsFactory.newGraphicsSquare(computedSize)
 
-            renderer(marginSquare, qrCodeGraphics)
-        }
+    private fun draw(xOffset: Int, yOffset: Int, rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
+        qrCodeProcessor.renderShaded(
+            cellSize = squareSize,
+            margin = squareSize,
+            rawData = rawData,
+            qrCodeGraphics = canvas,
+        ) { x, y, currentSquare, _ ->
+            val actualSquare = currentSquare.parent ?: currentSquare
 
-        rawData.forEachIndexed { row, rowData ->
-            rowData.forEachIndexed { col, cell ->
-                if (cell != null) {
-                    val squareCanvas = qrCodeGraphicsFactory.newGraphicsSquare(cellSize)
-                    renderer(cell, squareCanvas)
-                    qrCodeGraphics.drawImage(
-                        squareCanvas,
-                        margin + cellSize * col,
-                        margin + cellSize * row
+            if (!actualSquare.rendered) {
+                when (currentSquare.squareInfo.type) {
+                    POSITION_PROBE, POSITION_ADJUST -> shapeFn.renderControlSquare(
+                        xOffset,
+                        yOffset,
+                        colorFn,
+                        actualSquare,
+                        canvas,
+                        this,
                     )
+
+                    else -> shapeFn.renderSquare(xOffset + x, yOffset + y, colorFn, currentSquare, canvas, this)
                 }
+
+                actualSquare.rendered = true
             }
         }
 
-        return qrCodeGraphics
+    /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
+    @JvmOverloads
+    fun renderToGraphics(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0): QRCodeGraphics {
+        colorFn.beforeRender(this, qrCodeGraphics)
+        shapeFn.beforeRender(this, qrCodeGraphics)
+        doBefore(qrCodeGraphics, xOffset, yOffset)
+        return draw(xOffset, yOffset, rawData, qrCodeGraphics).also { doAfter(it, xOffset, yOffset) }
+    }
+
+    /** Calls [renderToGraphics] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */
+    @JvmOverloads
+    fun render(format: String = "PNG"): ByteArray {
+        return renderToGraphics().getBytes(format)
     }
 
     /**
-     * Computes and encodes the [data] of this object into a QR Code. This method returns the raw data of the QR Code.
-     *
-     * If you just want to render (create) a QR Code image, you are probably looking for the [renderShaded] method.
-     *
-     * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
-     * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
-     * @param maskPattern Mask Pattern to apply to the final QR Code. Basically changes how the QR Code looks at the end.
-     * Read more about it [here][MaskPattern]. Defaults to [MaskPattern.PATTERN000].
-     *
-     * @return The byte matrix of the encoded QRCode.
-     *
-     * @see typeForDataAndECL
-     * @see ErrorCorrectionLevel
-     * @see MaskPattern
-     * @see renderShaded
+     * Completely resets the QRCode drawing. After this, you can call [render] or [renderToGraphics] to redraw the
+     * whole QRCode. Useful when you want, for example, a transparent background QRCode to add to a larger image and
+     * then the same QRCode drawn on top of a custom background.
      */
-    @JvmOverloads
-    fun encode(
-        type: Int = typeForDataAndECL(data, errorCorrectionLevel),
-        maskPattern: MaskPattern = MaskPattern.PATTERN000
-    ): Array<Array<QRCodeSquare?>> {
-        val moduleCount = type * 4 + 17
-        val modules: Array<Array<QRCodeSquare?>> =
-            Array(moduleCount) { Array(moduleCount) { null } }
-
-        setupTopLeftPositionProbePattern(modules)
-        setupTopRightPositionProbePattern(modules)
-        setupBottomLeftPositionProbePattern(modules)
-
-        setupPositionAdjustPattern(type, modules)
-        setupTimingPattern(moduleCount, modules)
-        setupTypeInfo(errorCorrectionLevel, maskPattern, moduleCount, modules)
-
-        if (type >= 7) {
-            setupTypeNumber(type, moduleCount, modules)
+    fun reset() {
+        rawData.forEach { row ->
+            row.forEach { cell ->
+                cell.rendered = false
+                cell.parent?.rendered = false
+            }
         }
-
-        val data = createData(type)
-
-        applyMaskPattern(data, maskPattern, moduleCount, modules)
-
-        return modules
+        graphics.reset()
     }
-
-    private fun createData(type: Int): IntArray {
-        val rsBlocks = RSBlock.getRSBlocks(type, errorCorrectionLevel)
-        val buffer = BitBuffer()
-
-        buffer.put(qrCodeData.dataType.value, 4)
-        buffer.put(qrCodeData.length(), qrCodeData.getLengthInBits(type))
-        qrCodeData.write(buffer)
-
-        val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
-
-        if (buffer.lengthInBits > totalDataCount) {
-            throw IllegalArgumentException("Code length overflow (${buffer.lengthInBits} > $totalDataCount)")
-        }
-
-        if (buffer.lengthInBits + 4 <= totalDataCount) {
-            buffer.put(0, 4)
-        }
-
-        while (buffer.lengthInBits % 8 != 0) {
-            buffer.put(false)
-        }
-
-        while (true) {
-            if (buffer.lengthInBits >= totalDataCount) {
-                break
-            }
-
-            buffer.put(PAD0, 8)
-
-            if (buffer.lengthInBits >= totalDataCount) {
-                break
-            }
-
-            buffer.put(PAD1, 8)
-        }
-
-        return createBytes(buffer, rsBlocks)
-    }
-
-    private fun createBytes(buffer: BitBuffer, rsBlocks: Array<RSBlock>): IntArray {
-        var offset = 0
-        var maxDcCount = 0
-        var maxEcCount = 0
-        var totalCodeCount = 0
-        val dcData = Array(rsBlocks.size) { IntArray(0) }
-        val ecData = Array(rsBlocks.size) { IntArray(0) }
-
-        rsBlocks.forEachIndexed { i, it ->
-            val dcCount = it.dataCount
-            val ecCount = it.totalCount - dcCount
-
-            totalCodeCount += it.totalCount
-            maxDcCount = maxDcCount.coerceAtLeast(dcCount)
-            maxEcCount = maxEcCount.coerceAtLeast(ecCount)
-
-            // Init dcData[i]
-            dcData[i] = IntArray(dcCount) { idx -> 0xff and buffer.buffer[idx + offset] }
-            offset += dcCount
-
-            // Init ecData[i]
-            val rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount)
-            val rawPoly = Polynomial(dcData[i], rsPoly.len() - 1)
-            val modPoly = rawPoly.mod(rsPoly)
-            val ecDataSize = rsPoly.len() - 1
-
-            ecData[i] = IntArray(ecDataSize) { idx ->
-                val modIndex = idx + modPoly.len() - ecDataSize
-                if ((modIndex >= 0)) modPoly[modIndex] else 0
-            }
-        }
-
-        var index = 0
-        val data = IntArray(totalCodeCount)
-
-        for (i in 0 until maxDcCount) {
-            for (r in rsBlocks.indices) {
-                if (i < dcData[r].size) {
-                    data[index++] = dcData[r][i]
-                }
-            }
-        }
-
-        for (i in 0 until maxEcCount) {
-            for (r in rsBlocks.indices) {
-                if (i < ecData[r].size) {
-                    data[index++] = ecData[r][i]
-                }
-            }
-        }
-
-        return data
-    }
-
-    override fun toString(): String =
-        "QRCode(data=$data" +
-            ", errorCorrectionLevel=$errorCorrectionLevel" +
-            ", dataType=$dataType" +
-            ", qrCodeData=${qrCodeData::class.simpleName}" +
-            ")"
 }

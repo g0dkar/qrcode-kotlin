@@ -1,11 +1,11 @@
 package qrcode.internals
 
+import qrcode.raw.QRCodeDataType
+import qrcode.raw.QRCodeDataType.DEFAULT
+import qrcode.raw.QRCodeDataType.NUMBERS
+import qrcode.raw.QRCodeDataType.UPPER_ALPHA_NUM
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import qrcode.QRCodeDataType
-import qrcode.QRCodeDataType.DEFAULT
-import qrcode.QRCodeDataType.NUMBERS
-import qrcode.QRCodeDataType.UPPER_ALPHA_NUM
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRData.java)

@@ -7,6 +7,8 @@ import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.ImageData
 import org.w3c.files.Blob
 
+@JsExport
+@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
@@ -19,6 +21,7 @@ actual open class QRCodeGraphics actual constructor(
 
     private val canvas: HTMLCanvasElement
     private val context: CanvasRenderingContext2D
+    private var changed: Boolean = false
 
     init {
         val canvas = tryGet { document.createElement("canvas") as HTMLCanvasElement }
@@ -41,11 +44,30 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     private fun draw(color: Int, action: () -> Unit) {
+        changed = true
         val colorString = rgba(color)
         context.fillStyle = colorString
         context.strokeStyle = colorString
+        val lineWidth = context.lineWidth
+
         action()
+
+        context.lineWidth = lineWidth
     }
+
+    /** Returns `true` if **any** drawing was performed */
+    actual open fun changed() = changed
+
+    /** Simply changes the `changed` flag to true without doing anything else */
+    actual fun reset() {
+        if (changed) {
+            changed = false
+            context.clearRect(0.0, 0.0, width.toDouble(), height.toDouble())
+        }
+    }
+
+    /** Return the dimensions of this Graphics object as a pair of `width, height` */
+    actual open fun dimensions() = arrayOf(width, height)
 
     /**
      * Returns a Data URL to this can be shown in an `<img/>` tag.
@@ -77,7 +99,7 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun nativeImage(): Any = canvas
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
-    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int) {
+    actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
         draw(color) {
             context.moveTo(x1.toDouble(), y1.toDouble())
             context.lineTo(x2.toDouble(), y2.toDouble())
@@ -85,8 +107,9 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
-    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
+            context.lineWidth = thickness
             context.strokeRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
         }
     }
@@ -130,9 +153,10 @@ actual open class QRCodeGraphics actual constructor(
         width: Int,
         height: Int,
         borderRadius: Int,
-        color: Int
+        color: Int,
+        thickness: Double
     ) {
-        drawRect(x, y, width, height, color)
+        drawRect(x, y, width, height, color, 1.0)
     }
 
     /**
@@ -167,26 +191,15 @@ actual open class QRCodeGraphics actual constructor(
         fillRect(x, y, width, height, color)
     }
 
-    /** Draw an image inside another. Mostly used to merge squares into the main QRCode. */
-    actual open fun drawImage(img: QRCodeGraphics, x: Int, y: Int) {
-        context.drawImage(img.canvas, x.toDouble(), y.toDouble())
-    }
-
-    private fun <T> tryGet(what: () -> T): T =
-        try {
-            what()
-        } catch (t: Throwable) {
-            throw Error(CANVAS_UNSUPPORTED, cause = t)
-        }
-
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
-    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+    actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
             val radiusX = width.toDouble() / 2.0
             val radiusY = height.toDouble() / 2.0
 
+            context.lineWidth = thickness
             context.beginPath()
             context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
             context.stroke()
@@ -214,8 +227,20 @@ actual open class QRCodeGraphics actual constructor(
      * On JS this has a limitation that the [rawData] image will be loaded considering it has the same [width] as
      * this object.
      */
-    actual fun drawImage(rawData: ByteArray, x: Int, y: Int) {
-        val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
-        context.putImageData(imageData, x.toDouble(), y.toDouble())
+    @JsName("drawImageFromBytes")
+    actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
+        if (rawData != null && rawData.isNotEmpty()) {
+            draw(0) {
+                val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
+                context.putImageData(imageData, x.toDouble(), y.toDouble())
+            }
+        }
     }
+
+    private fun <T> tryGet(what: () -> T): T =
+        try {
+            what()
+        } catch (t: Throwable) {
+            throw Error(CANVAS_UNSUPPORTED, cause = t)
+        }
 }
