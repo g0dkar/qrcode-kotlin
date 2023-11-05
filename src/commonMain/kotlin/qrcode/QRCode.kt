@@ -142,6 +142,8 @@ class QRCode @JvmOverloads constructor(
             }
         }
 
+    fun render
+
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     fun renderToGraphics(): QRCodeGraphics {
         colorFn.beforeRender(this, graphics)

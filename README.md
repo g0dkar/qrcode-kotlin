@@ -104,11 +104,16 @@ FileOutputStream("hello-world.png").use { it.write(pngBytes) }
 
 We highly recommend that you check out some examples:
 
-* All sorts of shapes: [Kotlin](examples/kotlin/src/main/kotlin/Example01-Shapes.kt), [Java](examples/java/src/main/java/examples/Example01_Shapes.java), [JavaScript](examples/js)
-* All about colors: [Kotlin](examples/kotlin/src/main/kotlin/Example01-Shapes.kt), [Java](examples/java/src/main/java/examples/Example01_Shapes.java), [JavaScript](examples/js)
+* [All sorts of shapes](examples/kotlin/src/main/kotlin/Example01-Shapes.kt): Squares, Circles, Rounded Squares and Custom shapes
+* [All about colors](examples/kotlin/src/main/kotlin/Example02-Colors.kt): Foreground, Background, Transparent backgrounds, Linear Gradient colors
+* [Adding a Logo](examples/kotlin/src/main/kotlin/Example03-Logo.kt): Add a logo and remove the cells behind it, or don't :)
+* [SVG QRCodes](examples/kotlin/src/main/kotlin/Example04-SVG.kt): How to extend the rendered to render SVG (uses [JFree SVG](https://github.com/jfree/jfreesvg))
+* [The banner on the top of this README](examples/kotlin/src/main/kotlin/ProjectLogo.kt): Yup, all done with the library ^^
 
 The examples show pretty much all that can be done with the library! Even how to extend it so that it can create SVG
 QRCodes ;)
+
+You can mix and match all those together. Try generating the library logo with gradients and all in SVG ;)
 
 ### Spring Framework and/or Spring Boot
 

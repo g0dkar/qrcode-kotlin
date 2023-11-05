@@ -11,7 +11,7 @@ fun main() {
     // Get the Kotlin Logo
     val logoBytes = ClassLoader.getSystemResourceAsStream("kotlin-logo.png")?.readBytes() ?: ByteArray(0)
 
-    // Generate the QRCode
+    // Let's build a transparent QRCode with Kotlin's logo and a lightly transparent white as the color
     val qrCode = QRCode.ofCircles()
         .withSize(13)
         .withColor(Colors.rgba(255, 255, 255, 180))
@@ -19,23 +19,25 @@ fun main() {
         .withLogo(logoBytes, 150, 150)
         .build("https://qrcodekotlin.com")
 
-    // Get a rendering of it with a transparent background (to add on the banner)
-    val qrCodePngData = qrCode.render()
-
-    // Reset all that was drawn so far
-    qrCode.reset()
-    // Draw our gradient as the background
+    // Before drawing the QRCode, draw our gradient as the background
     qrCode.graphics.directDraw {
         it.paint = kotlinGradient(qrCode.computedSize)
         it.fillRect(0, 0, qrCode.computedSize, qrCode.computedSize)
     }
-    // Render the QRCode on top of the Gradient :)
+
+    // And render the QRCode on top of the Gradient :)
     val qrCodeLogoPngData = qrCode.render()
 
-    // Banner
+    // Now to create the Banner...
+    // We reset all the rendering done so far
+    qrCode.reset()
+
+    // Create a new 1280x640 image
     val w = 1280
     val h = 640
     val wholeImage = qrCode.graphicsFactory.newGraphics(w, h)
+
+
     wholeImage.directDraw {
         it.paint = kotlinGradient(w)
         it.fillRect(0, 0, w, h)
