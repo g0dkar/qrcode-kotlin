@@ -66,9 +66,12 @@ class QRCodeBuilder @JvmOverloads constructor(
     /**
      * Color of the cells of the QRCode.
      *
-     * _Expected to be the Integer that represents an RGBA color. In short, use the [Colors] helpers ;)_
+     * Expected to be the Integer that represents an RGBA color. In short, use the [Colors] helpers ;)
      *
      * @see Colors
+     * @see Colors.css
+     * @see Colors.rgba
+     * @see Colors.withAlpha
      */
     fun withColor(color: Int): QRCodeBuilder {
         this.color = color
@@ -78,7 +81,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     /**
      * Background color of the QRCode.
      *
-     * _Expected to be the Integer that represents an RGBA color. In short, use the [Colors] helpers ;)_
+     * Expected to be the Integer that represents an RGBA color. In short, use the [Colors] helpers ;)
      *
      * @see Colors
      */

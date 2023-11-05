@@ -114,6 +114,9 @@ class QRCode @JvmOverloads constructor(
     /** Calculated size of the whole QRCode (the final image will be a square of `computedSize` by `computedSize`) */
     val computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
 
+    /** The [QRCodeGraphics] (aka "canvas") where all the drawing will happen */
+    val graphics = graphicsFactory.newGraphicsSquare(computedSize)
+
     private fun draw(rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
         qrCodeProcessor.renderShaded(
             cellSize = squareSize,
@@ -141,16 +144,30 @@ class QRCode @JvmOverloads constructor(
 
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     fun renderToGraphics(): QRCodeGraphics {
-        val qrCodeGraphics = graphicsFactory.newGraphicsSquare(computedSize)
-        colorFn.beforeRender(this, qrCodeGraphics)
-        shapeFn.beforeRender(this, qrCodeGraphics)
-        doBefore(qrCodeGraphics)
-        return draw(rawData, qrCodeGraphics).also { doAfter(it) }
+        colorFn.beforeRender(this, graphics)
+        shapeFn.beforeRender(this, graphics)
+        doBefore(graphics)
+        return draw(rawData, graphics).also { doAfter(it) }
     }
 
     /** Calls [renderToGraphics] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */
     @JvmOverloads
     fun render(format: String = "PNG"): ByteArray {
         return renderToGraphics().getBytes(format)
+    }
+
+    /**
+     * Completely resets the QRCode drawing. After this, you can call [render] or [renderToGraphics] to redraw the
+     * whole QRCode. Useful when you want, for example, a transparent background QRCode to add to a larger image and
+     * then the same QRCode drawn on top of a custom background.
+     */
+    fun reset() {
+        rawData.forEach { row ->
+            row.forEach { cell ->
+                cell.rendered = false
+                cell.parent?.rendered = false
+            }
+        }
+        graphics.reset()
     }
 }

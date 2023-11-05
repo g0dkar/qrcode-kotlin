@@ -39,11 +39,11 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example01-squares.png").write(squarePngData)
-    FileOutputStream("examples/kotlin/example01-circles.png").write(circlePngData)
-    FileOutputStream("examples/kotlin/example01-rounded-squares.png").write(roundedSquarePngData)
-    FileOutputStream("examples/kotlin/example01-custom.png").write(customShapePngData)
-    FileOutputStream("examples/kotlin/example01-custom-jvm.png").write(customShapePngDataJVM)
+    FileOutputStream("examples/kotlin/example01-squares.png").use { it.write(squarePngData) }
+    FileOutputStream("examples/kotlin/example01-circles.png").use { it.write(circlePngData) }
+    FileOutputStream("examples/kotlin/example01-rounded-squares.png").use { it.write(roundedSquarePngData) }
+    FileOutputStream("examples/kotlin/example01-custom.png").use { it.write(customShapePngData) }
+    FileOutputStream("examples/kotlin/example01-custom-jvm.png").use { it.write(customShapePngDataJVM) }
 }
 
 class TriangleShapeFunction(

@@ -32,8 +32,8 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example02-color.png").write(orangePngData)
-    FileOutputStream("examples/kotlin/example02-dark-mode.png").write(darkModePngData)
-    FileOutputStream("examples/kotlin/example02-gradient.png").write(gradientPngData)
-    FileOutputStream("examples/kotlin/example02-transparent.png").write(transparentPngData)
+    FileOutputStream("examples/kotlin/example02-color.png").use { it.write(orangePngData) }
+    FileOutputStream("examples/kotlin/example02-dark-mode.png").use { it.write(darkModePngData) }
+    FileOutputStream("examples/kotlin/example02-gradient.png").use { it.write(gradientPngData) }
+    FileOutputStream("examples/kotlin/example02-transparent.png").use { it.write(transparentPngData) }
 }

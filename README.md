@@ -1,247 +1,121 @@
+# QRCode-Kotlin
+
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-
-[//]: # ([![Project is Building?]&#40;https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=main&#41;]&#40;https://github.com/g0dkar/qrcode-kotlin/actions/workflows/gradle-build.yml&#41;)
 
 💚 [_**Disponível em Português (Brasil)**_](https://qrcodekotlin.com/pt_br) 💛
 
-Creating QRCodes in Kotlin and Java is harder than it should be. QRCode-Kotlin aims to bring a simple, straightforward
-and customizable way to create QRCodes into the JVM domain, especially in the backend.
+![QRCode Kotlin Logo](examples/kotlin/project-banner.png)
+
+Creating QRCodes in Kotlin (and Java) is harder than it should be. **QRCode-Kotlin aims to bring a simple,
+straightforward and customizable way to create QRCodes**, especially in the backend.
+
+It is with this mission in mind that we keep doing our best to learn how developers use this tool and their goals so
+that we can provide a better tool/API for them. Please, feel free to share if and how you're using this project ^^
+
+* **Pure Kotlin:** Rewritten on pure Kotlin from a reference implementation of the QRCode spec
+  by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
+* **Lightweight:** No dependencies, `~115KB` and it does what it says on the tin.
+* **Easy to use:** Quickly and easily implement QRCodes with few lines of code.
+* **Good-looking:** Many developers don't have time and sometimes knowledge to implement the perfect QRCode,
+  so this library tries to generate good-looking QRCodes by default.
+* **Server friendly:** The JVM version is mainly focused on a personal use-case where I needed to generate QRCodes on
+  the backend, but all libraries I found were either complex or huge, usually both.
+* **Multiplatform:** This is a KMP library with support to Java, JavaScript, Android, iOS and tvOS.
 
 ## Table of Contents
 
 <!-- toc -->
-- [Advantages of QRCode-Kotlin](#advantages-of-qrcode-kotlin)
-- [Installation](#installation)
-- [Examples and Usage](#examples-and-usage)
-  - [Just a plain, simple QRCode, nothing fancy](#just-a-plain-simple-qrcode-nothing-fancy)
-  - [A QRCode, but bigger](#a-qrcode-but-bigger)
-  - [Just like Google's ZXing one!](#just-like-googles-zxing-one)
-  - [A splash of Color](#a-splash-of-color)
-  - [Specifying your own data type](#specifying-your-own-data-type)
-  - [Spring Framework and/or Spring Boot](#spring-framework-andor-spring-boot)
-- [License](#license)
-- [Thanks and Acknowledgements](#thanks-and-acknowledgements)
-- [Support and Links](#support-and-links)
+
+[toc]
+
 <!-- /toc -->
-
-## Advantages of QRCode-Kotlin
-
-* **Pure Kotlin:** Reimplemented on pure Kotlin from a reference implementation of the QRCode spec
-  by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
-* **Lightweight:** No dependencies*, `~65KB` and it does what it says on the tin.
-* **Easy to use:** Instantiate an object, invoke a method, and you're done :)
-* **Compact:** Doesn't add any bloat like when using libraries like Google's ZXing (which do way more than generate
-  QRCodes)
-* **Customizable output:** Want to make a colorful QRCode? We got you! A round one? Sure! Maybe use a drawing library?
-  All good as well!
-* **Server friendly:** This isn't a library for Mobile applications, but it is extensible. This is a library thought by
-  backend developers for backend developers.
-* ![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical?style=flat) **Android is Supported:** Since this library is now a Kotlin Multiplatform one, Android is now natively supported as well!
-* ![new on v3.3.0](https://img.shields.io/badge/new!-v3.3.0-critical?style=flat) **JavaScript is Supported:** Now a Browser-Compatible JavaScript version is also available. Check an example [here](examples/js/qrcode-example.html)!
-
->\* Well, except maybe the `org.jetbrains.kotlin:kotlin-stdlib-jdk8` one if you use Java...
 
 ## Installation
 
-This library is available from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/3.0.0/qrcode-kotlin),
-so you can add `QRCode-Kotlin` to your project as a dependency like any other:
+The library is available
+from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.0.1/qrcode-kotlin)
+and [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), so you can add it to your project as a dependency like any
+other:
 
-![new on v3.0.0](https://img.shields.io/badge/new!-v3.0.0-critical)
-> **Now this is a Multiplatform lib:** Starting from version `3.0.0` this library became a Kotlin Multiplatform library.
-> We hope that to you using the library the only change is to declare either `qrcode-kotlin-jvm` or
-> `qrcode-kotlin-android` as the dependency.
+**Gradle:**
 
-**If you're using Maven - pom.xml:**
+```groovy
+implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
+```
+
+**Maven:**
 
 ```xml
-<!-- Use this one for normal applications -->
+
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>3.3.0</version>
-</dependency>
-
-
-
-<!-- Or this one for Android apps 👀 -->
-<dependency>
-    <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-android</artifactId>
-    <version>3.3.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
-**If you're using Gradle:**
+**NodeJS:**
 
-```groovy
-// Kotlin ❤️
-// Use this one for normal applications
-implementation("io.github.g0dkar:qrcode-kotlin-jvm:3.3.0")
-// Or this one for Android apps 👀
-implementation("io.github.g0dkar:qrcode-kotlin-android:3.3.0")
-
-
-
-// Groovy
-// Use this one for normal applications
-implementation 'io.github.g0dkar:qrcode-kotlin-jvm:3.3.0'
-// Or this one for Android apps 👀
-implementation 'io.github.g0dkar:qrcode-kotlin-android:3.3.0'
+```shell
+npm install qrcode-kotlin@4.0.1
 ```
 
-**Or if you're using it on your Browser:**
+**Browser:**
 
 ```html
-<!-- Step 1: Import the library -->
-<script src="qrcode-kotlin.min.js"></script>
 
-<!-- Step 2: Recommended to do this to make it easier to use -->
-<script>
-    const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
-</script>
+<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.1/release/qrcode-kotlin.min.js"
+        type="application/javascript"></script>
 ```
 
-## Examples and Usage
+## Usage
 
-Here are a few examples of how to use the library to achieve some nice results. If you are interested in more advanced
-uses and/or fancier QRCodes, please read the [documentation](https://qrcodekotlin.com/dokka/) :)
-
-![new on v3.2.0](https://img.shields.io/badge/new!-v3.2.0-critical)
-
-**New:** There's a new example showing how to create an [SVG QRCode](examples/kotlin/src/main/kotlin/SVGQRCode.kt)!
-
->Also, make sure to check our [examples](examples) folder for codes in Kotlin and Java, and the resulting QRCodes!
-
-### Just a plain, simple QRCode, nothing fancy
-
-To generate a simple QRCode:
+To create QRCodes, the main class that should be used is the `qrcode.render.QRCode` class. It has static methods to help
+you create a QRCode the way you want:
 
 ```kotlin
-// By default, the writeImage() method outputs PNGs
-val fileOut = FileOutputStream("example01.png")
+// Use one of these:
 
-QRCode("https://github.com/g0dkar/qrcode-kotlin").render().writeImage(fileOut)
+val squareQRCodeBuilder = QRCode.ofSquares()
+
+val circlesQRCodeBuilder = QRCode.ofCircles()
+
+val roundedSquaresQRCodeBuilder = QRCode.ofRoundedSquares()
 ```
 
-Same code as above, but in Java:
+With that, you'll have a [QRCodeBuilder](src/commonMain/kotlin/qrcode/QRCodeBuilder.kt) instance. It has methods to
+adjust colors, size, spacing, add a logo and more! Also, make sure to check
+the [Colors](src/commonMain/kotlin/qrcode/color/Colors.kt) class as well.
 
-```java
-// By default, the writeImage() method outputs PNGs
-FileOutputStream fileOut = new FileOutputStream("example01-java.png");
-
-new QRCode("https://github.com/g0dkar/qrcode-kotlin").render().writeImage(fileOut);
-```
-
-### A QRCode, but bigger
-
-The `render()` function can receive a `cellSize` to adjust the size of the resulting QRCode. This parameter represents
-the size in pixels of each square of the resulting QRCode. Its default value is `25`:
+Here's a code to get you started:
 
 ```kotlin
-val fileOut = FileOutputStream("example02.png")
+val helloWorld = QRCode.ofSquares()
+    .withColor(Colors.DEEP_SKY_BLUE) // Default is Colors.BLACK
+    .withSize(10) // Default is 25
+    .build("Hello world!")
 
-QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(cellSize = 50)
-    .writeImage(fileOut)
+// By default, QRCodes are rendered as PNGs.
+val pngBytes = helloWorld.render()
+
+FileOutputStream("hello-world.png").use { it.write(pngBytes) }
 ```
 
-In Java:
+We highly recommend that you check out some examples:
 
-```java
-FileOutputStream fileOut = new FileOutputStream("example02-java.png");
+* All sorts of shapes: [Kotlin](examples/kotlin/src/main/kotlin/Example01-Shapes.kt), [Java](examples/java/src/main/java/examples/Example01_Shapes.java), [JavaScript](examples/js)
+* All about colors: [Kotlin](examples/kotlin/src/main/kotlin/Example01-Shapes.kt), [Java](examples/java/src/main/java/examples/Example01_Shapes.java), [JavaScript](examples/js)
 
-new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(50)
-    .writeImage(fileOut);
-```
-
-### Just like Google's ZXing one!
-
-As of the time of writing, [Google's ZXing library](https://github.com/zxing/zxing) is widely used to render QRCodes.
-Its rendering of QRCodes usually adds a "border" _(aka "margin")_ around the QRCode, usually equal to 1 cell. The
-`render()` function can receive a `margin` parameter as well, which is how many pixels we want to have as a margin
-around our QRCode. **By default, the `margin` parameter is equal to `0`.**
-
-To have one of these nice looking and spaced QRCode, try doing this:
-
-```kotlin
-val fileOut = FileOutputStream("example03.png")
-val cellSize = 30 // pixels
-
-QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(cellSize, margin = cellSize)
-    .writeImage(fileOut)
-```
-
-In Java:
-
-```java
-FileOutputStream fileOut = new FileOutputStream("example03-java.png");
-int cellSize = 30; // pixels
-
-new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(cellSize, cellSize);
-    .writeImage(fileOut);
-```
-
-### A splash of Color
-
-![new on v2.0.0](https://img.shields.io/badge/new!-v2.0.0-critical)
-
-Want to have a colorful QRCode? Easy-peasy! The `render()` function also have the `brightColor`, `darkColor` and
-`marginColor` parameters just for that. Their default values are Black-and-White squares with a White margin.
-
-Starting from **v2.0.0** these are simply `Int` values in the RGBA space. These can be created with either the new
-[Colors](src/main/kotlin/io/github/g0dkar/qrcode/render/Colors.kt) helper class or if you are running in the JRE
-with plain, _(very)_ old `java.awt.Color` classes :)
-
-For fun, this will make a QRCode with GitHub's Dark Mode colors:
-
-```kotlin
-import io.github.g0dkar.qrcode.render.Colors
-
-val background = Colors.css("#8b949e")
-val foreground = Colors.css("#0d1117")
-val fileOut = FileOutputStream("example04.png")
-
-QRCode("https://github.com/g0dkar/qrcode-kotlin").render(
-    brightColor = background, // Background
-    darkColor = foreground,   // Foreground (aka the "black squares")
-    marginColor = background  // Margin (ignored since margin = 0)
-).writeImage(fileOut)
-```
-
-In Java:
-
-```java
-import java.awt.Color;
-
-Color background = new Color(13, 17, 23);
-Color foreground = new Color(139, 148, 158);
-FileOutputStream fileOut = new FileOutputStream("example04-java.png");
-
-new QRCode("https://github.com/g0dkar/qrcode-kotlin")
-    .render(25, 0, background.getRGB(), foreground.getRGB(), background.getRGB())
-    .writeImage(fileOut);
-```
-
-### Specifying your own data type
-
-If you don't want to rely on the basic data-type identification logic implemented by the library, you can specify what
-is the type of data that your input string is composed of. You can pass it as the `dataType` parameter in the
-constructor of the `QRCode` class like this:
-
-```kotlin
-// Create a "String" typed QRCode instead of a "Number" (which would be automatically identified)
-QRCode("42", dataType = QRCodeDataType.DEFAULT)
-```
+The examples show pretty much all that can be done with the library! Even how to extend it so that it can create SVG
+QRCodes ;)
 
 ### Spring Framework and/or Spring Boot
 
-One of the main reasons I developed this library was to use it on a Spring Boot API that needed to generate QRCodes. So
-it is only natural to show how to do that :)
+As said earlier, one of the main reasons I developed this library was to use it on a backend application. So it is only
+natural to show how to do that :)
+
+This Spring Framework/Boot controller method can generate
 
 ```kotlin
 import org.springframework.core.io.ByteArrayResource
@@ -250,12 +124,10 @@ import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
 @GetMapping("/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
-    val imageOut = ByteArrayOutputStream()
-
-    QRCode(content).render().writeImage(imageOut)
-
-    val imageBytes = imageOut.toByteArray()
-    val resource = ByteArrayResource(imageBytes, IMAGE_PNG_VALUE)
+    val pngData = QRCode().ofSquares()
+        .build(content)
+        .render()
+    val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
 
     return ResponseEntity.ok()
         .header(CONTENT_DISPOSITION, "attachment; filename=\"qrcode.png\"")

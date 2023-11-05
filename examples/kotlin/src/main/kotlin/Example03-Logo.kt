@@ -23,6 +23,6 @@ fun main() {
 
     // ---------------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example03-logo.png").write(logoQRCodePngData)
-    FileOutputStream("examples/kotlin/example03-logo-with-cells.png").write(transparentQRCodePngData)
+    FileOutputStream("examples/kotlin/example03-logo.png").use { it.write(logoQRCodePngData) }
+    FileOutputStream("examples/kotlin/example03-logo-with-cells.png").use { it.write(transparentQRCodePngData) }
 }

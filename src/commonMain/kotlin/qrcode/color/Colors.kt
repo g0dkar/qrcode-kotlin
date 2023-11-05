@@ -1,6 +1,7 @@
 package qrcode.color
 
 import qrcode.color.Colors.css
+import qrcode.color.Colors.getRGBA
 import qrcode.color.Colors.withAlpha
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
@@ -12,7 +13,9 @@ import kotlin.jvm.JvmStatic
  * The constants are all the CSS colors, taken from https://www.w3schools.com/colors/colors_names.asp
  *
  * @author Rafael Lins - g0dkar
+ *
  * @see css
+ * @see getRGBA
  * @see withAlpha
  */
 @JsExport
