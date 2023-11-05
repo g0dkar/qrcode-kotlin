@@ -41,8 +41,8 @@ The positions marked with `A`, `B`, `C` and `D` would be regions [TOP_LEFT_CORNE
 | Name | Summary |
 |---|---|
 | [entries](entries.md) | [common]<br>val [entries](entries.md): [EnumEntries](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.enums/-enum-entries/index.html)&lt;[QRCodeRegion](index.md)&gt;<br>Returns a representation of an immutable list of all enum entries, in the order they're declared. |
-| [name](-u-n-k-n-o-w-n/index.md#-372974862%2FProperties%2F345188675) | [common]<br>val [name](-u-n-k-n-o-w-n/index.md#-372974862%2FProperties%2F345188675): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
-| [ordinal](-u-n-k-n-o-w-n/index.md#-739389684%2FProperties%2F345188675) | [common]<br>val [ordinal](-u-n-k-n-o-w-n/index.md#-739389684%2FProperties%2F345188675): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| [name](../../qrcode.raw/-q-r-code-data-type/-d-e-f-a-u-l-t/index.md#-372974862%2FProperties%2F345188675) | [common]<br>val [name](../../qrcode.raw/-q-r-code-data-type/-d-e-f-a-u-l-t/index.md#-372974862%2FProperties%2F345188675): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [ordinal](../../qrcode.raw/-q-r-code-data-type/-d-e-f-a-u-l-t/index.md#-739389684%2FProperties%2F345188675) | [common]<br>val [ordinal](../../qrcode.raw/-q-r-code-data-type/-d-e-f-a-u-l-t/index.md#-739389684%2FProperties%2F345188675): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
 
 ## Functions
 

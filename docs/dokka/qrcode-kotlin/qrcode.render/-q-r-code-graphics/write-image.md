@@ -9,7 +9,7 @@ Writes the QRCode image in the specified [format](write-image.md) and [quality](
 
 For app stability reasons if the specified [format](write-image.md) doesn't exist it'll be defaulted to [PNG](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html#PNG).
 
-**Note:** Please note that `JPG` is supported via the JPEG value, with an `E`.
+**Note:** Please note that `JPG` is supported via the [JPEG](https://developer.android.com/reference/kotlin/android/graphics/Bitmap.CompressFormat.html#JPEG) value, with an `E`.
 
 #### See also
 

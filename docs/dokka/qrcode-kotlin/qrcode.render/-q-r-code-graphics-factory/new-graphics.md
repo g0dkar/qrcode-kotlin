@@ -3,6 +3,6 @@
 # newGraphics
 
 [common]\
-fun [newGraphics](new-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)
+open fun [newGraphics](new-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)
 
 Creates a new [QRCodeGraphics](../-q-r-code-graphics/index.md) instance.

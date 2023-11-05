@@ -6,14 +6,4 @@
 
 @[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-constructor(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), errorCorrectionLevel: [ErrorCorrectionLevel](../-error-correction-level/index.md) = ErrorCorrectionLevel.M, dataType: [QRCodeDataType](../-q-r-code-data-type/index.md) = QRUtil.getDataType(data))
-
-#### Parameters
-
-common
-
-| | |
-|---|---|
-| data | String that will be encoded in the QR Code. |
-| errorCorrectionLevel | The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M](../-error-correction-level/-m/index.md). |
-| dataType | One of the available [QRCodeDataType](../-q-r-code-data-type/index.md). By default, the code tries to guess which one is the best fitting one from your input data. |
+constructor(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_SQUARE_SIZE, colorFn: [QRCodeColorFunction](../../qrcode.color/-q-r-code-color-function/index.md) = DefaultColorFunction(), shapeFn: [QRCodeShapeFunction](../../qrcode.shape/-q-r-code-shape-function/index.md) = DefaultShapeFunction(squareSize), graphicsFactory: [QRCodeGraphicsFactory](../../qrcode.render/-q-r-code-graphics-factory/index.md) = QRCodeGraphicsFactory(), doBefore: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN, doAfter: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN)

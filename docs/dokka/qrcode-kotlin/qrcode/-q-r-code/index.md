@@ -2,65 +2,41 @@
 
 # QRCode
 
-class [QRCode](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), errorCorrectionLevel: [ErrorCorrectionLevel](../-error-correction-level/index.md) = ErrorCorrectionLevel.M, dataType: [QRCodeDataType](../-q-r-code-data-type/index.md) = QRUtil.getDataType(data))
+class [QRCode](index.md)@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)constructor(val data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), val squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_SQUARE_SIZE, val colorFn: [QRCodeColorFunction](../../qrcode.color/-q-r-code-color-function/index.md) = DefaultColorFunction(), val shapeFn: [QRCodeShapeFunction](../../qrcode.shape/-q-r-code-shape-function/index.md) = DefaultShapeFunction(squareSize), var graphicsFactory: [QRCodeGraphicsFactory](../../qrcode.render/-q-r-code-graphics-factory/index.md) = QRCodeGraphicsFactory(), doBefore: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN, doAfter: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN)
 
-A Class/Library that helps encode data as QR Code images without any external dependencies.
+A simple class to create easily create aesthetic pleasing QRCodes.
 
-Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRCode.java).
+It'll create a [QRCodeProcessor](../../qrcode.raw/-q-r-code-processor/index.md) and build a custom render function on top of it.
 
-To create a QR Code you can simply do the following:
+It includes things like:
 
-```kotlin
-val dataToEncode = "Hello QRCode!"
-val eachQRCodeSquareSize = 10 // In Pixels!
-val qrCodeRenderer = QRCode(dataToEncode).render(eachQRCodeSquareSize)
-```
+- 
+   QR Codes with a logo at the center
+- 
+   QR Codes with dots instead of squares
+- 
+   Colorful QR Codes (including linear gradient colors)
 
-You can now use `qrCodeRenderer` to render your QRCode into any `OutputStream` (as a PNG by default)
-
-For example, to simply save it on the disk:
-
-```kotlin
-val qrCodeFile = File("qrcode.png")
-qrCodeFile.outputStream().use { qrCodeRenderer.writeImage(it) }
-```
-
-Or maybe have it as a byte array, to be sent as a response to a server request:
-
-```kotlin
-val imageBytes = ByteArrayOutputStream()
-    .also { qrCodeRenderer.writeImage(it) }
-    .toByteArray()
-```
+If you have a suggestion for a nice QR Code style, feel free to open a PR, or an Issue with your suggestion :)
 
 #### Author
 
 Rafael Lins - g0dkar
 
-Kazuhiko Arase - kazuhikoarase
-
-#### Parameters
-
-common
-
-| | |
-|---|---|
-| data | String that will be encoded in the QR Code. |
-| errorCorrectionLevel | The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M](../-error-correction-level/-m/index.md). |
-| dataType | One of the available [QRCodeDataType](../-q-r-code-data-type/index.md). By default, the code tries to guess which one is the best fitting one from your input data. |
-
 #### See also
 
 | |
 |---|
-| [ErrorCorrectionLevel](../-error-correction-level/index.md) |
-| QRUtil.getDataType |
+| [QRCodeBuilder](../-q-r-code-builder/index.md) |
+| [QRCode.Companion.ofSquares](-companion/of-squares.md) |
+| [QRCode.Companion.ofCircles](-companion/of-circles.md) |
+| [QRCode.Companion.ofRoundedSquares](-companion/of-rounded-squares.md) |
 
 ## Constructors
 
 | | |
 |---|---|
-| [QRCode](-q-r-code.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>constructor(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), errorCorrectionLevel: [ErrorCorrectionLevel](../-error-correction-level/index.md) = ErrorCorrectionLevel.M, dataType: [QRCodeDataType](../-q-r-code-data-type/index.md) = QRUtil.getDataType(data)) |
+| [QRCode](-q-r-code.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>constructor(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_SQUARE_SIZE, colorFn: [QRCodeColorFunction](../../qrcode.color/-q-r-code-color-function/index.md) = DefaultColorFunction(), shapeFn: [QRCodeShapeFunction](../../qrcode.shape/-q-r-code-shape-function/index.md) = DefaultShapeFunction(squareSize), graphicsFactory: [QRCodeGraphicsFactory](../../qrcode.render/-q-r-code-graphics-factory/index.md) = QRCodeGraphicsFactory(), doBefore: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN, doAfter: [QRCode](index.md).([QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html) = EMPTY_FN) |
 
 ## Types
 
@@ -72,14 +48,21 @@ common
 
 | Name | Summary |
 |---|---|
-| [qrCodeGraphicsFactory](qr-code-graphics-factory.md) | [common]<br>var [qrCodeGraphicsFactory](qr-code-graphics-factory.md): [QRCodeGraphicsFactory](../../qrcode.render/-q-r-code-graphics-factory/index.md) |
+| [colorFn](color-fn.md) | [common]<br>val [colorFn](color-fn.md): [QRCodeColorFunction](../../qrcode.color/-q-r-code-color-function/index.md) |
+| [computedSize](computed-size.md) | [common]<br>val [computedSize](computed-size.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculated size of the whole QRCode (the final image will be a square of `computedSize` by `computedSize`) |
+| [data](data.md) | [common]<br>val [data](data.md): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [graphics](graphics.md) | [common]<br>val [graphics](graphics.md): [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)<br>The [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md) (aka &quot;canvas&quot;) where all the drawing will happen |
+| [graphicsFactory](graphics-factory.md) | [common]<br>var [graphicsFactory](graphics-factory.md): [QRCodeGraphicsFactory](../../qrcode.render/-q-r-code-graphics-factory/index.md) |
+| [qrCodeProcessor](qr-code-processor.md) | [common]<br>val [qrCodeProcessor](qr-code-processor.md): [QRCodeProcessor](../../qrcode.raw/-q-r-code-processor/index.md)<br>The underlying [QRCodeProcessor](../../qrcode.raw/-q-r-code-processor/index.md) object that'll do all calculations |
+| [rawData](raw-data.md) | [common]<br>val [rawData](raw-data.md): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md)&gt;&gt;<br>Raw QRCode data computed by [QRCodeProcessor](../../qrcode.raw/-q-r-code-processor/index.md) |
+| [shapeFn](shape-fn.md) | [common]<br>val [shapeFn](shape-fn.md): [QRCodeShapeFunction](../../qrcode.shape/-q-r-code-shape-function/index.md) |
+| [squareSize](square-size.md) | [common]<br>val [squareSize](square-size.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| [typeNum](type-num.md) | [common]<br>val [typeNum](type-num.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Computed type number for the given [data](data.md) parameter |
 
 ## Functions
 
 | Name | Summary |
 |---|---|
-| [computeImageSize](compute-image-size.md) | [common]<br>fun [computeImageSize](compute-image-size.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, margin: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 0, rawData: [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md)?&gt;&gt; = encode()): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>fun [computeImageSize](compute-image-size.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, margin: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_MARGIN, size: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`. |
-| [encode](encode.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [encode](encode.md)(type: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = typeForDataAndECL(data, errorCorrectionLevel), maskPattern: [MaskPattern](../-mask-pattern/index.md) = MaskPattern.PATTERN000): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md)?&gt;&gt;<br>Computes and encodes the data of this object into a QR Code. This method returns the raw data of the QR Code. |
-| [render](render.md) | [common]<br>fun [render](render.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, margin: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_MARGIN, brightColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.WHITE, darkColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.BLACK, marginColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.WHITE): [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)<br>Renders a QR Code image based on its [computed data](encode.md). This function exists to ease the interop with Java :)<br>[common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [render](render.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, margin: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_MARGIN, rawData: [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md)?&gt;&gt; = encode(), qrCodeGraphics: [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md) = qrCodeGraphicsFactory.newGraphicsSquare(             computeImageSize(                 cellSize,                 margin,                 rawData             )         ), brightColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.WHITE, darkColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.BLACK, marginColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = Colors.WHITE): [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)<br>Renders a QR Code image based on its [computed data](encode.md). |
-| [renderShaded](render-shaded.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [renderShaded](render-shaded.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, margin: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_MARGIN, rawData: [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md)?&gt;&gt; = encode(), qrCodeGraphics: [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md) = qrCodeGraphicsFactory.newGraphicsSquare(             computeImageSize(                 cellSize,                 margin,                 rawData             )         ), renderer: ([QRCodeSquare](../../qrcode.internals/-q-r-code-square/index.md), [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)): [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)<br>Renders a QR Code image based on its [computed data](encode.md). |
-| [toString](to-string.md) | [common]<br>open override fun [toString](to-string.md)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) |
+| [render](render.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [render](render.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;PNG&quot;): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)<br>Calls [renderToGraphics](render-to-graphics.md) and then returns the bytes of a [format](render.md) (default = PNG) render of the QRCode. |
+| [renderToGraphics](render-to-graphics.md) | [common]<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [renderToGraphics](render-to-graphics.md)(qrCodeGraphics: [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md) = graphics, xOffset: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 0, yOffset: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 0): [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md)<br>Executes all the drawing of the QRCode and returns the [QRCodeGraphics](../../qrcode.render/-q-r-code-graphics/index.md) of the complete QRCode. |
+| [reset](reset.md) | [common]<br>fun [reset](reset.md)()<br>Completely resets the QRCode drawing. After this, you can call [render](render.md) or [renderToGraphics](render-to-graphics.md) to redraw the whole QRCode. Useful when you want, for example, a transparent background QRCode to add to a larger image and then the same QRCode drawn on top of a custom background. |

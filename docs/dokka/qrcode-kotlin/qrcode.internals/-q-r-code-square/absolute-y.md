@@ -6,6 +6,6 @@
 
 @[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-fun [absoluteY](absolute-y.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCode.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+fun [absoluteY](absolute-y.md)(cellSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = QRCodeProcessor.DEFAULT_CELL_SIZE): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
 
 Calculates where is the Y position where this square will be in the main QRCode image given a [cellSize](absolute-y.md).

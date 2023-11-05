@@ -9,11 +9,13 @@ object [Companion](index.md)
 
 | Name | Summary |
 |---|---|
-| [DEFAULT_CELL_SIZE](-d-e-f-a-u-l-t_-c-e-l-l_-s-i-z-e.md) | [common]<br>const val [DEFAULT_CELL_SIZE](-d-e-f-a-u-l-t_-c-e-l-l_-s-i-z-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 25 |
-| [DEFAULT_MARGIN](-d-e-f-a-u-l-t_-m-a-r-g-i-n.md) | [common]<br>const val [DEFAULT_MARGIN](-d-e-f-a-u-l-t_-m-a-r-g-i-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 0 |
+| [DEFAULT_SQUARE_SIZE](-d-e-f-a-u-l-t_-s-q-u-a-r-e_-s-i-z-e.md) | [common]<br>const val [DEFAULT_SQUARE_SIZE](-d-e-f-a-u-l-t_-s-q-u-a-r-e_-s-i-z-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Default value of [squareSize](../square-size.md). |
 
 ## Functions
 
 | Name | Summary |
 |---|---|
-| [typeForDataAndECL](type-for-data-and-e-c-l.md) | [common]<br>@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)<br>@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)<br>fun [typeForDataAndECL](type-for-data-and-e-c-l.md)(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), errorCorrectionLevel: [ErrorCorrectionLevel](../../-error-correction-level/index.md), dataType: [QRCodeDataType](../../-q-r-code-data-type/index.md) = QRUtil.getDataType(data)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)<br>Calculates a suitable value for the [dataType](type-for-data-and-e-c-l.md) field for you. |
+| [ofCircles](of-circles.md) | [common]<br>@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)<br>fun [ofCircles](of-circles.md)(): [QRCodeBuilder](../../-q-r-code-builder/index.md)<br>Creates a new [QRCodeBuilder](../../-q-r-code-builder/index.md) to build a Fancy QRCode which uses circles as the base shape. |
+| [ofCustomShape](of-custom-shape.md) | [common]<br>@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)<br>fun [ofCustomShape](of-custom-shape.md)(customShapeFunction: [QRCodeShapeFunction](../../../qrcode.shape/-q-r-code-shape-function/index.md)): [QRCodeBuilder](../../-q-r-code-builder/index.md)<br>Creates a new [QRCodeBuilder](../../-q-r-code-builder/index.md) to build a QRCode which uses a custom shape function. |
+| [ofRoundedSquares](of-rounded-squares.md) | [common]<br>@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)<br>fun [ofRoundedSquares](of-rounded-squares.md)(): [QRCodeBuilder](../../-q-r-code-builder/index.md)<br>Creates a new [QRCodeBuilder](../../-q-r-code-builder/index.md) to build a Fancy QRCode which uses rounded squares as the base shape. |
+| [ofSquares](of-squares.md) | [common]<br>@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)<br>fun [ofSquares](of-squares.md)(): [QRCodeBuilder](../../-q-r-code-builder/index.md)<br>Creates a new [QRCodeBuilder](../../-q-r-code-builder/index.md) to build a Fancy QRCode which uses squares as the base shape (this is the default) |
