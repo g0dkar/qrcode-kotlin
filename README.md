@@ -3,15 +3,15 @@
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
 
-💚 [_**Disponível em Português (Brasil)**_](https://qrcodekotlin.com/pt_br) 💛
+💚 [_**Disponível em Português (Brasil)**_](README.pt-br.md) 💛
 
 ![QRCode Kotlin Logo](examples/kotlin/project-banner.png)
 
 Creating QRCodes in Kotlin (and Java) is harder than it should be. **QRCode-Kotlin aims to bring a simple,
 straightforward and customizable way to create QRCodes**, especially in the backend.
 
-It is with this mission in mind that we keep doing our best to learn how developers use this tool and their goals so
-that we can provide a better tool/API for them. Please, feel free to share if and how you're using this project ^^
+It is with this mission in mind that we keep doing our best to learn how developers use this library and their goals so
+that we can provide a better library/API for them. Please, feel free to share if and how you're using this project ^^
 
 * **Pure Kotlin:** Rewritten on pure Kotlin from a reference implementation of the QRCode spec
   by [Kazuhiko Arase](https://github.com/kazuhikoarase/qrcode-generator)
@@ -52,7 +52,6 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
 **Maven:**
 
 ```xml
-
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId> <!-- or qrcode-kotlin-android -->
@@ -69,9 +68,7 @@ npm install qrcode-kotlin@4.0.1
 **Browser:**
 
 ```html
-
-<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.1/release/qrcode-kotlin.min.js"
-        type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.1/release/qrcode-kotlin.min.js" type="application/javascript"></script>
 ```
 
 ## Usage
@@ -82,11 +79,11 @@ you create a QRCode the way you want:
 ```kotlin
 // Use one of these:
 
-val squareQRCodeBuilder = QRCode.ofSquares()
+val squares = QRCode.ofSquares()
 
-val circlesQRCodeBuilder = QRCode.ofCircles()
+val circles = QRCode.ofCircles()
 
-val roundedSquaresQRCodeBuilder = QRCode.ofRoundedSquares()
+val roundedSquares = QRCode.ofRoundedSquares()
 ```
 
 With that, you'll have a [QRCodeBuilder](src/commonMain/kotlin/qrcode/QRCodeBuilder.kt) instance. It has methods to
@@ -115,8 +112,7 @@ We highly recommend that you check out some examples:
   backgrounds, Linear Gradient colors
 * [Adding a Logo](examples/kotlin/src/main/kotlin/Example03-Logo.kt): Add a logo and remove the cells behind it, or
   don't :)
-* [SVG QRCodes](examples/kotlin/src/main/kotlin/Example04-SVG.kt): How to extend the rendered to render SVG (
-  uses [JFree SVG](https://github.com/jfree/jfreesvg))
+* [SVG QRCodes](examples/kotlin/src/main/kotlin/Example04-SVG.kt): How to extend the renderer to render SVG (uses [JFree SVG](https://github.com/jfree/jfreesvg))
 * [The banner on the top of this README](examples/kotlin/src/main/kotlin/ProjectLogo.kt): Yup, all done with the
   library ^^
 
@@ -155,21 +151,23 @@ fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
 The main changes coming from `v3.3.0` are:
 
 1. The main package of the classes was changed from `io.github.g0dkar.qrcode` to simply `qrcode`
-    * It doesn't help languages that don't have the "package" concept, and other Kotlin libraries already name their
-      main package this way.
-2. The old `QRCode` class was rewritten to be easier to create nice QRCodes
-   from. The previous `QRCode` class was renamed
-   to [QRCodeProcessor](src/commonMain/kotlin/qrcode/raw/QRCodeProcessor.kt), with very minor API changes.
+    * The old name doesn't help languages that don't have the "package" concept, and other Kotlin libraries already name
+      their main package this way.
+2. The old `QRCode` class was rewritten to be easier to create better looking QRCodes . The previous `QRCode` class was
+   renamed to [QRCodeProcessor](src/commonMain/kotlin/qrcode/raw/QRCodeProcessor.kt), with very minor API changes.
     * **For most of the simple cases, the new `QRCode` class is compatible with the old one!**
 3. A bunch of optimizations on how the QRCode is drawn. Previously, we'd had a canvas for each square, which would then
    be copied into the QRCode. This was changed to have just one large canvas where each square will be individually
    drawn directly.
+4. ![Experimental](https://img.shields.io/badge/Experimental-critical) iOS and tvOS Support: Starting from `v4.0.1` an
+   initial implementation of the `QRCodeGraphics` so that iOS and tvOS are now supported. **Any and
+   all [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) are very welcome!**
 
 ## License
 
 Copyright since 2021 Rafael M. Lins, Licensed under the [MIT License](https://rafaellins.mit-license.org/2021/).
 
-QR Code is trademarked by Denso Wave, inc.
+QR Code is trademarked by Denso Wave, Inc.
 
 ## Thanks and Acknowledgements
 
@@ -180,6 +178,7 @@ QR Code is trademarked by Denso Wave, inc.
   of other stuff during the development of v2.0.0 and v3.0.0!
 * [Doomsdayrs](https://github.com/Doomsdayrs): For pointing out how the library could be improved using Kotlin
   Multiplatform, and helping out implementing it into the project.
+* An awesome, furry friend for all the support through all these years :)
 
 ## Support and Links
 
