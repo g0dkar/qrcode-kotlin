@@ -323,9 +323,18 @@ signing {
         properties.getOrDefault("signing.password", System.getenv("SIGNING_PASSWORD"))?.toString() ?: return@signing
 
     useInMemoryPgpKeys(key, password)
+    sign(publishing.publications)
+}
+
+// https://github.com/gradle/gradle/issues/26091
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    val signingTasks = tasks.withType<Sign>()
+    mustRunAfter(signingTasks)
 }
 
 npmPublish {
+    readme.set(rootDir.resolve("README.md"))
+
     registries {
         register("npmjs") {
             uri.set(uri("https://registry.npmjs.org"))

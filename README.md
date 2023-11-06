@@ -39,14 +39,14 @@ that we can provide a better library/API for them. Please, feel free to share if
 ## Installation
 
 The library is available
-from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.0.1/qrcode-kotlin)
+from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.0.2/qrcode-kotlin)
 and [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), so you can add it to your project as a dependency like any
 other:
 
 **Gradle:**
 
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
+implementation("io.github.g0dkar:qrcode-kotlin:4.0.2")
 ```
 
 **Maven:**
@@ -55,20 +55,20 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.0.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId> <!-- or qrcode-kotlin-android -->
-    <version>4.0.1</version>
+    <version>4.0.2</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.0.1
+npm install qrcode-kotlin@4.0.2
 ```
 
 **Browser:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.1/release/qrcode-kotlin.min.js" type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.2/release/qrcodeKotlin.min.js" type="application/javascript"></script>
 ```
 
 ## Usage
@@ -159,7 +159,7 @@ The main changes coming from `v3.3.0` are:
 3. A bunch of optimizations on how the QRCode is drawn. Previously, we'd had a canvas for each square, which would then
    be copied into the QRCode. This was changed to have just one large canvas where each square will be individually
    drawn directly.
-4. ![Experimental](https://img.shields.io/badge/Experimental-critical) iOS and tvOS Support: Starting from `v4.0.1` an
+4. ![Experimental](https://img.shields.io/badge/Experimental-critical) iOS and tvOS Support: Starting from `v4.0.2` an
    initial implementation of the `QRCodeGraphics` so that iOS and tvOS are now supported. **Any and
    all [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) are very welcome!**
 
