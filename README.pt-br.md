@@ -67,7 +67,7 @@ npm install qrcode-kotlin@4.0.2
 **Browser:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@4.0.2/release/qrcodeKotlin.min.js" type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@main/release/qrcodeKotlin.min.js" type="application/javascript"></script>
 ```
 
 ## Uso
