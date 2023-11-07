@@ -59,8 +59,6 @@ kotlin {
     }
 
     js {
-        moduleName = "qrcodeKotlin"
-
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -71,7 +69,7 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
-                output?.library = "qrcodeKotlin"
+//                output?.library = "qrcodeKotlin"
             }
 
             testTask {

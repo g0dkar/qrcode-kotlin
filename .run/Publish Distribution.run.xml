@@ -13,7 +13,6 @@
           <option value=":clean" />
           <option value=":publishToSonatype" />
           <option value=":closeAndReleaseSonatypeStagingRepository" />
-          <option value=":publishJsPackageToNpmjsRegistry" />
         </list>
       </option>
       <option name="vmOptions" />
