@@ -11,5 +11,5 @@ Builds a [QRCode](../-q-r-code/index.md) instance ready to use.
 
 | |
 |---|
+| [QRCode.renderToBytes](../-q-r-code/render-to-bytes.md) |
 | [QRCode.render](../-q-r-code/render.md) |
-| [QRCode.renderToGraphics](../-q-r-code/render-to-graphics.md) |

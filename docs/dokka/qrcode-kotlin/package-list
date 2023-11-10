@@ -1,6 +1,7 @@
 $dokka.format:gfm-v1
 $dokka.linkExtension:md
 $dokka.location:qrcode.color////PointingToDeclaration/qrcode-kotlin/qrcode.color/index.md
+$dokka.location:qrcode.color/ColorType///PointingToDeclaration/qrcode-kotlin/qrcode.color/-color-type/index.md
 $dokka.location:qrcode.color/Colors///PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/index.md
 $dokka.location:qrcode.color/Colors/ALICE_BLUE/#/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/-a-l-i-c-e_-b-l-u-e.md
 $dokka.location:qrcode.color/Colors/ANTIQUE_WHITE/#/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/-a-n-t-i-q-u-e_-w-h-i-t-e.md
@@ -340,8 +341,8 @@ $dokka.location:qrcode/QRCode/graphics/#/PointingToDeclaration/qrcode-kotlin/qr
 $dokka.location:qrcode/QRCode/graphicsFactory/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/graphics-factory.md
 $dokka.location:qrcode/QRCode/qrCodeProcessor/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/qr-code-processor.md
 $dokka.location:qrcode/QRCode/rawData/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/raw-data.md
-$dokka.location:qrcode/QRCode/render/#kotlin.String/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/render.md
-$dokka.location:qrcode/QRCode/renderToGraphics/#qrcode.render.QRCodeGraphics#kotlin.Int#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/render-to-graphics.md
+$dokka.location:qrcode/QRCode/render/#qrcode.render.QRCodeGraphics#kotlin.Int#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/render.md
+$dokka.location:qrcode/QRCode/renderToBytes/#kotlin.String/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/render-to-bytes.md
 $dokka.location:qrcode/QRCode/reset/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/reset.md
 $dokka.location:qrcode/QRCode/shapeFn/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/shape-fn.md
 $dokka.location:qrcode/QRCode/squareSize/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/square-size.md
