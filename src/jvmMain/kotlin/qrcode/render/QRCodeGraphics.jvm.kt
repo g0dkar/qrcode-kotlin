@@ -21,7 +21,6 @@ actual open class QRCodeGraphics actual constructor(
     private lateinit var image: BufferedImage
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
-//    private var nextDrawPaint: Paint? = null
 
     protected open fun createImage(force: Boolean = false): BufferedImage {
         if (force || !this::image.isInitialized) {

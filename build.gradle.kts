@@ -29,6 +29,10 @@ plugins {
 
     // Docs Plugins
     alias(libs.plugins.dokka)
+
+    // Here because of the Android Examples
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 repositories {
@@ -41,7 +45,7 @@ val javaVersion = JavaVersion.VERSION_17
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
-    applyDefaultHierarchyTemplate()
+    //applyDefaultHierarchyTemplate()
 
     jvm {
         jvmToolchain(javaVersionNumber)
@@ -53,7 +57,8 @@ kotlin {
         }
     }
 
-    androidTarget {
+    android {
+//    androidTarget {
         jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
     }
@@ -69,7 +74,6 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
-//                output?.library = "qrcodeKotlin"
             }
 
             testTask {
@@ -77,7 +81,6 @@ kotlin {
             }
 
             binaries.library()
-//            binaries.executable()
             generateTypeScriptDefinitions()
         }
     }

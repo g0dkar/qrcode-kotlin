@@ -13,13 +13,13 @@ fun main() {
     val logoQRCode = QRCode.ofCircles()
         .withLogo(logoBytes, 150, 150) // <- See Here --- Default: Will hide cells behind logo
         .build("BOO!!! Happy Halloween!")
-    val logoQRCodePngData = logoQRCode.render()
+    val logoQRCodePngData = logoQRCode.renderToBytes()
 
     // Simply add a logo image
     val transparentQRCode = QRCode.ofCircles()
         .withLogo(logoBytes, 150, 150, clearLogoArea = false) // <- See Here --- Keep cells behind logo
         .build("BOO!!! Happy Halloween!")
-    val transparentQRCodePngData = transparentQRCode.render()
+    val transparentQRCodePngData = transparentQRCode.renderToBytes()
 
     // ---------------------------
     // JVM-only code (saves the PNG Bytes to a file)

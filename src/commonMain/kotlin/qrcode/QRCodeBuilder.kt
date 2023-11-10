@@ -250,8 +250,8 @@ class QRCodeBuilder @JvmOverloads constructor(
     /**
      * Builds a [QRCode] instance ready to use.
      *
+     * @see QRCode.renderToBytes
      * @see QRCode.render
-     * @see QRCode.renderToGraphics
      */
     fun build(data: String) =
         QRCode(
