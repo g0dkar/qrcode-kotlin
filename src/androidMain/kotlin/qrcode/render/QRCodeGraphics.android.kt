@@ -12,7 +12,6 @@ import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
-import android.util.Log
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import kotlin.math.roundToInt
@@ -122,13 +121,17 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        Log.i("graphics", "[drawLine] x1=$x1, y1=$y1, x2=$x2, y2=$y2, color=$color, thickness=$thickness")
-        canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color, STROKE, thickness))
+        canvas.drawLine(
+            x1.toFloat(),
+            y1.toFloat(),
+            x2.toFloat(),
+            y2.toFloat(),
+            paintFromCache(color, STROKE, thickness),
+        )
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        Log.i("graphics", "[drawRect] x=$x, y=$y, width=$width, height=$height, color=$color, thickness=$thickness")
         val halfThickness = (thickness / 2.0).roundToInt()
         val rect = Rect(x + halfThickness, y + halfThickness, x + width - halfThickness, y + height - halfThickness)
         canvas.drawRect(rect, paintFromCache(color, STROKE, thickness))
@@ -174,7 +177,6 @@ actual open class QRCodeGraphics actual constructor(
         color: Int,
         thickness: Double,
     ) {
-        Log.i("graphics", "[drawRoundRect] x=$x, y=$y, width=$width, height=$height, borderRadius=$borderRadius, color=$color, thickness=$thickness")
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -208,7 +210,6 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
-        Log.i("graphics", "[fillRoundRect] x=$x, y=$y, width=$width, height=$height, borderRadius=$borderRadius, color=$color")
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
@@ -224,7 +225,6 @@ actual open class QRCodeGraphics actual constructor(
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        Log.i("graphics", "[drawEllipse] x=$x, y=$y, width=$width, height=$height, color=$color, thickness=$thickness")
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),
@@ -239,7 +239,6 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        Log.i("graphics", "[fillEllipse] x=$x, y=$y, width=$width, height=$height, color=$color")
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),
