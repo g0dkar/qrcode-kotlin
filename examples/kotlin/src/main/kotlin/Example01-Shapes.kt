@@ -50,7 +50,7 @@ class TriangleShapeFunction(
     squareSize: Int = QRCodeProcessor.DEFAULT_CELL_SIZE,
     innerSpace: Int = 1,
 ) : DefaultShapeFunction(squareSize, innerSpace) {
-    override fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Long, canvas: QRCodeGraphics) {
+    override fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int, canvas: QRCodeGraphics) {
         val topCenterX = x + width / 2
         val topCenterY = y
         val bottomLeftX = x
@@ -74,7 +74,7 @@ class JVMTriangleShapeFunction(
     squareSize: Int = QRCodeProcessor.DEFAULT_CELL_SIZE,
     innerSpace: Int = 1,
 ) : DefaultShapeFunction(squareSize, innerSpace) {
-    override fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Long, canvas: QRCodeGraphics) {
+    override fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int, canvas: QRCodeGraphics) {
         val topCenterX = x + width / 2
         val topCenterY = y
         val bottomLeftX = x
