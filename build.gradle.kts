@@ -91,10 +91,12 @@ kotlin {
     if (currentPlatform.lowercase() == "mac os x") {
         iosX64()
         iosArm64()
+        iosSimulatorArm64()
 //    watchosX64() <- Still have to figure out how to do it for watchOS x_x
 //    watchosArm64()
-//        tvosX64() <- Issues on deployment, will fix and get it back later
-//        tvosArm64()
+        tvosX64()
+        tvosArm64()
+        tvosSimulatorArm64()
     }
     // iOS Family of targets... since you can't just "ios()" anymore.
 
@@ -121,7 +123,7 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
     }
 
     compileOptions {
