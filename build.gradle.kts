@@ -94,7 +94,6 @@ kotlin {
         iosSimulatorArm64()
 //    watchosX64() <- Still have to figure out how to do it for watchOS x_x
 //    watchosArm64()
-//    watchosSimulatorArm64()
         tvosX64()
         tvosArm64()
         tvosSimulatorArm64()
@@ -124,7 +123,7 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
     }
 
     compileOptions {

@@ -13,8 +13,8 @@ export declare namespace qrcode {
         get rawData(): Array<Array<qrcode.internals.QRCodeSquare>>;
         get computedSize(): number;
         get graphics(): qrcode.render.QRCodeGraphics;
-        renderToGraphics(qrCodeGraphics?: qrcode.render.QRCodeGraphics, xOffset?: number, yOffset?: number): qrcode.render.QRCodeGraphics;
-        render(format?: string): Int8Array;
+        render(qrCodeGraphics?: qrcode.render.QRCodeGraphics, xOffset?: number, yOffset?: number): qrcode.render.QRCodeGraphics;
+        renderToBytes(format?: string): Int8Array;
         reset(): void;
         static get Companion(): {
             get DEFAULT_SQUARE_SIZE(): number;
