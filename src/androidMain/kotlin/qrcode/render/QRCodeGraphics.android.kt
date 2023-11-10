@@ -12,36 +12,39 @@ import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
+import android.util.Log
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
+import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
-    val height: Int
+    val height: Int,
 ) {
     companion object {
-        val AVAILABLE_FORMATS: Array<String> = CompressFormat.entries.map { it.name }.toTypedArray()
+        val AVAILABLE_FORMATS: Array<String> = CompressFormat.values().map { it.name }.toTypedArray()
     }
 
     protected fun createCanvas(image: Bitmap) = Canvas(image)
 
     private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
     private var canvas: Canvas = createCanvas(image)
-    private val paintCache = HashMap<Int, Paint>()
+    private val paintCache = mutableMapOf<Int, Paint>()
     private var changed: Boolean = false
 
     /**
-     * Keeps a simple color cache. The default style is [STROKE]. Use [FILL] if you intend to fill an area of the image.
+     * Keeps a simple color cache. The default style is [FILL].
      */
-    protected fun paintFromCache(color: Int, paintStyle: Style = STROKE): Paint {
+    protected fun paintFromCache(color: Int, paintStyle: Style = FILL, thickness: Double = 1.0): Paint {
         changed = true
-        val paint = paintCache.computeIfAbsent(color) { Paint().apply { setColor(color) } }
-
-        return paint.apply {
+        return paintCache.getOrPut(color) {
+            Paint().apply { setColor(color) }
+        }.apply {
             if (style != paintStyle) {
                 style = paintStyle
             }
+            this.strokeWidth = thickness.toFloat()
         }
     }
 
@@ -119,17 +122,21 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color))
+        Log.i("graphics", "[drawLine] x1=$x1, y1=$y1, x2=$x2, y2=$y2, color=$color, thickness=$thickness")
+        canvas.drawLine(x1.toFloat(), y1.toFloat(), x2.toFloat(), y2.toFloat(), paintFromCache(color, STROKE, thickness))
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color))
+        Log.i("graphics", "[drawRect] x=$x, y=$y, width=$width, height=$height, color=$color, thickness=$thickness")
+        val halfThickness = (thickness / 2.0).roundToInt()
+        val rect = Rect(x + halfThickness, y + halfThickness, x + width - halfThickness, y + height - halfThickness)
+        canvas.drawRect(rect, paintFromCache(color, STROKE, thickness))
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawRect(Rect(x, y, width, height), paintFromCache(color, FILL))
+        canvas.drawRect(Rect(x, y, x + width, y + height), paintFromCache(color))
     }
 
     /** Fill the whole area of this canvas with the specified [color]. */
@@ -165,16 +172,17 @@ actual open class QRCodeGraphics actual constructor(
         height: Int,
         borderRadius: Int,
         color: Int,
-        thickness: Double
+        thickness: Double,
     ) {
+        Log.i("graphics", "[drawRoundRect] x=$x, y=$y, width=$width, height=$height, borderRadius=$borderRadius, color=$color, thickness=$thickness")
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
-            width.toFloat(),
-            height.toFloat(),
+            (x + width).toFloat(),
+            (y + height).toFloat(),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
-            paintFromCache(color)
+            paintFromCache(color, STROKE, thickness),
         )
     }
 
@@ -200,14 +208,15 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
+        Log.i("graphics", "[fillRoundRect] x=$x, y=$y, width=$width, height=$height, borderRadius=$borderRadius, color=$color")
         canvas.drawRoundRect(
             x.toFloat(),
             y.toFloat(),
-            width.toFloat(),
-            height.toFloat(),
+            (x + width).toFloat(),
+            (y + height).toFloat(),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
-            paintFromCache(color, FILL)
+            paintFromCache(color),
         )
     }
 
@@ -215,12 +224,13 @@ actual open class QRCodeGraphics actual constructor(
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
+        Log.i("graphics", "[drawEllipse] x=$x, y=$y, width=$width, height=$height, color=$color, thickness=$thickness")
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),
-            width.toFloat(),
-            height.toFloat(),
-            paintFromCache(color)
+            (x + width).toFloat(),
+            (y + height).toFloat(),
+            paintFromCache(color, STROKE, thickness),
         )
     }
 
@@ -229,12 +239,13 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
+        Log.i("graphics", "[fillEllipse] x=$x, y=$y, width=$width, height=$height, color=$color")
         canvas.drawOval(
             x.toFloat(),
             y.toFloat(),
-            width.toFloat(),
-            height.toFloat(),
-            paintFromCache(color, FILL)
+            (x + width).toFloat(),
+            (y + height).toFloat(),
+            paintFromCache(color),
         )
     }
 

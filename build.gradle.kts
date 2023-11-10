@@ -29,6 +29,10 @@ plugins {
 
     // Docs Plugins
     alias(libs.plugins.dokka)
+
+    // Here because of the Android Examples
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 repositories {
@@ -69,7 +73,6 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
-//                output?.library = "qrcodeKotlin"
             }
 
             testTask {
@@ -77,7 +80,6 @@ kotlin {
             }
 
             binaries.library()
-//            binaries.executable()
             generateTypeScriptDefinitions()
         }
     }

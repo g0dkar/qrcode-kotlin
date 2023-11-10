@@ -54,7 +54,7 @@ class QRCode @JvmOverloads constructor(
     val data: String,
     val squareSize: Int = DEFAULT_SQUARE_SIZE,
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
-    val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize),
+    val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize, innerSpace = 0),
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
     private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
     private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
@@ -146,21 +146,21 @@ class QRCode @JvmOverloads constructor(
 
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     @JvmOverloads
-    fun renderToGraphics(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0): QRCodeGraphics {
+    fun render(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0): QRCodeGraphics {
         colorFn.beforeRender(this, qrCodeGraphics)
         shapeFn.beforeRender(this, qrCodeGraphics)
         doBefore(qrCodeGraphics, xOffset, yOffset)
         return draw(xOffset, yOffset, rawData, qrCodeGraphics).also { doAfter(it, xOffset, yOffset) }
     }
 
-    /** Calls [renderToGraphics] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */
+    /** Calls [render] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */
     @JvmOverloads
-    fun render(format: String = "PNG"): ByteArray {
-        return renderToGraphics().getBytes(format)
+    fun renderToBytes(format: String = "PNG"): ByteArray {
+        return render().getBytes(format)
     }
 
     /**
-     * Completely resets the QRCode drawing. After this, you can call [render] or [renderToGraphics] to redraw the
+     * Completely resets the QRCode drawing. After this, you can call [renderToBytes] or [render] to redraw the
      * whole QRCode. Useful when you want, for example, a transparent background QRCode to add to a larger image and
      * then the same QRCode drawn on top of a custom background.
      */

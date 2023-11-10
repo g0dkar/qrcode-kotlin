@@ -14,19 +14,19 @@ public class Example03_SVG { // NOSONAR
         QRCode squareQRCode = QRCode.ofSquares()
                 .withGraphicsFactory(new SVGGraphicsFactory()) // <- See Here
                 .build("Hello, Squares!");
-        byte[] squarePngData = squareQRCode.render();
+        byte[] squarePngData = squareQRCode.renderToBytes();
 
         // Circles
         QRCode circleQRCode = QRCode.ofCircles()
                 .withGraphicsFactory(new SVGGraphicsFactory()) // <- See Here
                 .build("Hello, Circles!");
-        byte[] circlePngData = circleQRCode.render();
+        byte[] circlePngData = circleQRCode.renderToBytes();
 
         // Rounded Squares
         QRCode roundedSquareQRCode = QRCode.ofRoundedSquares()
                 .withGraphicsFactory(new SVGGraphicsFactory()) // <- See Here
                 .build("Hello, Rounded Squares!");
-        byte[] roundedSquarePngData = roundedSquareQRCode.render();
+        byte[] roundedSquarePngData = roundedSquareQRCode.renderToBytes();
 
         // -----------------------
         // JVM-only code (saves the SVG to a file)
