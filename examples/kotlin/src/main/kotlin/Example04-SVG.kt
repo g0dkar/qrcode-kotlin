@@ -12,19 +12,19 @@ fun main() {
     val squareQRCode = QRCode.ofSquares()
         .withGraphicsFactory(SVGGraphicsFactory()) // <- See Here --- Feel free to copy/paste and use these classes ^^
         .build("Hello, Squares! (you are reading an SVG!)")
-    val squarePngData = squareQRCode.render()
+    val squarePngData = squareQRCode.renderToBytes()
 
     // Circles
     val circleQRCode = QRCode.ofCircles()
         .withGraphicsFactory(SVGGraphicsFactory()) // <- See Here --- Feel free to copy/paste and use these classes ^^
         .build("Hello, Circles! (you are reading an SVG!)")
-    val circlePngData = circleQRCode.render()
+    val circlePngData = circleQRCode.renderToBytes()
 
     // Rounded Squares
     val roundedSquareQRCode = QRCode.ofRoundedSquares()
         .withGraphicsFactory(SVGGraphicsFactory()) // <- See Here --- Feel free to copy/paste and use these classes ^^
         .build("Hello, Rounded Squares! (you are reading an SVG!)")
-    val roundedSquarePngData = roundedSquareQRCode.render()
+    val roundedSquarePngData = roundedSquareQRCode.renderToBytes()
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)

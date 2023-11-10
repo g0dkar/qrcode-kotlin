@@ -14,29 +14,29 @@ public class Example01_Shapes { // NOSONAR
         // Squares (default)
         QRCode squareQRCode = QRCode.ofSquares() // <- See Here
                 .build("Hello, Squares!");
-        byte[] squarePngData = squareQRCode.render();
+        byte[] squarePngData = squareQRCode.renderToBytes();
 
         // Circles
         QRCode circleQRCode = QRCode.ofCircles() // <- See Here
                 .build("Hello, Circles!");
-        byte[] circlePngData = circleQRCode.render();
+        byte[] circlePngData = circleQRCode.renderToBytes();
 
         // Rounded Squares
         QRCode roundedSquareQRCode = QRCode.ofRoundedSquares() // <- See Here
                 .build("Hello, Rounded Squares!");
-        byte[] roundedSquarePngData = roundedSquareQRCode.render();
+        byte[] roundedSquarePngData = roundedSquareQRCode.renderToBytes();
 
         // Custom Shape
         // WARNING: For demonstration purposes only. My phone camera couldn't read it.
         QRCode customShapeQRCode = QRCode.ofCustomShape(new TriangleShapeFunction()) // <- See Here
                 .build("Hello, Triangles!");
-        byte[] customShapePngData = customShapeQRCode.render();
+        byte[] customShapePngData = customShapeQRCode.renderToBytes();
 
         // Custom Shape - JVM-specific implementation
         // WARNING: For demonstration purposes only. My phone camera couldn't read it.
         QRCode customShapeQRCodeJVM = QRCode.ofCustomShape(new JVMTriangleShapeFunction()) // <- See Here
                 .build("Hello, Triangles... from the JVM!");
-        byte[] customShapePngDataJVM = customShapeQRCodeJVM.render();
+        byte[] customShapePngDataJVM = customShapeQRCodeJVM.renderToBytes();
 
         // -----------------------
         // JVM-only code (saves the PNG Bytes to a file)

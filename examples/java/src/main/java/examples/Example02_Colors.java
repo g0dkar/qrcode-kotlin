@@ -14,27 +14,27 @@ public class Example02_Colors { // NOSONAR
         QRCode colorQRCode = QRCode.ofSquares()
                 .withColor(Colors.ORANGE) // <- See Here
                 .build("Orange");
-        byte[] colorPngData = colorQRCode.render();
+        byte[] colorPngData = colorQRCode.renderToBytes();
 
         // Circles
         QRCode darkModeQRCode = QRCode.ofSquares()
                 .withColor(Colors.css("#43454a"))           // <- See Here
                 .withBackgroundColor(Colors.css("#1e1f22")) // <- See Here
                 .build("Dark Mode QRCode");
-        byte[] darkModePngData = darkModeQRCode.render();
+        byte[] darkModePngData = darkModeQRCode.renderToBytes();
 
         // Rounded Squares
         QRCode gradientQRCode = QRCode.ofSquares()
                 .withGradientColor(Colors.BISQUE, Colors.BLUE) // <- See Here
                 .build("Weird gradient colors, but I think it's nice");
-        byte[] gradientPngData = gradientQRCode.render();
+        byte[] gradientPngData = gradientQRCode.renderToBytes();
 
         // Custom Shape
         // WARNING: For demonstration purposes only. My phone camera couldn't read it.
         QRCode transparentQRCode = QRCode.ofSquares()
                 .withBackgroundColor(Colors.TRANSPARENT)
                 .build("You can put this on top of pretty much anything :)");
-        byte[] transparentPngData = transparentQRCode.render();
+        byte[] transparentPngData = transparentQRCode.renderToBytes();
 
         // -----------------------
         // JVM-only code (saves the PNG Bytes to a file)

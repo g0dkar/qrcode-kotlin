@@ -29,6 +29,10 @@ plugins {
 
     // Docs Plugins
     alias(libs.plugins.dokka)
+
+    // Here because of the Android Examples
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 repositories {
@@ -59,8 +63,6 @@ kotlin {
     }
 
     js {
-        moduleName = "qrcodeKotlin"
-
         compilations.all {
             kotlinOptions {
                 main = "noCall"
@@ -71,7 +73,6 @@ kotlin {
             commonWebpackConfig {
                 mode = PRODUCTION
                 sourceMaps = true
-                output?.library = "qrcodeKotlin"
             }
 
             testTask {
@@ -79,7 +80,6 @@ kotlin {
             }
 
             binaries.library()
-//            binaries.executable()
             generateTypeScriptDefinitions()
         }
     }
@@ -94,7 +94,6 @@ kotlin {
         iosSimulatorArm64()
 //    watchosX64() <- Still have to figure out how to do it for watchOS x_x
 //    watchosArm64()
-//    watchosSimulatorArm64()
         tvosX64()
         tvosArm64()
         tvosSimulatorArm64()
@@ -124,7 +123,7 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 23
     }
 
     compileOptions {

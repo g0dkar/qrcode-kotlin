@@ -13,29 +13,29 @@ fun main() {
     // Squares (default)
     val squareQRCode = QRCode.ofSquares() // <- See Here
         .build("Hello, Squares!")
-    val squarePngData = squareQRCode.render()
+    val squarePngData = squareQRCode.renderToBytes()
 
     // Circles
     val circleQRCode = QRCode.ofCircles() // <- See Here
         .build("Hello, Circles!")
-    val circlePngData = circleQRCode.render()
+    val circlePngData = circleQRCode.renderToBytes()
 
     // Rounded Squares
     val roundedSquareQRCode = QRCode.ofRoundedSquares() // <- See Here
         .build("Hello, Rounded Squares!")
-    val roundedSquarePngData = roundedSquareQRCode.render()
+    val roundedSquarePngData = roundedSquareQRCode.renderToBytes()
 
     // Custom Shape
     // WARNING: For demonstration purposes only. My phone camera couldn't read it.
     val customShapeQRCode = QRCode.ofCustomShape(TriangleShapeFunction()) // <- See Here
         .build("Hello, Triangles!")
-    val customShapePngData = customShapeQRCode.render()
+    val customShapePngData = customShapeQRCode.renderToBytes()
 
     // Custom Shape - JVM-specific implementation
     // WARNING: For demonstration purposes only. My phone camera couldn't read it.
     val customShapeQRCodeJVM = QRCode.ofCustomShape(JVMTriangleShapeFunction()) // <- See Here
         .build("Hello, Triangles... from the JVM!")
-    val customShapePngDataJVM = customShapeQRCodeJVM.render()
+    val customShapePngDataJVM = customShapeQRCodeJVM.renderToBytes()
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
