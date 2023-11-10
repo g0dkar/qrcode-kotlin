@@ -1,18 +1,17 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Publish Distribution" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Build" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="" />
+      <option name="scriptParameters" value="-x :test" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
         <list>
           <option value=":clean" />
-          <option value=":publishToSonatype" />
-          <option value=":closeAndReleaseSonatypeStagingRepository" />
+          <option value=":build" />
         </list>
       </option>
       <option name="vmOptions" />

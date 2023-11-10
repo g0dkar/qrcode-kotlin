@@ -23,7 +23,7 @@ if (typeof Array.prototype.fill === 'undefined') {
       O[k] = value;
       k++;
     }
-    ; // Step 13.
+     // Step 13.
     return O;
   }});
 }
@@ -72,8 +72,8 @@ if (typeof Math.imul === 'undefined') {
   setMetadataFor(AbstractCollection, 'AbstractCollection', classMeta, VOID, [Collection]);
   setMetadataFor(AbstractMutableCollection, 'AbstractMutableCollection', classMeta, AbstractCollection, [AbstractCollection, Collection]);
   setMetadataFor(Set, 'Set', interfaceMeta, VOID, [Collection]);
-  setMetadataFor(AbstractMutableSet, 'AbstractMutableSet', classMeta, AbstractMutableCollection, [AbstractMutableCollection, Collection, Set]);
-  setMetadataFor(HashSet, 'HashSet', classMeta, AbstractMutableSet, [AbstractMutableSet, Collection, Set], HashSet_init_$Create$);
+  setMetadataFor(AbstractMutableSet, 'AbstractMutableSet', classMeta, AbstractMutableCollection, [AbstractMutableCollection, Set, Collection]);
+  setMetadataFor(HashSet, 'HashSet', classMeta, AbstractMutableSet, [AbstractMutableSet, Set, Collection], HashSet_init_$Create$);
   setMetadataFor(Companion, 'Companion', objectMeta);
   setMetadataFor(Itr, 'Itr', classMeta);
   setMetadataFor(KeysItr, 'KeysItr', classMeta, Itr);
@@ -118,7 +118,7 @@ if (typeof Math.imul === 'undefined') {
   }
   setMetadataFor(InternalMap, 'InternalMap', interfaceMeta);
   setMetadataFor(InternalHashMap, 'InternalHashMap', classMeta, VOID, [InternalMap], InternalHashMap_init_$Create$);
-  setMetadataFor(LinkedHashSet, 'LinkedHashSet', classMeta, HashSet, [HashSet, Collection, Set], LinkedHashSet_init_$Create$);
+  setMetadataFor(LinkedHashSet, 'LinkedHashSet', classMeta, HashSet, [HashSet, Set, Collection], LinkedHashSet_init_$Create$);
   setMetadataFor(KClass, 'KClass', interfaceMeta);
   setMetadataFor(KClassImpl, 'KClassImpl', classMeta, VOID, [KClass]);
   setMetadataFor(NothingKClassImpl, 'NothingKClassImpl', objectMeta, KClassImpl);
@@ -1684,7 +1684,7 @@ if (typeof Math.imul === 'undefined') {
       if (limit < 0 ? true : count <= limit) {
         appendElement(buffer, element, transform);
       } else
-        break $l$loop;
+        break;
     }
     if (limit >= 0 ? count > limit : false) {
       buffer.u3(truncated);
@@ -2102,7 +2102,7 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.js.jsIn' call
     if (!('kotlinHashCodeValue$' in obj)) {
       var hash = calculateRandomHash();
-      var descriptor = new Object();
+      var descriptor = {};
       descriptor.value = hash;
       descriptor.enumerable = false;
       Object.defineProperty(obj, 'kotlinHashCodeValue$', descriptor);
@@ -3765,7 +3765,7 @@ if (typeof Math.imul === 'undefined') {
     Companion_getInstance_8();
     squareSize = squareSize === VOID ? 25 : squareSize;
     colorFn = colorFn === VOID ? new DefaultColorFunction() : colorFn;
-    shapeFn = shapeFn === VOID ? new DefaultShapeFunction(squareSize) : shapeFn;
+    shapeFn = shapeFn === VOID ? new DefaultShapeFunction(squareSize, 0) : shapeFn;
     graphicsFactory = graphicsFactory === VOID ? new QRCodeGraphicsFactory() : graphicsFactory;
     doBefore = doBefore === VOID ? Companion_getInstance_8().i6_1 : doBefore;
     doAfter = doAfter === VOID ? Companion_getInstance_8().i6_1 : doAfter;
@@ -3822,20 +3822,20 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.also' call
     var this_0 = draw(this, xOffset, yOffset, this.rawData, qrCodeGraphics);
     // Inline function 'kotlin.contracts.contract' call
-    // Inline function 'qrcode.QRCode.renderToGraphics.<anonymous>' call
+    // Inline function 'qrcode.QRCode.render.<anonymous>' call
     this.m6_1(this, this_0, xOffset, yOffset);
     return this_0;
   };
-  protoOf(QRCode).renderToGraphics = function (qrCodeGraphics, xOffset, yOffset, $super) {
+  protoOf(QRCode).render = function (qrCodeGraphics, xOffset, yOffset, $super) {
     qrCodeGraphics = qrCodeGraphics === VOID ? this.graphics : qrCodeGraphics;
     xOffset = xOffset === VOID ? 0 : xOffset;
     yOffset = yOffset === VOID ? 0 : yOffset;
     return this.y6(qrCodeGraphics, xOffset, yOffset);
   };
   protoOf(QRCode).z6 = function (format) {
-    return this.renderToGraphics().getBytesForFormat(format);
+    return this.render().getBytesForFormat(format);
   };
-  protoOf(QRCode).render = function (format, $super) {
+  protoOf(QRCode).renderToBytes = function (format, $super) {
     format = format === VOID ? 'PNG' : format;
     return this.z6(format);
   };
@@ -5101,7 +5101,7 @@ if (typeof Math.imul === 'undefined') {
             var col = inductionVariable_0;
             inductionVariable_0 = inductionVariable_0 + 1 | 0;
             if (!isInsideModules(this, row, rowOffset, col, colOffset, modulesSize)) {
-              continue $l$loop;
+              continue;
             }
             var isDark = (isTopBottomRowSquare(this, row, col, probeSize) ? true : isLeftRightColSquare(this, row, col, probeSize)) ? true : isMidSquare(this, row, col, probeSize);
             var region = findSquareRegion(this, row, col, probeSize);
@@ -5137,7 +5137,7 @@ if (typeof Math.imul === 'undefined') {
             var row = pos[i];
             var col = pos[j];
             if (!(modules[row][col] == null)) {
-              continue $l$loop;
+              continue;
             }
             var tmp2_row = row - 1 | 0;
             var tmp3_col = col - 1 | 0;
@@ -5184,7 +5184,7 @@ if (typeof Math.imul === 'undefined') {
         var r = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
         if (!(modules[r][6] == null)) {
-          continue $l$loop;
+          continue;
         }
         var tmp = modules[r];
         var tmp5_dark = (r % 2 | 0) === 0;
@@ -5200,7 +5200,7 @@ if (typeof Math.imul === 'undefined') {
         var c = inductionVariable_0;
         inductionVariable_0 = inductionVariable_0 + 1 | 0;
         if (!(modules[6][c] == null)) {
-          continue $l$loop_0;
+          continue;
         }
         var tmp_0 = modules[6];
         var tmp9_dark = (c % 2 | 0) === 0;
@@ -5304,7 +5304,7 @@ if (typeof Math.imul === 'undefined') {
         if (row < 0 ? true : moduleCount <= row) {
           row = row - inc | 0;
           inc = -inc | 0;
-          break $l$loop;
+          break;
         }
       }
       col = col - 2 | 0;
@@ -7156,7 +7156,7 @@ if (typeof Math.imul === 'undefined') {
     $l$loop_0: while (buffer.lengthInBits < totalDataCount) {
       buffer.put(236, 8);
       if (buffer.lengthInBits >= totalDataCount) {
-        break $l$loop_0;
+        break;
       }
       buffer.put(17, 8);
     }
@@ -7948,4 +7948,4 @@ if (typeof Math.imul === 'undefined') {
   return _;
 }));
 
-//# sourceMappingURL=qrcodeKotlin.js.map
+//# sourceMappingURL=qrcode-kotlin.js.map
