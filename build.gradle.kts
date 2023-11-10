@@ -45,7 +45,7 @@ val javaVersion = JavaVersion.VERSION_17
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
-    //applyDefaultHierarchyTemplate()
+    applyDefaultHierarchyTemplate()
 
     jvm {
         jvmToolchain(javaVersionNumber)
@@ -57,8 +57,7 @@ kotlin {
         }
     }
 
-    android {
-//    androidTarget {
+    androidTarget {
         jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
     }
