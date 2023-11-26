@@ -62,6 +62,16 @@ kotlin {
         publishLibraryVariants("release")
     }
 
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "qrcode_kotlin"
+        }
+    }
+
     js {
         compilations.all {
             kotlinOptions {
