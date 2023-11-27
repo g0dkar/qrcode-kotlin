@@ -5,18 +5,24 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import platform.CoreGraphics.CGContextFillEllipseInRect
 import platform.CoreGraphics.CGContextFillPath
+import platform.CoreGraphics.CGContextSetLineWidth
 import platform.CoreGraphics.CGContextStrokeEllipseInRect
 import platform.CoreGraphics.CGContextStrokePath
 import platform.CoreGraphics.CGPathCreateWithRoundedRect
 import platform.CoreGraphics.CGPointMake
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
+import platform.Foundation.NSData
 import platform.Foundation.NSMutableData
 import platform.Foundation.appendBytes
 import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererContext
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageHEICRepresentation
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.UIKit.UIImagePNGRepresentation
+import platform.posix.memcpy
 import qrcode.color.Colors
 
 @OptIn(ExperimentalForeignApi::class)
@@ -251,10 +257,12 @@ actual open class QRCodeGraphics actual constructor(
  */
 @OptIn(ExperimentalForeignApi::class)
 private fun NSData.toByteArray(): ByteArray {
-    val result = ByteArray(length.toInt())
-    if (result.isEmpty()) return result
-    result.usePinned {
-        memcpy(it.addressOf(0), bytes, length)
+    val arrayLen = length.toInt().coerceAtLeast(0)
+    val result = ByteArray(arrayLen)
+
+    return ByteArray(arrayLen).apply {
+        if (arrayLen > 0) {
+            result.usePinned { memcpy(it.addressOf(0), bytes, length) }
+        }
     }
-    return result
 }
