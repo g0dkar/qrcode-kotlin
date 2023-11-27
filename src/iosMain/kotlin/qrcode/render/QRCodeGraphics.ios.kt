@@ -258,11 +258,10 @@ actual open class QRCodeGraphics actual constructor(
 @OptIn(ExperimentalForeignApi::class)
 private fun NSData.toByteArray(): ByteArray {
     val arrayLen = length.toInt().coerceAtLeast(0)
-    val result = ByteArray(arrayLen)
 
     return ByteArray(arrayLen).apply {
         if (arrayLen > 0) {
-            result.usePinned { memcpy(it.addressOf(0), bytes, length) }
+            this.usePinned { memcpy(it.addressOf(0), bytes, length) }
         }
     }
 }
