@@ -175,6 +175,8 @@ QR Code é marca registrada de Denso Wave, Inc.
 * [Renan Lukas](https://github.com/RenanLukas): Por sua amizade, paciência e ajuda com Android, Gradle e várias outras coisas mais durante o desenvolvimento das versões v2.0.0 e v3.0.0!
 * [Doomsdayrs](https://github.com/Doomsdayrs): Por apontar como a biblioteca podería melhorar se tornando um projeto KMP, entre outras contribuições.
 * Um incrível e peludo amigo por todo o suporte através dos anos :)
+* [ruicanas](https://github.com/ruicanas): Por não apenas apontar problemas com a implementação iOS, mas resolvê-los
+  também! Muito obrigado ^^
 
 ## Suporte e Links
 
