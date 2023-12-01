@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class QrCodeAppUITestsLaunchTests: XCTestCase {
+final class iosAppUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

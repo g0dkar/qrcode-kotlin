@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct QrCodeApp: App {
+struct iosApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

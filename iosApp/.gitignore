@@ -1,5 +1,27 @@
 # Xcode
 .DS_Store
 build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
 xcuserdata/
-*.xcworkspace/
+
+# Swift
+*.swiftpm
+
+# CocoaPods
+Pods/
+*.xcworkspace
+
+# Carthage
+Carthage/
+
+# macOS
+*.DS_Store
+
+# iOS
+*.ipa
+*.xcarchive
+*.xcuserstate
+DerivedData/
