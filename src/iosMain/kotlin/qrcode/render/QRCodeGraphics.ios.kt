@@ -5,18 +5,24 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import platform.CoreGraphics.CGContextFillEllipseInRect
 import platform.CoreGraphics.CGContextFillPath
+import platform.CoreGraphics.CGContextSetLineWidth
 import platform.CoreGraphics.CGContextStrokeEllipseInRect
 import platform.CoreGraphics.CGContextStrokePath
 import platform.CoreGraphics.CGPathCreateWithRoundedRect
 import platform.CoreGraphics.CGPointMake
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
+import platform.Foundation.NSData
 import platform.Foundation.NSMutableData
 import platform.Foundation.appendBytes
 import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererContext
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageHEICRepresentation
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.UIKit.UIImagePNGRepresentation
+import platform.posix.memcpy
 import qrcode.color.Colors
 
 @OptIn(ExperimentalForeignApi::class)
@@ -26,7 +32,7 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int,
 ) {
     companion object {
-        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG")
+        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG", "HEIC")
     }
 
     private var changed: Boolean = false
@@ -69,7 +75,14 @@ actual open class QRCodeGraphics actual constructor(
      * @see availableFormats
      */
     actual open fun getBytes(format: String): ByteArray =
-        ByteArray(0)
+        (nativeImage() as? UIImage)?.let { image ->
+            when (format) {
+                "HEIC" -> UIImageHEICRepresentation(image)
+                "JPEG" -> UIImageJPEGRepresentation(image, 1.0)
+                "PNG" -> UIImagePNGRepresentation(image)
+                else -> null
+            }?.toByteArray() ?: ByteArray(0)
+        } ?: ByteArray(0)
 
     /**
      * Returns the available formats to be passed as parameters to [getBytes].
@@ -105,6 +118,7 @@ actual open class QRCodeGraphics actual constructor(
         renderActions.add {
             colorOf(color).setStroke()
             val rect = CGRectMake(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+            CGContextSetLineWidth(it.CGContext, thickness)
             it.strokeRect(rect)
         }
     }
@@ -233,6 +247,21 @@ actual open class QRCodeGraphics actual constructor(
                     image.drawAtPoint(point)
                 }
             }
+        }
+    }
+}
+
+/**
+ * Converts an [NSData] object to a [ByteArray].
+ * This function is useful when working in Kotlin/Native where data may be represented as [ByteArray]
+ */
+@OptIn(ExperimentalForeignApi::class)
+private fun NSData.toByteArray(): ByteArray {
+    val arrayLen = length.toInt().coerceAtLeast(0)
+
+    return ByteArray(arrayLen).apply {
+        if (arrayLen > 0) {
+            this.usePinned { memcpy(it.addressOf(0), bytes, length) }
         }
     }
 }
