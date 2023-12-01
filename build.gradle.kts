@@ -69,6 +69,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "qrcode_kotlin"
+            isStatic = true
         }
     }
 
