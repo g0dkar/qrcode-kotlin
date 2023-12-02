@@ -12,7 +12,6 @@ import platform.CoreGraphics.CGPathCreateWithRoundedRect
 import platform.CoreGraphics.CGPointMake
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
-import platform.Foundation.NSData
 import platform.Foundation.NSMutableData
 import platform.Foundation.appendBytes
 import platform.UIKit.UIColor
@@ -22,8 +21,8 @@ import platform.UIKit.UIImage
 import platform.UIKit.UIImageHEICRepresentation
 import platform.UIKit.UIImageJPEGRepresentation
 import platform.UIKit.UIImagePNGRepresentation
-import platform.posix.memcpy
 import qrcode.color.Colors
+import utils.toByteArray
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("MemberVisibilityCanBePrivate")
@@ -247,21 +246,6 @@ actual open class QRCodeGraphics actual constructor(
                     image.drawAtPoint(point)
                 }
             }
-        }
-    }
-}
-
-/**
- * Converts an [NSData] object to a [ByteArray].
- * This function is useful when working in Kotlin/Native where data may be represented as [ByteArray]
- */
-@OptIn(ExperimentalForeignApi::class)
-private fun NSData.toByteArray(): ByteArray {
-    val arrayLen = length.toInt().coerceAtLeast(0)
-
-    return ByteArray(arrayLen).apply {
-        if (arrayLen > 0) {
-            this.usePinned { memcpy(it.addressOf(0), bytes, length) }
         }
     }
 }
