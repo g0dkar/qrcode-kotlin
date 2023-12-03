@@ -5,6 +5,7 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import platform.CoreGraphics.CGContextFillEllipseInRect
 import platform.CoreGraphics.CGContextFillPath
+import platform.CoreGraphics.CGContextSetLineWidth
 import platform.CoreGraphics.CGContextStrokeEllipseInRect
 import platform.CoreGraphics.CGContextStrokePath
 import platform.CoreGraphics.CGPathCreateWithRoundedRect
@@ -17,7 +18,11 @@ import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererContext
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageHEICRepresentation
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.UIKit.UIImagePNGRepresentation
 import qrcode.color.Colors
+import utils.toByteArray
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("MemberVisibilityCanBePrivate")
@@ -26,7 +31,7 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int,
 ) {
     companion object {
-        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG")
+        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG", "HEIC")
         private const val MAX_COLOR_VALUE = 255.0
     }
 
@@ -78,7 +83,14 @@ actual open class QRCodeGraphics actual constructor(
      * @see availableFormats
      */
     actual open fun getBytes(format: String): ByteArray =
-        ByteArray(0)
+        (nativeImage() as? UIImage)?.let { image ->
+            when (format) {
+                "HEIC" -> UIImageHEICRepresentation(image)
+                "JPEG" -> UIImageJPEGRepresentation(image, 1.0)
+                "PNG" -> UIImagePNGRepresentation(image)
+                else -> null
+            }?.toByteArray() ?: ByteArray(0)
+        } ?: ByteArray(0)
 
     /**
      * Returns the available formats to be passed as parameters to [getBytes].
@@ -114,6 +126,7 @@ actual open class QRCodeGraphics actual constructor(
         renderActions.add {
             colorOf(color).setStroke()
             val rect = CGRectMake(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+            CGContextSetLineWidth(it.CGContext, thickness)
             it.strokeRect(rect)
         }
     }
