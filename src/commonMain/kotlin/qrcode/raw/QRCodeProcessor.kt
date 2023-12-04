@@ -227,7 +227,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
                     graphics.fillRect(x, y, cellSize, cellSize, brightColor)
                 } else {
-                    graphics.fillRect(x, y, cellSize, cellSize, marginColor)
+                    graphics.fillRect(x, y, qrCodeGraphics.dimensions()[0], qrCodeGraphics.dimensions[1], marginColor)
                 }
             }
         }
