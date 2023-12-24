@@ -41,7 +41,7 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-val javaVersion = JavaVersion.VERSION_17
+val javaVersion = JavaVersion.VERSION_1_8
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
@@ -130,11 +130,11 @@ kotlin {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 32
+    compileSdk = 7
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 7
     }
 
     compileOptions {
