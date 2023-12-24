@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-//    implementation(project.rootProject)
     implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
