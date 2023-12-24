@@ -12,7 +12,6 @@ buildscript {
 plugins {
     // Dev Plugins
     id("idea")
-    alias(libs.plugins.spotless)
 
     // Base Plugins
     alias(libs.plugins.kotlin.multiplatform)
@@ -46,6 +45,10 @@ val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
     applyDefaultHierarchyTemplate()
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 
     jvm {
         jvmToolchain(javaVersionNumber)
@@ -214,33 +217,6 @@ val dokkaJar by tasks.creating(Jar::class) {
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
     from(tasks.dokkaHtml)
-}
-
-/* **************** */
-/* Lint             */
-/* **************** */
-spotless {
-    val spotlessFiles = properties["spotlessFiles"]?.toString()?.split(",")
-
-    isEnforceCheck = properties.getOrDefault("spotless.enforce", "false") == "true"
-
-    val ktlintVersion = libs.versions.ktlint.getOrElse("0.48.2")
-
-    kotlin {
-        val files = fileTree(project.projectDir) {
-            if (spotlessFiles.isNullOrEmpty()) {
-                include("**/*.kt")
-            } else {
-                include(spotlessFiles)
-            }
-
-            exclude("src/generated/**")
-        }
-
-        target(files)
-
-        ktlint(ktlintVersion)
-    }
 }
 
 /* **************** */
