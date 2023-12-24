@@ -36,7 +36,7 @@ that we can provide a better library/API for them. Please, feel free to share if
 
 <!-- TOC -->
 
-## Installation
+## 1. Installation
 
 The library is available
 from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.0/qrcode-kotlin)
@@ -46,15 +46,26 @@ other:
 **Gradle:**
 
 ```groovy
+// Use this for both Android and JVM
 implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
 ```
 
-**Maven:**
+**Maven - JVM:**
 
 ```xml
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-jvm</artifactId> <!-- or qrcode-kotlin-android -->
+    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <version>4.1.0</version>
+</dependency>
+```
+
+**Maven - Android:**
+
+```xml
+<dependency>
+    <groupId>io.github.g0dkar</groupId>
+    <artifactId>qrcode-kotlin-android</artifactId>
     <version>4.1.0</version>
 </dependency>
 ```
