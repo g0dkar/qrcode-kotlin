@@ -170,9 +170,9 @@ The main changes coming from `v3.3.0` are:
 3. A bunch of optimizations on how the QRCode is drawn. Previously, we'd had a canvas for each square, which would then
    be copied into the QRCode. This was changed to have just one large canvas where each square will be individually
    drawn directly.
-4. ![Experimental](https://img.shields.io/badge/Experimental-critical) iOS and tvOS Support: Starting from `v4.1.0` an
-   initial implementation of the `QRCodeGraphics` so that iOS and tvOS are now supported. **Any and
-   all [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) are very welcome!**
+4. iOS and tvOS Support: Starting from `v4.0.7` an initial implementation of the `QRCodeGraphics` so that iOS and tvOS
+   are now supported. **Any and all [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) are very welcome!** -
+   Thanks a lot to [ruicanas](https://github.com/ruicanas) for all his contributions to this feature :D
 
 ## License
 
