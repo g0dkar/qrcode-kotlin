@@ -42,15 +42,12 @@ actual open class QRCodeGraphics actual constructor(
     private val renderActions = mutableListOf<(UIGraphicsImageRendererContext) -> Unit>()
 
     private fun colorOf(color: Int): UIColor {
-
         /**
          * When creating a UIColor instance, RGBA color components are expected in the range 0.0 to 1.0.
          * To convert 8-bit values (0 to 255) to this range we must divide by 255.0.
          * Dividing by 255.0 ensures the color components are normalized appropriately.
          */
-        val (r, g, b, a) = Colors
-            .getRGBA(color)
-            .map { it/MAX_COLOR_VALUE }
+        val (r, g, b, a) = Colors.getRGBAPercentages(color)
 
         return UIColor(
             red = r,

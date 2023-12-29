@@ -12,6 +12,7 @@ import android.graphics.Paint.Style
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
+import android.graphics.RectF
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import kotlin.math.roundToInt
@@ -46,6 +47,9 @@ actual open class QRCodeGraphics actual constructor(
             this.strokeWidth = thickness.toFloat()
         }
     }
+
+    protected fun rect(x: Int, y: Int, w: Int, h: Int): RectF =
+        RectF(x.toFloat(), y.toFloat(), (x + w).toFloat(), (y + h).toFloat())
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
@@ -178,10 +182,7 @@ actual open class QRCodeGraphics actual constructor(
         thickness: Double,
     ) {
         canvas.drawRoundRect(
-            x.toFloat(),
-            y.toFloat(),
-            (x + width).toFloat(),
-            (y + height).toFloat(),
+            rect(x, y, width, height),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
             paintFromCache(color, STROKE, thickness),
@@ -211,10 +212,7 @@ actual open class QRCodeGraphics actual constructor(
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
         canvas.drawRoundRect(
-            x.toFloat(),
-            y.toFloat(),
-            (x + width).toFloat(),
-            (y + height).toFloat(),
+            rect(x, y, width, height),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
             paintFromCache(color),
@@ -226,10 +224,7 @@ actual open class QRCodeGraphics actual constructor(
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         canvas.drawOval(
-            x.toFloat(),
-            y.toFloat(),
-            (x + width).toFloat(),
-            (y + height).toFloat(),
+            rect(x, y, width, height),
             paintFromCache(color, STROKE, thickness),
         )
     }
@@ -240,10 +235,7 @@ actual open class QRCodeGraphics actual constructor(
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
         canvas.drawOval(
-            x.toFloat(),
-            y.toFloat(),
-            (x + width).toFloat(),
-            (y + height).toFloat(),
+            rect(x, y, width, height),
             paintFromCache(color),
         )
     }

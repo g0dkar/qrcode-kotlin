@@ -39,29 +39,40 @@ Por favor, sinta-se livre para compartilhar se e como você utiliza este projeto
 ## Instalação
 
 A biblioteca está disponível através
-da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.0.6/qrcode-kotlin) e
+da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.0/qrcode-kotlin) e
 do [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), portanto basta adicioná-la a seu projeto como qualquer outra:
 
 **Gradle:**
 
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin:4.0.6")
+// Use esse tanto para Android quanto para a JVM
+implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
 ```
 
-**Maven:**
+**Maven - JVM:**
 
 ```xml
 <dependency>
     <groupId>io.github.g0dkar</groupId>
-    <artifactId>qrcode-kotlin-jvm</artifactId> <!-- ou qrcode-kotlin-android -->
-    <version>4.0.6</version>
+    <artifactId>qrcode-kotlin-jvm</artifactId>
+    <version>4.1.0</version>
+</dependency>
+```
+
+**Maven - Android:**
+
+```xml
+<dependency>
+    <groupId>io.github.g0dkar</groupId>
+    <artifactId>qrcode-kotlin-android</artifactId>
+    <version>4.1.0</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.0.6
+npm install qrcode-kotlin@4.1.0
 ```
 
 **Browser:**
@@ -158,9 +169,11 @@ As principais mudanças vindo da versão `v3.3.0` são:
 3. Uma grande quantidade de otimizações em como o QRCode é desenhado. Anteriormente, tínhamos um canvas (ecrã) para cada
    quadrado, o qual era copiado no canvas do QRCode principal. Isto foi mudado para termos apenas um grande canvas onde
    cada quadrado individual será desenhado diretamente.
-4. ![Experimental](https://img.shields.io/badge/Experimental-critical) Suporte a iOS e tvOS: A partir da
-   versão `v4.0.6`, uma implementação experimental inicial da classe `QRCodeGraphics` foi criada para que o iOS e tvOS
-   sejam suportados. **Todo e qualquer [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) é muito bem-vindo!** (pode comentar em português mesmo)
+4. Suporte a iOS e tvOS: A partir da versão `v4.0.7`, uma implementação experimental inicial da classe `QRCodeGraphics`
+   foi criada para que o iOS e tvOS sejam suportados. **Todo e
+   qualquer [feedback](https://github.com/g0dkar/qrcode-kotlin/issues/85) é muito bem-vindo!** (pode comentar em
+   português mesmo) - Um imenso agradecimento a [ruicanas](https://github.com/ruicanas) por suas contribuições a essa
+   feature :D
 
 ## Licença
 

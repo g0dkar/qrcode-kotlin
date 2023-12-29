@@ -42,7 +42,17 @@ object Colors {
             (color shr 16) and 0xFF,
             (color shr 8) and 0xFF,
             (color shr 0) and 0xFF,
-            (color shr 24) and 0xFF
+            (color shr 24) and 0xFF,
+        )
+
+    /** Compute the R, G, B and Alpha components of a color. All values between `0..255`. */
+    @JvmStatic
+    fun getRGBAPercentages(color: Int, maxValue: Double = 255.0): DoubleArray =
+        doubleArrayOf(
+            ((color shr 16) and 0xFF) / maxValue,
+            ((color shr 8) and 0xFF) / maxValue,
+            ((color shr 0) and 0xFF) / maxValue,
+            ((color shr 24) and 0xFF) / maxValue,
         )
 
     /**

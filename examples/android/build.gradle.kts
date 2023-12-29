@@ -36,15 +36,14 @@ android {
 }
 
 dependencies {
-    implementation(project.rootProject) // <- On your project, use: implementation("io.github.g0dkar:qrcode-kotlin:4.0.4")
-
+    implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
-    implementation("androidx.annotation:annotation:1.7.0")
+    implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 }

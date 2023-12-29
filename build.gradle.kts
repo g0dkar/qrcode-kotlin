@@ -12,7 +12,6 @@ buildscript {
 plugins {
     // Dev Plugins
     id("idea")
-    alias(libs.plugins.spotless)
 
     // Base Plugins
     alias(libs.plugins.kotlin.multiplatform)
@@ -41,11 +40,15 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-val javaVersion = JavaVersion.VERSION_17
+val javaVersion = JavaVersion.VERSION_1_8
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
     applyDefaultHierarchyTemplate()
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
 
     jvm {
         jvmToolchain(javaVersionNumber)
@@ -130,11 +133,11 @@ kotlin {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 32
+    compileSdk = 7
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 7
     }
 
     compileOptions {
@@ -214,33 +217,6 @@ val dokkaJar by tasks.creating(Jar::class) {
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
     from(tasks.dokkaHtml)
-}
-
-/* **************** */
-/* Lint             */
-/* **************** */
-spotless {
-    val spotlessFiles = properties["spotlessFiles"]?.toString()?.split(",")
-
-    isEnforceCheck = properties.getOrDefault("spotless.enforce", "false") == "true"
-
-    val ktlintVersion = libs.versions.ktlint.getOrElse("0.48.2")
-
-    kotlin {
-        val files = fileTree(project.projectDir) {
-            if (spotlessFiles.isNullOrEmpty()) {
-                include("**/*.kt")
-            } else {
-                include(spotlessFiles)
-            }
-
-            exclude("src/generated/**")
-        }
-
-        target(files)
-
-        ktlint(ktlintVersion)
-    }
 }
 
 /* **************** */
