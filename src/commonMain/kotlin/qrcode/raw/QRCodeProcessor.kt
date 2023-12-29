@@ -281,7 +281,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 squareInfo = QRCodeSquareInfo.margin(),
             )
 
-            renderer(marginSquare.absoluteX(cellSize), marginSquare.absoluteY(cellSize), marginSquare, qrCodeGraphics)
+            renderer(marginSquare.absoluteX(margin), marginSquare.absoluteY(margin), marginSquare, qrCodeGraphics)
         }
 
         rawData.forEach { rowData ->
