@@ -166,8 +166,9 @@ tasks {
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js"))
-        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.d.ts"))
         into(layout.projectDirectory.dir("release"))
     }
 }
