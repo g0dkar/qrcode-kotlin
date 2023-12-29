@@ -154,6 +154,7 @@ $dokka.location:qrcode.color/Colors/YELLOW/#/PointingToDeclaration/qrcode-kotli
 $dokka.location:qrcode.color/Colors/YELLOW_GREEN/#/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/-y-e-l-l-o-w_-g-r-e-e-n.md
 $dokka.location:qrcode.color/Colors/css/#kotlin.String/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/css.md
 $dokka.location:qrcode.color/Colors/getRGBA/#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/get-r-g-b-a.md
+$dokka.location:qrcode.color/Colors/getRGBAPercentages/#kotlin.Int#kotlin.Double/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/get-r-g-b-a-percentages.md
 $dokka.location:qrcode.color/Colors/rgba/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/rgba.md
 $dokka.location:qrcode.color/Colors/withAlpha/#kotlin.Int#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode.color/-colors/with-alpha.md
 $dokka.location:qrcode.color/DefaultColorFunction///PointingToDeclaration/qrcode-kotlin/qrcode.color/-default-color-function/index.md
