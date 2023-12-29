@@ -73,6 +73,7 @@ export declare namespace qrcode.color {
         css(str: string): number;
         rgba(r: number, g: number, b: number, a?: number): number;
         getRGBA(color: number): Int32Array;
+        getRGBAPercentages(color: number, maxValue?: number): Float64Array;
         withAlpha(color: number, alpha: number): number;
         get TRANSPARENT(): number;
         get ALICE_BLUE(): number;

@@ -5,6 +5,7 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import platform.CoreGraphics.CGContextFillEllipseInRect
 import platform.CoreGraphics.CGContextFillPath
+import platform.CoreGraphics.CGContextSetLineWidth
 import platform.CoreGraphics.CGContextStrokeEllipseInRect
 import platform.CoreGraphics.CGContextStrokePath
 import platform.CoreGraphics.CGPathCreateWithRoundedRect
@@ -17,7 +18,11 @@ import platform.UIKit.UIColor
 import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererContext
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageHEICRepresentation
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.UIKit.UIImagePNGRepresentation
 import qrcode.color.Colors
+import utils.toByteArray
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("MemberVisibilityCanBePrivate")
@@ -26,7 +31,8 @@ actual open class QRCodeGraphics actual constructor(
     val height: Int,
 ) {
     companion object {
-        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG")
+        private val AVAILABLE_FORMATS = arrayOf("JPEG", "PNG", "HEIC")
+        private const val MAX_COLOR_VALUE = 255.0
     }
 
     private var changed: Boolean = false
@@ -36,13 +42,18 @@ actual open class QRCodeGraphics actual constructor(
     private val renderActions = mutableListOf<(UIGraphicsImageRendererContext) -> Unit>()
 
     private fun colorOf(color: Int): UIColor {
-        val (r, g, b, a) = Colors.getRGBA(color)
+        /**
+         * When creating a UIColor instance, RGBA color components are expected in the range 0.0 to 1.0.
+         * To convert 8-bit values (0 to 255) to this range we must divide by 255.0.
+         * Dividing by 255.0 ensures the color components are normalized appropriately.
+         */
+        val (r, g, b, a) = Colors.getRGBAPercentages(color)
 
         return UIColor(
-            red = r.toDouble(),
-            green = g.toDouble(),
-            blue = b.toDouble(),
-            alpha = a.toDouble(),
+            red = r,
+            green = g,
+            blue = b,
+            alpha = a,
         )
     }
 
@@ -69,7 +80,14 @@ actual open class QRCodeGraphics actual constructor(
      * @see availableFormats
      */
     actual open fun getBytes(format: String): ByteArray =
-        ByteArray(0)
+        (nativeImage() as? UIImage)?.let { image ->
+            when (format) {
+                "HEIC" -> UIImageHEICRepresentation(image)
+                "JPEG" -> UIImageJPEGRepresentation(image, 1.0)
+                "PNG" -> UIImagePNGRepresentation(image)
+                else -> null
+            }?.toByteArray() ?: ByteArray(0)
+        } ?: ByteArray(0)
 
     /**
      * Returns the available formats to be passed as parameters to [getBytes].
@@ -105,6 +123,7 @@ actual open class QRCodeGraphics actual constructor(
         renderActions.add {
             colorOf(color).setStroke()
             val rect = CGRectMake(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+            CGContextSetLineWidth(it.CGContext, thickness)
             it.strokeRect(rect)
         }
     }

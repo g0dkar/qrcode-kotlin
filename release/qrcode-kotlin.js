@@ -4340,454 +4340,462 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.intArrayOf' call
     return new Int32Array([color >> 16 & 255, color >> 8 & 255, color >> 0 & 255, color >> 24 & 255]);
   };
+  protoOf(Colors).v7 = function (color, maxValue) {
+    // Inline function 'kotlin.doubleArrayOf' call
+    return new Float64Array([(color >> 16 & 255) / maxValue, (color >> 8 & 255) / maxValue, (color >> 0 & 255) / maxValue, (color >> 24 & 255) / maxValue]);
+  };
+  protoOf(Colors).getRGBAPercentages = function (color, maxValue, $super) {
+    maxValue = maxValue === VOID ? 255.0 : maxValue;
+    return this.v7(color, maxValue);
+  };
   protoOf(Colors).withAlpha = function (color, alpha) {
     return (coerceIn(alpha, numberRangeToNumber(0, 255)) << 24) + (color & 16777215) | 0;
   };
-  protoOf(Colors).v7 = function () {
+  protoOf(Colors).w7 = function () {
     return this.TRANSPARENT;
   };
-  protoOf(Colors).w7 = function () {
+  protoOf(Colors).x7 = function () {
     return this.ALICE_BLUE;
   };
-  protoOf(Colors).x7 = function () {
+  protoOf(Colors).y7 = function () {
     return this.ANTIQUE_WHITE;
   };
-  protoOf(Colors).y7 = function () {
+  protoOf(Colors).z7 = function () {
     return this.AQUA;
   };
-  protoOf(Colors).z7 = function () {
+  protoOf(Colors).a8 = function () {
     return this.AQUAMARINE;
   };
-  protoOf(Colors).a8 = function () {
+  protoOf(Colors).b8 = function () {
     return this.AZURE;
   };
-  protoOf(Colors).b8 = function () {
+  protoOf(Colors).c8 = function () {
     return this.BEIGE;
   };
-  protoOf(Colors).c8 = function () {
+  protoOf(Colors).d8 = function () {
     return this.BISQUE;
   };
-  protoOf(Colors).d8 = function () {
+  protoOf(Colors).e8 = function () {
     return this.BLACK;
   };
-  protoOf(Colors).e8 = function () {
+  protoOf(Colors).f8 = function () {
     return this.BLANCHED_ALMOND;
   };
-  protoOf(Colors).f8 = function () {
+  protoOf(Colors).g8 = function () {
     return this.BLUE;
   };
-  protoOf(Colors).g8 = function () {
+  protoOf(Colors).h8 = function () {
     return this.BLUE_VIOLET;
   };
-  protoOf(Colors).h8 = function () {
+  protoOf(Colors).i8 = function () {
     return this.BROWN;
   };
-  protoOf(Colors).i8 = function () {
+  protoOf(Colors).j8 = function () {
     return this.BURLY_WOOD;
   };
-  protoOf(Colors).j8 = function () {
+  protoOf(Colors).k8 = function () {
     return this.CADET_BLUE;
   };
-  protoOf(Colors).k8 = function () {
+  protoOf(Colors).l8 = function () {
     return this.CHARTREUSE;
   };
-  protoOf(Colors).l8 = function () {
+  protoOf(Colors).m8 = function () {
     return this.CHOCOLATE;
   };
-  protoOf(Colors).m8 = function () {
+  protoOf(Colors).n8 = function () {
     return this.CORAL;
   };
-  protoOf(Colors).n8 = function () {
+  protoOf(Colors).o8 = function () {
     return this.CORNFLOWER_BLUE;
   };
-  protoOf(Colors).o8 = function () {
+  protoOf(Colors).p8 = function () {
     return this.CORNSILK;
   };
-  protoOf(Colors).p8 = function () {
+  protoOf(Colors).q8 = function () {
     return this.CRIMSON;
   };
-  protoOf(Colors).q8 = function () {
+  protoOf(Colors).r8 = function () {
     return this.CYAN;
   };
-  protoOf(Colors).r8 = function () {
+  protoOf(Colors).s8 = function () {
     return this.DARK_BLUE;
   };
-  protoOf(Colors).s8 = function () {
+  protoOf(Colors).t8 = function () {
     return this.DARK_CYAN;
   };
-  protoOf(Colors).t8 = function () {
+  protoOf(Colors).u8 = function () {
     return this.DARK_GOLDEN_ROD;
   };
-  protoOf(Colors).u8 = function () {
+  protoOf(Colors).v8 = function () {
     return this.DARK_GRAY;
   };
-  protoOf(Colors).v8 = function () {
+  protoOf(Colors).w8 = function () {
     return this.DARK_GREY;
   };
-  protoOf(Colors).w8 = function () {
+  protoOf(Colors).x8 = function () {
     return this.DARK_GREEN;
   };
-  protoOf(Colors).x8 = function () {
+  protoOf(Colors).y8 = function () {
     return this.DARK_KHAKI;
   };
-  protoOf(Colors).y8 = function () {
+  protoOf(Colors).z8 = function () {
     return this.DARK_MAGENTA;
   };
-  protoOf(Colors).z8 = function () {
+  protoOf(Colors).a9 = function () {
     return this.DARK_OLIVE_GREEN;
   };
-  protoOf(Colors).a9 = function () {
+  protoOf(Colors).b9 = function () {
     return this.DARK_ORANGE;
   };
-  protoOf(Colors).b9 = function () {
+  protoOf(Colors).c9 = function () {
     return this.DARK_ORCHID;
   };
-  protoOf(Colors).c9 = function () {
+  protoOf(Colors).d9 = function () {
     return this.DARK_RED;
   };
-  protoOf(Colors).d9 = function () {
+  protoOf(Colors).e9 = function () {
     return this.DARK_SALMON;
   };
-  protoOf(Colors).e9 = function () {
+  protoOf(Colors).f9 = function () {
     return this.DARK_SEA_GREEN;
   };
-  protoOf(Colors).f9 = function () {
+  protoOf(Colors).g9 = function () {
     return this.DARK_SLATE_BLUE;
   };
-  protoOf(Colors).g9 = function () {
+  protoOf(Colors).h9 = function () {
     return this.DARK_SLATE_GRAY;
   };
-  protoOf(Colors).h9 = function () {
+  protoOf(Colors).i9 = function () {
     return this.DARK_SLATE_GREY;
   };
-  protoOf(Colors).i9 = function () {
+  protoOf(Colors).j9 = function () {
     return this.DARK_TURQUOISE;
   };
-  protoOf(Colors).j9 = function () {
+  protoOf(Colors).k9 = function () {
     return this.DARK_VIOLET;
   };
-  protoOf(Colors).k9 = function () {
+  protoOf(Colors).l9 = function () {
     return this.DEEP_PINK;
   };
-  protoOf(Colors).l9 = function () {
+  protoOf(Colors).m9 = function () {
     return this.DEEP_SKY_BLUE;
   };
-  protoOf(Colors).m9 = function () {
+  protoOf(Colors).n9 = function () {
     return this.DIM_GRAY;
   };
-  protoOf(Colors).n9 = function () {
+  protoOf(Colors).o9 = function () {
     return this.DIM_GREY;
   };
-  protoOf(Colors).o9 = function () {
+  protoOf(Colors).p9 = function () {
     return this.DODGER_BLUE;
   };
-  protoOf(Colors).p9 = function () {
+  protoOf(Colors).q9 = function () {
     return this.FIRE_BRICK;
   };
-  protoOf(Colors).q9 = function () {
+  protoOf(Colors).r9 = function () {
     return this.FLORAL_WHITE;
   };
-  protoOf(Colors).r9 = function () {
+  protoOf(Colors).s9 = function () {
     return this.FOREST_GREEN;
   };
-  protoOf(Colors).s9 = function () {
+  protoOf(Colors).t9 = function () {
     return this.FUCHSIA;
   };
-  protoOf(Colors).t9 = function () {
+  protoOf(Colors).u9 = function () {
     return this.GAINSBORO;
   };
-  protoOf(Colors).u9 = function () {
+  protoOf(Colors).v9 = function () {
     return this.GHOST_WHITE;
   };
-  protoOf(Colors).v9 = function () {
+  protoOf(Colors).w9 = function () {
     return this.GOLD;
   };
-  protoOf(Colors).w9 = function () {
+  protoOf(Colors).x9 = function () {
     return this.GOLDEN_ROD;
   };
-  protoOf(Colors).x9 = function () {
+  protoOf(Colors).y9 = function () {
     return this.GRAY;
   };
-  protoOf(Colors).y9 = function () {
+  protoOf(Colors).z9 = function () {
     return this.GREY;
   };
-  protoOf(Colors).z9 = function () {
+  protoOf(Colors).aa = function () {
     return this.GREEN;
   };
-  protoOf(Colors).aa = function () {
+  protoOf(Colors).ba = function () {
     return this.GREEN_YELLOW;
   };
-  protoOf(Colors).ba = function () {
+  protoOf(Colors).ca = function () {
     return this.HONEY_DEW;
   };
-  protoOf(Colors).ca = function () {
+  protoOf(Colors).da = function () {
     return this.HOT_PINK;
   };
-  protoOf(Colors).da = function () {
+  protoOf(Colors).ea = function () {
     return this.INDIAN_RED;
   };
-  protoOf(Colors).ea = function () {
+  protoOf(Colors).fa = function () {
     return this.INDIGO;
   };
-  protoOf(Colors).fa = function () {
+  protoOf(Colors).ga = function () {
     return this.IVORY;
   };
-  protoOf(Colors).ga = function () {
+  protoOf(Colors).ha = function () {
     return this.KHAKI;
   };
-  protoOf(Colors).ha = function () {
+  protoOf(Colors).ia = function () {
     return this.LAVENDER;
   };
-  protoOf(Colors).ia = function () {
+  protoOf(Colors).ja = function () {
     return this.LAVENDER_BLUSH;
   };
-  protoOf(Colors).ja = function () {
+  protoOf(Colors).ka = function () {
     return this.LAWN_GREEN;
   };
-  protoOf(Colors).ka = function () {
+  protoOf(Colors).la = function () {
     return this.LEMON_CHIFFON;
   };
-  protoOf(Colors).la = function () {
+  protoOf(Colors).ma = function () {
     return this.LIGHT_BLUE;
   };
-  protoOf(Colors).ma = function () {
+  protoOf(Colors).na = function () {
     return this.LIGHT_CORAL;
   };
-  protoOf(Colors).na = function () {
+  protoOf(Colors).oa = function () {
     return this.LIGHT_CYAN;
   };
-  protoOf(Colors).oa = function () {
+  protoOf(Colors).pa = function () {
     return this.LIGHT_GOLDEN_ROD_YELLOW;
   };
-  protoOf(Colors).pa = function () {
+  protoOf(Colors).qa = function () {
     return this.LIGHT_GRAY;
   };
-  protoOf(Colors).qa = function () {
+  protoOf(Colors).ra = function () {
     return this.LIGHT_GREY;
   };
-  protoOf(Colors).ra = function () {
+  protoOf(Colors).sa = function () {
     return this.LIGHT_GREEN;
   };
-  protoOf(Colors).sa = function () {
+  protoOf(Colors).ta = function () {
     return this.LIGHT_PINK;
   };
-  protoOf(Colors).ta = function () {
+  protoOf(Colors).ua = function () {
     return this.LIGHT_SALMON;
   };
-  protoOf(Colors).ua = function () {
+  protoOf(Colors).va = function () {
     return this.LIGHT_SEA_GREEN;
   };
-  protoOf(Colors).va = function () {
+  protoOf(Colors).wa = function () {
     return this.LIGHT_SKY_BLUE;
   };
-  protoOf(Colors).wa = function () {
+  protoOf(Colors).xa = function () {
     return this.LIGHT_SLATE_GRAY;
   };
-  protoOf(Colors).xa = function () {
+  protoOf(Colors).ya = function () {
     return this.LIGHT_SLATE_GREY;
   };
-  protoOf(Colors).ya = function () {
+  protoOf(Colors).za = function () {
     return this.LIGHT_STEEL_BLUE;
   };
-  protoOf(Colors).za = function () {
+  protoOf(Colors).ab = function () {
     return this.LIGHT_YELLOW;
   };
-  protoOf(Colors).ab = function () {
+  protoOf(Colors).bb = function () {
     return this.LIME;
   };
-  protoOf(Colors).bb = function () {
+  protoOf(Colors).cb = function () {
     return this.LIME_GREEN;
   };
-  protoOf(Colors).cb = function () {
+  protoOf(Colors).db = function () {
     return this.LINEN;
   };
-  protoOf(Colors).db = function () {
+  protoOf(Colors).eb = function () {
     return this.MAGENTA;
   };
-  protoOf(Colors).eb = function () {
+  protoOf(Colors).fb = function () {
     return this.MAROON;
   };
-  protoOf(Colors).fb = function () {
+  protoOf(Colors).gb = function () {
     return this.MEDIUM_AQUA_MARINE;
   };
-  protoOf(Colors).gb = function () {
+  protoOf(Colors).hb = function () {
     return this.MEDIUM_BLUE;
   };
-  protoOf(Colors).hb = function () {
+  protoOf(Colors).ib = function () {
     return this.MEDIUM_ORCHID;
   };
-  protoOf(Colors).ib = function () {
+  protoOf(Colors).jb = function () {
     return this.MEDIUM_PURPLE;
   };
-  protoOf(Colors).jb = function () {
+  protoOf(Colors).kb = function () {
     return this.MEDIUM_SEA_GREEN;
   };
-  protoOf(Colors).kb = function () {
+  protoOf(Colors).lb = function () {
     return this.MEDIUM_SLATE_BLUE;
   };
-  protoOf(Colors).lb = function () {
+  protoOf(Colors).mb = function () {
     return this.MEDIUM_SPRING_GREEN;
   };
-  protoOf(Colors).mb = function () {
+  protoOf(Colors).nb = function () {
     return this.MEDIUM_TURQUOISE;
   };
-  protoOf(Colors).nb = function () {
+  protoOf(Colors).ob = function () {
     return this.MEDIUM_VIOLET_RED;
   };
-  protoOf(Colors).ob = function () {
+  protoOf(Colors).pb = function () {
     return this.MIDNIGHT_BLUE;
   };
-  protoOf(Colors).pb = function () {
+  protoOf(Colors).qb = function () {
     return this.MINT_CREAM;
   };
-  protoOf(Colors).qb = function () {
+  protoOf(Colors).rb = function () {
     return this.MISTY_ROSE;
   };
-  protoOf(Colors).rb = function () {
+  protoOf(Colors).sb = function () {
     return this.MOCCASIN;
   };
-  protoOf(Colors).sb = function () {
+  protoOf(Colors).tb = function () {
     return this.NAVAJO_WHITE;
   };
-  protoOf(Colors).tb = function () {
+  protoOf(Colors).ub = function () {
     return this.NAVY;
   };
-  protoOf(Colors).ub = function () {
+  protoOf(Colors).vb = function () {
     return this.OLD_LACE;
   };
-  protoOf(Colors).vb = function () {
+  protoOf(Colors).wb = function () {
     return this.OLIVE;
   };
-  protoOf(Colors).wb = function () {
+  protoOf(Colors).xb = function () {
     return this.OLIVE_DRAB;
   };
-  protoOf(Colors).xb = function () {
+  protoOf(Colors).yb = function () {
     return this.ORANGE;
   };
-  protoOf(Colors).yb = function () {
+  protoOf(Colors).zb = function () {
     return this.ORANGE_RED;
   };
-  protoOf(Colors).zb = function () {
+  protoOf(Colors).ac = function () {
     return this.ORCHID;
   };
-  protoOf(Colors).ac = function () {
+  protoOf(Colors).bc = function () {
     return this.PALE_GOLDEN_ROD;
   };
-  protoOf(Colors).bc = function () {
+  protoOf(Colors).cc = function () {
     return this.PALE_GREEN;
   };
-  protoOf(Colors).cc = function () {
+  protoOf(Colors).dc = function () {
     return this.PALE_TURQUOISE;
   };
-  protoOf(Colors).dc = function () {
+  protoOf(Colors).ec = function () {
     return this.PALE_VIOLET_RED;
   };
-  protoOf(Colors).ec = function () {
+  protoOf(Colors).fc = function () {
     return this.PAPAYA_WHIP;
   };
-  protoOf(Colors).fc = function () {
+  protoOf(Colors).gc = function () {
     return this.PEACH_PUFF;
   };
-  protoOf(Colors).gc = function () {
+  protoOf(Colors).hc = function () {
     return this.PERU;
   };
-  protoOf(Colors).hc = function () {
+  protoOf(Colors).ic = function () {
     return this.PINK;
   };
-  protoOf(Colors).ic = function () {
+  protoOf(Colors).jc = function () {
     return this.PLUM;
   };
-  protoOf(Colors).jc = function () {
+  protoOf(Colors).kc = function () {
     return this.POWDER_BLUE;
   };
-  protoOf(Colors).kc = function () {
+  protoOf(Colors).lc = function () {
     return this.PURPLE;
   };
-  protoOf(Colors).lc = function () {
+  protoOf(Colors).mc = function () {
     return this.REBECCA_PURPLE;
   };
-  protoOf(Colors).mc = function () {
+  protoOf(Colors).nc = function () {
     return this.RED;
   };
-  protoOf(Colors).nc = function () {
+  protoOf(Colors).oc = function () {
     return this.ROSY_BROWN;
   };
-  protoOf(Colors).oc = function () {
+  protoOf(Colors).pc = function () {
     return this.ROYAL_BLUE;
   };
-  protoOf(Colors).pc = function () {
+  protoOf(Colors).qc = function () {
     return this.SADDLE_BROWN;
   };
-  protoOf(Colors).qc = function () {
+  protoOf(Colors).rc = function () {
     return this.SALMON;
   };
-  protoOf(Colors).rc = function () {
+  protoOf(Colors).sc = function () {
     return this.SANDY_BROWN;
   };
-  protoOf(Colors).sc = function () {
+  protoOf(Colors).tc = function () {
     return this.SEA_GREEN;
   };
-  protoOf(Colors).tc = function () {
+  protoOf(Colors).uc = function () {
     return this.SEA_SHELL;
   };
-  protoOf(Colors).uc = function () {
+  protoOf(Colors).vc = function () {
     return this.SIENNA;
   };
-  protoOf(Colors).vc = function () {
+  protoOf(Colors).wc = function () {
     return this.SILVER;
   };
-  protoOf(Colors).wc = function () {
+  protoOf(Colors).xc = function () {
     return this.SKY_BLUE;
   };
-  protoOf(Colors).xc = function () {
+  protoOf(Colors).yc = function () {
     return this.SLATE_BLUE;
   };
-  protoOf(Colors).yc = function () {
+  protoOf(Colors).zc = function () {
     return this.SLATE_GRAY;
   };
-  protoOf(Colors).zc = function () {
+  protoOf(Colors).ad = function () {
     return this.SLATE_GREY;
   };
-  protoOf(Colors).ad = function () {
+  protoOf(Colors).bd = function () {
     return this.SNOW;
   };
-  protoOf(Colors).bd = function () {
+  protoOf(Colors).cd = function () {
     return this.SPRING_GREEN;
   };
-  protoOf(Colors).cd = function () {
+  protoOf(Colors).dd = function () {
     return this.STEEL_BLUE;
   };
-  protoOf(Colors).dd = function () {
+  protoOf(Colors).ed = function () {
     return this.TAN;
   };
-  protoOf(Colors).ed = function () {
+  protoOf(Colors).fd = function () {
     return this.TEAL;
   };
-  protoOf(Colors).fd = function () {
+  protoOf(Colors).gd = function () {
     return this.THISTLE;
   };
-  protoOf(Colors).gd = function () {
+  protoOf(Colors).hd = function () {
     return this.TOMATO;
   };
-  protoOf(Colors).hd = function () {
+  protoOf(Colors).id = function () {
     return this.TURQUOISE;
   };
-  protoOf(Colors).id = function () {
+  protoOf(Colors).jd = function () {
     return this.VIOLET;
   };
-  protoOf(Colors).jd = function () {
+  protoOf(Colors).kd = function () {
     return this.WHEAT;
   };
-  protoOf(Colors).kd = function () {
+  protoOf(Colors).ld = function () {
     return this.WHITE;
   };
-  protoOf(Colors).ld = function () {
+  protoOf(Colors).md = function () {
     return this.WHITE_SMOKE;
   };
-  protoOf(Colors).md = function () {
+  protoOf(Colors).nd = function () {
     return this.YELLOW;
   };
-  protoOf(Colors).nd = function () {
+  protoOf(Colors).od = function () {
     return this.YELLOW_GREEN;
   };
   var Colors_instance;
@@ -4809,17 +4817,17 @@ if (typeof Math.imul === 'undefined') {
       tmp_0 = background;
     }
     background = tmp_0;
-    this.od_1 = foreground;
-    this.pd_1 = background;
+    this.pd_1 = foreground;
+    this.qd_1 = background;
   }
   protoOf(DefaultColorFunction).fg = function (row, col, qrCode, qrCodeGraphics) {
-    return this.od_1;
+    return this.pd_1;
   };
   protoOf(DefaultColorFunction).bg = function (row, col, qrCode, qrCodeGraphics) {
-    return this.pd_1;
+    return this.qd_1;
   };
   protoOf(DefaultColorFunction).margin = function (row, col, qrCode, qrCodeGraphics) {
-    return this.pd_1;
+    return this.qd_1;
   };
   function LinearGradientColorFunction(startForegroundColor, endForegroundColor, backgroundColor, vertical) {
     var tmp;
@@ -4834,22 +4842,22 @@ if (typeof Math.imul === 'undefined') {
     this.endForegroundColor = endForegroundColor;
     this.backgroundColor = backgroundColor;
     this.vertical = vertical;
-    this.qd_1 = Colors_instance.getRGBA(this.startForegroundColor);
-    this.rd_1 = Colors_instance.getRGBA(this.endForegroundColor);
+    this.rd_1 = Colors_instance.getRGBA(this.startForegroundColor);
+    this.sd_1 = Colors_instance.getRGBA(this.endForegroundColor);
   }
-  protoOf(LinearGradientColorFunction).sd = function () {
+  protoOf(LinearGradientColorFunction).td = function () {
     return this.startForegroundColor;
   };
-  protoOf(LinearGradientColorFunction).td = function () {
+  protoOf(LinearGradientColorFunction).ud = function () {
     return this.endForegroundColor;
   };
-  protoOf(LinearGradientColorFunction).ud = function () {
+  protoOf(LinearGradientColorFunction).vd = function () {
     return this.backgroundColor;
   };
-  protoOf(LinearGradientColorFunction).vd = function (_set____db54di) {
+  protoOf(LinearGradientColorFunction).wd = function (_set____db54di) {
     this.vertical = _set____db54di;
   };
-  protoOf(LinearGradientColorFunction).wd = function () {
+  protoOf(LinearGradientColorFunction).xd = function () {
     return this.vertical;
   };
   protoOf(LinearGradientColorFunction).fg = function (row, col, qrCode, qrCodeGraphics) {
@@ -4860,9 +4868,9 @@ if (typeof Math.imul === 'undefined') {
       tmp = col;
     }
     var pct = tmp / qrCode.rawData.length;
-    var r = this.qd_1[0] * (1 - pct) + this.rd_1[0] * pct;
-    var g = this.qd_1[1] * (1 - pct) + this.rd_1[1] * pct;
-    var b = this.qd_1[2] * (1 - pct) + this.rd_1[2] * pct;
+    var r = this.rd_1[0] * (1 - pct) + this.sd_1[0] * pct;
+    var g = this.rd_1[1] * (1 - pct) + this.sd_1[1] * pct;
+    var b = this.rd_1[2] * (1 - pct) + this.sd_1[2] * pct;
     return Colors_instance.rgba(coerceIn(roundToInt(r), numberRangeToNumber(0, 255)), coerceIn(roundToInt(g), numberRangeToNumber(0, 255)), coerceIn(roundToInt(b), numberRangeToNumber(0, 255)), 255);
   };
   protoOf(LinearGradientColorFunction).bg = function (row, col, qrCode, qrCodeGraphics) {
@@ -4877,8 +4885,8 @@ if (typeof Math.imul === 'undefined') {
     return (($this.buffer[index / 8 | 0] >>> (7 - (index % 8 | 0) | 0) | 0) & 1) === 1;
   }
   function BitBuffer() {
-    this.xd_1 = 32;
-    this.buffer = new Int32Array(this.xd_1);
+    this.yd_1 = 32;
+    this.buffer = new Int32Array(this.yd_1);
     this.lengthInBits = 0;
   }
   protoOf(BitBuffer).put = function (num, length) {
@@ -4893,7 +4901,7 @@ if (typeof Math.imul === 'undefined') {
   };
   protoOf(BitBuffer).putBit = function (bit) {
     if (this.lengthInBits === imul(this.buffer.length, 8)) {
-      this.buffer = copyOf(this.buffer, this.buffer.length + this.xd_1 | 0);
+      this.buffer = copyOf(this.buffer, this.buffer.length + this.yd_1 | 0);
     }
     if (bit) {
       this.buffer[this.lengthInBits / 8 | 0] = this.buffer[this.lengthInBits / 8 | 0] | (128 >>> (this.lengthInBits % 8 | 0) | 0);
@@ -5063,30 +5071,30 @@ if (typeof Math.imul === 'undefined') {
     return set($this, row, col, value, modules, parent);
   }
   function QRCodeSetup() {
-    this.yd_1 = 7;
+    this.zd_1 = 7;
   }
-  protoOf(QRCodeSetup).zd = function (modules, probeSize) {
+  protoOf(QRCodeSetup).ae = function (modules, probeSize) {
     this.setupPositionProbePattern(0, 0, modules, probeSize);
   };
   protoOf(QRCodeSetup).setupTopLeftPositionProbePattern = function (modules, probeSize, $super) {
     probeSize = probeSize === VOID ? 7 : probeSize;
-    return this.zd(modules, probeSize);
+    return this.ae(modules, probeSize);
   };
-  protoOf(QRCodeSetup).ae = function (modules, probeSize) {
+  protoOf(QRCodeSetup).be = function (modules, probeSize) {
     this.setupPositionProbePattern(modules.length - probeSize | 0, 0, modules, probeSize);
   };
   protoOf(QRCodeSetup).setupTopRightPositionProbePattern = function (modules, probeSize, $super) {
     probeSize = probeSize === VOID ? 7 : probeSize;
-    return this.ae(modules, probeSize);
+    return this.be(modules, probeSize);
   };
-  protoOf(QRCodeSetup).be = function (modules, probeSize) {
+  protoOf(QRCodeSetup).ce = function (modules, probeSize) {
     this.setupPositionProbePattern(0, modules.length - probeSize | 0, modules, probeSize);
   };
   protoOf(QRCodeSetup).setupBottomLeftPositionProbePattern = function (modules, probeSize, $super) {
     probeSize = probeSize === VOID ? 7 : probeSize;
-    return this.be(modules, probeSize);
+    return this.ce(modules, probeSize);
   };
-  protoOf(QRCodeSetup).ce = function (rowOffset, colOffset, modules, probeSize) {
+  protoOf(QRCodeSetup).de = function (rowOffset, colOffset, modules, probeSize) {
     var modulesSize = modules.length;
     var tmp0_squareInfo = new QRCodeSquareInfo(QRCodeSquareType_POSITION_PROBE_getInstance(), QRCodeRegion_UNKNOWN_getInstance());
     var squareData = new QRCodeSquare(false, rowOffset, colOffset, modulesSize, tmp0_squareInfo, probeSize, probeSize);
@@ -5118,7 +5126,7 @@ if (typeof Math.imul === 'undefined') {
   };
   protoOf(QRCodeSetup).setupPositionProbePattern = function (rowOffset, colOffset, modules, probeSize, $super) {
     probeSize = probeSize === VOID ? 7 : probeSize;
-    return this.ce(rowOffset, colOffset, modules, probeSize);
+    return this.de(rowOffset, colOffset, modules, probeSize);
   };
   protoOf(QRCodeSetup).setupPositionAdjustPattern = function (type, modules) {
     var pos = QRUtil_getInstance().getPatternPosition(type);
@@ -5329,40 +5337,40 @@ if (typeof Math.imul === 'undefined') {
     this.parent = parent;
     this.rendered = false;
   }
-  protoOf(QRCodeSquare).fe = function (_set____db54di) {
+  protoOf(QRCodeSquare).ge = function (_set____db54di) {
     this.dark = _set____db54di;
   };
-  protoOf(QRCodeSquare).ge = function () {
+  protoOf(QRCodeSquare).he = function () {
     return this.dark;
   };
-  protoOf(QRCodeSquare).he = function () {
+  protoOf(QRCodeSquare).ie = function () {
     return this.row;
   };
-  protoOf(QRCodeSquare).ie = function () {
+  protoOf(QRCodeSquare).je = function () {
     return this.col;
   };
-  protoOf(QRCodeSquare).je = function () {
+  protoOf(QRCodeSquare).ke = function () {
     return this.moduleSize;
   };
-  protoOf(QRCodeSquare).ke = function () {
+  protoOf(QRCodeSquare).le = function () {
     return this.squareInfo;
   };
-  protoOf(QRCodeSquare).le = function () {
+  protoOf(QRCodeSquare).me = function () {
     return this.rowSize;
   };
-  protoOf(QRCodeSquare).me = function () {
+  protoOf(QRCodeSquare).ne = function () {
     return this.colSize;
   };
-  protoOf(QRCodeSquare).ne = function () {
+  protoOf(QRCodeSquare).oe = function () {
     return this.parent;
   };
-  protoOf(QRCodeSquare).oe = function (_set____db54di) {
+  protoOf(QRCodeSquare).pe = function (_set____db54di) {
     this.rendered = _set____db54di;
   };
-  protoOf(QRCodeSquare).pe = function () {
+  protoOf(QRCodeSquare).qe = function () {
     return this.rendered;
   };
-  protoOf(QRCodeSquare).qe = function (cellSize) {
+  protoOf(QRCodeSquare).re = function (cellSize) {
     return imul(this.col, cellSize);
   };
   protoOf(QRCodeSquare).absoluteX = function (cellSize, $super) {
@@ -5373,9 +5381,9 @@ if (typeof Math.imul === 'undefined') {
       tmp = cellSize;
     }
     cellSize = tmp;
-    return this.qe(cellSize);
+    return this.re(cellSize);
   };
-  protoOf(QRCodeSquare).re = function (cellSize) {
+  protoOf(QRCodeSquare).se = function (cellSize) {
     return imul(this.row, cellSize);
   };
   protoOf(QRCodeSquare).absoluteY = function (cellSize, $super) {
@@ -5386,7 +5394,7 @@ if (typeof Math.imul === 'undefined') {
       tmp = cellSize;
     }
     cellSize = tmp;
-    return this.re(cellSize);
+    return this.se(cellSize);
   };
   protoOf(QRCodeSquare).equals = function (other) {
     if (this === other)
@@ -5412,31 +5420,31 @@ if (typeof Math.imul === 'undefined') {
     result = imul(31, result) + this.colSize | 0;
     return result;
   };
-  protoOf(QRCodeSquare).se = function () {
+  protoOf(QRCodeSquare).te = function () {
     return this.dark;
   };
-  protoOf(QRCodeSquare).te = function () {
+  protoOf(QRCodeSquare).ue = function () {
     return this.row;
   };
-  protoOf(QRCodeSquare).ue = function () {
+  protoOf(QRCodeSquare).ve = function () {
     return this.col;
   };
-  protoOf(QRCodeSquare).ve = function () {
+  protoOf(QRCodeSquare).we = function () {
     return this.moduleSize;
   };
-  protoOf(QRCodeSquare).we = function () {
+  protoOf(QRCodeSquare).xe = function () {
     return this.squareInfo;
   };
-  protoOf(QRCodeSquare).xe = function () {
+  protoOf(QRCodeSquare).ye = function () {
     return this.rowSize;
   };
-  protoOf(QRCodeSquare).ye = function () {
+  protoOf(QRCodeSquare).ze = function () {
     return this.colSize;
   };
-  protoOf(QRCodeSquare).ze = function () {
+  protoOf(QRCodeSquare).af = function () {
     return this.parent;
   };
-  protoOf(QRCodeSquare).af = function (dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent) {
+  protoOf(QRCodeSquare).bf = function (dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent) {
     return new QRCodeSquare(dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent);
   };
   protoOf(QRCodeSquare).copy = function (dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent, $super) {
@@ -5448,14 +5456,14 @@ if (typeof Math.imul === 'undefined') {
     rowSize = rowSize === VOID ? this.rowSize : rowSize;
     colSize = colSize === VOID ? this.colSize : colSize;
     parent = parent === VOID ? this.parent : parent;
-    return this.af(dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent);
+    return this.bf(dark, row, col, moduleSize, squareInfo, rowSize, colSize, parent);
   };
   protoOf(QRCodeSquare).toString = function () {
     return 'QRCodeSquare(dark=' + this.dark + ', row=' + this.row + ', col=' + this.col + ', moduleSize=' + this.moduleSize + ', squareInfo=' + this.squareInfo + ', rowSize=' + this.rowSize + ', colSize=' + this.colSize + ', parent=' + this.parent + ')';
   };
   function Companion_9() {
   }
-  protoOf(Companion_9).bf = function () {
+  protoOf(Companion_9).cf = function () {
     return new QRCodeSquareInfo(QRCodeSquareType_MARGIN_getInstance(), QRCodeRegion_MARGIN_getInstance());
   };
   var Companion_instance_9;
@@ -5466,25 +5474,25 @@ if (typeof Math.imul === 'undefined') {
     this.type = type;
     this.region = region;
   }
-  protoOf(QRCodeSquareInfo).cf = function () {
-    return this.type;
-  };
   protoOf(QRCodeSquareInfo).df = function () {
-    return this.region;
-  };
-  protoOf(QRCodeSquareInfo).se = function () {
     return this.type;
+  };
+  protoOf(QRCodeSquareInfo).ef = function () {
+    return this.region;
   };
   protoOf(QRCodeSquareInfo).te = function () {
+    return this.type;
+  };
+  protoOf(QRCodeSquareInfo).ue = function () {
     return this.region;
   };
-  protoOf(QRCodeSquareInfo).ef = function (type, region) {
+  protoOf(QRCodeSquareInfo).ff = function (type, region) {
     return new QRCodeSquareInfo(type, region);
   };
   protoOf(QRCodeSquareInfo).copy = function (type, region, $super) {
     type = type === VOID ? this.type : type;
     region = region === VOID ? this.region : region;
-    return this.ef(type, region);
+    return this.ff(type, region);
   };
   protoOf(QRCodeSquareInfo).toString = function () {
     return 'QRCodeSquareInfo(type=' + this.type + ', region=' + this.region + ')';
@@ -5738,21 +5746,21 @@ if (typeof Math.imul === 'undefined') {
   };
   function QR8BitByte(data) {
     QRData.call(this, QRCodeDataType_DEFAULT_getInstance(), data);
-    this.jf_1 = encodeToByteArray(data);
+    this.kf_1 = encodeToByteArray(data);
   }
   protoOf(QR8BitByte).write = function (buffer) {
     var inductionVariable = 0;
-    var last = this.jf_1.length - 1 | 0;
+    var last = this.kf_1.length - 1 | 0;
     if (inductionVariable <= last)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        buffer.put(this.jf_1[i], 8);
+        buffer.put(this.kf_1[i], 8);
       }
        while (inductionVariable <= last);
   };
   protoOf(QR8BitByte).length = function () {
-    return this.jf_1.length;
+    return this.kf_1.length;
   };
   function charCode($this, c) {
     var tmp;
@@ -5848,14 +5856,14 @@ if (typeof Math.imul === 'undefined') {
   };
   function QRMath() {
     QRMath_instance = this;
-    this.kf_1 = new Int32Array(256);
     this.lf_1 = new Int32Array(256);
+    this.mf_1 = new Int32Array(256);
     var inductionVariable = 0;
     if (inductionVariable <= 7)
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + 1 | 0;
-        this.kf_1[i] = 1 << i;
+        this.lf_1[i] = 1 << i;
       }
        while (inductionVariable <= 7);
     var inductionVariable_0 = 8;
@@ -5863,7 +5871,7 @@ if (typeof Math.imul === 'undefined') {
       do {
         var i_0 = inductionVariable_0;
         inductionVariable_0 = inductionVariable_0 + 1 | 0;
-        this.kf_1[i_0] = this.kf_1[i_0 - 4 | 0] ^ this.kf_1[i_0 - 5 | 0] ^ this.kf_1[i_0 - 6 | 0] ^ this.kf_1[i_0 - 8 | 0];
+        this.lf_1[i_0] = this.lf_1[i_0 - 4 | 0] ^ this.lf_1[i_0 - 5 | 0] ^ this.lf_1[i_0 - 6 | 0] ^ this.lf_1[i_0 - 8 | 0];
       }
        while (inductionVariable_0 <= 255);
     var inductionVariable_1 = 0;
@@ -5871,12 +5879,12 @@ if (typeof Math.imul === 'undefined') {
       do {
         var i_1 = inductionVariable_1;
         inductionVariable_1 = inductionVariable_1 + 1 | 0;
-        this.lf_1[this.kf_1[i_1]] = i_1;
+        this.mf_1[this.lf_1[i_1]] = i_1;
       }
        while (inductionVariable_1 <= 254);
   }
   protoOf(QRMath).glog = function (n) {
-    return this.lf_1[n];
+    return this.mf_1[n];
   };
   protoOf(QRMath).gexp = function (n) {
     var i = n;
@@ -5886,7 +5894,7 @@ if (typeof Math.imul === 'undefined') {
     while (i >= 256) {
       i = i - 255 | 0;
     }
-    return this.kf_1[i];
+    return this.lf_1[i];
   };
   protoOf(QRMath).rectsIntersect = function (x1, y1, w1, h1, x2, y2, w2, h2) {
     var x1End = x1 + w1 | 0;
@@ -6003,7 +6011,7 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.intArrayOf' call
     // Inline function 'kotlin.js.unsafeCast' call
     // Inline function 'kotlin.js.asDynamic' call
-    tmp.mf_1 = [tmp_0, tmp_1, tmp_2, tmp_3, tmp_4, tmp_5, tmp_6, tmp_7, tmp_8, tmp_9, tmp_10, tmp_11, tmp_12, tmp_13, tmp_14, tmp_15, tmp_16, tmp_17, tmp_18, tmp_19, tmp_20, tmp_21, tmp_22, tmp_23, tmp_24, tmp_25, tmp_26, tmp_27, tmp_28, tmp_29, tmp_30, tmp_31, tmp_32, tmp_33, tmp_34, tmp_35, tmp_36, tmp_37, tmp_38, new Int32Array([6, 30, 58, 86, 114, 142, 170])];
+    tmp.nf_1 = [tmp_0, tmp_1, tmp_2, tmp_3, tmp_4, tmp_5, tmp_6, tmp_7, tmp_8, tmp_9, tmp_10, tmp_11, tmp_12, tmp_13, tmp_14, tmp_15, tmp_16, tmp_17, tmp_18, tmp_19, tmp_20, tmp_21, tmp_22, tmp_23, tmp_24, tmp_25, tmp_26, tmp_27, tmp_28, tmp_29, tmp_30, tmp_31, tmp_32, tmp_33, tmp_34, tmp_35, tmp_36, tmp_37, tmp_38, new Int32Array([6, 30, 58, 86, 114, 142, 170])];
     var tmp_39 = this;
     // Inline function 'kotlin.arrayOf' call
     // Inline function 'kotlin.arrayOf' call
@@ -6381,16 +6389,16 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.js.asDynamic' call
     // Inline function 'kotlin.js.unsafeCast' call
     // Inline function 'kotlin.js.asDynamic' call
-    tmp_39.nf_1 = [tmp_43, tmp_47, tmp_51, tmp_55, tmp_59, tmp_63, tmp_67, tmp_71, tmp_75, tmp_79, tmp_83, tmp_87, tmp_91, tmp_95, tmp_99, tmp_103, tmp_107, tmp_111, tmp_115, tmp_119, tmp_123, tmp_127, tmp_131, tmp_135, tmp_139, tmp_143, tmp_147, tmp_151, tmp_155, tmp_159, tmp_163, tmp_167, tmp_171, [tmp_172, tmp_173, tmp_174, new Int32Array([2301, 1394, 958, 590])]];
-    this.of_1 = 1335;
-    this.pf_1 = 7973;
-    this.qf_1 = 21522;
+    tmp_39.of_1 = [tmp_43, tmp_47, tmp_51, tmp_55, tmp_59, tmp_63, tmp_67, tmp_71, tmp_75, tmp_79, tmp_83, tmp_87, tmp_91, tmp_95, tmp_99, tmp_103, tmp_107, tmp_111, tmp_115, tmp_119, tmp_123, tmp_127, tmp_131, tmp_135, tmp_139, tmp_143, tmp_147, tmp_151, tmp_155, tmp_159, tmp_163, tmp_167, tmp_171, [tmp_172, tmp_173, tmp_174, new Int32Array([2301, 1394, 958, 590])]];
+    this.pf_1 = 1335;
+    this.qf_1 = 7973;
+    this.rf_1 = 21522;
   }
   protoOf(QRUtil).getPatternPosition = function (typeNumber) {
-    return this.mf_1[typeNumber - 1 | 0];
+    return this.nf_1[typeNumber - 1 | 0];
   };
   protoOf(QRUtil).getMaxLength = function (typeNumber, dataType, errorCorrectionLevel) {
-    return this.nf_1[typeNumber - 1 | 0][errorCorrectionLevel.d5_1][dataType.d5_1];
+    return this.of_1[typeNumber - 1 | 0][errorCorrectionLevel.d5_1][dataType.d5_1];
   };
   protoOf(QRUtil).getErrorCorrectPolynomial = function (errorCorrectLength) {
     // Inline function 'kotlin.intArrayOf' call
@@ -6802,13 +6810,13 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.intArrayOf' call
     // Inline function 'kotlin.js.unsafeCast' call
     // Inline function 'kotlin.js.asDynamic' call
-    tmp.rf_1 = [tmp_0, tmp_1, tmp_2, tmp_3, tmp_4, tmp_5, tmp_6, tmp_7, tmp_8, tmp_9, tmp_10, tmp_11, tmp_12, tmp_13, tmp_14, tmp_15, tmp_16, tmp_17, tmp_18, tmp_19, tmp_20, tmp_21, tmp_22, tmp_23, tmp_24, tmp_25, tmp_26, tmp_27, tmp_28, tmp_29, tmp_30, tmp_31, tmp_32, tmp_33, tmp_34, tmp_35, tmp_36, tmp_37, tmp_38, tmp_39, tmp_40, tmp_41, tmp_42, tmp_43, tmp_44, tmp_45, tmp_46, tmp_47, tmp_48, tmp_49, tmp_50, tmp_51, tmp_52, tmp_53, tmp_54, tmp_55, tmp_56, tmp_57, tmp_58, tmp_59, tmp_60, tmp_61, tmp_62, tmp_63, tmp_64, tmp_65, tmp_66, tmp_67, tmp_68, tmp_69, tmp_70, tmp_71, tmp_72, tmp_73, tmp_74, tmp_75, tmp_76, tmp_77, tmp_78, tmp_79, tmp_80, tmp_81, tmp_82, tmp_83, tmp_84, tmp_85, tmp_86, tmp_87, tmp_88, tmp_89, tmp_90, tmp_91, tmp_92, tmp_93, tmp_94, tmp_95, tmp_96, tmp_97, tmp_98, tmp_99, tmp_100, tmp_101, tmp_102, tmp_103, tmp_104, tmp_105, tmp_106, tmp_107, tmp_108, tmp_109, tmp_110, tmp_111, tmp_112, tmp_113, tmp_114, tmp_115, tmp_116, tmp_117, tmp_118, tmp_119, tmp_120, tmp_121, tmp_122, tmp_123, tmp_124, tmp_125, tmp_126, tmp_127, tmp_128, tmp_129, tmp_130, tmp_131, tmp_132, tmp_133, tmp_134, tmp_135, tmp_136, tmp_137, tmp_138, tmp_139, tmp_140, tmp_141, tmp_142, tmp_143, tmp_144, tmp_145, tmp_146, tmp_147, tmp_148, tmp_149, tmp_150, tmp_151, tmp_152, tmp_153, tmp_154, tmp_155, tmp_156, tmp_157, tmp_158, new Int32Array([20, 45, 15, 61, 46, 16])];
+    tmp.sf_1 = [tmp_0, tmp_1, tmp_2, tmp_3, tmp_4, tmp_5, tmp_6, tmp_7, tmp_8, tmp_9, tmp_10, tmp_11, tmp_12, tmp_13, tmp_14, tmp_15, tmp_16, tmp_17, tmp_18, tmp_19, tmp_20, tmp_21, tmp_22, tmp_23, tmp_24, tmp_25, tmp_26, tmp_27, tmp_28, tmp_29, tmp_30, tmp_31, tmp_32, tmp_33, tmp_34, tmp_35, tmp_36, tmp_37, tmp_38, tmp_39, tmp_40, tmp_41, tmp_42, tmp_43, tmp_44, tmp_45, tmp_46, tmp_47, tmp_48, tmp_49, tmp_50, tmp_51, tmp_52, tmp_53, tmp_54, tmp_55, tmp_56, tmp_57, tmp_58, tmp_59, tmp_60, tmp_61, tmp_62, tmp_63, tmp_64, tmp_65, tmp_66, tmp_67, tmp_68, tmp_69, tmp_70, tmp_71, tmp_72, tmp_73, tmp_74, tmp_75, tmp_76, tmp_77, tmp_78, tmp_79, tmp_80, tmp_81, tmp_82, tmp_83, tmp_84, tmp_85, tmp_86, tmp_87, tmp_88, tmp_89, tmp_90, tmp_91, tmp_92, tmp_93, tmp_94, tmp_95, tmp_96, tmp_97, tmp_98, tmp_99, tmp_100, tmp_101, tmp_102, tmp_103, tmp_104, tmp_105, tmp_106, tmp_107, tmp_108, tmp_109, tmp_110, tmp_111, tmp_112, tmp_113, tmp_114, tmp_115, tmp_116, tmp_117, tmp_118, tmp_119, tmp_120, tmp_121, tmp_122, tmp_123, tmp_124, tmp_125, tmp_126, tmp_127, tmp_128, tmp_129, tmp_130, tmp_131, tmp_132, tmp_133, tmp_134, tmp_135, tmp_136, tmp_137, tmp_138, tmp_139, tmp_140, tmp_141, tmp_142, tmp_143, tmp_144, tmp_145, tmp_146, tmp_147, tmp_148, tmp_149, tmp_150, tmp_151, tmp_152, tmp_153, tmp_154, tmp_155, tmp_156, tmp_157, tmp_158, new Int32Array([20, 45, 15, 61, 46, 16])];
   }
   protoOf(Companion_10).getRSBlocks = function (typeNumber, errorCorrectionLevel) {
     // Inline function 'kotlin.let' call
     // Inline function 'kotlin.contracts.contract' call
     // Inline function 'qrcode.internals.Companion.getRSBlocks.<anonymous>' call
-    var rsBlock = this.rf_1[imul(typeNumber - 1 | 0, 4) + errorCorrectionLevel.d5_1 | 0];
+    var rsBlock = this.sf_1[imul(typeNumber - 1 | 0, 4) + errorCorrectionLevel.d5_1 | 0];
     var tmp;
     if (rsBlock.length === 3) {
       var block = new RSBlock(rsBlock[1], rsBlock[2]);
@@ -6854,13 +6862,13 @@ if (typeof Math.imul === 'undefined') {
     this.totalCount = totalCount;
     this.dataCount = dataCount;
   }
-  protoOf(RSBlock).sf = function (totalCount, dataCount) {
+  protoOf(RSBlock).tf = function (totalCount, dataCount) {
     return new RSBlock(totalCount, dataCount);
   };
   protoOf(RSBlock).copy = function (totalCount, dataCount, $super) {
     totalCount = totalCount === VOID ? this.totalCount : totalCount;
     dataCount = dataCount === VOID ? this.dataCount : dataCount;
-    return this.sf(totalCount, dataCount);
+    return this.tf(totalCount, dataCount);
   };
   protoOf(RSBlock).toString = function () {
     return 'RSBlock(totalCount=' + this.totalCount + ', dataCount=' + this.dataCount + ')';
@@ -6923,7 +6931,7 @@ if (typeof Math.imul === 'undefined') {
   protoOf(ErrorCorrectionLevel).k2 = function () {
     return this.value;
   };
-  protoOf(ErrorCorrectionLevel).tf = function () {
+  protoOf(ErrorCorrectionLevel).uf = function () {
     return this.maxTypeNum;
   };
   var MaskPattern_PATTERN000_instance;
@@ -7077,16 +7085,16 @@ if (typeof Math.imul === 'undefined') {
   function Companion_11() {
     this.DEFAULT_CELL_SIZE = 25;
     this.DEFAULT_MARGIN = 0;
-    this.yf_1 = 236;
-    this.zf_1 = 17;
+    this.zf_1 = 236;
+    this.ag_1 = 17;
   }
-  protoOf(Companion_11).ag = function () {
+  protoOf(Companion_11).cg = function () {
     return this.DEFAULT_CELL_SIZE;
   };
-  protoOf(Companion_11).cg = function () {
+  protoOf(Companion_11).dg = function () {
     return this.DEFAULT_MARGIN;
   };
-  protoOf(Companion_11).dg = function (data, errorCorrectionLevel, dataType) {
+  protoOf(Companion_11).eg = function (data, errorCorrectionLevel, dataType) {
     var tmp;
     switch (dataType.d5_1) {
       case 0:
@@ -7119,18 +7127,18 @@ if (typeof Math.imul === 'undefined') {
   };
   protoOf(Companion_11).typeForDataAndECL = function (data, errorCorrectionLevel, dataType, $super) {
     dataType = dataType === VOID ? QRUtil_getInstance().getDataType(data) : dataType;
-    return this.dg(data, errorCorrectionLevel, dataType);
+    return this.eg(data, errorCorrectionLevel, dataType);
   };
   var Companion_instance_11;
   function Companion_getInstance_11() {
     return Companion_instance_11;
   }
   function createData($this, type) {
-    var rsBlocks = Companion_getInstance_10().getRSBlocks(type, $this.gg_1);
+    var rsBlocks = Companion_getInstance_10().getRSBlocks(type, $this.hg_1);
     var buffer = new BitBuffer();
-    buffer.put($this.ig_1.dataType.value, 4);
-    buffer.put($this.ig_1.length(), $this.ig_1.getLengthInBits(type));
-    $this.ig_1.write(buffer);
+    buffer.put($this.jg_1.dataType.value, 4);
+    buffer.put($this.jg_1.length(), $this.jg_1.getLengthInBits(type));
+    $this.jg_1.write(buffer);
     // Inline function 'kotlin.collections.sumOf' call
     var sum = 0;
     var inductionVariable = 0;
@@ -7269,22 +7277,22 @@ if (typeof Math.imul === 'undefined') {
        while (inductionVariable_2 < last_2);
     return data;
   }
-  function QRCodeProcessor$render$lambda($cellSize, $darkColor, $brightColor, $marginColor) {
+  function QRCodeProcessor$render$lambda($cellSize, $darkColor, $brightColor, $margin, $marginColor) {
     return function (x, y, cellData, graphics) {
       var tmp;
-      if (cellData.dark) {
-        graphics.fillRect(x, y, $cellSize, $cellSize, $darkColor);
-        tmp = Unit_instance;
-      } else {
+      if (!cellData.squareInfo.type.equals(QRCodeSquareType_MARGIN_getInstance())) {
         var tmp_0;
-        if (!cellData.squareInfo.type.equals(QRCodeSquareType_MARGIN_getInstance())) {
-          graphics.fillRect(x, y, $cellSize, $cellSize, $brightColor);
+        if (cellData.dark) {
+          graphics.fillRect(x, y, $cellSize, $cellSize, $darkColor);
           tmp_0 = Unit_instance;
         } else {
-          graphics.fillRect(x, y, $cellSize, $cellSize, $marginColor);
+          graphics.fillRect(x, y, $cellSize, $cellSize, $brightColor);
           tmp_0 = Unit_instance;
         }
         tmp = tmp_0;
+      } else {
+        graphics.fillRect(x, y, $margin, $margin, $marginColor);
+        tmp = Unit_instance;
       }
       return Unit_instance;
     };
@@ -7293,49 +7301,49 @@ if (typeof Math.imul === 'undefined') {
     errorCorrectionLevel = errorCorrectionLevel === VOID ? ErrorCorrectionLevel_M_getInstance() : errorCorrectionLevel;
     dataType = dataType === VOID ? QRUtil_getInstance().getDataType(data) : dataType;
     graphicsFactory = graphicsFactory === VOID ? new QRCodeGraphicsFactory() : graphicsFactory;
-    this.eg_1 = data;
-    this.gg_1 = errorCorrectionLevel;
-    this.hg_1 = dataType;
+    this.gg_1 = data;
+    this.hg_1 = errorCorrectionLevel;
+    this.ig_1 = dataType;
     this.graphicsFactory = graphicsFactory;
     var tmp = this;
     var tmp_0;
-    switch (this.hg_1.d5_1) {
+    switch (this.ig_1.d5_1) {
       case 0:
-        tmp_0 = new QRNumber(this.eg_1);
+        tmp_0 = new QRNumber(this.gg_1);
         break;
       case 1:
-        tmp_0 = new QRAlphaNum(this.eg_1);
+        tmp_0 = new QRAlphaNum(this.gg_1);
         break;
       case 2:
-        tmp_0 = new QR8BitByte(this.eg_1);
+        tmp_0 = new QR8BitByte(this.gg_1);
         break;
       default:
         noWhenBranchMatchedException();
         break;
     }
-    tmp.ig_1 = tmp_0;
+    tmp.jg_1 = tmp_0;
   }
   protoOf(QRCodeProcessor).s6 = function () {
     return this.graphicsFactory;
   };
-  protoOf(QRCodeProcessor).jg = function (cellSize, margin, rawData) {
+  protoOf(QRCodeProcessor).kg = function (cellSize, margin, rawData) {
     return this.computeImageSize(cellSize, margin, rawData.length);
   };
   protoOf(QRCodeProcessor).computeImageSizeFromRawData = function (cellSize, margin, rawData, $super) {
     cellSize = cellSize === VOID ? 25 : cellSize;
     margin = margin === VOID ? 0 : margin;
     rawData = rawData === VOID ? this.encode() : rawData;
-    return this.jg(cellSize, margin, rawData);
+    return this.kg(cellSize, margin, rawData);
   };
-  protoOf(QRCodeProcessor).kg = function (cellSize, margin, size) {
+  protoOf(QRCodeProcessor).lg = function (cellSize, margin, size) {
     return imul(size, cellSize) + imul(margin, 2) | 0;
   };
   protoOf(QRCodeProcessor).computeImageSize = function (cellSize, margin, size, $super) {
     cellSize = cellSize === VOID ? 25 : cellSize;
     margin = margin === VOID ? 0 : margin;
-    return this.kg(cellSize, margin, size);
+    return this.lg(cellSize, margin, size);
   };
-  protoOf(QRCodeProcessor).lg = function (cellSize, margin, brightColor, darkColor, marginColor) {
+  protoOf(QRCodeProcessor).mg = function (cellSize, margin, brightColor, darkColor, marginColor) {
     return this.renderComputed(cellSize, margin, this.encode(), VOID, brightColor, darkColor, marginColor);
   };
   protoOf(QRCodeProcessor).render = function (cellSize, margin, brightColor, darkColor, marginColor, $super) {
@@ -7362,10 +7370,10 @@ if (typeof Math.imul === 'undefined') {
       tmp_1 = marginColor;
     }
     marginColor = tmp_1;
-    return this.lg(cellSize, margin, brightColor, darkColor, marginColor);
+    return this.mg(cellSize, margin, brightColor, darkColor, marginColor);
   };
-  protoOf(QRCodeProcessor).mg = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
-    return this.renderShaded(cellSize, margin, rawData, qrCodeGraphics, QRCodeProcessor$render$lambda(cellSize, darkColor, brightColor, marginColor));
+  protoOf(QRCodeProcessor).ng = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor) {
+    return this.renderShaded(cellSize, margin, rawData, qrCodeGraphics, QRCodeProcessor$render$lambda(cellSize, darkColor, brightColor, margin, marginColor));
   };
   protoOf(QRCodeProcessor).renderComputed = function (cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor, $super) {
     cellSize = cellSize === VOID ? 25 : cellSize;
@@ -7393,12 +7401,12 @@ if (typeof Math.imul === 'undefined') {
       tmp_1 = marginColor;
     }
     marginColor = tmp_1;
-    return this.mg(cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor);
+    return this.ng(cellSize, margin, rawData, qrCodeGraphics, brightColor, darkColor, marginColor);
   };
-  protoOf(QRCodeProcessor).ng = function (cellSize, margin, rawData, qrCodeGraphics, renderer) {
+  protoOf(QRCodeProcessor).og = function (cellSize, margin, rawData, qrCodeGraphics, renderer) {
     if (margin > 0) {
-      var marginSquare = new QRCodeSquare(false, 0, 0, rawData.length, Companion_instance_9.bf());
-      renderer(marginSquare.absoluteX(cellSize), marginSquare.absoluteY(cellSize), marginSquare, qrCodeGraphics);
+      var marginSquare = new QRCodeSquare(false, 0, 0, rawData.length, Companion_instance_9.cf());
+      renderer(marginSquare.absoluteX(margin), marginSquare.absoluteY(margin), marginSquare, qrCodeGraphics);
     }
     // Inline function 'kotlin.collections.forEach' call
     var inductionVariable = 0;
@@ -7427,9 +7435,9 @@ if (typeof Math.imul === 'undefined') {
     margin = margin === VOID ? 0 : margin;
     rawData = rawData === VOID ? this.encode() : rawData;
     qrCodeGraphics = qrCodeGraphics === VOID ? this.graphicsFactory.newGraphicsSquare(this.computeImageSizeFromRawData(cellSize, margin, rawData)) : qrCodeGraphics;
-    return this.ng(cellSize, margin, rawData, qrCodeGraphics, renderer);
+    return this.og(cellSize, margin, rawData, qrCodeGraphics, renderer);
   };
-  protoOf(QRCodeProcessor).og = function (type, maskPattern) {
+  protoOf(QRCodeProcessor).pg = function (type, maskPattern) {
     var moduleCount = imul(type, 4) + 17 | 0;
     var tmp = 0;
     // Inline function 'kotlin.arrayOfNulls' call
@@ -7452,7 +7460,7 @@ if (typeof Math.imul === 'undefined') {
     QRCodeSetup_instance.setupBottomLeftPositionProbePattern(modules);
     QRCodeSetup_instance.setupPositionAdjustPattern(type, modules);
     QRCodeSetup_instance.setupTimingPattern(moduleCount, modules);
-    QRCodeSetup_instance.setupTypeInfo(this.gg_1, maskPattern, moduleCount, modules);
+    QRCodeSetup_instance.setupTypeInfo(this.hg_1, maskPattern, moduleCount, modules);
     if (type >= 7) {
       QRCodeSetup_instance.setupTypeNumber(type, moduleCount, modules);
     }
@@ -7478,12 +7486,12 @@ if (typeof Math.imul === 'undefined') {
     return tmp_5;
   };
   protoOf(QRCodeProcessor).encode = function (type, maskPattern, $super) {
-    type = type === VOID ? Companion_instance_11.typeForDataAndECL(this.eg_1, this.gg_1) : type;
+    type = type === VOID ? Companion_instance_11.typeForDataAndECL(this.gg_1, this.hg_1) : type;
     maskPattern = maskPattern === VOID ? MaskPattern_PATTERN000_getInstance() : maskPattern;
-    return this.og(type, maskPattern);
+    return this.pg(type, maskPattern);
   };
   protoOf(QRCodeProcessor).toString = function () {
-    return 'QRCode(data=' + this.eg_1 + (', errorCorrectionLevel=' + this.gg_1) + (', dataType=' + this.hg_1) + (', qrCodeData=' + getKClassFromExpression(this.ig_1).o2()) + ')';
+    return 'QRCode(data=' + this.gg_1 + (', errorCorrectionLevel=' + this.hg_1) + (', dataType=' + this.ig_1) + (', qrCodeData=' + getKClassFromExpression(this.jg_1).o2()) + ')';
   };
   function QRCodeGraphicsFactory() {
   }
@@ -7525,7 +7533,7 @@ if (typeof Math.imul === 'undefined') {
       do {
         var i = inductionVariable;
         inductionVariable = inductionVariable + step_0 | 0;
-        $this.fillRect((x + imul($this.squareSize, i) | 0) + $this.pg_1 | 0, y + $this.pg_1 | 0, $this.squareSize - imul($this.pg_1, 2) | 0, $this.squareSize - imul($this.pg_1, 2) | 0, color, canvas);
+        $this.fillRect((x + imul($this.squareSize, i) | 0) + $this.qg_1 | 0, y + $this.qg_1 | 0, $this.squareSize - imul($this.qg_1, 2) | 0, $this.squareSize - imul($this.qg_1, 2) | 0, color, canvas);
       }
        while (!(i === last));
   }
@@ -7539,7 +7547,7 @@ if (typeof Math.imul === 'undefined') {
     squareSize = tmp;
     innerSpace = innerSpace === VOID ? 1 : innerSpace;
     this.squareSize = squareSize;
-    this.pg_1 = coerceIn(innerSpace, numberRangeToNumber(0, this.squareSize / 2 | 0));
+    this.qg_1 = coerceIn(innerSpace, numberRangeToNumber(0, this.squareSize / 2 | 0));
   }
   protoOf(DefaultShapeFunction).o6 = function () {
     return this.squareSize;
@@ -7548,9 +7556,11 @@ if (typeof Math.imul === 'undefined') {
     var bg = colorFn.bg(square.row, square.col, qrCode, canvas);
     var fg = colorFn.fg(square.row, square.col, qrCode, canvas);
     if (square.squareInfo.type.equals(QRCodeSquareType_MARGIN_getInstance())) {
-      canvas.fill(bg);
-    } else if (square.dark) {
-      this.fillRect(x + this.pg_1 | 0, y + this.pg_1 | 0, this.squareSize - imul(this.pg_1, 2) | 0, this.squareSize - imul(this.pg_1, 2) | 0, fg, canvas);
+      var margin = colorFn.margin(square.row, square.col, qrCode, canvas);
+      canvas.fill(margin);
+    } else {
+      var color = square.dark ? fg : bg;
+      this.fillRect(x + this.qg_1 | 0, y + this.qg_1 | 0, this.squareSize - imul(this.qg_1, 2) | 0, this.squareSize - imul(this.qg_1, 2) | 0, color, canvas);
     }
   };
   protoOf(DefaultShapeFunction).renderControlSquare = function (xOffset, yOffset, colorFn, square, canvas, qrCode) {
@@ -7562,7 +7572,7 @@ if (typeof Math.imul === 'undefined') {
     if (square.squareInfo.type.d5_1 === 0) {
       var margin = colorFn.margin(square.row, square.col, qrCode, canvas);
       canvas.fillRect(startX, startY, size + imul(this.squareSize, 2) | 0, size + imul(this.squareSize, 2) | 0, margin);
-      this.drawRect((startX + this.squareSize | 0) + this.pg_1 | 0, (startY + this.squareSize | 0) + this.pg_1 | 0, size - imul(this.pg_1, 2) | 0, size - imul(this.pg_1, 2) | 0, fg, this.squareSize, canvas);
+      this.drawRect((startX + this.squareSize | 0) + this.qg_1 | 0, (startY + this.squareSize | 0) + this.qg_1 | 0, size - imul(this.qg_1, 2) | 0, size - imul(this.qg_1, 2) | 0, fg, this.squareSize, canvas);
       this.fillRect((startX + this.squareSize | 0) + imul(this.squareSize, 2) | 0, (startY + this.squareSize | 0) + imul(this.squareSize, 2) | 0, size - imul(this.squareSize, 4) | 0, size - imul(this.squareSize, 4) | 0, fg, canvas);
     } else {
       canvas.fillRect(startX, startY, size, size, bg);
@@ -7604,17 +7614,17 @@ if (typeof Math.imul === 'undefined') {
     radius = radius === VOID ? Companion_instance_13.defaultRadius(squareSize) : radius;
     innerSpace = innerSpace === VOID ? Companion_instance_13.defaultInnerSpace(squareSize) : innerSpace;
     DefaultShapeFunction.call(this, squareSize, innerSpace);
-    this.rg_1 = radius;
+    this.sg_1 = radius;
   }
   protoOf(RoundSquaresShapeFunction).fillRect = function (x, y, width, height, color, canvas) {
-    canvas.fillRoundRect(x, y, width, height, this.rg_1, color);
+    canvas.fillRoundRect(x, y, width, height, this.sg_1, color);
   };
   protoOf(RoundSquaresShapeFunction).drawRect = function (x, y, width, height, color, thickness, canvas) {
-    canvas.drawRoundRect(x, y, width, height, this.rg_1, color, thickness);
+    canvas.drawRoundRect(x, y, width, height, this.sg_1, color, thickness);
   };
   function Companion_14() {
-    this.sg_1 = 'Canvas seems to not be supported :(';
-    this.tg_1 = 6.283185307179586;
+    this.tg_1 = 'Canvas seems to not be supported :(';
+    this.ug_1 = 6.283185307179586;
   }
   var Companion_instance_14;
   function Companion_getInstance_14() {
@@ -7628,13 +7638,13 @@ if (typeof Math.imul === 'undefined') {
     return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
   }
   function draw_0($this, color, action) {
-    $this.wg_1 = true;
+    $this.xg_1 = true;
     var colorString = rgba($this, color);
-    $this.vg_1.fillStyle = colorString;
-    $this.vg_1.strokeStyle = colorString;
-    var lineWidth = $this.vg_1.lineWidth;
+    $this.wg_1.fillStyle = colorString;
+    $this.wg_1.strokeStyle = colorString;
+    var lineWidth = $this.wg_1.lineWidth;
     action();
-    $this.vg_1.lineWidth = lineWidth;
+    $this.wg_1.lineWidth = lineWidth;
   }
   function tryGet($this, what) {
     var tmp;
@@ -7663,21 +7673,21 @@ if (typeof Math.imul === 'undefined') {
   }
   function QRCodeGraphics$drawLine$lambda(this$0, $x1, $y1, $x2, $y2) {
     return function () {
-      this$0.vg_1.moveTo($x1, $y1);
-      this$0.vg_1.lineTo($x2, $y2);
+      this$0.wg_1.moveTo($x1, $y1);
+      this$0.wg_1.lineTo($x2, $y2);
       return Unit_instance;
     };
   }
   function QRCodeGraphics$drawRect$lambda(this$0, $thickness, $x, $y, $width, $height) {
     return function () {
-      this$0.vg_1.lineWidth = $thickness;
-      this$0.vg_1.strokeRect($x, $y, $width, $height);
+      this$0.wg_1.lineWidth = $thickness;
+      this$0.wg_1.strokeRect($x, $y, $width, $height);
       return Unit_instance;
     };
   }
   function QRCodeGraphics$fillRect$lambda(this$0, $x, $y, $width, $height) {
     return function () {
-      this$0.vg_1.fillRect($x, $y, $width, $height);
+      this$0.wg_1.fillRect($x, $y, $width, $height);
       return Unit_instance;
     };
   }
@@ -7685,10 +7695,10 @@ if (typeof Math.imul === 'undefined') {
     return function () {
       var radiusX = $width / 2.0;
       var radiusY = $height / 2.0;
-      this$0.vg_1.lineWidth = $thickness;
-      this$0.vg_1.beginPath();
-      this$0.vg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
-      this$0.vg_1.stroke();
+      this$0.wg_1.lineWidth = $thickness;
+      this$0.wg_1.beginPath();
+      this$0.wg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
+      this$0.wg_1.stroke();
       return Unit_instance;
     };
   }
@@ -7696,43 +7706,43 @@ if (typeof Math.imul === 'undefined') {
     return function () {
       var radiusX = $width / 2.0;
       var radiusY = $height / 2.0;
-      this$0.vg_1.beginPath();
-      this$0.vg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
-      this$0.vg_1.fill();
+      this$0.wg_1.beginPath();
+      this$0.wg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
+      this$0.wg_1.fill();
       return Unit_instance;
     };
   }
   function QRCodeGraphics$drawImage$lambda($rawData, this$0, $x, $y) {
     return function () {
       var imageData = new ImageData(new Uint8ClampedArray(toTypedArray($rawData)), this$0.width);
-      this$0.vg_1.putImageData(imageData, $x, $y);
+      this$0.wg_1.putImageData(imageData, $x, $y);
       return Unit_instance;
     };
   }
   function QRCodeGraphics(width, height) {
     this.width = width;
     this.height = height;
-    this.wg_1 = false;
+    this.xg_1 = false;
     var canvas = tryGet(this, QRCodeGraphics$lambda);
     canvas.width = this.width;
     canvas.height = this.height;
     var context = tryGet(this, QRCodeGraphics$lambda_0(canvas));
-    this.ug_1 = canvas;
-    this.vg_1 = context;
+    this.vg_1 = canvas;
+    this.wg_1 = context;
   }
-  protoOf(QRCodeGraphics).xg = function () {
+  protoOf(QRCodeGraphics).yg = function () {
     return this.width;
   };
-  protoOf(QRCodeGraphics).yg = function () {
+  protoOf(QRCodeGraphics).zg = function () {
     return this.height;
   };
   protoOf(QRCodeGraphics).changed = function () {
-    return this.wg_1;
+    return this.xg_1;
   };
   protoOf(QRCodeGraphics).reset = function () {
-    if (this.wg_1) {
-      this.wg_1 = false;
-      this.vg_1.clearRect(0.0, 0.0, this.width, this.height);
+    if (this.xg_1) {
+      this.xg_1 = false;
+      this.wg_1.clearRect(0.0, 0.0, this.width, this.height);
     }
   };
   protoOf(QRCodeGraphics).dimensions = function () {
@@ -7741,21 +7751,21 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.js.asDynamic' call
     return [this.width, this.height];
   };
-  protoOf(QRCodeGraphics).zg = function (format) {
-    return this.ug_1.toDataURL(format);
+  protoOf(QRCodeGraphics).ah = function (format) {
+    return this.vg_1.toDataURL(format);
   };
   protoOf(QRCodeGraphics).toDataURL = function (format, $super) {
     format = format === VOID ? 'png' : format;
-    return this.zg(format);
+    return this.ah(format);
   };
   protoOf(QRCodeGraphics).toBlob = function (callback) {
-    return this.ug_1.toBlob(callback);
+    return this.vg_1.toBlob(callback);
   };
   protoOf(QRCodeGraphics).getBytes = function () {
     return this.getBytesForFormat('png');
   };
   protoOf(QRCodeGraphics).getBytesForFormat = function (format) {
-    return encodeToByteArray(this.ug_1.toDataURL(format));
+    return encodeToByteArray(this.vg_1.toDataURL(format));
   };
   protoOf(QRCodeGraphics).availableFormats = function () {
     // Inline function 'kotlin.arrayOf' call
@@ -7764,7 +7774,7 @@ if (typeof Math.imul === 'undefined') {
     return ['png'];
   };
   protoOf(QRCodeGraphics).nativeImage = function () {
-    return this.ug_1;
+    return this.vg_1;
   };
   protoOf(QRCodeGraphics).drawLine = function (x1, y1, x2, y2, color, thickness) {
     draw_0(this, color, QRCodeGraphics$drawLine$lambda(this, x1, y1, x2, y2));

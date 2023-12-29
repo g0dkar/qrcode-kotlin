@@ -221,14 +221,14 @@ class QRCodeProcessor @JvmOverloads constructor(
             rawData,
             qrCodeGraphics,
         ) { x, y, cellData, graphics ->
-            if (cellData.dark) {
-                graphics.fillRect(x, y, cellSize, cellSize, darkColor)
-            } else {
-                if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
-                    graphics.fillRect(x, y, cellSize, cellSize, brightColor)
+            if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
+                if (cellData.dark) {
+                    graphics.fillRect(x, y, cellSize, cellSize, darkColor)
                 } else {
-                    graphics.fillRect(x, y, cellSize, cellSize, marginColor)
+                    graphics.fillRect(x, y, cellSize, cellSize, brightColor)
                 }
+            } else {
+                graphics.fillRect(x, y, margin, margin, marginColor)
             }
         }
 
@@ -281,7 +281,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 squareInfo = QRCodeSquareInfo.margin(),
             )
 
-            renderer(marginSquare.absoluteX(cellSize), marginSquare.absoluteY(cellSize), marginSquare, qrCodeGraphics)
+            renderer(marginSquare.absoluteX(margin), marginSquare.absoluteY(margin), marginSquare, qrCodeGraphics)
         }
 
         rawData.forEach { rowData ->

@@ -31,15 +31,17 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
 
         if (square.squareInfo.type == MARGIN) {
-            canvas.fill(bg)
-        }
-        else if (square.dark) {
+            val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
+            canvas.fill(margin)
+        } else {
+            val color = if (square.dark) fg else bg
+
             fillRect(
                 x + innerSpacing,
                 y + innerSpacing,
                 squareSize - innerSpacing * 2,
                 squareSize - innerSpacing * 2,
-                fg,
+                color,
                 canvas,
             )
         }

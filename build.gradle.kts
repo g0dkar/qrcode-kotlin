@@ -12,7 +12,6 @@ buildscript {
 plugins {
     // Dev Plugins
     id("idea")
-    alias(libs.plugins.spotless)
 
     // Base Plugins
     alias(libs.plugins.kotlin.multiplatform)
@@ -41,20 +40,18 @@ repositories {
 }
 
 group = "io.github.g0dkar"
-val javaVersion = JavaVersion.VERSION_17
+val javaVersion = JavaVersion.VERSION_1_8
 val javaVersionNumber = javaVersion.majorVersion.toInt()
 
 kotlin {
     applyDefaultHierarchyTemplate()
 
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     jvm {
         jvmToolchain(javaVersionNumber)
-
-        testRuns.named("test") {
-            executionTask.configure {
-                useJUnitPlatform()
-            }
-        }
     }
 
     androidTarget {
@@ -84,21 +81,25 @@ kotlin {
         }
     }
 
-    val currentPlatform = System.getProperty("os.name")
-
     // This is in place just because my main development machine is NOT a MacOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
+    val currentPlatform = System.getProperty("os.name")
     if (currentPlatform.lowercase() == "mac os x") {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-//    watchosX64() <- Still have to figure out how to do it for watchOS x_x
-//    watchosArm64()
-        tvosX64()
-        tvosArm64()
-        tvosSimulatorArm64()
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64(),
+//          watchosX64() <- Still have to figure out how to do it for watchOS x_x
+//          watchosArm64()
+            tvosX64(),
+            tvosArm64(),
+            tvosSimulatorArm64(),
+        ).forEach {
+            it.binaries.framework {
+                baseName = "qrcode_kotlin"
+                isStatic = true
+            }
+        }
     }
-    // iOS Family of targets... since you can't just "ios()" anymore.
 
     sourceSets {
         val commonTest by getting {
@@ -119,11 +120,11 @@ kotlin {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 32
+    compileSdk = 7
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 7
     }
 
     compileOptions {
@@ -138,6 +139,7 @@ android {
 tasks {
     named<Test>("jvmTest") {
         useJUnitPlatform()
+
         filter {
             isFailOnNoMatchingTests = false
         }
@@ -164,8 +166,9 @@ tasks {
         }
 
         from(layout.buildDirectory.file("libs/qrcode-kotlin-jvm-$version.jar"))
-        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js"))
-        from(layout.buildDirectory.file("dist/js/productionExecutable/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.js.map"))
+        from(layout.buildDirectory.file("dist/js/productionLibrary/qrcode-kotlin.d.ts"))
         into(layout.projectDirectory.dir("release"))
     }
 }
@@ -216,33 +219,6 @@ val dokkaJar by tasks.creating(Jar::class) {
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
     from(tasks.dokkaHtml)
-}
-
-/* **************** */
-/* Lint             */
-/* **************** */
-spotless {
-    val spotlessFiles = properties["spotlessFiles"]?.toString()?.split(",")
-
-    isEnforceCheck = properties.getOrDefault("spotless.enforce", "false") == "true"
-
-    val ktlintVersion = libs.versions.ktlint.getOrElse("0.48.2")
-
-    kotlin {
-        val files = fileTree(project.projectDir) {
-            if (spotlessFiles.isNullOrEmpty()) {
-                include("**/*.kt")
-            } else {
-                include(spotlessFiles)
-            }
-
-            exclude("src/generated/**")
-        }
-
-        target(files)
-
-        ktlint(ktlintVersion)
-    }
 }
 
 /* **************** */
