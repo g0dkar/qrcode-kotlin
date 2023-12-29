@@ -52,28 +52,11 @@ kotlin {
 
     jvm {
         jvmToolchain(javaVersionNumber)
-
-        testRuns.named("test") {
-            executionTask.configure {
-                useJUnitPlatform()
-            }
-        }
     }
 
     androidTarget {
         jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "qrcode_kotlin"
-            isStatic = true
-        }
     }
 
     js {
@@ -98,21 +81,25 @@ kotlin {
         }
     }
 
-    val currentPlatform = System.getProperty("os.name")
-
     // This is in place just because my main development machine is NOT a MacOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
+    val currentPlatform = System.getProperty("os.name")
     if (currentPlatform.lowercase() == "mac os x") {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-//    watchosX64() <- Still have to figure out how to do it for watchOS x_x
-//    watchosArm64()
-        tvosX64()
-        tvosArm64()
-        tvosSimulatorArm64()
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64(),
+//          watchosX64() <- Still have to figure out how to do it for watchOS x_x
+//          watchosArm64()
+            tvosX64(),
+            tvosArm64(),
+            tvosSimulatorArm64(),
+        ).forEach {
+            it.binaries.framework {
+                baseName = "qrcode_kotlin"
+                isStatic = true
+            }
+        }
     }
-    // iOS Family of targets... since you can't just "ios()" anymore.
 
     sourceSets {
         val commonTest by getting {
@@ -152,6 +139,7 @@ android {
 tasks {
     named<Test>("jvmTest") {
         useJUnitPlatform()
+
         filter {
             isFailOnNoMatchingTests = false
         }
