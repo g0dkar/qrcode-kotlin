@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <script src="qrcode-kotlin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@main/release/qrcode-kotlin.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -105,7 +105,7 @@
     </div>
 </div>
 <script>
-  const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
+  const qrcodeKotlin = window['io.github.g0dkar:qrcode-kotlin'].qrcode
   const qrcodeData = document.getElementById("qrcodeData")
   const timeEl = document.getElementById("generatedTime")
   const imgSizeEl = document.getElementById("imgSize")
@@ -113,11 +113,15 @@
   const sizeEl = document.getElementById("qrcodeCellSize")
   const downloadBtn = document.getElementById("downloadBtn")
 
-  const doRender = (data) => {
-    const size = sizeEl.value
+  const color = (arr) => arr[Math.round(Math.random() * arr.size)]
 
+  const doRender = (data) => {
+    const size = sizeEl.value * 1
     const start = Date.now()
-    const result = new QRCode(data).render(size)
+    const result = qrcodeKotlin.QRCode.Companion.ofSquares()
+        .withSize(size)
+        .build(data)
+        .render()
     const finish = Date.now()
 
     const dataURL = result.toDataURL()
