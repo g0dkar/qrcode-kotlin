@@ -7638,13 +7638,14 @@ if (typeof Math.imul === 'undefined') {
     return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
   }
   function draw_0($this, color, action) {
-    $this.xg_1 = true;
+    $this.wg_1 = true;
+    var context = tryGet($this, QRCodeGraphics$draw$lambda($this));
     var colorString = rgba($this, color);
-    $this.wg_1.fillStyle = colorString;
-    $this.wg_1.strokeStyle = colorString;
-    var lineWidth = $this.wg_1.lineWidth;
-    action();
-    $this.wg_1.lineWidth = lineWidth;
+    context.fillStyle = colorString;
+    context.strokeStyle = colorString;
+    var lineWidth = context.lineWidth;
+    action(context);
+    context.lineWidth = lineWidth;
   }
   function tryGet($this, what) {
     var tmp;
@@ -7665,84 +7666,89 @@ if (typeof Math.imul === 'undefined') {
     var tmp = document.createElement('canvas');
     return tmp instanceof HTMLCanvasElement ? tmp : THROW_CCE();
   }
-  function QRCodeGraphics$lambda_0($canvas) {
+  function QRCodeGraphics$draw$lambda(this$0) {
     return function () {
-      var tmp = $canvas.getContext('2d');
+      var tmp = this$0.vg_1.getContext('2d');
       return tmp instanceof CanvasRenderingContext2D ? tmp : THROW_CCE();
     };
   }
-  function QRCodeGraphics$drawLine$lambda(this$0, $x1, $y1, $x2, $y2) {
-    return function () {
-      this$0.wg_1.moveTo($x1, $y1);
-      this$0.wg_1.lineTo($x2, $y2);
+  function QRCodeGraphics$reset$lambda(this$0) {
+    return function ($this$draw) {
+      $this$draw.clearRect(0.0, 0.0, this$0.width, this$0.height);
       return Unit_instance;
     };
   }
-  function QRCodeGraphics$drawRect$lambda(this$0, $thickness, $x, $y, $width, $height) {
-    return function () {
-      this$0.wg_1.lineWidth = $thickness;
-      this$0.wg_1.strokeRect($x, $y, $width, $height);
+  function QRCodeGraphics$drawLine$lambda($x1, $y1, $x2, $y2) {
+    return function ($this$draw) {
+      $this$draw.moveTo($x1, $y1);
+      $this$draw.lineTo($x2, $y2);
       return Unit_instance;
     };
   }
-  function QRCodeGraphics$fillRect$lambda(this$0, $x, $y, $width, $height) {
-    return function () {
-      this$0.wg_1.fillRect($x, $y, $width, $height);
+  function QRCodeGraphics$drawRect$lambda($thickness, $x, $y, $width, $height) {
+    return function ($this$draw) {
+      $this$draw.lineWidth = $thickness;
+      var halfThickness = $thickness / 2.0;
+      $this$draw.strokeRect($x + halfThickness, $y + halfThickness, $width - $thickness, $height - $thickness);
       return Unit_instance;
     };
   }
-  function QRCodeGraphics$drawEllipse$lambda($width, $height, this$0, $thickness, $x, $y) {
-    return function () {
+  function QRCodeGraphics$fillRect$lambda($x, $y, $width, $height) {
+    return function ($this$draw) {
+      $this$draw.fillRect($x, $y, $width, $height);
+      return Unit_instance;
+    };
+  }
+  function QRCodeGraphics$drawEllipse$lambda($width, $height, $thickness, $x, $y) {
+    return function ($this$draw) {
       var radiusX = $width / 2.0;
       var radiusY = $height / 2.0;
-      this$0.wg_1.lineWidth = $thickness;
-      this$0.wg_1.beginPath();
-      this$0.wg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
-      this$0.wg_1.stroke();
+      $this$draw.lineWidth = $thickness;
+      $this$draw.beginPath();
+      $this$draw.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
+      $this$draw.stroke();
       return Unit_instance;
     };
   }
-  function QRCodeGraphics$fillEllipse$lambda($width, $height, this$0, $x, $y) {
-    return function () {
+  function QRCodeGraphics$fillEllipse$lambda($width, $height, $x, $y) {
+    return function ($this$draw) {
       var radiusX = $width / 2.0;
       var radiusY = $height / 2.0;
-      this$0.wg_1.beginPath();
-      this$0.wg_1.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
-      this$0.wg_1.fill();
+      $this$draw.beginPath();
+      $this$draw.ellipse(radiusX + $x, radiusY + $y, radiusX, radiusY, 0.0, 0.0, 6.283185307179586, false);
+      $this$draw.fill();
       return Unit_instance;
     };
   }
   function QRCodeGraphics$drawImage$lambda($rawData, this$0, $x, $y) {
-    return function () {
+    return function ($this$draw) {
       var imageData = new ImageData(new Uint8ClampedArray(toTypedArray($rawData)), this$0.width);
-      this$0.wg_1.putImageData(imageData, $x, $y);
+      $this$draw.putImageData(imageData, $x, $y);
       return Unit_instance;
     };
   }
   function QRCodeGraphics(width, height) {
     this.width = width;
     this.height = height;
-    this.xg_1 = false;
+    this.wg_1 = false;
     var canvas = tryGet(this, QRCodeGraphics$lambda);
     canvas.width = this.width;
     canvas.height = this.height;
-    var context = tryGet(this, QRCodeGraphics$lambda_0(canvas));
     this.vg_1 = canvas;
-    this.wg_1 = context;
   }
-  protoOf(QRCodeGraphics).yg = function () {
+  protoOf(QRCodeGraphics).xg = function () {
     return this.width;
   };
-  protoOf(QRCodeGraphics).zg = function () {
+  protoOf(QRCodeGraphics).yg = function () {
     return this.height;
   };
   protoOf(QRCodeGraphics).changed = function () {
-    return this.xg_1;
+    return this.wg_1;
   };
   protoOf(QRCodeGraphics).reset = function () {
-    if (this.xg_1) {
-      this.xg_1 = false;
-      this.wg_1.clearRect(0.0, 0.0, this.width, this.height);
+    if (this.wg_1) {
+      this.wg_1 = false;
+      draw_0(this, 0, QRCodeGraphics$reset$lambda(this));
     }
   };
   protoOf(QRCodeGraphics).dimensions = function () {
@@ -7751,12 +7757,12 @@ if (typeof Math.imul === 'undefined') {
     // Inline function 'kotlin.js.asDynamic' call
     return [this.width, this.height];
   };
-  protoOf(QRCodeGraphics).ah = function (format) {
+  protoOf(QRCodeGraphics).zg = function (format) {
     return this.vg_1.toDataURL(format);
   };
   protoOf(QRCodeGraphics).toDataURL = function (format, $super) {
     format = format === VOID ? 'png' : format;
-    return this.ah(format);
+    return this.zg(format);
   };
   protoOf(QRCodeGraphics).toBlob = function (callback) {
     return this.vg_1.toBlob(callback);
@@ -7777,13 +7783,13 @@ if (typeof Math.imul === 'undefined') {
     return this.vg_1;
   };
   protoOf(QRCodeGraphics).drawLine = function (x1, y1, x2, y2, color, thickness) {
-    draw_0(this, color, QRCodeGraphics$drawLine$lambda(this, x1, y1, x2, y2));
+    draw_0(this, color, QRCodeGraphics$drawLine$lambda(x1, y1, x2, y2));
   };
   protoOf(QRCodeGraphics).drawRect = function (x, y, width, height, color, thickness) {
-    draw_0(this, color, QRCodeGraphics$drawRect$lambda(this, thickness, x, y, width, height));
+    draw_0(this, color, QRCodeGraphics$drawRect$lambda(thickness, x, y, width, height));
   };
   protoOf(QRCodeGraphics).fillRect = function (x, y, width, height, color) {
-    draw_0(this, color, QRCodeGraphics$fillRect$lambda(this, x, y, width, height));
+    draw_0(this, color, QRCodeGraphics$fillRect$lambda(x, y, width, height));
   };
   protoOf(QRCodeGraphics).fill = function (color) {
     this.fillRect(0, 0, this.width, this.height, color);
@@ -7795,10 +7801,10 @@ if (typeof Math.imul === 'undefined') {
     this.fillRect(x, y, width, height, color);
   };
   protoOf(QRCodeGraphics).drawEllipse = function (x, y, width, height, color, thickness) {
-    draw_0(this, color, QRCodeGraphics$drawEllipse$lambda(width, height, this, thickness, x, y));
+    draw_0(this, color, QRCodeGraphics$drawEllipse$lambda(width, height, thickness, x, y));
   };
   protoOf(QRCodeGraphics).fillEllipse = function (x, y, width, height, color) {
-    draw_0(this, color, QRCodeGraphics$fillEllipse$lambda(width, height, this, x, y));
+    draw_0(this, color, QRCodeGraphics$fillEllipse$lambda(width, height, x, y));
   };
   protoOf(QRCodeGraphics).drawImageFromBytes = function (rawData, x, y) {
     var tmp;
