@@ -20,7 +20,6 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     private val canvas: HTMLCanvasElement
-    private val context: CanvasRenderingContext2D
     private var changed: Boolean = false
 
     init {
@@ -29,10 +28,7 @@ actual open class QRCodeGraphics actual constructor(
         canvas.width = width
         canvas.height = height
 
-        val context = tryGet { canvas.getContext("2d") as CanvasRenderingContext2D }
-
         this.canvas = canvas
-        this.context = context
     }
 
     private fun rgba(color: Int): String {
@@ -43,14 +39,18 @@ actual open class QRCodeGraphics actual constructor(
         return "rgba($r,$g,$b,$a)"
     }
 
-    private fun draw(color: Int, action: () -> Unit) {
+    private fun draw(color: Int, action: CanvasRenderingContext2D.() -> Unit) {
         changed = true
+
+        val context = tryGet { canvas.getContext("2d") as CanvasRenderingContext2D }
+
         val colorString = rgba(color)
         context.fillStyle = colorString
         context.strokeStyle = colorString
+
         val lineWidth = context.lineWidth
 
-        action()
+        action(context)
 
         context.lineWidth = lineWidth
     }
@@ -62,7 +62,7 @@ actual open class QRCodeGraphics actual constructor(
     actual fun reset() {
         if (changed) {
             changed = false
-            context.clearRect(0.0, 0.0, width.toDouble(), height.toDouble())
+            draw(0) { clearRect(0.0, 0.0, width.toDouble(), height.toDouble()) }
         }
     }
 
@@ -101,23 +101,24 @@ actual open class QRCodeGraphics actual constructor(
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
         draw(color) {
-            context.moveTo(x1.toDouble(), y1.toDouble())
-            context.lineTo(x2.toDouble(), y2.toDouble())
+            moveTo(x1.toDouble(), y1.toDouble())
+            lineTo(x2.toDouble(), y2.toDouble())
         }
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color) {
-            context.lineWidth = thickness
-            context.strokeRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+            lineWidth = thickness
+            val halfThickness = thickness / 2.0
+            strokeRect(x.toDouble() + halfThickness, y.toDouble() + halfThickness, width.toDouble() - thickness, height.toDouble() - thickness)
         }
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
         draw(color) {
-            context.fillRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+            fillRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
         }
     }
 
@@ -199,10 +200,10 @@ actual open class QRCodeGraphics actual constructor(
             val radiusX = width.toDouble() / 2.0
             val radiusY = height.toDouble() / 2.0
 
-            context.lineWidth = thickness
-            context.beginPath()
-            context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
-            context.stroke()
+            lineWidth = thickness
+            beginPath()
+            ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
+            stroke()
         }
     }
 
@@ -215,9 +216,9 @@ actual open class QRCodeGraphics actual constructor(
             val radiusX = width.toDouble() / 2.0
             val radiusY = height.toDouble() / 2.0
 
-            context.beginPath()
-            context.ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
-            context.fill()
+            beginPath()
+            ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
+            fill()
         }
     }
 
@@ -232,7 +233,7 @@ actual open class QRCodeGraphics actual constructor(
         if (rawData != null && rawData.isNotEmpty()) {
             draw(0) {
                 val imageData = ImageData(Uint8ClampedArray(rawData.toTypedArray()), width)
-                context.putImageData(imageData, x.toDouble(), y.toDouble())
+                putImageData(imageData, x.toDouble(), y.toDouble())
             }
         }
     }
