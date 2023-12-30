@@ -15,7 +15,7 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.7.0"
 constraintlayout = "2.1.4"
-navigation-fragment-ktx = "2.5.3"
+navigation-fragment-ktx = "2.7.6"
 navigation-ui-ktx = "2.5.3"
 
 [libraries]
