@@ -86,6 +86,7 @@ kotlin {
     val currentPlatform = System.getProperty("os.name")
     if (currentPlatform.lowercase() == "mac os x") {
         listOf(
+            iosX64(),
             iosArm64(),
             iosSimulatorArm64(),
 //          watchosX64() <- Still have to figure out how to do it for watchOS x_x
