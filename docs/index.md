@@ -47,14 +47,14 @@ that we can provide a better library/API for them. Please, feel free to share if
 ## Installation
 
 The library is available
-from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.0/qrcode-kotlin)
+from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.1/qrcode-kotlin)
 and [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), so you can add it to your project as a dependency like any
 other:
 
 **Gradle:**
 
 ```groovy
-implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
+implementation("io.github.g0dkar:qrcode-kotlin:4.1.1")
 ```
 
 **Maven:**
@@ -63,14 +63,14 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId> <!-- or qrcode-kotlin-android -->
-    <version>4.1.0</version>
+    <version>4.1.1</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.1.0
+npm install qrcode-kotlin@4.1.1
 ```
 
 **Browser:**

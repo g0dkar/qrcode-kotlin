@@ -7,16 +7,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-    <script src="https://cdn.jsdelivr.net/gh/g0dkar/qrcode-kotlin@main/release/qrcode-kotlin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-kotlin@4.1.1/qrcode-kotlin.min.js"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          fontFamily: {
-            display: ['Inter', 'system-ui', 'sans-serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      }
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    display: ['Inter', 'system-ui', 'sans-serif'],
+                    sans: ['Inter', 'system-ui', 'sans-serif'],
+                },
+            },
+        }
     </script>
 </head>
 <body class="bg-slate-500">
@@ -39,27 +39,43 @@
                     </div>
 
                     <div>
+                        <label for="qrcodeStyle" class="block text-sm font-medium text-gray-700">Style:</label>
+                        <div class="mt-1">
+                            <select id="qrcodeStyle" name="qrcodeStyle" class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <option value="sq">Squares</option>
+                                <option value="cr">Circles</option>
+                                <option value="rs">Rounded Squares</option>
+                            </select>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            The shape to use for each of the QRCode "Squares". Try them all out!
+                        </p>
+                    </div>
+
+                    <div>
                         <label for="qrcodeCellSize" class="block text-sm font-medium text-gray-700">Cell Size:</label>
                         <div class="mt-1">
                             <input type="number" min="5" max="250" id="qrcodeCellSize" name="qrcodeCellSize" value="25"
                                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                    placeholder="How big each square on the resulting QRCode will be"/>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">How big each square in the QRCode will be, in pixels. Default is 25. The
+                        <p class="mt-2 text-sm text-gray-500">How big each square in the QRCode will be, in pixels.
+                            Default is 25. The
                             bigger this is, the larger the resulting QRCode will be. <span class="text-indigo-600">Increasing this should not affect much how long it takes to generate the QRCode ;)</span>
                         </p>
                     </div>
                 </div>
+
                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <a id="downloadBtn" download="qrcode.png"
-                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                       class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="pr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  class="w-5 h-5">
                                 <path
-                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z"/>
+                                        d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z"/>
                                 <path
-                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/>
+                                        d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/>
                             </svg>
                         </span>
 
@@ -78,8 +94,7 @@
                         With the power of Kotlin! Know more about this
                         <a href="https://qrcodekotlin.com"
                            class="text-indigo-600 hover:text-indigo-900 after:content-['_↗']" target="_blank">
-                            <span
-                                class="underline decoration-indigo-600 decoration-2">here</span>
+                            <span class="underline decoration-indigo-600 decoration-2">here</span>
                         </a>
                         :)</p>
 
@@ -96,8 +111,10 @@
                     <div class="text-sm text-gray-600">
                         <p>Image size: <span id="imgSize">...</span></p>
                         <p>Generated in: <span id="generatedTime">...</span></p>
-                        <p class="pt-1 text-xs"><span class="italic">Tip: Right-click the QRCode above and "Save Image As..."</span>
-                            😉</p>
+                        <p class="pt-1 text-xs">
+                            <span class="italic">Tip: Right-click the QRCode above and "Save Image As..."</span>
+                            😉
+                        </p>
                     </div>
                 </div>
             </div>
@@ -105,52 +122,73 @@
     </div>
 </div>
 <script>
-    /*
-  const QRCode = window['qrcode-kotlin'].io.github.g0dkar.qrcode.QRCode
-  const qrcodeData = document.getElementById("qrcodeData")
-  const timeEl = document.getElementById("generatedTime")
-  const imgSizeEl = document.getElementById("imgSize")
-  const imgEl = document.getElementById("qrcodeResult")
-  const sizeEl = document.getElementById("qrcodeCellSize")
-  const downloadBtn = document.getElementById("downloadBtn")
+    const qrcodeKotlin = window['io.github.g0dkar:qrcode-kotlin'].qrcode
+    const QRCode = qrcodeKotlin.QRCode
+    const qrcodeData = document.getElementById("qrcodeData")
+    const timeEl = document.getElementById("generatedTime")
+    const imgSizeEl = document.getElementById("imgSize")
+    const imgEl = document.getElementById("qrcodeResult")
+    const sizeEl = document.getElementById("qrcodeCellSize")
+    const styleEl = document.getElementById("qrcodeStyle")
+    const downloadBtn = document.getElementById("downloadBtn")
 
-  const doRender = (data) => {
-    const size = sizeEl.value
+    const doRender = (data) => {
+        const start = Date.now()
+        const size = sizeEl.value * 1 // <- MAKE SURE THIS IS A NUMBER!
+        const style = styleEl.options[styleEl.selectedIndex].value
+        let builder;
 
-    const start = Date.now()
-    const result = new QRCode(data).render(size)
-    const finish = Date.now()
+        switch (style) {
+            case "cr": {
+                builder = QRCode.Companion.ofCircles()
+                break
+            }
+            case "rs": {
+                builder = QRCode.Companion.ofRoundedSquares()
+                break
+            }
+            default: builder = QRCode.Companion.ofSquares()
+        }
 
-    const dataURL = result.toDataURL()
-    downloadBtn.href = dataURL
-    imgEl.src = dataURL
-    timeEl.textContent = `${finish - start}ms`
-    imgSizeEl.textContent = `${result.width}x${result.height}, each square is ${size}x${size}`
-  }
+        const result = builder
+            .withSize(size)
+            .build(data)
+            .render()
+        const dataURL = result.toDataURL()
+        const finish = Date.now()
 
-  qrcodeData.onkeyup = (evt) => {
-    const data = evt.target.value
-    const prev = evt.target.$prev
-
-    if (data !== prev) {
-      if (evt.target.$timer) {
-        clearTimeout(evt.target.$timer)
-      }
-
-      evt.target.$prev = data
-
-      evt.target.$timer = setTimeout(() => {
-        doRender(data)
-      }, 500)
+        downloadBtn.href = dataURL
+        imgEl.src = dataURL
+        timeEl.textContent = `${finish - start}ms`
+        imgSizeEl.textContent = `${result.width}x${result.height}, each square is ${size}x${size}`
     }
-  }
 
-  sizeEl.onchange = () => {
+    qrcodeData.onkeyup = (evt) => {
+        const data = evt.target.value
+        const prev = evt.target.$prev
+
+        if (data !== prev) {
+            if (evt.target.$timer) {
+                clearTimeout(evt.target.$timer)
+            }
+
+            evt.target.$prev = data
+
+            evt.target.$timer = setTimeout(() => {
+                doRender(data)
+            }, 500)
+        }
+    }
+
+    sizeEl.onchange = () => {
+        doRender(qrcodeData.value)
+    }
+
+    styleEl.onchange = () => {
+        doRender(qrcodeData.value)
+    }
+
     doRender(qrcodeData.value)
-  }
-
-  doRender(qrcodeData.value)
-     */
 </script>
 </body>
 </html>
