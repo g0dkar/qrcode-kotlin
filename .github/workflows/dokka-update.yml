@@ -19,7 +19,7 @@ jobs:
           java-version: "17"
           distribution: "temurin"
       - name: Run Dokka Update
-        uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2
+        uses: gradle/gradle-build-action@29c0906b64b8fc82467890bfb7a0a7ef34bda89e # v3
         with:
           arguments: :dokkaGfm
       - name: Commit Changes
