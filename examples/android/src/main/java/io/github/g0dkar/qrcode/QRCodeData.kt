@@ -10,7 +10,7 @@ data class QRCodeData(
     val data: String,
     val style: Int = STYLE_DEFAULT,
     val timestamp: OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC),
-    val bitmap: Bitmap = QRCode(data).render().nativeImage() as Bitmap,
+    val bitmap: Bitmap = qrCodeForStyle(style).build(data).render().nativeImage() as Bitmap,
 ) : Comparable<QRCodeData> {
     companion object {
         const val STYLE_DEFAULT = 0
