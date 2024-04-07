@@ -17,6 +17,7 @@ class QRCodeListActivity : AppCompatActivity() {
     private val listAdapter = QRCodeListAdapter {
         val intent = Intent(this@QRCodeListActivity, QRCodeDetailActivity::class.java)
         intent.putExtra(QRCodeDetailActivity.QRCODE_DATA, it.data)
+        intent.putExtra(QRCodeDetailActivity.QRCODE_STYLE, it.style)
         intent.putExtra(QRCodeDetailActivity.QRCODE_TIMESTAMP, it.timestamp.toEpochSecond())
         startActivity(intent)
     }
