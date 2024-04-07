@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.lifecycle.MutableLiveData
 import io.github.g0dkar.qrcode.QRCodeData
+import io.github.g0dkar.qrcode.QRCodeData.Companion.SEPARATOR
+import io.github.g0dkar.qrcode.QRCodeData.Companion.STYLE_DEFAULT
 import java.time.Instant
 import java.time.ZoneOffset
 
@@ -24,14 +26,17 @@ object QRCodeListDatasource {
             sharedPreferences.all
                 .filterValues { it != null && it.toString().isNotBlank() }
                 .mapTo(this) { (key, value) ->
+                    val dataParts = value?.toString()?.split(SEPARATOR)
+
                     QRCodeData(
-                        value?.toString() ?: ERROR,
-                        Instant.ofEpochSecond(key.toLong()).atOffset(ZoneOffset.UTC)
+                        dataParts?.getOrNull(0)?.toString() ?: ERROR,
+                        dataParts?.getOrNull(1)?.toIntOrNull() ?: 0,
+                        Instant.ofEpochSecond(key.toLong()).atOffset(ZoneOffset.UTC),
                     )
                 }
 
             if (isEmpty()) {
-                add(QRCodeData("QRCode Kotlin"))
+                add(QRCodeData("QRCode Kotlin", STYLE_DEFAULT))
             }
 
             sortDescending()
@@ -40,9 +45,9 @@ object QRCodeListDatasource {
         liveData.postValue(newList)
     }
 
-    fun add(data: String) {
+    fun add(data: String, style: Int) {
         val currentList = liveData.value ?: listOf()
-        val qrCodeData = QRCodeData(data)
+        val qrCodeData = QRCodeData(data, style)
 
         val editor = sharedPreferences.edit()
         qrCodeData.persist(editor)
@@ -57,7 +62,6 @@ object QRCodeListDatasource {
         val currentList = liveData.value ?: listOf()
         val newList = currentList.toMutableList()
 
-        newList.removeIf { it.timestamp.toEpochSecond() == timestamp }
         sharedPreferences.edit()
             .remove(timestamp.toString())
             .apply()

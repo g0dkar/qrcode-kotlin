@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.github.g0dkar.qrcodeKotlin"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 403
         versionName = "4.0.4"
 
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.1.1")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
