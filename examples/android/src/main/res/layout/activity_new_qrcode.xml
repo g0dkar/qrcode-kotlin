@@ -10,19 +10,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context=".NewQRCodeActivity">
 
-    <Button
-        android:id="@+id/newQRCodeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="start"
-        android:contentDescription="@string/new_qrcode_btn"
-        android:enabled="true"
-        android:text="@string/new_qrcode_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newQRCodeData" />
-
     <EditText
         android:id="@+id/newQRCodeData"
         android:layout_width="match_parent"
@@ -35,6 +22,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newQRCodeStyleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/new_qrcode_style_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newQRCodeData" />
+
+    <Spinner
+        android:id="@+id/newQRCodeStyle"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/styles_array"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newQRCodeStyleLabel" />
+
+    <Button
+        android:id="@+id/newQRCodeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="start"
+        android:contentDescription="@string/new_qrcode_btn"
+        android:enabled="true"
+        android:text="@string/new_qrcode_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newQRCodeStyle" />
 
     <ImageView
         android:id="@+id/newQRCodePreviewImage"

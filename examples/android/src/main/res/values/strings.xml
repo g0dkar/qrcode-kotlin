@@ -1,20 +1,29 @@
 <resources>
-  <string name="app_name" translatable="false">QRCodeKotlinExampleApp</string>
+    <string name="app_name" translatable="false">QRCodeKotlinExampleApp</string>
 
-  <string name="action_about">About</string>
-  <string name="title">QRCode-Kotlin Lib Example App</string>
-  <string name="new_qrcode_error">Error adding QRCode, please try again.</string>
-  <string name="new_qrcode_error_preview">Error generating preview QRCode :(</string>
+    <string name="action_about">About</string>
+    <string name="title">QRCode-Kotlin Lib Example App</string>
+    <string name="new_qrcode_error">Error adding QRCode, please try again.</string>
+    <string name="new_qrcode_error_preview">Error generating preview QRCode :(</string>
 
-  <string name="qrcode_data_title">QRCode Data</string>
-  <string name="qrcode_image_description">QRCode Image</string>
-  <string name="fab_content_description">Create New QRCode</string>
+    <string name="qrcode_data_title">QRCode Data</string>
+    <string name="qrcode_image_description">QRCode Image</string>
+    <string name="fab_content_description">Create New QRCode</string>
 
-  <string name="title_activity_new_qrcode">New QRCode</string>
-  <string name="new_qrcode_qrcode_data_label">QRCode Data (Link, Text, anything)</string>
-  <string name="new_qrcode_btn">Save QRCode</string>
-  <string name="new_qrcode_image_desc">QRCode Preview</string>
+    <string name="title_activity_new_qrcode">New QRCode</string>
+    <string name="new_qrcode_qrcode_data_label">QRCode Data (Link, Text, anything)</string>
+    <string name="new_qrcode_btn">Save QRCode</string>
+    <string name="new_qrcode_image_desc">QRCode Preview</string>
 
-  <string name="title_activity_qrcode_detail">QRCode Info</string>
-  <string name="qrcode_detail_fab">Remove QRCode</string>
+    <string name="title_activity_qrcode_detail">QRCode Info</string>
+    <string name="qrcode_detail_fab">Remove QRCode</string>
+
+    <string name="new_qrcode_style_label">Style:</string>
+
+    <string-array name="styles_array">
+        <item>Spaced Squares (default)</item>
+        <item>Squares</item>
+        <item>Circles</item>
+        <item>Rounded Squares</item>
+    </string-array>
 </resources>

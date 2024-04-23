@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_about">Sobre</string>
-  <string name="title">QRCode-Kotlin App de Exemplo</string>
-  <string name="qrcode_data_title">Dado do QRCode</string>
-  <string name="qrcode_image_description">Imagem do QRCode</string>
-  <string name="fab_content_description">Criar Novo QRCode</string>
-  <string name="new_qrcode_qrcode_data_label">Dados do QRCode (Link, Texto, etc.)</string>
-  <string name="new_qrcode_btn">Salvar QRCode</string>
-  <string name="new_qrcode_image_desc">Previsão do QRCode</string>
-  <string name="new_qrcode_error">Erro ao adicionar QRCode, por favor tente novamente.</string>
-  <string name="title_activity_new_qrcode">Novo QRCode</string>
-  <string name="new_qrcode_error_preview">Erro gerando previsão de QRCode :(</string>
-  <string name="title_activity_qrcode_detail">Informações do QRCode</string>
-  <string name="qrcode_detail_fab">Remover QRCode</string>
+    <string name="action_about">Sobre</string>
+    <string name="title">QRCode-Kotlin App de Exemplo</string>
+    <string name="qrcode_data_title">Dado do QRCode</string>
+    <string name="qrcode_image_description">Imagem do QRCode</string>
+    <string name="fab_content_description">Criar Novo QRCode</string>
+    <string name="new_qrcode_qrcode_data_label">Dados do QRCode (Link, Texto, etc.)</string>
+    <string name="new_qrcode_btn">Salvar QRCode</string>
+    <string name="new_qrcode_image_desc">Previsão do QRCode</string>
+    <string name="new_qrcode_error">Erro ao adicionar QRCode, por favor tente novamente.</string>
+    <string name="title_activity_new_qrcode">Novo QRCode</string>
+    <string name="new_qrcode_error_preview">Erro gerando previsão de QRCode :(</string>
+    <string name="title_activity_qrcode_detail">Informações do QRCode</string>
+    <string name="qrcode_detail_fab">Remover QRCode</string>
+    <string name="new_qrcode_style_label">Estilo:</string>
+    <string-array name="styles_array">
+        <item>Quadrados Espaçados (padrão)</item>
+        <item>Quadrados</item>
+        <item>Círculos</item>
+        <item>Quadrados arredondados</item>
+    </string-array>
 </resources>

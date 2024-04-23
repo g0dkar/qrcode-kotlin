@@ -56,6 +56,8 @@ class QRCode @JvmOverloads constructor(
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
     val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize, innerSpace = 0),
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
+    errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH,
+    minTypeNum: Int = 6,
     private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
     private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
 ) {
@@ -103,10 +105,10 @@ class QRCode @JvmOverloads constructor(
 
     /** The underlying [QRCodeProcessor] object that'll do all calculations */
     val qrCodeProcessor: QRCodeProcessor =
-        QRCodeProcessor(data, ErrorCorrectionLevel.H, graphicsFactory = graphicsFactory)
+        QRCodeProcessor(data, ErrorCorrectionLevel.VERY_HIGH, graphicsFactory = graphicsFactory)
 
     /** Computed type number for the given [data] parameter */
-    val typeNum = QRCodeProcessor.typeForDataAndECL(data, ErrorCorrectionLevel.H).coerceAtLeast(6)
+    val typeNum = QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
     val rawData = qrCodeProcessor.encode(typeNum)

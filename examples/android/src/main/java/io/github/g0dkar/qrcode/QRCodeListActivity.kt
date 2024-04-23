@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import io.github.g0dkar.qrcode.NewQRCodeActivity.Companion.QRCODE_DATA
+import io.github.g0dkar.qrcode.NewQRCodeActivity.Companion.QRCODE_STYLE
 import io.github.g0dkar.qrcode.extra.QRCodeListAdapter
 import io.github.g0dkar.qrcode.extra.QRCodeListDatasource
 
@@ -16,6 +17,7 @@ class QRCodeListActivity : AppCompatActivity() {
     private val listAdapter = QRCodeListAdapter {
         val intent = Intent(this@QRCodeListActivity, QRCodeDetailActivity::class.java)
         intent.putExtra(QRCodeDetailActivity.QRCODE_DATA, it.data)
+        intent.putExtra(QRCodeDetailActivity.QRCODE_STYLE, it.style)
         intent.putExtra(QRCodeDetailActivity.QRCODE_TIMESTAMP, it.timestamp.toEpochSecond())
         startActivity(intent)
     }
@@ -45,9 +47,10 @@ class QRCodeListActivity : AppCompatActivity() {
 
                 if (result == RESULT_OK) {
                     val qrCodeData = it.data?.getStringExtra(QRCODE_DATA)
+                    val qrCodeStyle = it.data?.getIntExtra(QRCODE_STYLE, 0)
 
-                    if (qrCodeData != null) {
-                        QRCodeListDatasource.add(qrCodeData)
+                    if (qrCodeData != null && qrCodeStyle != null) {
+                        QRCodeListDatasource.add(qrCodeData, qrCodeStyle)
                     } else {
                         Toast.makeText(
                             this@QRCodeListActivity,
