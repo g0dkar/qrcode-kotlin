@@ -21,6 +21,6 @@ jobs:
           java-version: "8.0"
           distribution: "temurin"
       - name: Run Tests
-        uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2
+        uses: gradle/gradle-build-action@66535aaf56f831b35e3a8481c9c99b665b84dd45 # v3
         with:
           arguments: :test
