@@ -105,7 +105,7 @@ class QRCode @JvmOverloads constructor(
 
     /** The underlying [QRCodeProcessor] object that'll do all calculations */
     val qrCodeProcessor: QRCodeProcessor =
-        QRCodeProcessor(data, ErrorCorrectionLevel.VERY_HIGH, graphicsFactory = graphicsFactory)
+        QRCodeProcessor(data, errorCorrectionLevel, graphicsFactory = graphicsFactory)
 
     /** Computed type number for the given [data] parameter */
     val typeNum = QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
