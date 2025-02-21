@@ -103,7 +103,7 @@ kotlin {
     }
 
     sourceSets {
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.kotest.assertions.core)
@@ -111,7 +111,7 @@ kotlin {
             }
         }
 
-        val jvmTest by getting {
+        jvmTest {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
             }
