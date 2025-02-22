@@ -1,4 +1,5 @@
 @file:JvmName("TestUtils")
+
 package qrcode
 
 import io.kotest.matchers.Matcher
@@ -22,7 +23,7 @@ fun haveSameDimensions(otherImage: BufferedImage) = object : Matcher<BufferedIma
     override fun test(value: BufferedImage) = MatcherResult(
         value.width == otherImage.width && value.height == otherImage.height,
         { "Image should be ${value.width}x${value.height}" },
-        { "Image should not be ${value.width}x${value.height}" }
+        { "Image should not be ${value.width}x${value.height}" },
     )
 }
 
@@ -43,7 +44,7 @@ fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage
             val compareImage = BufferedImage(
                 image1.width + image2.width + gap,
                 image1.height.coerceAtLeast(image2.height),
-                image1.type
+                image1.type,
             )
             val graphics = compareImage.createGraphics()
 
@@ -89,7 +90,7 @@ fun haveSamePixelsAs(otherImage: BufferedImage) = object : Matcher<BufferedImage
                         val file = saveImages(value, otherImage)
                         "Images should not be pixel-equal but all pixels are the same RGB color!" +
                             " Saved images at: $file"
-                    }
+                    },
                 )
             }
 }

@@ -3,11 +3,11 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.3.1")
     implementation("org.jfree:org.jfree.svg:5.0.5")
 }
