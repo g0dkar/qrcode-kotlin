@@ -3,4 +3,4 @@
 # MOCCASIN
 
 [common]\
-const val [MOCCASIN](-m-o-c-c-a-s-i-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [MOCCASIN](-m-o-c-c-a-s-i-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

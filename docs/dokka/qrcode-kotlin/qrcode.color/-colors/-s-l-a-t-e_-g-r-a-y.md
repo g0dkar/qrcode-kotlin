@@ -3,4 +3,4 @@
 # SLATE_GRAY
 
 [common]\
-const val [SLATE_GRAY](-s-l-a-t-e_-g-r-a-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [SLATE_GRAY](-s-l-a-t-e_-g-r-a-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # GREY
 
 [common]\
-const val [GREY](-g-r-e-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [GREY](-g-r-e-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

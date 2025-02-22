@@ -3,4 +3,4 @@
 # LAVENDER
 
 [common]\
-const val [LAVENDER](-l-a-v-e-n-d-e-r.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [LAVENDER](-l-a-v-e-n-d-e-r.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

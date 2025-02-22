@@ -3,4 +3,4 @@
 # FOREST_GREEN
 
 [common]\
-const val [FOREST_GREEN](-f-o-r-e-s-t_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [FOREST_GREEN](-f-o-r-e-s-t_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

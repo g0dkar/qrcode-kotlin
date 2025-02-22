@@ -3,4 +3,4 @@
 # endForegroundColor
 
 [common]\
-val [endForegroundColor](end-foreground-color.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+val [endForegroundColor](end-foreground-color.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

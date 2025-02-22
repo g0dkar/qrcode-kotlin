@@ -4,9 +4,9 @@
 
 [common]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-fun [encode](encode.md)(type: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = typeForDataAndECL(data, errorCorrectionLevel), maskPattern: [MaskPattern](../-mask-pattern/index.md) = MaskPattern.PATTERN000): [QRCodeRawData](../-q-r-code-raw-data/index.md)
+fun [encode](encode.md)(type: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = typeForDataAndECL(data, errorCorrectionLevel), maskPattern: [MaskPattern](../-mask-pattern/index.md) = MaskPattern.PATTERN000): [QRCodeRawData](../-q-r-code-raw-data/index.md)
 
 Computes and encodes the data of this object into a QR Code. This method returns the raw data of the QR Code.
 

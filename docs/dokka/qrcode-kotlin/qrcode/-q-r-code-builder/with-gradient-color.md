@@ -4,9 +4,9 @@
 
 [common]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-fun [withGradientColor](with-gradient-color.md)(startColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), endColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)?, vertical: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = true): [QRCodeBuilder](index.md)
+fun [withGradientColor](with-gradient-color.md)(startColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html), endColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)?, vertical: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html) = true): [QRCodeBuilder](index.md)
 
 Uses a [LinearGradientColorFunction](../../qrcode.color/-linear-gradient-color-function/index.md) to choose colors for the QRCode.
 

@@ -4,7 +4,7 @@
 
 [common]\
 
-@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)
+@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html)
 
 fun [ofCustomShape](of-custom-shape.md)(customShapeFunction: [QRCodeShapeFunction](../../../qrcode.shape/-q-r-code-shape-function/index.md)): [QRCodeBuilder](../../-q-r-code-builder/index.md)
 

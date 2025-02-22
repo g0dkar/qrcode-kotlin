@@ -3,4 +3,4 @@
 # DARK_BLUE
 
 [common]\
-const val [DARK_BLUE](-d-a-r-k_-b-l-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [DARK_BLUE](-d-a-r-k_-b-l-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

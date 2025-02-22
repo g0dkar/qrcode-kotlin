@@ -3,4 +3,4 @@
 # MISTY_ROSE
 
 [common]\
-const val [MISTY_ROSE](-m-i-s-t-y_-r-o-s-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [MISTY_ROSE](-m-i-s-t-y_-r-o-s-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # DIM_GREY
 
 [common]\
-const val [DIM_GREY](-d-i-m_-g-r-e-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [DIM_GREY](-d-i-m_-g-r-e-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

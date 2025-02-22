@@ -3,4 +3,4 @@
 # GREEN_YELLOW
 
 [common]\
-const val [GREEN_YELLOW](-g-r-e-e-n_-y-e-l-l-o-w.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [GREEN_YELLOW](-g-r-e-e-n_-y-e-l-l-o-w.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

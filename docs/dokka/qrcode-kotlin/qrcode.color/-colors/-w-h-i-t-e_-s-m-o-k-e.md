@@ -3,4 +3,4 @@
 # WHITE_SMOKE
 
 [common]\
-const val [WHITE_SMOKE](-w-h-i-t-e_-s-m-o-k-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [WHITE_SMOKE](-w-h-i-t-e_-s-m-o-k-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

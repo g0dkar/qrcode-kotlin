@@ -3,4 +3,4 @@
 # LEMON_CHIFFON
 
 [common]\
-const val [LEMON_CHIFFON](-l-e-m-o-n_-c-h-i-f-f-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [LEMON_CHIFFON](-l-e-m-o-n_-c-h-i-f-f-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

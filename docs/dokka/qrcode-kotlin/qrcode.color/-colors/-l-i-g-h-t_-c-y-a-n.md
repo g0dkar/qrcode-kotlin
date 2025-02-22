@@ -3,4 +3,4 @@
 # LIGHT_CYAN
 
 [common]\
-const val [LIGHT_CYAN](-l-i-g-h-t_-c-y-a-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [LIGHT_CYAN](-l-i-g-h-t_-c-y-a-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # TOMATO
 
 [common]\
-const val [TOMATO](-t-o-m-a-t-o.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [TOMATO](-t-o-m-a-t-o.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

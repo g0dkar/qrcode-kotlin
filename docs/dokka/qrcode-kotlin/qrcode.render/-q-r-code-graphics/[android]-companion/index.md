@@ -9,4 +9,4 @@ object [Companion](index.md)
 
 | Name | Summary |
 |---|---|
-| [AVAILABLE_FORMATS](-a-v-a-i-l-a-b-l-e_-f-o-r-m-a-t-s.md) | [android]<br>val [AVAILABLE_FORMATS](-a-v-a-i-l-a-b-l-e_-f-o-r-m-a-t-s.md): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt; |
+| [AVAILABLE_FORMATS](-a-v-a-i-l-a-b-l-e_-f-o-r-m-a-t-s.md) | [android]<br>val [AVAILABLE_FORMATS](-a-v-a-i-l-a-b-l-e_-f-o-r-m-a-t-s.md): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)&gt; |

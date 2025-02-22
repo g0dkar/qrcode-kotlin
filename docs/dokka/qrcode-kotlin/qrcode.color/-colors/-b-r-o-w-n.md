@@ -3,4 +3,4 @@
 # BROWN
 
 [common]\
-const val [BROWN](-b-r-o-w-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [BROWN](-b-r-o-w-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

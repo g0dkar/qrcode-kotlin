@@ -3,7 +3,7 @@
 # withBackgroundColor
 
 [common]\
-fun [withBackgroundColor](with-background-color.md)(bgColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeBuilder](index.md)
+fun [withBackgroundColor](with-background-color.md)(bgColor: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [QRCodeBuilder](index.md)
 
 Background color of the QRCode.
 

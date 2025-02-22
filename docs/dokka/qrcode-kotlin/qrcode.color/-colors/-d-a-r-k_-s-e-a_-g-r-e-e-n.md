@@ -3,4 +3,4 @@
 # DARK_SEA_GREEN
 
 [common]\
-const val [DARK_SEA_GREEN](-d-a-r-k_-s-e-a_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [DARK_SEA_GREEN](-d-a-r-k_-s-e-a_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

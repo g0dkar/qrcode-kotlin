@@ -3,4 +3,4 @@
 # SILVER
 
 [common]\
-const val [SILVER](-s-i-l-v-e-r.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [SILVER](-s-i-l-v-e-r.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

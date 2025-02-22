@@ -3,7 +3,7 @@
 # withColor
 
 [common]\
-fun [withColor](with-color.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeBuilder](index.md)
+fun [withColor](with-color.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [QRCodeBuilder](index.md)
 
 Color of the cells of the QRCode.
 

@@ -3,4 +3,4 @@
 # SADDLE_BROWN
 
 [common]\
-const val [SADDLE_BROWN](-s-a-d-d-l-e_-b-r-o-w-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [SADDLE_BROWN](-s-a-d-d-l-e_-b-r-o-w-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

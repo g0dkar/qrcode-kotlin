@@ -3,7 +3,7 @@
 # writeImage
 
 [android]\
-open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;PNG&quot;, quality: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 100)
+open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html) = &quot;PNG&quot;, quality: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = 100)
 
 Writes the QRCode image in the specified [format](write-image.md) and [quality](write-image.md) into the destination [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html).
 
@@ -20,9 +20,9 @@ For app stability reasons if the specified [format](write-image.md) doesn't exis
 
 [jvm]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html) = &quot;PNG&quot;)
+open fun [writeImage](write-image.md)(destination: [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html), format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html) = &quot;PNG&quot;)
 
 Writes the QRCode image in the specified [format](write-image.md) into the destination [OutputStream](https://developer.android.com/reference/kotlin/java/io/OutputStream.html).
 
@@ -36,4 +36,4 @@ Writes the QRCode image in the specified [format](write-image.md) into the desti
 
 | | |
 |---|---|
-| [UnsupportedOperationException](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unsupported-operation-exception/index.html) | No suitable Image Writer was found for the specified format. |
+| [UnsupportedOperationException](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-unsupported-operation-exception/index.html) | No suitable Image Writer was found for the specified format. |

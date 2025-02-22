@@ -3,4 +3,4 @@
 # SEA_SHELL
 
 [common]\
-const val [SEA_SHELL](-s-e-a_-s-h-e-l-l.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [SEA_SHELL](-s-e-a_-s-h-e-l-l.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

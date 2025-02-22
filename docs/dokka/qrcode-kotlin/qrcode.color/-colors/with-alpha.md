@@ -4,10 +4,10 @@
 
 [common]\
 
-@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-static/index.html)
+@[JvmStatic](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-static/index.html)
 
-fun [withAlpha](with-alpha.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), alpha: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+fun [withAlpha](with-alpha.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html), alpha: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)
 
 Returns the specified color with an added alpha channel. That means a transparent/opaque color.
 
-`alpha` ranges from 0 (completely transparent) to 255 (completely visible). Values outside this range are [coerced](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/index.html) into it.
+`alpha` ranges from 0 (completely transparent) to 255 (completely visible). Values outside this range are [coerced](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.ranges/index.html) into it.

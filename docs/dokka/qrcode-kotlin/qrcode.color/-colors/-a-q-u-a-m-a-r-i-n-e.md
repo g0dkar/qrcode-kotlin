@@ -3,4 +3,4 @@
 # AQUAMARINE
 
 [common]\
-const val [AQUAMARINE](-a-q-u-a-m-a-r-i-n-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [AQUAMARINE](-a-q-u-a-m-a-r-i-n-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

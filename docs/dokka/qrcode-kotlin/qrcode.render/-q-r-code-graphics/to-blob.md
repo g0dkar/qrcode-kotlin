@@ -3,7 +3,7 @@
 # toBlob
 
 [js]\
-open fun [toBlob](to-blob.md)(callback: ([Blob](https://kotlinlang.org/api/latest/jvm/stdlib/org.w3c.files/-blob/index.html)?) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html))
+open fun [toBlob](to-blob.md)(callback: ([Blob](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/org.w3c.files/-blob/index.html)?) -&gt; [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-unit/index.html))
 
 Direct access to the `.toBlob()` function of the underlying canvas.
 

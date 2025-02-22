@@ -3,4 +3,4 @@
 # POWDER_BLUE
 
 [common]\
-const val [POWDER_BLUE](-p-o-w-d-e-r_-b-l-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [POWDER_BLUE](-p-o-w-d-e-r_-b-l-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

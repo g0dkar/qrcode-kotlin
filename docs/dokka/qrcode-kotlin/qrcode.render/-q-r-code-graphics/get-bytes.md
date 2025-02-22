@@ -4,17 +4,17 @@
 
 [common, js]\
 [common]\
-expect fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+expect fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
 [js]\
-actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as PNG.
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as PNG.
 
 [android]\
-actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as PNG. Recommended to use [writeImage](write-image.md).
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as PNG. Recommended to use [writeImage](write-image.md).
 
 #### See also
 
@@ -24,9 +24,9 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 | [QRCodeGraphics.writeImage](write-image.md) |
 
 [jvm]\
-actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as PNG. Usually recommended to use [writeImage](write-image.md) instead :)
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as PNG. Usually recommended to use [writeImage](write-image.md) instead :)
 
 #### See also
 
@@ -37,17 +37,17 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 
 [common, js]\
 [common]\
-expect fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+expect fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
 [js]\
-actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...).
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...).
 
 [android]\
-actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as the specified format. Recommended to use [writeImage](write-image.md).
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as the specified format. Recommended to use [writeImage](write-image.md).
 
 #### See also
 
@@ -58,9 +58,9 @@ Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib
 | [QRCodeGraphics.writeImage](write-image.md) |
 
 [jvm]\
-actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html)
+actual open fun [getBytes](get-bytes.md)(format: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)): [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html)
 
-Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html) encoded as the specified format. Usually recommended to use [writeImage](write-image.md) instead :)
+Returns this image as a [ByteArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-byte-array/index.html) encoded as the specified format. Usually recommended to use [writeImage](write-image.md) instead :)
 
 #### See also
 

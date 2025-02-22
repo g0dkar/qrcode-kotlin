@@ -3,4 +3,4 @@
 # CYAN
 
 [common]\
-const val [CYAN](-c-y-a-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [CYAN](-c-y-a-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

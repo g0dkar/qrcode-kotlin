@@ -3,4 +3,4 @@
 # squareSize
 
 [common]\
-val [squareSize](square-size.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+val [squareSize](square-size.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

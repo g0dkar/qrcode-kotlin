@@ -3,4 +3,4 @@
 # MINT_CREAM
 
 [common]\
-const val [MINT_CREAM](-m-i-n-t_-c-r-e-a-m.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [MINT_CREAM](-m-i-n-t_-c-r-e-a-m.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

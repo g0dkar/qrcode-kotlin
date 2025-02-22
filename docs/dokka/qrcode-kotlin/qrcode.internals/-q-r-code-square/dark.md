@@ -3,6 +3,6 @@
 # dark
 
 [common]\
-var [dark](dark.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)
+var [dark](dark.md): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html)
 
 Is this a painted square?

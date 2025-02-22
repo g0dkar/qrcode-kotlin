@@ -3,4 +3,4 @@
 # AZURE
 
 [common]\
-const val [AZURE](-a-z-u-r-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [AZURE](-a-z-u-r-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # CRIMSON
 
 [common]\
-const val [CRIMSON](-c-r-i-m-s-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [CRIMSON](-c-r-i-m-s-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

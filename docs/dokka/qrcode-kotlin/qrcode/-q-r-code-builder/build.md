@@ -3,7 +3,7 @@
 # build
 
 [common]\
-fun [build](build.md)(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)): [QRCode](../-q-r-code/index.md)
+fun [build](build.md)(data: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)): [QRCode](../-q-r-code/index.md)
 
 Builds a [QRCode](../-q-r-code/index.md) instance ready to use.
 

@@ -4,9 +4,9 @@
 
 [common, android, js, jvm]\
 [common]\
-expect fun [fill](fill.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html))
+expect fun [fill](fill.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html))
 
 [android, js, jvm]\
-actual open fun [fill](fill.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html))
+actual open fun [fill](fill.md)(color: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html))
 
 Fill the whole area of this canvas with the specified [color](fill.md).

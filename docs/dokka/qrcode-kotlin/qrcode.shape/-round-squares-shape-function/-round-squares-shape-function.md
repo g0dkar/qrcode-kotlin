@@ -4,6 +4,6 @@
 
 [common]\
 
-@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html)
+@[JvmOverloads](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html)
 
-constructor(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, radius: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = defaultRadius(squareSize), innerSpace: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = defaultInnerSpace(squareSize))
+constructor(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = DEFAULT_CELL_SIZE, radius: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = defaultRadius(squareSize), innerSpace: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = defaultInnerSpace(squareSize))

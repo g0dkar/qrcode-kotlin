@@ -3,4 +3,4 @@
 # DEFAULT_MARGIN
 
 [common]\
-const val [DEFAULT_MARGIN](-d-e-f-a-u-l-t_-m-a-r-g-i-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 0
+const val [DEFAULT_MARGIN](-d-e-f-a-u-l-t_-m-a-r-g-i-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = 0

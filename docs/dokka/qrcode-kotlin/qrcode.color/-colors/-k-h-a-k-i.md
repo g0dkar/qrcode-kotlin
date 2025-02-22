@@ -3,4 +3,4 @@
 # KHAKI
 
 [common]\
-const val [KHAKI](-k-h-a-k-i.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [KHAKI](-k-h-a-k-i.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # WHITE
 
 [common]\
-const val [WHITE](-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [WHITE](-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

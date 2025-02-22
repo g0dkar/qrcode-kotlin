@@ -3,4 +3,4 @@
 # PERU
 
 [common]\
-const val [PERU](-p-e-r-u.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [PERU](-p-e-r-u.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

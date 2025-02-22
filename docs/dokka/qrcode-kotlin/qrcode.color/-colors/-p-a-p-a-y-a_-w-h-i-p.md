@@ -3,4 +3,4 @@
 # PAPAYA_WHIP
 
 [common]\
-const val [PAPAYA_WHIP](-p-a-p-a-y-a_-w-h-i-p.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [PAPAYA_WHIP](-p-a-p-a-y-a_-w-h-i-p.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

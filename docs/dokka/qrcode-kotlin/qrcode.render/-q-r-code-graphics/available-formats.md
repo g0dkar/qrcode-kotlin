@@ -3,13 +3,13 @@
 # availableFormats
 
 [common]\
-expect fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt;
+expect fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)&gt;
 
 Returns the available formats to be passed as parameters to [getBytes](get-bytes.md).
 
 [android, jvm]\
 [android, jvm]\
-actual open fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt;
+actual open fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)&gt;
 
 Returns the available formats to be passed as parameters to [getBytes](get-bytes.md).
 
@@ -24,7 +24,7 @@ Returns the available formats to be passed as parameters to [getBytes](get-bytes
 | [ImageIO.getWriterFileSuffixes](https://docs.oracle.com/javase/8/docs/api/javax/imageio/ImageIO.html#getWriterFileSuffixes--) |
 
 [js]\
-actual open fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)&gt;
+actual open fun [availableFormats](available-formats.md)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-array/index.html)&lt;[String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html)&gt;
 
 Returns the available formats to be passed as parameters to [getBytes](get-bytes.md).
 

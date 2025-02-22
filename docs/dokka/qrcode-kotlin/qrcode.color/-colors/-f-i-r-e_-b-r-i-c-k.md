@@ -3,4 +3,4 @@
 # FIRE_BRICK
 
 [common]\
-const val [FIRE_BRICK](-f-i-r-e_-b-r-i-c-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [FIRE_BRICK](-f-i-r-e_-b-r-i-c-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

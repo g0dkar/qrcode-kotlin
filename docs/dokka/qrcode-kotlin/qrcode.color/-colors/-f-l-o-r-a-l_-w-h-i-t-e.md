@@ -3,4 +3,4 @@
 # FLORAL_WHITE
 
 [common]\
-const val [FLORAL_WHITE](-f-l-o-r-a-l_-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [FLORAL_WHITE](-f-l-o-r-a-l_-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # LIGHT_SALMON
 
 [common]\
-const val [LIGHT_SALMON](-l-i-g-h-t_-s-a-l-m-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [LIGHT_SALMON](-l-i-g-h-t_-s-a-l-m-o-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

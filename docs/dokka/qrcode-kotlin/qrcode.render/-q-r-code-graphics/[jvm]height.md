@@ -3,4 +3,4 @@
 # height
 
 [jvm]\
-val [height]([jvm]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+val [height]([jvm]height.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

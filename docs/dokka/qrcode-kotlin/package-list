@@ -223,10 +223,10 @@ $dokka.location:qrcode.internals/QRCodeSquareType/entries/#/PointingToDeclaratio
 $dokka.location:qrcode.internals/QRCodeSquareType/valueOf/#kotlin.String/PointingToDeclaration/qrcode-kotlin/qrcode.internals/-q-r-code-square-type/value-of.md
 $dokka.location:qrcode.internals/QRCodeSquareType/values/#/PointingToDeclaration/qrcode-kotlin/qrcode.internals/-q-r-code-square-type/values.md
 $dokka.location:qrcode.raw////PointingToDeclaration/qrcode-kotlin/qrcode.raw/index.md
-$dokka.location:qrcode.raw/ErrorCorrectionLevel.H///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-h/index.md
-$dokka.location:qrcode.raw/ErrorCorrectionLevel.L///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-l/index.md
-$dokka.location:qrcode.raw/ErrorCorrectionLevel.M///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-m/index.md
-$dokka.location:qrcode.raw/ErrorCorrectionLevel.Q///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-q/index.md
+$dokka.location:qrcode.raw/ErrorCorrectionLevel.HIGH///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-h-i-g-h/index.md
+$dokka.location:qrcode.raw/ErrorCorrectionLevel.LOW///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-l-o-w/index.md
+$dokka.location:qrcode.raw/ErrorCorrectionLevel.MEDIUM///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-m-e-d-i-u-m/index.md
+$dokka.location:qrcode.raw/ErrorCorrectionLevel.VERY_HIGH///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}qrcode-kotlin/qrcode.raw/-error-correction-level/-v-e-r-y_-h-i-g-h/index.md
 $dokka.location:qrcode.raw/ErrorCorrectionLevel///PointingToDeclaration/qrcode-kotlin/qrcode.raw/-error-correction-level/index.md
 $dokka.location:qrcode.raw/ErrorCorrectionLevel/entries/#/PointingToDeclaration/qrcode-kotlin/qrcode.raw/-error-correction-level/entries.md
 $dokka.location:qrcode.raw/ErrorCorrectionLevel/maxTypeNum/#/PointingToDeclaration/qrcode-kotlin/qrcode.raw/-error-correction-level/max-type-num.md
@@ -334,7 +334,7 @@ $dokka.location:qrcode/QRCode.Companion/ofCustomShape/#qrcode.shape.QRCodeShapeF
 $dokka.location:qrcode/QRCode.Companion/ofRoundedSquares/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/-companion/of-rounded-squares.md
 $dokka.location:qrcode/QRCode.Companion/ofSquares/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/-companion/of-squares.md
 $dokka.location:qrcode/QRCode///PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/index.md
-$dokka.location:qrcode/QRCode/QRCode/#kotlin.String#kotlin.Int#qrcode.color.QRCodeColorFunction#qrcode.shape.QRCodeShapeFunction#qrcode.render.QRCodeGraphicsFactory#kotlin.Function4[qrcode.QRCode,qrcode.render.QRCodeGraphics,kotlin.Int,kotlin.Int,kotlin.Unit]#kotlin.Function4[qrcode.QRCode,qrcode.render.QRCodeGraphics,kotlin.Int,kotlin.Int,kotlin.Unit]/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/-q-r-code.md
+$dokka.location:qrcode/QRCode/QRCode/#kotlin.String#kotlin.Int#qrcode.color.QRCodeColorFunction#qrcode.shape.QRCodeShapeFunction#qrcode.render.QRCodeGraphicsFactory#qrcode.raw.ErrorCorrectionLevel#kotlin.Int#kotlin.Function4[qrcode.QRCode,qrcode.render.QRCodeGraphics,kotlin.Int,kotlin.Int,kotlin.Unit]#kotlin.Function4[qrcode.QRCode,qrcode.render.QRCodeGraphics,kotlin.Int,kotlin.Int,kotlin.Unit]/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/-q-r-code.md
 $dokka.location:qrcode/QRCode/colorFn/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/color-fn.md
 $dokka.location:qrcode/QRCode/computedSize/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/computed-size.md
 $dokka.location:qrcode/QRCode/data/#/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code/data.md
@@ -365,10 +365,12 @@ $dokka.location:qrcode/QRCodeBuilder/withBeforeRenderAction/#kotlin.Function2[qr
 $dokka.location:qrcode/QRCodeBuilder/withColor/#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-color.md
 $dokka.location:qrcode/QRCodeBuilder/withCustomColorFunction/#qrcode.color.QRCodeColorFunction?/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-custom-color-function.md
 $dokka.location:qrcode/QRCodeBuilder/withCustomShapeFunction/#qrcode.shape.QRCodeShapeFunction?/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-custom-shape-function.md
+$dokka.location:qrcode/QRCodeBuilder/withErrorCorrectionLevel/#qrcode.raw.ErrorCorrectionLevel/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-error-correction-level.md
 $dokka.location:qrcode/QRCodeBuilder/withGradientColor/#kotlin.Int#kotlin.Int?#kotlin.Boolean/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-gradient-color.md
 $dokka.location:qrcode/QRCodeBuilder/withGraphicsFactory/#qrcode.render.QRCodeGraphicsFactory/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-graphics-factory.md
 $dokka.location:qrcode/QRCodeBuilder/withInnerSpacing/#kotlin.Int?/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-inner-spacing.md
 $dokka.location:qrcode/QRCodeBuilder/withLogo/#kotlin.ByteArray?#kotlin.Int#kotlin.Int#kotlin.Boolean/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-logo.md
+$dokka.location:qrcode/QRCodeBuilder/withMinimumInformationDensity/#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-minimum-information-density.md
 $dokka.location:qrcode/QRCodeBuilder/withRadius/#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-radius.md
 $dokka.location:qrcode/QRCodeBuilder/withSize/#kotlin.Int/PointingToDeclaration/qrcode-kotlin/qrcode/-q-r-code-builder/with-size.md
 qrcode

@@ -3,4 +3,4 @@
 # ORCHID
 
 [common]\
-const val [ORCHID](-o-r-c-h-i-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [ORCHID](-o-r-c-h-i-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # BURLY_WOOD
 
 [common]\
-const val [BURLY_WOOD](-b-u-r-l-y_-w-o-o-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [BURLY_WOOD](-b-u-r-l-y_-w-o-o-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

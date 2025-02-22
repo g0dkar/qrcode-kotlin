@@ -3,4 +3,4 @@
 # PINK
 
 [common]\
-const val [PINK](-p-i-n-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [PINK](-p-i-n-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # BISQUE
 
 [common]\
-const val [BISQUE](-b-i-s-q-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [BISQUE](-b-i-s-q-u-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

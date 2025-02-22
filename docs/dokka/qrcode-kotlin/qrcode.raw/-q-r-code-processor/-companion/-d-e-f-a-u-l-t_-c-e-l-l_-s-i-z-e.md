@@ -3,4 +3,4 @@
 # DEFAULT_CELL_SIZE
 
 [common]\
-const val [DEFAULT_CELL_SIZE](-d-e-f-a-u-l-t_-c-e-l-l_-s-i-z-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) = 25
+const val [DEFAULT_CELL_SIZE](-d-e-f-a-u-l-t_-c-e-l-l_-s-i-z-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) = 25

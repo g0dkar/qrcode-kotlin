@@ -3,4 +3,4 @@
 # DARK_ORCHID
 
 [common]\
-const val [DARK_ORCHID](-d-a-r-k_-o-r-c-h-i-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [DARK_ORCHID](-d-a-r-k_-o-r-c-h-i-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

@@ -3,4 +3,4 @@
 # SPRING_GREEN
 
 [common]\
-const val [SPRING_GREEN](-s-p-r-i-n-g_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [SPRING_GREEN](-s-p-r-i-n-g_-g-r-e-e-n.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

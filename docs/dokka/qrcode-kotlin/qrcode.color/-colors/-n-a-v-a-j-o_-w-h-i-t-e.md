@@ -3,4 +3,4 @@
 # NAVAJO_WHITE
 
 [common]\
-const val [NAVAJO_WHITE](-n-a-v-a-j-o_-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [NAVAJO_WHITE](-n-a-v-a-j-o_-w-h-i-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

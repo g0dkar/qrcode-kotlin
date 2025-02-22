@@ -3,4 +3,4 @@
 # DARK_GRAY
 
 [common]\
-const val [DARK_GRAY](-d-a-r-k_-g-r-a-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [DARK_GRAY](-d-a-r-k_-g-r-a-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

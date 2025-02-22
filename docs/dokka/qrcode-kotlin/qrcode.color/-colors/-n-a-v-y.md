@@ -3,4 +3,4 @@
 # NAVY
 
 [common]\
-const val [NAVY](-n-a-v-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [NAVY](-n-a-v-y.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

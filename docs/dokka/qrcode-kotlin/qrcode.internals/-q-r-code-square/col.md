@@ -3,6 +3,6 @@
 # col
 
 [common]\
-val [col](col.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+val [col](col.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)
 
 The column (left-to-right) that this square represents.

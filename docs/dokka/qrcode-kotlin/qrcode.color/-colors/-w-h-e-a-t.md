@@ -3,4 +3,4 @@
 # WHEAT
 
 [common]\
-const val [WHEAT](-w-h-e-a-t.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [WHEAT](-w-h-e-a-t.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

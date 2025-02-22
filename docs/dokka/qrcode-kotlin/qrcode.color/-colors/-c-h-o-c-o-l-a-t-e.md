@@ -3,4 +3,4 @@
 # CHOCOLATE
 
 [common]\
-const val [CHOCOLATE](-c-h-o-c-o-l-a-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [CHOCOLATE](-c-h-o-c-o-l-a-t-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

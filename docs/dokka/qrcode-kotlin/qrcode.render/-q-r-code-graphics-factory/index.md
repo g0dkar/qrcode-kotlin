@@ -25,5 +25,5 @@ Rafael Lins - g0dkar
 
 | Name | Summary |
 |---|---|
-| [newGraphics](new-graphics.md) | [common]<br>open fun [newGraphics](new-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)<br>Creates a new [QRCodeGraphics](../-q-r-code-graphics/index.md) instance. |
-| [newGraphicsSquare](new-graphics-square.md) | [common]<br>open fun [newGraphicsSquare](new-graphics-square.md)(size: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)<br>Creates a `size` by `size` square [QRCodeGraphics](../-q-r-code-graphics/index.md) instance. |
+| [newGraphics](new-graphics.md) | [common]<br>open fun [newGraphics](new-graphics.md)(width: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html), height: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)<br>Creates a new [QRCodeGraphics](../-q-r-code-graphics/index.md) instance. |
+| [newGraphicsSquare](new-graphics-square.md) | [common]<br>open fun [newGraphicsSquare](new-graphics-square.md)(size: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [QRCodeGraphics](../-q-r-code-graphics/index.md)<br>Creates a `size` by `size` square [QRCodeGraphics](../-q-r-code-graphics/index.md) instance. |

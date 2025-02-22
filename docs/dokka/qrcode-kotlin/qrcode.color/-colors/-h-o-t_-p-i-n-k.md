@@ -3,4 +3,4 @@
 # HOT_PINK
 
 [common]\
-const val [HOT_PINK](-h-o-t_-p-i-n-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [HOT_PINK](-h-o-t_-p-i-n-k.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

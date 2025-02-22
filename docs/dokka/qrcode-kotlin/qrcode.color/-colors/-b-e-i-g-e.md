@@ -3,4 +3,4 @@
 # BEIGE
 
 [common]\
-const val [BEIGE](-b-e-i-g-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [BEIGE](-b-e-i-g-e.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)

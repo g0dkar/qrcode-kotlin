@@ -9,5 +9,5 @@ object [Companion](index.md)
 
 | Name | Summary |
 |---|---|
-| [defaultInnerSpace](default-inner-space.md) | [common]<br>fun [defaultInnerSpace](default-inner-space.md)(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
-| [defaultRadius](default-radius.md) | [common]<br>fun [defaultRadius](default-radius.md)(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html) |
+| [defaultInnerSpace](default-inner-space.md) | [common]<br>fun [defaultInnerSpace](default-inner-space.md)(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) |
+| [defaultRadius](default-radius.md) | [common]<br>fun [defaultRadius](default-radius.md)(squareSize: [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html) |

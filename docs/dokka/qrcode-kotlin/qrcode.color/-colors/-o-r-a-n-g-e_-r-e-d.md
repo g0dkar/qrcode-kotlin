@@ -3,4 +3,4 @@
 # ORANGE_RED
 
 [common]\
-const val [ORANGE_RED](-o-r-a-n-g-e_-r-e-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)
+const val [ORANGE_RED](-o-r-a-n-g-e_-r-e-d.md): [Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html)
