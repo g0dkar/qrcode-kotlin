@@ -24,7 +24,6 @@ jobs:
       - name: Give execute permission to ./gradlew
         run: chmod +x ./gradlew
       - name: Build and Publish Locally
-        run: "./gradlew clean :build :publishToMavenLocal -x :test -Pkotlin.incremental.useClasspathSnapshot=false"
-#        run: "./gradlew clean :build :publishToMavenLocal -x :test -Pkotlin.incremental=false -Pkotlin.incremental.js=false -Pkotlin.incremental.useClasspathSnapshot=false"
+        run: "./gradlew clean :build :publishToMavenLocal -x :test -x :jvmTest -Pkotlin.incremental.useClasspathSnapshot=false"
       - name: Run Tests
         run: "./gradlew test -Pkotlin.incremental.useClasspathSnapshot=false"
