@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.github.g0dkar.qrcodeKotlin"
