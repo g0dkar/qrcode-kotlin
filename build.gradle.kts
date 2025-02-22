@@ -202,7 +202,7 @@ tasks {
     }
 }
 
-val dokkaJar by tasks.creating(Jar::class) {
+val dokkaJar by tasks.registering(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
