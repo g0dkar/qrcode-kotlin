@@ -1,13 +1,17 @@
 [![License](https://img.shields.io/github/license/g0dkar/qrcode-kotlin)](LICENSE)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.g0dkar/qrcode-kotlin.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.g0dkar%22%20AND%20a:%22qrcode-kotlin%22)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 
 # Change Log
 
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-## 4.1.0 - Latest
+## 4.2.1 - Latest
+
+- Fixed issue with the Error Correction being ignored (thanks [slaha](https://github.com/slaha)!)
+- Updated libs versions
+
+## 4.1.0
 
 - Another round of improvements and fixes (special thanks to [ruicanas](https://github.com/ruicanas) and [chphmh](https://github.com/chphmh)!)
 - Changed the minimal requirements for the library:
