@@ -10,7 +10,8 @@
 
 - Fixed issue with the Error Correction being ignored (thanks [slaha](https://github.com/slaha)!)
 - Updated libs versions
--
+- **Only for project devs:** fixed the pipeline issues with running tests for PRs.
+- **Investigating:** Issues with very large payloads being encoded
 
 ## 4.1.0
 
