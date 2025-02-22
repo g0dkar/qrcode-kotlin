@@ -12,6 +12,7 @@ import java.time.ZoneOffset
 class QRCodeDetailActivity : AppCompatActivity() {
     companion object {
         const val QRCODE_DATA = "qrCodeData"
+        const val QRCODE_STYLE = "qrCodeStyle"
         const val QRCODE_TIMESTAMP = "qrCodeTimestamp"
     }
 
@@ -27,11 +28,12 @@ class QRCodeDetailActivity : AppCompatActivity() {
         qrCodeDetailImage = findViewById(R.id.qrCodeDetailImage)
         qrCodeDetailFab = findViewById(R.id.qrCodeDetailFab)
 
-        setBrightness()
+        setBrightness() // Needed for readability if using this app on an actual phone
 
         val qrCodeData = intent.getStringExtra(QRCODE_DATA) ?: "ERROR"
+        val qrCodeStyle = intent.getIntExtra(QRCODE_STYLE, 0)
         val qrCodeTimestamp = intent.getLongExtra(QRCODE_TIMESTAMP, Instant.now().epochSecond)
-        val qrCode = QRCodeData(qrCodeData, OffsetDateTime.ofInstant(Instant.ofEpochSecond(qrCodeTimestamp), ZoneOffset.UTC))
+        val qrCode = QRCodeData(qrCodeData, qrCodeStyle, OffsetDateTime.ofInstant(Instant.ofEpochSecond(qrCodeTimestamp), ZoneOffset.UTC))
 
         qrCodeDetailText.text = qrCode.data
         qrCodeDetailImage.setImageBitmap(qrCode.bitmap)

@@ -63,7 +63,7 @@ import kotlin.jvm.JvmStatic
  * ```
  *
  * @param data String that will be encoded in the QR Code.
- * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.M].
+ * @param errorCorrectionLevel The level of Error Correction that should be applied to the QR Code. Defaults to [ErrorCorrectionLevel.MEDIUM].
  * @param dataType One of the available [QRCodeDataType]. By default, the code tries to guess which one is the best fitting one from your input data.
  *
  * @author Rafael Lins - g0dkar
@@ -77,7 +77,7 @@ import kotlin.jvm.JvmStatic
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCodeProcessor @JvmOverloads constructor(
     private val data: String,
-    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.M,
+    private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.MEDIUM,
     private val dataType: QRCodeDataType = QRUtil.getDataType(data),
     val graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
 ) {

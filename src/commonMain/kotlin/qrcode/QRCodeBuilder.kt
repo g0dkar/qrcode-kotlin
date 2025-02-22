@@ -10,6 +10,7 @@ import qrcode.color.DefaultColorFunction
 import qrcode.color.LinearGradientColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRMath
+import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.QRCodeProcessor
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
@@ -41,6 +42,8 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var userDoAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
+    private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH
+    private var minTypeNum: Int = 6
 
     enum class QRCodeShapesEnum {
         SQUARE,
@@ -218,6 +221,32 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
+    /**
+     * The level of error correction to apply to the QR Code. Defaults to [ErrorCorrectionLevel.VERY_HIGH].
+     *
+     * In short, this configures how much data loss we can tolerate. Higher error correction = Readable QR Codes even
+     * with large parts hidden/crumpled/deformed.
+     *
+     * @see ErrorCorrectionLevel
+     */
+    fun withErrorCorrectionLevel(ecl: ErrorCorrectionLevel): QRCodeBuilder {
+        this.errorCorrectionLevel = ecl
+        return this
+    }
+
+    /**
+     * The minimum level of "information density" this QRCode will maintain. Defaults to 6.
+     *
+     * This is complex to explain, but basically the lower this value the fewer squares the QR Code _**might**_ have.
+     *
+     * This is simply a way to make sure QR Codes for very few characters are readable :)
+     *
+     */
+    fun withMinimumInformationDensity(minTypeNum: Int): QRCodeBuilder {
+        this.minTypeNum = minTypeNum
+        return this
+    }
+
     private val beforeFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
         get() = { canvas, xOffset, yOffset ->
             drawLogoBeforeAction(canvas, xOffset, yOffset)
@@ -260,6 +289,8 @@ class QRCodeBuilder @JvmOverloads constructor(
             colorFunction,
             shapeFunction,
             graphicsFactory,
+            errorCorrectionLevel,
+            minTypeNum,
             beforeFn,
             afterFn,
         )

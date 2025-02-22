@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.github.g0dkar.qrcodeKotlin"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 403
-        versionName = "4.0.4"
+        versionName = "4.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,14 +36,14 @@ android {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:4.1.0")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.2.0")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
-    implementation("androidx.annotation:annotation:1.7.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.annotation:annotation:1.9.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
 }

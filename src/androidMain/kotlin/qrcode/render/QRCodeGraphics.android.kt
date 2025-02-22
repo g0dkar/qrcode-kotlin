@@ -36,7 +36,7 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Keeps a simple color cache. The default style is [FILL].
      */
-    protected fun paintFromCache(color: Int, paintStyle: Style = FILL, thickness: Double = 1.0): Paint {
+    protected fun paintFromCache(color: Int, paintStyle: Style = FILL, thickness: Double = 0.0): Paint {
         changed = true
         return paintCache.getOrPut(color) {
             Paint().apply { setColor(color) }
@@ -181,8 +181,10 @@ actual open class QRCodeGraphics actual constructor(
         color: Int,
         thickness: Double,
     ) {
+        val halfThickness = (thickness / 2.0).roundToInt()
+
         canvas.drawRoundRect(
-            rect(x, y, width, height),
+            rect(x + halfThickness, y + halfThickness, width - halfThickness * 2, height - halfThickness * 2),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
             paintFromCache(color, STROKE, thickness),

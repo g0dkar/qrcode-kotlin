@@ -1,14 +1,14 @@
 package qrcode.raw
 
-import qrcode.raw.ErrorCorrectionLevel.H
-import qrcode.raw.ErrorCorrectionLevel.Q
+import qrcode.raw.ErrorCorrectionLevel.VERY_HIGH
+import qrcode.raw.ErrorCorrectionLevel.HIGH
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 /**
  * The level of Error Correction to apply to the QR Code image. The Higher the Error Correction, the lower quality
  * **print** the QRCode can be (think of "wow, even with the paper a bit crumpled, it still read the QR Code!" - that
- * is likely a [Q] or [H] error correction).
+ * is likely a [HIGH] or [VERY_HIGH] error correction).
  *
  * The trade-off is the amount of data you can encode. The higher the error correction level, the less amount of data
  * you'll be able to encode.
@@ -30,10 +30,10 @@ import kotlin.js.JsExport
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
-    L(1, 21),
-    M(0, 25),
-    Q(3, 30),
-    H(2, 34)
+    LOW(1, 21),
+    MEDIUM(0, 25),
+    HIGH(3, 30),
+    VERY_HIGH(2, 34)
 }
 
 /**
