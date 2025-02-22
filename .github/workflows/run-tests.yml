@@ -24,6 +24,6 @@ jobs:
       - name: Give execute permission to ./gradlew
         run: chmod +x ./gradlew
       - name: Build and Publish Locally
-        run: "./gradlew clean :build :publishToMavenLocal -x :test"
+        run: "./gradlew clean :build :publishToMavenLocal -x :test --stacktrace"
       - name: Run Tests
         run: "./gradlew test"
