@@ -6,10 +6,11 @@
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-## 4.2.1 - Latest
+## 4.2.0 - Latest
 
 - Fixed issue with the Error Correction being ignored (thanks [slaha](https://github.com/slaha)!)
 - Updated libs versions
+-
 
 ## 4.1.0
 

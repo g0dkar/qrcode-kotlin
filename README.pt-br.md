@@ -46,7 +46,7 @@ do [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), portanto basta adicion
 
 ```groovy
 // Use esse tanto para Android quanto para a JVM
-implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
+implementation("io.github.g0dkar:qrcode-kotlin:4.2.0")
 ```
 
 **Maven - JVM:**
@@ -55,7 +55,7 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>4.2.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
@@ -65,14 +65,14 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>4.2.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.2.1
+npm install qrcode-kotlin@4.2.0
 ```
 
 **Browser:**
