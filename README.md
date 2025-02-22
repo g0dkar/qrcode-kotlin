@@ -47,7 +47,7 @@ other:
 
 ```groovy
 // Use this for both Android and JVM
-implementation("io.github.g0dkar:qrcode-kotlin:4.3.1")
+implementation("io.github.g0dkar:qrcode-kotlin:4.2.0")
 ```
 
 **Maven - JVM:**
@@ -56,7 +56,7 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.3.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>4.3.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
@@ -66,14 +66,14 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.3.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>4.3.1</version>
+    <version>4.2.0</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.3.1
+npm install qrcode-kotlin@4.2.0
 ```
 
 **Browser:**
