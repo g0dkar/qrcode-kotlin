@@ -1,7 +1,7 @@
 type Nullable<T> = T | null | undefined
 export declare namespace qrcode {
     class QRCode {
-        constructor(data: string, squareSize?: number, colorFn?: qrcode.color.QRCodeColorFunction, shapeFn?: qrcode.shape.QRCodeShapeFunction, graphicsFactory?: qrcode.render.QRCodeGraphicsFactory, doBefore?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void, doAfter?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void);
+        constructor(data: string, squareSize?: number, colorFn?: qrcode.color.QRCodeColorFunction, shapeFn?: qrcode.shape.QRCodeShapeFunction, graphicsFactory?: qrcode.render.QRCodeGraphicsFactory, errorCorrectionLevel?: qrcode.raw.ErrorCorrectionLevel, minTypeNum?: number, doBefore?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void, doAfter?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void);
         get data(): string;
         get squareSize(): number;
         get colorFn(): qrcode.color.QRCodeColorFunction;
@@ -40,6 +40,8 @@ export declare namespace qrcode {
         withGraphicsFactory(factory: qrcode.render.QRCodeGraphicsFactory): qrcode.QRCodeBuilder;
         withCustomColorFunction(colorFn: Nullable<qrcode.color.QRCodeColorFunction>): qrcode.QRCodeBuilder;
         withCustomShapeFunction(shapeFn: Nullable<qrcode.shape.QRCodeShapeFunction>): qrcode.QRCodeBuilder;
+        withErrorCorrectionLevel(ecl: qrcode.raw.ErrorCorrectionLevel): qrcode.QRCodeBuilder;
+        withMinimumInformationDensity(minTypeNum: number): qrcode.QRCodeBuilder;
         build(data: string): qrcode.QRCode;
     }
     namespace QRCodeBuilder {
@@ -381,25 +383,25 @@ export declare namespace qrcode.raw {
         private constructor();
         get value(): number;
         get maxTypeNum(): number;
-        static get L(): qrcode.raw.ErrorCorrectionLevel & {
-            get name(): "L";
+        static get LOW(): qrcode.raw.ErrorCorrectionLevel & {
+            get name(): "LOW";
             get ordinal(): 0;
         };
-        static get M(): qrcode.raw.ErrorCorrectionLevel & {
-            get name(): "M";
+        static get MEDIUM(): qrcode.raw.ErrorCorrectionLevel & {
+            get name(): "MEDIUM";
             get ordinal(): 1;
         };
-        static get Q(): qrcode.raw.ErrorCorrectionLevel & {
-            get name(): "Q";
+        static get HIGH(): qrcode.raw.ErrorCorrectionLevel & {
+            get name(): "HIGH";
             get ordinal(): 2;
         };
-        static get H(): qrcode.raw.ErrorCorrectionLevel & {
-            get name(): "H";
+        static get VERY_HIGH(): qrcode.raw.ErrorCorrectionLevel & {
+            get name(): "VERY_HIGH";
             get ordinal(): 3;
         };
         static values(): Array<qrcode.raw.ErrorCorrectionLevel>;
         static valueOf(value: string): qrcode.raw.ErrorCorrectionLevel;
-        get name(): "L" | "M" | "Q" | "H";
+        get name(): "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
         get ordinal(): 0 | 1 | 2 | 3;
     }
     abstract class MaskPattern {
