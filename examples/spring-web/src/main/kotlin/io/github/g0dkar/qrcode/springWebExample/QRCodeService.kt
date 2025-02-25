@@ -11,6 +11,7 @@ import qrcode.raw.ErrorCorrectionLevel.MEDIUM
 class QRCodeService {
     fun qrCode(
         data: String,
+        spacing: Int? = null,
         shape: QRCodeShapesEnum = SQUARE,
         ecl: ErrorCorrectionLevel = MEDIUM,
         informationDensity: Int = 6,
@@ -20,6 +21,11 @@ class QRCodeService {
             .withErrorCorrectionLevel(ecl)
             .withInformationDensity(informationDensity)
             .forceInformationDensity(forceInformationDensity) // Must be AFTER withInformationDensity()
+            .also {
+                if (spacing != null && spacing >= 0) {
+                    it.withInnerSpacing(spacing)
+                }
+            }
             .build(data)
             .render()
             .getBytes()
