@@ -1,10 +1,10 @@
 package qrcode
 
 import qrcode.QRCode.Companion.EMPTY_FN
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.CIRCLE
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.CUSTOM
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.ROUNDED_SQUARE
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.SQUARE
+import qrcode.QRCodeShapesEnum.CIRCLE
+import qrcode.QRCodeShapesEnum.CUSTOM
+import qrcode.QRCodeShapesEnum.ROUNDED_SQUARE
+import qrcode.QRCodeShapesEnum.SQUARE
 import qrcode.color.Colors
 import qrcode.color.DefaultColorFunction
 import qrcode.color.LinearGradientColorFunction
@@ -25,7 +25,7 @@ import kotlin.jvm.JvmOverloads
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 class QRCodeBuilder @JvmOverloads constructor(
-    private val shape: QRCodeShapesEnum,
+    private var shape: QRCodeShapesEnum,
     private var customShapeFunction: QRCodeShapeFunction? = null,
 ) {
     private var customColorFunction: QRCodeColorFunction? = null
@@ -43,14 +43,8 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
     private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH
-    private var minTypeNum: Int = 6
-
-    enum class QRCodeShapesEnum {
-        SQUARE,
-        CIRCLE,
-        ROUNDED_SQUARE,
-        CUSTOM
-    }
+    private var typeNum: Int = 6
+    private var forceInformationDensity: Boolean = false
 
     private fun innerSpace() =
         when (shape) {
@@ -59,6 +53,16 @@ class QRCodeBuilder @JvmOverloads constructor(
             ROUNDED_SQUARE -> RoundSquaresShapeFunction.defaultInnerSpace(squareSize)
             CUSTOM -> 0
         }.takeIf { it < squareSize } ?: 0
+
+    /**
+     * Changes the Shape of the QRCode.
+     *
+     * @see QRCodeShapesEnum
+     */
+    fun withShape(shape: QRCodeShapesEnum): QRCodeBuilder {
+        this.shape = shape
+        return withInnerSpacing(innerSpace())
+    }
 
     /** Size of each individual space in the QRCode (each cell). */
     fun withSize(size: Int): QRCodeBuilder {
@@ -235,15 +239,39 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The minimum level of "information density" this QRCode will maintain. Defaults to 6.
+     * The level of "information density" this QRCode will maintain. **Defaults to 6.**
      *
      * This is complex to explain, but basically the lower this value the fewer squares the QR Code _**might**_ have.
      *
      * This is simply a way to make sure QR Codes for very few characters are readable :)
      *
+     * **IMPORTANT:** Setting this also sets `forceInformationDensity` to `true`! By default, the code will compute a
+     * value automatically given the data to be encoded and the Error Correction Level. We take that if you are setting
+     * this manually, you probably know what you're doing.
+     *
+     * In short:
+     *
+     * - Lots of data: You can keep this as close to 1 as possible. Be aware that the QRCode might be a bit hard to
+     *                 read if this is too low.
+     * - Smaller data: Try to keep this a big higher, just in case.
+     *
+     * @see forceInformationDensity
      */
-    fun withMinimumInformationDensity(minTypeNum: Int): QRCodeBuilder {
-        this.minTypeNum = minTypeNum
+    fun withInformationDensity(minTypeNum: Int): QRCodeBuilder {
+        this.typeNum = minTypeNum
+        return forceInformationDensity(true)
+    }
+
+    /**
+     * Force the QRCode to use the value of Information Density specified. **Defaults to false.**
+     *
+     * **IMPORTANT:** Calling [withInformationDensity] will also set this to `true`!
+     *
+     * If this parameter is `false`, the `informationDensity` will be computed automatically given the data being
+     * encoded and the Error Correction Level.
+     */
+    fun forceInformationDensity(forceInformationDensity: Boolean): QRCodeBuilder {
+        this.forceInformationDensity = forceInformationDensity
         return this
     }
 
@@ -290,7 +318,8 @@ class QRCodeBuilder @JvmOverloads constructor(
             shapeFunction,
             graphicsFactory,
             errorCorrectionLevel,
-            minTypeNum,
+            typeNum,
+            forceInformationDensity,
             beforeFn,
             afterFn,
         )
