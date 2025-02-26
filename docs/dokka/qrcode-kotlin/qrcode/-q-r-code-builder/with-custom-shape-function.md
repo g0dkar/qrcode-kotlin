@@ -9,7 +9,7 @@ Sets the [QRCode.shapeFn](../-q-r-code/shape-fn.md) value to a custom one. If se
 
 Default is `null`, meaning a [QRCodeShapeFunction](../../qrcode.shape/-q-r-code-shape-function/index.md) will be created for the selected shape.
 
-If shape is [CUSTOM](-q-r-code-shapes-enum/-c-u-s-t-o-m/index.md) but customShapeFunction is not set, a [DefaultShapeFunction](../../qrcode.shape/-default-shape-function/index.md) will be used.
+If shape is [CUSTOM](../-q-r-code-shapes-enum/-c-u-s-t-o-m/index.md) but customShapeFunction is not set, a [DefaultShapeFunction](../../qrcode.shape/-default-shape-function/index.md) will be used.
 
 #### See also
 
