@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import qrcode.QRCodeShapesEnum
-import qrcode.QRCodeShapesEnum.SQUARE
 import qrcode.raw.ErrorCorrectionLevel
-import qrcode.raw.ErrorCorrectionLevel.MEDIUM
 
 @RestController
 class QRCodeController(
@@ -19,13 +17,25 @@ class QRCodeController(
     @GetMapping("/qrcode", produces = [IMAGE_PNG_VALUE])
     fun generateQRCode(
         @RequestParam(required = true) data: String,
-        @RequestParam(required = false) shape: QRCodeShapesEnum = SQUARE,
+        @RequestParam(required = false, defaultValue = "SQUARE") shape: String,
         @RequestParam(required = false) spacing: Int?,
-        @RequestParam(name = "ecl", required = false) ecl: ErrorCorrectionLevel = MEDIUM,
+        @RequestParam(name = "ecl", required = false, defaultValue = "MEDIUM") ecl: String,
         @RequestParam(name = "id", required = false) informationDensity: Int = 6,
         @RequestParam(name = "fid", required = false) forceInformationDensity: Boolean = false,
     ): ResponseEntity<ByteArrayResource> {
-        val pngData = qrCodeService.qrCode(data, spacing, shape, ecl, informationDensity, forceInformationDensity)
+        val shapeEnum = try {
+            QRCodeShapesEnum.valueOf(shape.uppercase())
+        } catch (_: Exception) {
+            QRCodeShapesEnum.SQUARE
+        }
+        val eclEnum = try {
+            ErrorCorrectionLevel.valueOf(ecl.uppercase())
+        } catch (_: Exception) {
+            ErrorCorrectionLevel.MEDIUM
+        }
+
+        val pngData =
+            qrCodeService.qrCode(data, spacing, shapeEnum, eclEnum, informationDensity, forceInformationDensity)
         val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
 
         return ResponseEntity.ok()
