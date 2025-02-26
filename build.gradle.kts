@@ -230,8 +230,7 @@ val ossrhPassword = properties.getOrDefault("ossrhPassword", System.getenv("OSSR
 val npmAccessKey = properties.getOrDefault("npmAccessKey", System.getenv("NPM_ACCESSKEY"))?.toString()
 
 nexusPublishing {
-    // Workaround from https://github.com/gradle-nexus/publish-plugin/issues/220
-    this.repositories {
+    repositories {
         sonatype {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))

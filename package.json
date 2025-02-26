@@ -1,6 +1,6 @@
 {
   "name": "qrcode-kotlin",
-  "version": "0.0.1",
+  "version": "4.3.0",
   "description": "Generate Beautiful QRCodes in pure JS (actually, Kotlin)",
   "main": "index.js",
   "directories": {

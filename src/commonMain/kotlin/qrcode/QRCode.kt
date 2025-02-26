@@ -3,10 +3,10 @@ package qrcode
 import qrcode.QRCode.Companion.ofCircles
 import qrcode.QRCode.Companion.ofRoundedSquares
 import qrcode.QRCode.Companion.ofSquares
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.CIRCLE
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.CUSTOM
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.ROUNDED_SQUARE
-import qrcode.QRCodeBuilder.QRCodeShapesEnum.SQUARE
+import qrcode.QRCodeShapesEnum.CIRCLE
+import qrcode.QRCodeShapesEnum.CUSTOM
+import qrcode.QRCodeShapesEnum.ROUNDED_SQUARE
+import qrcode.QRCodeShapesEnum.SQUARE
 import qrcode.color.DefaultColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
@@ -58,6 +58,7 @@ class QRCode @JvmOverloads constructor(
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
     errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH,
     minTypeNum: Int = 6,
+    forceMinTypeNum: Boolean = false,
     private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
     private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
 ) {
@@ -100,7 +101,8 @@ class QRCode @JvmOverloads constructor(
          * @see DefaultShapeFunction
          */
         @JvmStatic
-        fun ofCustomShape(customShapeFunction: QRCodeShapeFunction): QRCodeBuilder = QRCodeBuilder(CUSTOM, customShapeFunction)
+        fun ofCustomShape(customShapeFunction: QRCodeShapeFunction): QRCodeBuilder =
+            QRCodeBuilder(CUSTOM, customShapeFunction)
     }
 
     /** The underlying [QRCodeProcessor] object that'll do all calculations */
@@ -108,7 +110,11 @@ class QRCode @JvmOverloads constructor(
         QRCodeProcessor(data, errorCorrectionLevel, graphicsFactory = graphicsFactory)
 
     /** Computed type number for the given [data] parameter */
-    val typeNum = QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
+    val typeNum = if (forceMinTypeNum) {
+        minTypeNum
+    } else {
+        QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
+    }
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
     val rawData = qrCodeProcessor.encode(typeNum)
