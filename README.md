@@ -47,7 +47,7 @@ other:
 
 ```groovy
 // Use this for both Android and JVM
-implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
+implementation("io.github.g0dkar:qrcode-kotlin:4.3.0")
 ```
 
 **Maven - JVM:**
@@ -56,7 +56,7 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>4.2.1</version>
+    <version>4.3.0</version>
 </dependency>
 ```
 
@@ -66,14 +66,14 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>4.2.1</version>
+    <version>4.3.0</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.2.1
+npm install qrcode-kotlin@4.3.0
 ```
 
 **Browser:**
@@ -146,7 +146,7 @@ import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
 @GetMapping("/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
-    val pngData = QRCode().ofSquares()
+    val pngData = QRCode.ofSquares()
         .build(content)
         .render()
     val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)

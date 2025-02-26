@@ -19,4 +19,4 @@ pluginManagement {
 rootProject.name = "qrcode-kotlin"
 
 // Examples
-include("examples:kotlin", "examples:java", "examples:android")
+include("examples:kotlin", "examples:java", "examples:android", "examples:spring-web")
