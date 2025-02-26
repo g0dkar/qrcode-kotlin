@@ -33,6 +33,9 @@ dependencies {
 
     // QRCode-Kotlin
     implementation("io.github.g0dkar:qrcode-kotlin:4.3.0")
+
+    // Tests
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 kotlin {
