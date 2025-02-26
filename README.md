@@ -39,7 +39,7 @@ that we can provide a better library/API for them. Please, feel free to share if
 ## 1. Installation
 
 The library is available
-from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.0/qrcode-kotlin)
+from [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.3.0/qrcode-kotlin)
 and [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), so you can add it to your project as a dependency like any
 other:
 

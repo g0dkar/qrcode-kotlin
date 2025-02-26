@@ -39,7 +39,7 @@ Por favor, sinta-se livre para compartilhar se e como você utiliza este projeto
 ## Instalação
 
 A biblioteca está disponível através
-da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.1.1/qrcode-kotlin) e
+da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.3.0/qrcode-kotlin) e
 do [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), portanto basta adicioná-la a seu projeto como qualquer outra:
 
 **Gradle:**
