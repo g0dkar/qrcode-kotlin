@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.25"
+kotlin = "2.1.10"
 dokka = "2.0.0"
 kotest = "5.9.1"
 mavenNexus = "2.0.0"
