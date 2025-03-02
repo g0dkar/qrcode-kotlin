@@ -187,31 +187,40 @@ idea {
 /* **************** */
 /* Docs             */
 /* **************** */
-tasks {
-    dokkaHtml {
-        outputDirectory.set(layout.buildDirectory.dir("javadoc"))
+//tasks {
+//    dokkaHtml {
+//        outputDirectory.set(layout.buildDirectory.dir("javadoc"))
+//
+//        dokkaSourceSets {
+//            configureEach {
+//                includeNonPublic.set(false)
+//                skipDeprecated.set(true)
+//                reportUndocumented.set(true)
+//                skipEmptyPackages.set(true)
+//            }
+//        }
+//    }
+//}
 
-        dokkaSourceSets {
-            configureEach {
-                includeNonPublic.set(false)
-                skipDeprecated.set(true)
-                reportUndocumented.set(true)
-                skipEmptyPackages.set(true)
+dokka {
+    moduleName.set("QRCode-Kotlin")
+
+    dokkaSourceSets {
+        configureEach {
+            skipDeprecated = true
+            reportUndocumented = true
+            skipEmptyPackages = true
+            suppressGeneratedFiles = true
+
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl("https://qrcodekotlin.com/dokka")
             }
         }
     }
 
-    dokkaGfm {
-        outputDirectory.set(rootDir.resolve("docs/dokka"))
-
-        dokkaSourceSets {
-            configureEach {
-                includeNonPublic.set(false)
-                skipDeprecated.set(true)
-                reportUndocumented.set(true)
-                skipEmptyPackages.set(true)
-            }
-        }
+    pluginsConfiguration.html {
+        footerMessage.set("(c) Your Company")
     }
 }
 
@@ -219,7 +228,7 @@ val dokkaJar by tasks.registering(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
+    from(dokka)
 }
 
 /* **************** */
