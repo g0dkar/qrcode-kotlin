@@ -1,10 +1,10 @@
 [versions]
-kotlin = "1.9.25"
+kotlin = "2.1.10"
 dokka = "2.0.0"
 kotest = "5.9.1"
 mavenNexus = "2.0.0"
 androidPlugin = "8.7.3"
-npmPublish = "3.4.2"
+npmPublish = "3.5.3"
 core-ktx = "1.15.0"
 appcompat = "1.7.0"
 material = "1.12.0"

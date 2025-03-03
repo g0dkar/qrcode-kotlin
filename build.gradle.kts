@@ -202,7 +202,7 @@ dokka {
             documentedVisibilities = setOf(VisibilityModifier.Public)
 
             sourceLink {
-                remoteUrl("https://qrcodekotlin.com/dokka")
+                remoteUrl("https://github.com/g0dkar/qrcode-kotlin")
             }
         }
     }
