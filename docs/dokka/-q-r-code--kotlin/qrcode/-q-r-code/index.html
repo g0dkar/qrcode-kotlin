@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>QRCode</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    QRCode-Kotlin
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+4.3.0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":/commonMain"
+                                       data-filter=":/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    QRCode-Kotlin
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="QRCode-Kotlin::qrcode/QRCode///PointingToDeclaration//1558683979">
+  <div class="breadcrumbs"><a href="../../../index.html">QRCode-Kotlin</a><span class="delimiter">/</span><a href="../index.html">qrcode</a><span class="delimiter">/</span><span class="current">QRCode</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>QRCode</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">QRCode</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>squareSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_SQUARE_SIZE<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>colorFn<span class="token operator">: </span><a href="../../qrcode.color/-q-r-code-color-function/index.html">QRCodeColorFunction</a><span class="token operator"> = </span>DefaultColorFunction()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>shapeFn<span class="token operator">: </span><a href="../../qrcode.shape/-q-r-code-shape-function/index.html">QRCodeShapeFunction</a><span class="token operator"> = </span>DefaultShapeFunction(squareSize, innerSpace = 0)<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>graphicsFactory<span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics-factory/index.html">QRCodeGraphicsFactory</a><span class="token operator"> = </span>QRCodeGraphicsFactory()<span class="token punctuation">, </span></span><span class="parameter ">errorCorrectionLevel<span class="token operator">: </span><a href="../../qrcode.raw/-error-correction-level/index.html">ErrorCorrectionLevel</a><span class="token operator"> = </span>ErrorCorrectionLevel.VERY_HIGH<span class="token punctuation">, </span></span><span class="parameter ">minTypeNum<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">6</span><span class="token punctuation">, </span></span><span class="parameter ">forceMinTypeNum<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">doBefore<span class="token operator">: </span><a href="index.html">QRCode</a><span class="token punctuation">.</span><span class="token punctuation">(</span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>EMPTY_FN<span class="token punctuation">, </span></span><span class="parameter ">doAfter<span class="token operator">: </span><a href="index.html">QRCode</a><span class="token punctuation">.</span><span class="token punctuation">(</span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>EMPTY_FN</span></span><span class="token punctuation">)</span><span class="clearfix"><span class="floating-right">(<a href="https://qrcodekotlin.com/dokka/src/commonMain/kotlin/qrcode/QRCode.kt#L53">source</a>)</span></span></div><p class="paragraph">A simple class to create easily create aesthetic pleasing QRCodes.</p><p class="paragraph">It'll create a <a href="../../qrcode.raw/-q-r-code-processor/index.html">QRCodeProcessor</a> and build a custom render function on top of it.</p><p class="paragraph">It includes things like:</p><ul><li><p class="paragraph">QR Codes with a logo at the center</p></li><li><p class="paragraph">QR Codes with dots instead of squares</p></li><li><p class="paragraph">Colorful QR Codes (including linear gradient colors)</p></li></ul><p class="paragraph">If you have a suggestion for a nice QR Code style, feel free to open a PR, or an Issue with your suggestion :)</p><span class="kdoc-tag"><h4 class="">Author</h4><p class="paragraph">Rafael Lins - g0dkar</p></span><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-q-r-code-builder/index.html"><span>QRCode</span><wbr></wbr><span><span>Builder</span></span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-companion/of-squares.html"><span>QRCode.</span><wbr></wbr><span>Companion.</span><wbr></wbr><span>ofSquares</span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-companion/of-circles.html"><span>QRCode.</span><wbr></wbr><span>Companion.</span><wbr></wbr><span>ofCircles</span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-companion/of-rounded-squares.html"><span>QRCode.</span><wbr></wbr><span>Companion.</span><wbr></wbr><span>of</span><wbr></wbr><span>Rounded</span><wbr></wbr><span><span>Squares</span></span></a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-148332772%2FConstructors%2F1558683979" anchor-label="QRCode" id="-148332772%2FConstructors%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-q-r-code.html"><span><span>QRCode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-148332772%2FConstructors%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">data<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">squareSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_SQUARE_SIZE<span class="token punctuation">, </span></span><span class="parameter ">colorFn<span class="token operator">: </span><a href="../../qrcode.color/-q-r-code-color-function/index.html">QRCodeColorFunction</a><span class="token operator"> = </span>DefaultColorFunction()<span class="token punctuation">, </span></span><span class="parameter ">shapeFn<span class="token operator">: </span><a href="../../qrcode.shape/-q-r-code-shape-function/index.html">QRCodeShapeFunction</a><span class="token operator"> = </span>DefaultShapeFunction(squareSize, innerSpace = 0)<span class="token punctuation">, </span></span><span class="parameter ">graphicsFactory<span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics-factory/index.html">QRCodeGraphicsFactory</a><span class="token operator"> = </span>QRCodeGraphicsFactory()<span class="token punctuation">, </span></span><span class="parameter ">errorCorrectionLevel<span class="token operator">: </span><a href="../../qrcode.raw/-error-correction-level/index.html">ErrorCorrectionLevel</a><span class="token operator"> = </span>ErrorCorrectionLevel.VERY_HIGH<span class="token punctuation">, </span></span><span class="parameter ">minTypeNum<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">6</span><span class="token punctuation">, </span></span><span class="parameter ">forceMinTypeNum<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">doBefore<span class="token operator">: </span><a href="index.html">QRCode</a><span class="token punctuation">.</span><span class="token punctuation">(</span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>EMPTY_FN<span class="token punctuation">, </span></span><span class="parameter ">doAfter<span class="token operator">: </span><a href="index.html">QRCode</a><span class="token punctuation">.</span><span class="token punctuation">(</span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>EMPTY_FN</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="360454596%2FClasslikes%2F1558683979" anchor-label="Companion" id="360454596%2FClasslikes%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="360454596%2FClasslikes%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1697181870%2FProperties%2F1558683979" anchor-label="colorFn" id="-1697181870%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="color-fn.html"><span>color</span><wbr></wbr><span><span>Fn</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1697181870%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="color-fn.html">colorFn</a><span class="token operator">: </span><a href="../../qrcode.color/-q-r-code-color-function/index.html">QRCodeColorFunction</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-663272945%2FProperties%2F1558683979" anchor-label="computedSize" id="-663272945%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="computed-size.html"><span>computed</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-663272945%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="computed-size.html">computedSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Calculated size of the whole QRCode (the final image will be a square of <code class="lang-kotlin">computedSize</code> by <code class="lang-kotlin">computedSize</code>)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1990797971%2FProperties%2F1558683979" anchor-label="data" id="1990797971%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="data.html"><span><span>data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1990797971%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="data.html">data</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1594155310%2FProperties%2F1558683979" anchor-label="graphics" id="-1594155310%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="graphics.html"><span><span>graphics</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1594155310%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="graphics.html">graphics</a><span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a></div><div class="brief "><p class="paragraph">The <a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a> (aka &quot;canvas&quot;) where all the drawing will happen</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="271559006%2FProperties%2F1558683979" anchor-label="graphicsFactory" id="271559006%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="graphics-factory.html"><span>graphics</span><wbr></wbr><span><span>Factory</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="271559006%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="graphics-factory.html">graphicsFactory</a><span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics-factory/index.html">QRCodeGraphicsFactory</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1684446329%2FProperties%2F1558683979" anchor-label="qrCodeProcessor" id="1684446329%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="qr-code-processor.html"><span>qr</span><wbr></wbr><span>Code</span><wbr></wbr><span><span>Processor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1684446329%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="qr-code-processor.html">qrCodeProcessor</a><span class="token operator">: </span><a href="../../qrcode.raw/-q-r-code-processor/index.html">QRCodeProcessor</a></div><div class="brief "><p class="paragraph">The underlying <a href="../../qrcode.raw/-q-r-code-processor/index.html">QRCodeProcessor</a> object that'll do all calculations</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1097456437%2FProperties%2F1558683979" anchor-label="rawData" id="-1097456437%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="raw-data.html"><span>raw</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1097456437%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="raw-data.html">rawData</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="../../qrcode.internals/-q-r-code-square/index.html">QRCodeSquare</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Raw QRCode data computed by <a href="../../qrcode.raw/-q-r-code-processor/index.html">QRCodeProcessor</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1925494868%2FProperties%2F1558683979" anchor-label="shapeFn" id="1925494868%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="shape-fn.html"><span>shape</span><wbr></wbr><span><span>Fn</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1925494868%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="shape-fn.html">shapeFn</a><span class="token operator">: </span><a href="../../qrcode.shape/-q-r-code-shape-function/index.html">QRCodeShapeFunction</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1313525249%2FProperties%2F1558683979" anchor-label="squareSize" id="-1313525249%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="square-size.html"><span>square</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1313525249%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="square-size.html">squareSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2091214831%2FProperties%2F1558683979" anchor-label="typeNum" id="-2091214831%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="type-num.html"><span>type</span><wbr></wbr><span><span>Num</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2091214831%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="type-num.html">typeNum</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Computed type number for the given <a href="data.html">data</a> parameter</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-595136490%2FFunctions%2F1558683979" anchor-label="render" id="-595136490%2FFunctions%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="render.html"><span><span>render</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-595136490%2FFunctions%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">fun </span><a href="render.html"><span class="token function">render</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">qrCodeGraphics<span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token operator"> = </span>graphics<span class="token punctuation">, </span></span><span class="parameter ">xOffset<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">yOffset<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a></div><div class="brief "><p class="paragraph">Executes all the drawing of the QRCode and returns the <a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a> of the complete QRCode.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1490962335%2FFunctions%2F1558683979" anchor-label="renderToBytes" id="-1490962335%2FFunctions%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="render-to-bytes.html"><span>render</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Bytes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1490962335%2FFunctions%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">fun </span><a href="render-to-bytes.html"><span class="token function">renderToBytes</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">format<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;PNG&quot;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte-array/index.html">ByteArray</a></div><div class="brief "><p class="paragraph">Calls <a href="render.html">render</a> and then returns the bytes of a <a href="render-to-bytes.html">format</a> (default = PNG) render of the QRCode.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1624560142%2FFunctions%2F1558683979" anchor-label="reset" id="1624560142%2FFunctions%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset.html"><span><span>reset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1624560142%2FFunctions%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="reset.html"><span class="token function">reset</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Completely resets the QRCode drawing. After this, you can call <a href="render-to-bytes.html">renderToBytes</a> or <a href="render.html">render</a> to redraw the whole QRCode. Useful when you want, for example, a transparent background QRCode to add to a larger image and then the same QRCode drawn on top of a custom background.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>&copy; 2021-2025 Rafael M. Lins - MIT License</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

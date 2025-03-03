@@ -1,0 +1,1 @@
+sourceset_dependencies='{":/androidDebug":[":/commonMain"],":/androidMain":[":/commonMain"],":/androidRelease":[":/commonMain"],":/commonMain":[],":/jsMain":[":/commonMain"],":/jvmMain":[":/commonMain"]}'
