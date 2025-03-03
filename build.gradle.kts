@@ -1,7 +1,9 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
+import java.time.LocalDateTime
 
 buildscript {
     dependencies {
@@ -204,6 +206,7 @@ idea {
 
 dokka {
     moduleName.set("QRCode-Kotlin")
+    basePublicationsDirectory = layout.buildDirectory.dir("javadoc")
 
     dokkaSourceSets {
         configureEach {
@@ -212,15 +215,17 @@ dokka {
             skipEmptyPackages = true
             suppressGeneratedFiles = true
 
+            documentedVisibilities = setOf(VisibilityModifier.Public)
+
             sourceLink {
-                localDirectory.set(file("src/main/kotlin"))
+//                localDirectory.set(file("src/main/kotlin"))
                 remoteUrl("https://qrcodekotlin.com/dokka")
             }
         }
     }
 
     pluginsConfiguration.html {
-        footerMessage.set("(c) Your Company")
+        footerMessage.set("&copy; 2021-${LocalDateTime.now().year} Rafael M. Lins - MIT License")
     }
 }
 
@@ -228,7 +233,20 @@ val dokkaJar by tasks.registering(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
-    from(dokka)
+    from(tasks.dokkaGenerate)
+}
+
+val dokkaCopyToFolder by tasks.registering(Copy::class) {
+    doFirst { layout.projectDirectory.dir("docs/dokka").asFile.deleteRecursively() }
+
+    from(layout.buildDirectory.dir("dokka/html"))
+    into(layout.projectDirectory.dir("docs/dokka"))
+}
+
+tasks {
+    dokkaGenerate {
+        finalizedBy(dokkaCopyToFolder)
+    }
 }
 
 /* **************** */

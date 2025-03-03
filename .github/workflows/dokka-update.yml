@@ -18,10 +18,11 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
+          cache: gradle
+      - name: Give execute permission to ./gradlew
+        run: chmod +x ./gradlew
       - name: Run Dokka Update
-        uses: gradle/gradle-build-action@ac2d340dc04d9e1113182899e983b5400c17cda1 # v3
-        with:
-          arguments: :dokkaGfm
+        run: "./gradlew dokkaGenerate"
       - name: Commit Changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9
         with:
