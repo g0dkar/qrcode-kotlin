@@ -148,7 +148,7 @@ import org.springframework.http.MediaType.IMAGE_PNG_VALUE
 
 @GetMapping("/qrcode")
 fun generateQrCode(content: String): ResponseEntity<ByteArrayResource> {
-    val pngData = QRCode().ofSquares()
+    val pngData = QRCode.ofSquares()
         .build(content)
         .render()
     val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
