@@ -48,16 +48,15 @@ val javaVersionNumber = javaVersion.majorVersion.toInt()
 kotlin {
     applyDefaultHierarchyTemplate()
 
+    jvmToolchain(javaVersionNumber)
+
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
-    jvm {
-        jvmToolchain(javaVersionNumber)
-    }
+    jvm()
 
     androidTarget {
-        jvmToolchain(javaVersionNumber)
         publishLibraryVariants("release")
     }
 
@@ -189,21 +188,6 @@ idea {
 /* **************** */
 /* Docs             */
 /* **************** */
-//tasks {
-//    dokkaHtml {
-//        outputDirectory.set(layout.buildDirectory.dir("javadoc"))
-//
-//        dokkaSourceSets {
-//            configureEach {
-//                includeNonPublic.set(false)
-//                skipDeprecated.set(true)
-//                reportUndocumented.set(true)
-//                skipEmptyPackages.set(true)
-//            }
-//        }
-//    }
-//}
-
 dokka {
     moduleName.set("QRCode-Kotlin")
     basePublicationsDirectory = layout.buildDirectory.dir("javadoc")
@@ -218,7 +202,6 @@ dokka {
             documentedVisibilities = setOf(VisibilityModifier.Public)
 
             sourceLink {
-//                localDirectory.set(file("src/main/kotlin"))
                 remoteUrl("https://qrcodekotlin.com/dokka")
             }
         }
