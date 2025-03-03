@@ -222,7 +222,7 @@ val dokkaJar by tasks.registering(Jar::class) {
 val dokkaCopyToFolder by tasks.registering(Copy::class) {
     doFirst { layout.projectDirectory.dir("docs/dokka").asFile.deleteRecursively() }
 
-    from(layout.buildDirectory.dir("dokka/html"))
+    from(layout.buildDirectory.dir("javadoc/html"))
     into(layout.projectDirectory.dir("docs/dokka"))
 }
 
