@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 import java.time.LocalDateTime
 
@@ -61,12 +65,30 @@ kotlin {
     }
 
     js {
-        compilations.all {
-            kotlinOptions {
-                main = "noCall"
-            }
-        }
+//        val main by compilations.getting {
+//            compileTaskProvider.configure {
+//                compilerOptions {
+//                    sourceMap = true
+//                }
+//            }
+//        }
 
+        browser {
+            commonWebpackConfig {
+                mode = PRODUCTION
+                sourceMaps = true
+            }
+
+            testTask {
+                enabled = false
+            }
+
+            binaries.library()
+            generateTypeScriptDefinitions()
+        }
+    }
+
+    wasmJs {
         browser {
             commonWebpackConfig {
                 mode = PRODUCTION
@@ -115,6 +137,12 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
+            }
+        }
+
+        wasmJsMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
             }
         }
     }
