@@ -14,12 +14,14 @@ fun main() {
         .withErrorCorrectionLevel(ErrorCorrectionLevel.LOW) // <- See Here
         .withInformationDensity(1) // <- Force using the lowest possible value
         .build(qrCodeData)
+        .also { println("[Low] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.typeNum}") }
     val eclLowPngData = eclLowQRCode.renderToBytes()
 
     val eclMediumQRCode = QRCode.ofSquares()
         .withErrorCorrectionLevel(ErrorCorrectionLevel.MEDIUM) // <- See Here
         .withInformationDensity(1) // <- Force using the lowest possible value
         .build(qrCodeData)
+        .also { println("[Medium] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.typeNum}") }
     val eclMediumPngData = eclMediumQRCode.renderToBytes()
 
     // ECL High: we need to add +1 to the information density because of the extra data added by the ECL
@@ -27,6 +29,7 @@ fun main() {
         .withErrorCorrectionLevel(ErrorCorrectionLevel.HIGH) // <- See Here
         .withInformationDensity(2) // <- Force using the lowest possible value
         .build(qrCodeData)
+        .also { println("[High] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.typeNum}") }
     val eclHighPngData = eclHighQRCode.renderToBytes()
 
     // ECL Very High: we need to add +1 to the information density because of the extra data added by the ECL
@@ -34,7 +37,14 @@ fun main() {
         .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH) // <- See Here
         .withInformationDensity(2) // <- Force using the lowest possible value
         .build(qrCodeData)
+        .also { println("[Very High] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.typeNum}") }
     val eclVeryHighPngData = eclVeryHighQRCode.renderToBytes()
+
+    // Default: ECL Very High + auto computed information density
+    val eclDefaultQRCode = QRCode.ofSquares()
+        .build(qrCodeData)
+        .also { println("[Default] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.typeNum}") }
+    val eclDefaultPngData = eclDefaultQRCode.renderToBytes()
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
@@ -42,4 +52,5 @@ fun main() {
     FileOutputStream("examples/kotlin/example06-ecl-medium.png").use { it.write(eclMediumPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-high.png").use { it.write(eclHighPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-very-high.png").use { it.write(eclVeryHighPngData) }
+    FileOutputStream("examples/kotlin/example06-ecl-default.png").use { it.write(eclDefaultPngData) }
 }

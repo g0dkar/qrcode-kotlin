@@ -43,7 +43,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
     private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH
-    private var typeNum: Int = 6
+    private var typeNum: Int = 0
     private var forceInformationDensity: Boolean = false
 
     private fun innerSpace() =

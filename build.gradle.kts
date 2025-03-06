@@ -226,12 +226,6 @@ val dokkaCopyToFolder by tasks.registering(Copy::class) {
     into(layout.projectDirectory.dir("docs/dokka"))
 }
 
-tasks {
-    dokkaGenerate {
-        finalizedBy(dokkaCopyToFolder)
-    }
-}
-
 /* **************** */
 /* Publishing       */
 /* **************** */
