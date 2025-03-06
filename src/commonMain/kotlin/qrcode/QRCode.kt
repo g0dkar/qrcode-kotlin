@@ -109,12 +109,17 @@ class QRCode @JvmOverloads constructor(
     val qrCodeProcessor: QRCodeProcessor =
         QRCodeProcessor(data, errorCorrectionLevel, graphicsFactory = graphicsFactory)
 
-    /** Computed type number for the given [data] parameter */
+    /** Information Density parameter. More data = more information density. Previously known as [typeNum]. */
     val informationDensity = if (forceMinTypeNum) {
         minTypeNum
     } else {
         QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
     }
+
+    /** Computed type number for the given [data] parameter. Renamed/replaced with [informationDensity]. */
+    @Deprecated("Please use informationDensity instead.")
+    val typeNum: Int
+        get() = informationDensity
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
     val rawData = qrCodeProcessor.encode(informationDensity)
