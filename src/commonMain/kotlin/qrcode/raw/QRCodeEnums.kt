@@ -1,7 +1,7 @@
 package qrcode.raw
 
-import qrcode.raw.ErrorCorrectionLevel.VERY_HIGH
 import qrcode.raw.ErrorCorrectionLevel.HIGH
+import qrcode.raw.ErrorCorrectionLevel.VERY_HIGH
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
@@ -30,6 +30,7 @@ import kotlin.js.JsExport
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
+    AUTO(0, 0), // Indicates that one of the other values will be computed and used
     LOW(1, 21),
     MEDIUM(0, 25),
     HIGH(3, 30),
