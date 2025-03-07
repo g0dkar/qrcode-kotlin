@@ -46,6 +46,13 @@ fun main() {
         .also { println("[Default] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
     val eclDefaultPngData = eclDefaultQRCode.renderToBytes()
 
+    // Default: ECL Very High + auto computed information density
+    val eclDefaultLowQRCode = QRCode.ofSquares()
+        .withErrorCorrectionLevel(ErrorCorrectionLevel.LOW)
+        .build(qrCodeData)
+        .also { println("[Default - ECL Low] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
+    val eclDefaultLowPngData = eclDefaultLowQRCode.renderToBytes()
+
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
     FileOutputStream("examples/kotlin/example06-ecl-low.png").use { it.write(eclLowPngData) }
@@ -53,4 +60,5 @@ fun main() {
     FileOutputStream("examples/kotlin/example06-ecl-high.png").use { it.write(eclHighPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-very-high.png").use { it.write(eclVeryHighPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-default.png").use { it.write(eclDefaultPngData) }
+    FileOutputStream("examples/kotlin/example06-ecl-default-low.png").use { it.write(eclDefaultLowPngData) }
 }

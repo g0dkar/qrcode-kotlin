@@ -12,6 +12,7 @@ import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRMath
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.QRCodeProcessor
+import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
 import qrcode.shape.CircleShapeFunction
@@ -42,9 +43,8 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var userDoAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
-    private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH
-    private var typeNum: Int = 0
-    private var forceInformationDensity: Boolean = false
+    private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW
+    private var informationDensity: Int = 0
 
     private fun innerSpace() =
         when (shape) {
@@ -226,7 +226,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The level of error correction to apply to the QR Code. Defaults to [ErrorCorrectionLevel.VERY_HIGH].
+     * The level of error correction to apply to the QR Code. Defaults to [ErrorCorrectionLevel.LOW].
      *
      * In short, this configures how much data loss we can tolerate. Higher error correction = Readable QR Codes even
      * with large parts hidden/crumpled/deformed.
@@ -239,15 +239,15 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The level of "information density" this QRCode will maintain. **Defaults to 6.**
+     * The level of "information density" this QRCode will maintain.
      *
-     * This is complex to explain, but basically the lower this value the fewer squares the QR Code _**might**_ have.
+     * **Defaults to `0`. Meaning the minimum possible value will be computed and used.**
      *
-     * This is simply a way to make sure QR Codes for very few characters are readable :)
+     * Must be a value between `1` and `40`. **If this value is `0` (zero), the minimum possible value for it will be
+     * computed and used.**
      *
-     * **IMPORTANT:** Setting this also sets `forceInformationDensity` to `true`! By default, the code will compute a
-     * value automatically given the data to be encoded and the Error Correction Level. We take that if you are setting
-     * this manually, you probably know what you're doing.
+     * This is complex to explain, but basically the lower this value the fewer squares the QRCode have. The catch is:
+     * the fewer squares the QRCode have, the harder it'll be to read damaged/obstructed versions of it.
      *
      * In short:
      *
@@ -255,23 +255,11 @@ class QRCodeBuilder @JvmOverloads constructor(
      *                 read if this is too low.
      * - Smaller data: Try to keep this a big higher, just in case.
      *
-     * @see forceInformationDensity
-     */
-    fun withInformationDensity(minTypeNum: Int): QRCodeBuilder {
-        this.typeNum = minTypeNum
-        return forceInformationDensity(true)
-    }
-
-    /**
-     * Force the QRCode to use the value of Information Density specified. **Defaults to false.**
+     * @see QRCodeProcessor.infoDensityForDataAndECL
      *
-     * **IMPORTANT:** Calling [withInformationDensity] will also set this to `true`!
-     *
-     * If this parameter is `false`, the `informationDensity` will be computed automatically given the data being
-     * encoded and the Error Correction Level.
      */
-    fun forceInformationDensity(forceInformationDensity: Boolean): QRCodeBuilder {
-        this.forceInformationDensity = forceInformationDensity
+    fun withInformationDensity(informationDensity: Int): QRCodeBuilder {
+        this.informationDensity = informationDensity.coerceIn(0..MAXIMUM_INFO_DENSITY)
         return this
     }
 
@@ -318,8 +306,7 @@ class QRCodeBuilder @JvmOverloads constructor(
             shapeFunction,
             graphicsFactory,
             errorCorrectionLevel,
-            typeNum,
-            forceInformationDensity,
+            informationDensity,
             beforeFn,
             afterFn,
         )

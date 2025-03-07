@@ -1,5 +1,6 @@
 package qrcode
 
+import qrcode.QRCode.Companion.DEFAULT_SQUARE_SIZE
 import qrcode.QRCode.Companion.ofCircles
 import qrcode.QRCode.Companion.ofRoundedSquares
 import qrcode.QRCode.Companion.ofSquares
@@ -51,21 +52,30 @@ import kotlin.jvm.JvmStatic
 @OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
+    /** Data that will be encoded. */
     val data: String,
+    /** Size in pixels of each square of the QR Code - Defaults to [DEFAULT_SQUARE_SIZE] (25px) */
     val squareSize: Int = DEFAULT_SQUARE_SIZE,
+    /** Function that will handle color processing (which color is "light" and which is "dark") - Defaults to [DefaultColorFunction]. */
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
+    /** Function that will handle drawing the shapes of each square - Defaults to [DefaultShapeFunction] with `innerSpace = 0`. */
     val shapeFn: QRCodeShapeFunction = DefaultShapeFunction(squareSize, innerSpace = 0),
+    /** Factory of [QRCodeGraphics] instances - Defaults to [QRCodeGraphicsFactory]. */
     var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory(),
-    val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH,
-    minTypeNum: Int = 6,
-    forceMinTypeNum: Boolean = false,
+    /** Error Correction Level to add to embed in the QRCode. The higher the ErrorCorrectionLevel is, the higher will be the QRCode tolerance to damage - Defaults to [ErrorCorrectionLevel.LOW]. */
+    val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW,
+    /** Information Density (formerly known as `typeNum`). A number that represents how much data this QRCode can hold - Defaults to a value computed by [QRCodeProcessor.infoDensityForDataAndECL]. */
+    val informationDensity: Int = QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel),
+    /** Code to run BEFORE rendering the whole QRCode - Defaults to [EMPTY_FN] */
     private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
+    /** Code to run AFTER rendering the whole QRCode - Defaults to [EMPTY_FN] */
     private val doAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
 ) {
     companion object {
+        /** Used to have an empty `doBefore` and `doAfter` function */
         internal val EMPTY_FN: QRCode.(QRCodeGraphics, Int, Int) -> Unit = { _, _, _ -> }
 
-        /** Default value of [squareSize]. */
+        /** Default value of [squareSize]. Same value as [DEFAULT_CELL_SIZE] (value = 25) */
         const val DEFAULT_SQUARE_SIZE = DEFAULT_CELL_SIZE
 
         /**
@@ -109,17 +119,9 @@ class QRCode @JvmOverloads constructor(
     val qrCodeProcessor: QRCodeProcessor =
         QRCodeProcessor(data, errorCorrectionLevel, graphicsFactory = graphicsFactory)
 
-    /** Information Density parameter. More data = more information density. Previously known as [typeNum]. */
-    val informationDensity = if (forceMinTypeNum) {
-        minTypeNum
-    } else {
-        QRCodeProcessor.typeForDataAndECL(data, errorCorrectionLevel).coerceAtLeast(minTypeNum)
-    }
-
     /** Computed type number for the given [data] parameter. Renamed/replaced with [informationDensity]. */
     @Deprecated("Please use informationDensity instead.")
-    val typeNum: Int
-        get() = informationDensity
+    val typeNum: Int get() = informationDensity
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
     val rawData = qrCodeProcessor.encode(informationDensity)

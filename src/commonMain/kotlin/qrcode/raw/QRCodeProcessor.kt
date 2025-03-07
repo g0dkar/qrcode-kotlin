@@ -24,6 +24,7 @@ import qrcode.internals.RSBlock
 import qrcode.raw.QRCodeDataType.DEFAULT
 import qrcode.raw.QRCodeDataType.NUMBERS
 import qrcode.raw.QRCodeDataType.UPPER_ALPHA_NUM
+import qrcode.raw.QRCodeProcessor.Companion.infoDensityForDataAndECL
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
 import kotlin.js.ExperimentalJsExport
@@ -92,13 +93,20 @@ class QRCodeProcessor @JvmOverloads constructor(
         const val DEFAULT_MARGIN = 0
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
+        const val MAXIMUM_INFO_DENSITY = 40
 
         /**
-         * Calculates a suitable value for the [dataType] field for you.
+         * Infer what is the least amount of the [QRCode.informationDensity] parameter to fit the specified [data]
+         * at the given [errorCorrectionLevel].
+         *
+         * If it cannot determine the value, the maximum value for it will be returned: `40`.
+         *
+         * @see QRCode.informationDensity
+         * @see MAXIMUM_INFO_DENSITY
          */
         @JvmStatic
         @JvmOverloads
-        fun typeForDataAndECL(
+        fun infoDensityForDataAndECL(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
             dataType: QRCodeDataType = QRUtil.getDataType(data),
@@ -116,7 +124,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 }
             }
 
-            return 40
+            return MAXIMUM_INFO_DENSITY
         }
     }
 
@@ -302,20 +310,20 @@ class QRCodeProcessor @JvmOverloads constructor(
      * If you just want to render (create) a QR Code image, you are probably looking for the [renderShaded] method.
      *
      * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
-     * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
+     * Defaults to an [automatically calculated value][infoDensityForDataAndECL] based on [data] and the [errorCorrectionLevel].
      * @param maskPattern Mask Pattern to apply to the final QR Code. Basically changes how the QR Code looks at the end.
      * Read more about it [here][MaskPattern]. Defaults to [MaskPattern.PATTERN000].
      *
      * @return The byte matrix of the encoded QRCode.
      *
-     * @see typeForDataAndECL
+     * @see infoDensityForDataAndECL
      * @see ErrorCorrectionLevel
      * @see MaskPattern
      * @see renderShaded
      */
     @JvmOverloads
     fun encode(
-        type: Int = typeForDataAndECL(data, errorCorrectionLevel),
+        type: Int = infoDensityForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000,
     ): QRCodeRawData {
         val moduleCount = type * 4 + 17
