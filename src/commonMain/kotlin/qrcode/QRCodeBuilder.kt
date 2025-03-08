@@ -11,6 +11,7 @@ import qrcode.color.LinearGradientColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRMath
 import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
 import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
 import qrcode.render.QRCodeGraphics
@@ -45,6 +46,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
     private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW
     private var informationDensity: Int = 0
+    private var maskPattern: MaskPattern = MaskPattern.PATTERN000
 
     private fun innerSpace() =
         when (shape) {
@@ -239,27 +241,36 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The level of "information density" this QRCode will maintain.
+     * The level of "information density" this QRCode will support.
      *
      * **Defaults to `0`. Meaning the minimum possible value will be computed and used.**
      *
      * Must be a value between `1` and `40`. **If this value is `0` (zero), the minimum possible value for it will be
-     * computed and used.**
+     * computed and used instead.**
      *
      * This is complex to explain, but basically the lower this value the fewer squares the QRCode have. The catch is:
      * the fewer squares the QRCode have, the harder it'll be to read damaged/obstructed versions of it.
      *
      * In short:
      *
-     * - Lots of data: You can keep this as close to 1 as possible. Be aware that the QRCode might be a bit hard to
-     *                 read if this is too low.
-     * - Smaller data: Try to keep this a big higher, just in case.
+     * - Ease of reading: Bump it as high as you want. Up to `6` is enough for a LOT of cases, even with logos.
+     * - Smaller size: Go with the computed value =)
      *
      * @see QRCodeProcessor.infoDensityForDataAndECL
      *
      */
     fun withInformationDensity(informationDensity: Int): QRCodeBuilder {
         this.informationDensity = informationDensity.coerceIn(0..MAXIMUM_INFO_DENSITY)
+        return this
+    }
+
+    /**
+     * Which [MaskPattern] to apply on the QRCode. Mostly for aesthetics. Defaults to [MaskPattern.PATTERN000].
+     *
+     * @see MaskPattern
+     */
+    fun withMaskPattern(maskPattern: MaskPattern): QRCodeBuilder {
+        this.maskPattern = maskPattern
         return this
     }
 
@@ -307,6 +318,7 @@ class QRCodeBuilder @JvmOverloads constructor(
             graphicsFactory,
             errorCorrectionLevel,
             informationDensity,
+            maskPattern,
             beforeFn,
             afterFn,
         )

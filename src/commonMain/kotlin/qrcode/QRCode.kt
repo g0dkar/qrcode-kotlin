@@ -13,6 +13,7 @@ import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.raw.QRCodeRawData
@@ -66,6 +67,8 @@ class QRCode @JvmOverloads constructor(
     val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW,
     /** Information Density (formerly known as `typeNum`). A number that represents how much data this QRCode can hold - Defaults to a value computed by [QRCodeProcessor.infoDensityForDataAndECL]. */
     val informationDensity: Int = QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel),
+    /** Which mask pattern to apply to the QRCode. Slightly change the squares. Mostly for aesthetics. */
+    val maskPattern: MaskPattern = MaskPattern.PATTERN000,
     /** Code to run BEFORE rendering the whole QRCode - Defaults to [EMPTY_FN] */
     private val doBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN,
     /** Code to run AFTER rendering the whole QRCode - Defaults to [EMPTY_FN] */
@@ -124,7 +127,7 @@ class QRCode @JvmOverloads constructor(
     val typeNum: Int get() = informationDensity
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
-    val rawData = qrCodeProcessor.encode(informationDensity)
+    val rawData = qrCodeProcessor.encode(informationDensity, maskPattern)
 
     /** Calculated size of the whole QRCode (the final image will be a square of `computedSize` by `computedSize`) */
     val computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)

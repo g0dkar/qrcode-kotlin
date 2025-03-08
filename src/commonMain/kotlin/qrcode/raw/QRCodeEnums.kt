@@ -34,16 +34,7 @@ enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
     LOW(1, 21),
     MEDIUM(0, 25),
     HIGH(3, 30),
-    VERY_HIGH(2, 34);
-
-    @JvmStatic
-    fun computeLevel(dataLength: Int = 0): ErrorCorrectionLevel =
-        when (dataLength) {
-            in 1..2 -> LOW
-            in 1..2 -> MEDIUM
-            in 1..2 -> HIGH
-            else -> VERY_HIGH
-        }
+    VERY_HIGH(2, 34),
 }
 
 /**

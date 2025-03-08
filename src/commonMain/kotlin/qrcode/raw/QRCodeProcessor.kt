@@ -2,6 +2,7 @@ package qrcode.raw
 
 import qrcode.QRCode
 import qrcode.color.Colors
+import qrcode.exception.InsufficientInformationDensityException
 import qrcode.internals.BitBuffer
 import qrcode.internals.Polynomial
 import qrcode.internals.QR8BitByte
@@ -364,7 +365,7 @@ class QRCodeProcessor @JvmOverloads constructor(
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
-            throw IllegalArgumentException("Code length overflow (${buffer.lengthInBits} > $totalDataCount)")
+            throw InsufficientInformationDensityException(type, buffer.lengthInBits, totalDataCount)
         }
 
         if (buffer.lengthInBits + 4 <= totalDataCount) {
