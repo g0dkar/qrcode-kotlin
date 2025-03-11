@@ -25,6 +25,7 @@ import qrcode.internals.RSBlock
 import qrcode.raw.QRCodeDataType.DEFAULT
 import qrcode.raw.QRCodeDataType.NUMBERS
 import qrcode.raw.QRCodeDataType.UPPER_ALPHA_NUM
+import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
 import qrcode.raw.QRCodeProcessor.Companion.infoDensityForDataAndECL
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
@@ -365,7 +366,8 @@ class QRCodeProcessor @JvmOverloads constructor(
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
-            throw InsufficientInformationDensityException(type, buffer.lengthInBits, totalDataCount)
+            val errorMessage = "Insufficient Information Density Parameter: $type [neededBits=${buffer.lengthInBits}, maximumBitsForDensityLevel=$totalDataCount] - Try increasing the Information Density parameter value or use 0 (zero) to automatically compute the least amount needed to fit the QRCode data being encoded."
+            throw InsufficientInformationDensityException(errorMessage)
         }
 
         if (buffer.lengthInBits + 4 <= totalDataCount) {

@@ -1,11 +1,10 @@
 package qrcode.exception
 
+/**
+ * Thrown when the Information Density parameter is not enough to hold all the data that needs to be encoded in the
+ * QRCode.
+ */
 class InsufficientInformationDensityException(
-    val informationDensity: Int,
-    val neededBytes: Int,
-    val maximumBytesSupported: Int,
+    override val message: String? = null,
     override val cause: Throwable? = null,
-) : IllegalArgumentException(
-    message = "Insufficient Information Density Parameter: $informationDensity [neededBytes=$neededBytes, maximumBytesSupported=$maximumBytesSupported] - Try increasing the parameter value or use 0 (zero) to automatically compute the least amount needed to fit the QRCode data being encoded.",
-    cause,
-)
+) : IllegalArgumentException(message, cause)

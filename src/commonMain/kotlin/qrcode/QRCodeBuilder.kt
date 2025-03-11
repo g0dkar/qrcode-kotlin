@@ -328,7 +328,10 @@ class QRCodeBuilder @JvmOverloads constructor(
             shapeFunction,
             graphicsFactory,
             errorCorrectionLevel,
-            informationDensity,
+            when (informationDensity) {
+                0 -> QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel)
+                else -> informationDensity
+            },
             maskPattern,
             beforeFn,
             afterFn,
