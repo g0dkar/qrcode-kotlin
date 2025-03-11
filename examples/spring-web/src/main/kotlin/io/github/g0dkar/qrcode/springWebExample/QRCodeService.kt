@@ -14,13 +14,11 @@ class QRCodeService {
         spacing: Int? = null,
         shape: QRCodeShapesEnum = SQUARE,
         ecl: ErrorCorrectionLevel = MEDIUM,
-        informationDensity: Int = 6,
-        forceInformationDensity: Boolean = false,
+        informationDensity: Int = 0,
     ): ByteArray =
         QRCodeBuilder(shape)
             .withErrorCorrectionLevel(ecl)
             .withInformationDensity(informationDensity)
-            .forceInformationDensity(forceInformationDensity) // Must be AFTER withInformationDensity()
             .also {
                 if (spacing != null && spacing >= 0) {
                     it.withInnerSpacing(spacing)
