@@ -191,7 +191,15 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
-    /** Use a custom [QRCodeGraphicsFactory] instead of the default. */
+    /**
+     * Use a custom [QRCodeGraphicsFactory] instead of the default. Use this to have a way to better control how and
+     * where the QRCode drawing will occur.
+     *
+     * The currently available implementations on this library are:
+     *
+     * - **Android:**`qrcode.render.AndroidQRCodeGraphicsFactory`
+     * - **JVM:** `qrcode.render.JvmQRCodeGraphicsFactory`
+     */
     fun withGraphicsFactory(factory: QRCodeGraphicsFactory): QRCodeBuilder {
         graphicsFactory = factory
         return this
@@ -305,6 +313,9 @@ class QRCodeBuilder @JvmOverloads constructor(
 
     /**
      * Builds a [QRCode] instance ready to use.
+     *
+     * **Important:** if you want to use your own drawing instrument (for example an Android `Canvas` or a JVM
+     * `BufferedImage`) call `freshlyBuiltQrCode.graphics
      *
      * @see QRCode.renderToBytes
      * @see QRCode.render

@@ -26,13 +26,11 @@ actual open class QRCodeGraphics actual constructor(
         val AVAILABLE_FORMATS: Array<String> = CompressFormat.entries.map { it.name }.toTypedArray()
     }
 
-    protected fun createCanvas(image: Bitmap) = Canvas(image)
-
     /** [Bitmap] being used for the drawing operations. */
     private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
 
     /** [Canvas] that handles the presenting. */
-    private var canvas: Canvas = createCanvas(image)
+    private lateinit var canvas: Canvas
 
     /** Cache of [Paint] objects being used. Just to try and use the least amount of CPU/memory possible. */
     private val paintCache = mutableMapOf<Int, Paint>()
@@ -44,6 +42,14 @@ actual open class QRCodeGraphics actual constructor(
     private var customCanvas = false
     private var customCanvasOffsetX: Int = 0
     private var customCanvasOffsetY: Int = 0
+
+    protected fun useCanvas(): Canvas {
+        if (!customCanvas && !this::canvas.isInitialized) {
+            canvas = Canvas(image)
+        }
+
+        return canvas
+    }
 
     /**
      * Allows this object to draw directly to a user specified [Canvas].
@@ -93,12 +99,7 @@ actual open class QRCodeGraphics actual constructor(
         if (changed) {
             changed = false
             image = Bitmap.createBitmap(width, height, ARGB_8888)
-
-            if (!customCanvas) {
-                canvas = createCanvas(image)
-            } else {
-                this.canvas.setBitmap(image)
-            }
+            useCanvas().setBitmap(image)
         }
     }
 
@@ -163,7 +164,7 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        canvas.drawLine(
+        useCanvas().drawLine(
             (x1 + customCanvasOffsetX).toFloat(),
             (y1 + customCanvasOffsetY).toFloat(),
             (x2 + customCanvasOffsetX).toFloat(),
@@ -181,12 +182,12 @@ actual open class QRCodeGraphics actual constructor(
             x + width - halfThickness + customCanvasOffsetX,
             y + height - halfThickness + customCanvasOffsetY,
         )
-        canvas.drawRect(rect, paintFromCache(color, STROKE, thickness))
+        useCanvas().drawRect(rect, paintFromCache(color, STROKE, thickness))
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawRect(
+        useCanvas().drawRect(
             Rect(
                 x + customCanvasOffsetX,
                 y + customCanvasOffsetY,
@@ -234,7 +235,7 @@ actual open class QRCodeGraphics actual constructor(
     ) {
         val halfThickness = (thickness / 2.0).roundToInt()
 
-        canvas.drawRoundRect(
+        useCanvas().drawRoundRect(
             buildRectF(x + halfThickness, y + halfThickness, width - halfThickness * 2, height - halfThickness * 2),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
@@ -264,7 +265,7 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
-        canvas.drawRoundRect(
+        useCanvas().drawRoundRect(
             buildRectF(x, y, width, height),
             borderRadius.toFloat(),
             borderRadius.toFloat(),
@@ -276,7 +277,7 @@ actual open class QRCodeGraphics actual constructor(
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        canvas.drawOval(
+        useCanvas().drawOval(
             buildRectF(x, y, width, height),
             paintFromCache(color, STROKE, thickness),
         )
@@ -287,7 +288,7 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        canvas.drawOval(
+        useCanvas().drawOval(
             buildRectF(x, y, width, height),
             paintFromCache(color),
         )
@@ -308,6 +309,6 @@ actual open class QRCodeGraphics actual constructor(
      */
     open fun drawImage(img: Bitmap, x: Int, y: Int) {
         changed = true
-        canvas.drawBitmap(img, x.toFloat(), y.toFloat(), null)
+        useCanvas().drawBitmap(img, x.toFloat(), y.toFloat(), null)
     }
 }
