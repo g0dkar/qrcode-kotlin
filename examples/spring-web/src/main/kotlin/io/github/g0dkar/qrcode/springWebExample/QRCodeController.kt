@@ -35,9 +35,8 @@ class QRCodeController(
         @RequestParam(required = true) data: String,
         @RequestParam(required = false, defaultValue = "SQUARE") shape: String,
         @RequestParam(required = false) spacing: Int?,
-        @RequestParam(required = false, defaultValue = "MEDIUM") ecl: String,
-        @RequestParam(name = "id", required = false, defaultValue = "6") informationDensity: Int,
-        @RequestParam(name = "fid", required = false, defaultValue = "false") forceInformationDensity: Boolean,
+        @RequestParam(required = false, defaultValue = "LOW") ecl: String,
+        @RequestParam(required = false, defaultValue = "0") informationDensity: Int,
         @RequestParam(required = false, defaultValue = "qrcode") fileName: String,
     ): ResponseEntity<ByteArrayResource> {
         val shapeEnum = try {
@@ -48,11 +47,11 @@ class QRCodeController(
         val eclEnum = try {
             ErrorCorrectionLevel.valueOf(ecl.uppercase())
         } catch (_: Exception) {
-            ErrorCorrectionLevel.MEDIUM
+            ErrorCorrectionLevel.LOW
         }
 
         val pngData =
-            qrCodeService.qrCode(data, spacing, shapeEnum, eclEnum, informationDensity, forceInformationDensity)
+            qrCodeService.qrCode(data, spacing, shapeEnum, eclEnum, informationDensity)
         val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
 
         return ResponseEntity.ok()
