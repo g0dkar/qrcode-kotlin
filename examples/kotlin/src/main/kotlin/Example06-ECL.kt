@@ -14,14 +14,14 @@ fun main() {
 
     val eclLowQRCode = QRCode.ofSquares()
         .withErrorCorrectionLevel(ErrorCorrectionLevel.LOW) // <- See Here
-        .withInformationDensity(1) // <- Setting this will make the code NOT compute a value
+        .withInformationDensity(1) // <- Setting this to >= 1 will make the code NOT compute a value
         .build(qrCodeData)
         .also { println("[Low] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
     val eclLowPngData = eclLowQRCode.renderToBytes()
 
     val eclMediumQRCode = QRCode.ofSquares()
         .withErrorCorrectionLevel(ErrorCorrectionLevel.MEDIUM) // <- See Here
-        .withInformationDensity(1) // <- Setting this will make the code NOT compute a value
+        .withInformationDensity(1) // <- Setting this to >= 1 will make the code NOT compute a value
         .build(qrCodeData)
         .also { println("[Medium] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
     val eclMediumPngData = eclMediumQRCode.renderToBytes()
@@ -29,7 +29,7 @@ fun main() {
     // ECL High: we need to add +1 to the information density because of the extra data added by the ECL
     val eclHighQRCode = QRCode.ofSquares()
         .withErrorCorrectionLevel(ErrorCorrectionLevel.HIGH) // <- See Here
-        .withInformationDensity(2) // <- Setting this will make the code NOT compute a value
+        .withInformationDensity(2) // <- Setting this to >= 1 will make the code NOT compute a value
         .build(qrCodeData)
         .also { println("[High] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
     val eclHighPngData = eclHighQRCode.renderToBytes()
@@ -37,7 +37,7 @@ fun main() {
     // ECL Very High: we need to add +1 to the information density because of the extra data added by the ECL
     val eclVeryHighQRCode = QRCode.ofSquares()
         .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH) // <- See Here
-        .withInformationDensity(2) // <- Setting this will make the code NOT compute a value
+        .withInformationDensity(2) // <- Setting this to >= 1 will make the code NOT compute a value
         .build(qrCodeData)
         .also { println("[Very High] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
     val eclVeryHighPngData = eclVeryHighQRCode.renderToBytes()
@@ -56,6 +56,14 @@ fun main() {
         .also { println("[Default - ECL High] ECL: ${it.errorCorrectionLevel}, Information Density (computed): ${it.informationDensity}") }
     val eclDefaultLowPngData = eclDefaultLowQRCode.renderToBytes()
 
+    // ECL Very High + Info Density: Using the maximum values to showcase how the QRCode grows given these parameters
+    val denseQRCode = QRCode.ofSquares()
+        .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH) // <- See Here
+        .withInformationDensity(40) // <- Maximum value
+        .build(qrCodeData)
+        .also { println("[Dense] ECL: ${it.errorCorrectionLevel}, Information Density: ${it.informationDensity}") }
+    val densePngData = denseQRCode.renderToBytes()
+
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
     FileOutputStream("examples/kotlin/example06-ecl-low.png").use { it.write(eclLowPngData) }
@@ -64,4 +72,5 @@ fun main() {
     FileOutputStream("examples/kotlin/example06-ecl-very-high.png").use { it.write(eclVeryHighPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-default.png").use { it.write(eclDefaultPngData) }
     FileOutputStream("examples/kotlin/example06-ecl-default-high.png").use { it.write(eclDefaultLowPngData) }
+    FileOutputStream("examples/kotlin/example06-dense.png").use { it.write(densePngData) }
 }
