@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.1.10"
 dokka = "2.0.0"
-kotest = "5.9.1"
+kotest = "6.0.0.M2"
 mavenNexus = "2.0.0"
 androidPlugin = "8.7.3"
 npmPublish = "3.5.3"
@@ -35,3 +35,4 @@ nexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "mavenNexu
 npmPublish = { id = "dev.petuska.npm.publish", version.ref = "npmPublish" }
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

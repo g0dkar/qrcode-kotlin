@@ -45,6 +45,9 @@ open class BitmapGraphics(
         }
     }
 
+    private fun rectF(x: Int, y: Int, width: Int, height: Int): RectF =
+        RectF(x.toFloat(), y.toFloat(), (x + width).toFloat(), (y + height).toFloat())
+
     override fun drawLine(
         x1: Int,
         y1: Int,
@@ -102,10 +105,10 @@ open class BitmapGraphics(
         thickness: Double,
     ) {
         val floatRadius = borderRadius.toFloat()
-        val halfThickness: Float = (thickness / 2.0).toFloat()
+        val halfThickness = (thickness / 2.0).roundToInt()
 
         canvas.drawRoundRect(
-            RectF(
+            rectF(
                 x + halfThickness,
                 y + halfThickness,
                 width - halfThickness * 2,
@@ -119,12 +122,14 @@ open class BitmapGraphics(
 
     override fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
         val floatRadius = borderRadius.toFloat()
+        val rectF = rectF(x, y, width, height)
+        val paint = paintFromCache(color)
 
         canvas.drawRoundRect(
-            RectF(x.toFloat(), y.toFloat(), width.toFloat(), height.toFloat()),
+            rectF,
             floatRadius,
             floatRadius,
-            paintFromCache(color),
+            paint,
         )
     }
 
@@ -137,14 +142,14 @@ open class BitmapGraphics(
         thickness: Double,
     ) {
         canvas.drawOval(
-            RectF(x.toFloat(), y.toFloat(), width.toFloat(), height.toFloat()),
+            rectF(x, y, width, height),
             paintFromCache(color, STROKE, thickness),
         )
     }
 
     override fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
         canvas.drawOval(
-            RectF(x.toFloat(), y.toFloat(), width.toFloat(), height.toFloat()),
+            rectF(x, y, width, height),
             paintFromCache(color),
         )
     }
