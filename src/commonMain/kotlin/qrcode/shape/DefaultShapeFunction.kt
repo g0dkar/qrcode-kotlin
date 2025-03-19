@@ -16,8 +16,19 @@ import kotlin.js.JsExport
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
-open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSpace: Int = 1) : QRCodeShapeFunction {
-    private val innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+open class DefaultShapeFunction(
+    squareSize: Int = DEFAULT_CELL_SIZE,
+    val innerSpace: Int = 1,
+) : QRCodeShapeFunction {
+    private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+    var squareSize: Int = DEFAULT_CELL_SIZE
+        set(value) {
+            resize(value)
+        }
+
+    override fun resize(newSquareSize: Int) {
+        innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+    }
 
     override fun renderSquare(
         x: Int,

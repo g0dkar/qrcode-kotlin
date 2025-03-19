@@ -1,6 +1,7 @@
 package qrcode.render.extensions
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
@@ -42,7 +43,10 @@ import qrcode.render.graphics.DrawScopeGraphics
 fun DrawScope.drawQRCode(
     qrCode: QRCode,
     offsetTopLeft: Offset = Offset.Zero,
+    size: Size = this.size,
 ) {
+    qrCode.fitIntoArea(size.width.toInt(), size.height.toInt())
+
     val qrCodeGraphics = qrCode.graphics
     val previousDrawingInterface = qrCodeGraphics.drawingInterface
 

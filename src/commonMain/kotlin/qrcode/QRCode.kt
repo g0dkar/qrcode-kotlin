@@ -1,6 +1,7 @@
 package qrcode
 
 import qrcode.QRCode.Companion.DEFAULT_SQUARE_SIZE
+import qrcode.QRCode.Companion.EMPTY_FN
 import qrcode.QRCode.Companion.ofCircles
 import qrcode.QRCode.Companion.ofRoundedSquares
 import qrcode.QRCode.Companion.ofSquares
@@ -27,6 +28,8 @@ import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlin.math.floor
+import kotlin.math.min
 
 /**
  * A simple class to create easily create aesthetic pleasing QRCodes.
@@ -56,7 +59,7 @@ class QRCode @JvmOverloads constructor(
     /** Data that will be encoded. */
     val data: String,
     /** Size in pixels of each square of the QR Code - Defaults to [DEFAULT_SQUARE_SIZE] (25px) */
-    val squareSize: Int = DEFAULT_SQUARE_SIZE,
+    squareSize: Int = DEFAULT_SQUARE_SIZE,
     /** Function that will handle color processing (which color is "light" and which is "dark") - Defaults to [DefaultColorFunction]. */
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
     /** Function that will handle drawing the shapes of each square - Defaults to [DefaultShapeFunction] with `innerSpace = 0`. */
@@ -118,22 +121,28 @@ class QRCode @JvmOverloads constructor(
             QRCodeBuilder(CUSTOM, customShapeFunction)
     }
 
-    /** The underlying [QRCodeProcessor] object that'll do all calculations */
+    var squareSize: Int = squareSize
+        private set
+
+    /** The underlying [QRCodeProcessor] object that will do all calculations */
     val qrCodeProcessor: QRCodeProcessor =
         QRCodeProcessor(data, errorCorrectionLevel, graphicsFactory = graphicsFactory)
 
     /** Computed type number for the given [data] parameter. Renamed/replaced with [informationDensity]. */
     @Deprecated("Please use informationDensity instead.")
-    val typeNum: Int get() = informationDensity
+    val typeNum: Int
+        get() = informationDensity
 
     /** Raw QRCode data computed by [QRCodeProcessor] */
-    val rawData = qrCodeProcessor.encode(informationDensity, maskPattern)
+    val rawData: QRCodeRawData = qrCodeProcessor.encode(informationDensity, maskPattern)
 
     /** Calculated size of the whole QRCode (the final image will be a square of `computedSize` by `computedSize`) */
-    val computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
+    var computedSize: Int = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
+        private set
 
     /** The [QRCodeGraphics] (aka "canvas") where all the drawing will happen */
-    val graphics = graphicsFactory.newGraphicsSquare(computedSize)
+    var graphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(computedSize)
+        private set
 
     private fun draw(xOffset: Int, yOffset: Int, rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
         qrCodeProcessor.renderShaded(
@@ -161,6 +170,19 @@ class QRCode @JvmOverloads constructor(
                 actualSquare.rendered = true
             }
         }
+
+    /**
+     * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
+     */
+    fun fitIntoArea(width: Int, height: Int): QRCode {
+        val reference = min(width, height)
+        squareSize = floor(reference / (rawData.size + 2.0)).toInt()
+        shapeFn.resize(squareSize)
+        computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
+        graphics = graphicsFactory.newGraphicsSquare(squareSize)
+
+        return this
+    }
 
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     @JvmOverloads
