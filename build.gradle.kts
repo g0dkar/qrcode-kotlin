@@ -117,6 +117,12 @@ kotlin {
                 implementation(libs.kotest.runner.junit5)
             }
         }
+
+        androidTarget {
+            dependencies {
+                compileOnly(libs.androidx.compose.ui)
+            }
+        }
     }
 }
 

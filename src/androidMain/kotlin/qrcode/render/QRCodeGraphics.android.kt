@@ -4,18 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Bitmap.CompressFormat.JPEG
 import android.graphics.Bitmap.CompressFormat.PNG
-import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Paint.Style
-import android.graphics.Paint.Style.FILL
-import android.graphics.Paint.Style.STROKE
-import android.graphics.Rect
-import android.graphics.RectF
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import qrcode.render.extensions.drawQRCode
+import qrcode.render.graphics.BitmapGraphics
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
-import kotlin.math.roundToInt
 
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
@@ -26,70 +20,16 @@ actual open class QRCodeGraphics actual constructor(
         val AVAILABLE_FORMATS: Array<String> = CompressFormat.entries.map { it.name }.toTypedArray()
     }
 
-    /** [Bitmap] being used for the drawing operations. */
-    private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
-
-    /** [Canvas] that handles the presenting. */
-    private lateinit var canvas: Canvas
-
-    /** Cache of [Paint] objects being used. Just to try and use the least amount of CPU/memory possible. */
-    private val paintCache = mutableMapOf<Int, Paint>()
+    /**
+     * Which [AndroidDrawingInterface] will handle the actual drawing. By default, a [android.graphics.Bitmap] and
+     * [android.graphics.Canvas] will be used for compatibility reasons.
+     *
+     * If you're in a modern Android app using Jetpack Compose, please see the [drawQRCode] extension function.
+     */
+    lateinit var drawingInterface: AndroidDrawingInterface
 
     /** Whether any drawing operations were done or not. */
     private var changed: Boolean = false
-
-    /** Whether the user set the value of [canvas]. */
-    private var customCanvas = false
-    private var customCanvasOffsetX: Int = 0
-    private var customCanvasOffsetY: Int = 0
-
-    protected fun useCanvas(): Canvas {
-        if (!customCanvas && !this::canvas.isInitialized) {
-            canvas = Canvas(image)
-        }
-
-        return canvas
-    }
-
-    /**
-     * Allows this object to draw directly to a user specified [Canvas].
-     *
-     * It'll invoke [Canvas.setBitmap] with the [Bitmap] being used to draw.
-     *
-     * @see image
-     */
-    fun useCustomCanvas(canvas: Canvas, offsetX: Int = 0, offsetY: Int = 0): QRCodeGraphics {
-        customCanvas = true
-        this.canvas = canvas
-        this.canvas.setBitmap(image)
-        customCanvasOffsetX = offsetX
-        customCanvasOffsetY = offsetY
-
-        return this
-    }
-
-    /**
-     * Keeps a simple color cache. The default style is [FILL].
-     */
-    protected fun paintFromCache(color: Int, paintStyle: Style = FILL, thickness: Double = 0.0): Paint {
-        changed = true
-        return paintCache.getOrPut(color) {
-            Paint().apply { setColor(color) }
-        }.apply {
-            if (style != paintStyle) {
-                style = paintStyle
-            }
-            this.strokeWidth = thickness.toFloat()
-        }
-    }
-
-    protected fun buildRectF(x: Int, y: Int, w: Int, h: Int): RectF =
-        RectF(
-            (x + customCanvasOffsetX).toFloat(),
-            (y + customCanvasOffsetY).toFloat(),
-            (x + w + customCanvasOffsetX).toFloat(),
-            (y + h + customCanvasOffsetY).toFloat(),
-        )
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
@@ -98,9 +38,18 @@ actual open class QRCodeGraphics actual constructor(
     actual fun reset() {
         if (changed) {
             changed = false
-            image = Bitmap.createBitmap(width, height, ARGB_8888)
-            useCanvas().setBitmap(image)
         }
+    }
+
+    /**
+     * Make sure we can use the [drawingInterface]. Never mind the name.
+     */
+    private fun useCanvas(): AndroidDrawingInterface {
+        if (!this::drawingInterface.isInitialized) {
+            drawingInterface = BitmapGraphics(width, height)
+        }
+
+        return drawingInterface
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
@@ -136,19 +85,9 @@ actual open class QRCodeGraphics actual constructor(
      * @see availableFormats
      */
     open fun writeImage(destination: OutputStream, format: String = "PNG", quality: Int = 100) {
-        val compressFormat = toCompressFormat(format)
-        image.compress(compressFormat, quality.coerceIn(0, 100), destination)
+        val byteArray = drawingInterface.getBytes(format, quality)
+        destination.write(byteArray)
     }
-
-    /**
-     * Tries to convert a [String] into a [CompressFormat] returning [PNG] if it fails to do so.
-     */
-    private fun toCompressFormat(format: String) =
-        try {
-            CompressFormat.valueOf(format.uppercase())
-        } catch (_: Throwable) {
-            PNG
-        }
 
     /**
      * Returns the available formats to be passed as parameters to [getBytes].
@@ -159,43 +98,22 @@ actual open class QRCodeGraphics actual constructor(
      */
     actual open fun availableFormats(): Array<String> = AVAILABLE_FORMATS
 
-    /** Returns the [Bitmap] object being worked upon. */
-    actual open fun nativeImage(): Any = image
+    /** Returns the [Bitmap] or [DrawScope] (if Jetpack Compose is available) object being worked upon. */
+    actual open fun nativeImage(): Any = drawingInterface.nativeImage()
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        useCanvas().drawLine(
-            (x1 + customCanvasOffsetX).toFloat(),
-            (y1 + customCanvasOffsetY).toFloat(),
-            (x2 + customCanvasOffsetX).toFloat(),
-            (y2 + customCanvasOffsetY).toFloat(),
-            paintFromCache(color, STROKE, thickness),
-        )
+        useCanvas().drawLine(x1, y1, x2, y2, color, thickness)
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        val halfThickness = (thickness / 2.0).roundToInt()
-        val rect = Rect(
-            x + halfThickness + customCanvasOffsetX,
-            y + halfThickness + customCanvasOffsetY,
-            x + width - halfThickness + customCanvasOffsetX,
-            y + height - halfThickness + customCanvasOffsetY,
-        )
-        useCanvas().drawRect(rect, paintFromCache(color, STROKE, thickness))
+        useCanvas().drawRect(x, y, width, height, color, thickness)
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        useCanvas().drawRect(
-            Rect(
-                x + customCanvasOffsetX,
-                y + customCanvasOffsetY,
-                x + width + customCanvasOffsetX,
-                y + height + customCanvasOffsetY,
-            ),
-            paintFromCache(color),
-        )
+        useCanvas().fillRect(x, y, width, height, color)
     }
 
     /** Fill the whole area of this canvas with the specified [color]. */
@@ -233,14 +151,7 @@ actual open class QRCodeGraphics actual constructor(
         color: Int,
         thickness: Double,
     ) {
-        val halfThickness = (thickness / 2.0).roundToInt()
-
-        useCanvas().drawRoundRect(
-            buildRectF(x + halfThickness, y + halfThickness, width - halfThickness * 2, height - halfThickness * 2),
-            borderRadius.toFloat(),
-            borderRadius.toFloat(),
-            paintFromCache(color, STROKE, thickness),
-        )
+        useCanvas().drawRoundRect(x, y, width, height, borderRadius, color, thickness)
     }
 
     /**
@@ -265,22 +176,14 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
-        useCanvas().drawRoundRect(
-            buildRectF(x, y, width, height),
-            borderRadius.toFloat(),
-            borderRadius.toFloat(),
-            paintFromCache(color),
-        )
+        useCanvas().fillRoundRect(x, y, width, height, borderRadius, color)
     }
 
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        useCanvas().drawOval(
-            buildRectF(x, y, width, height),
-            paintFromCache(color, STROKE, thickness),
-        )
+        useCanvas().drawEllipse(x, y, width, height, color, thickness)
     }
 
     /**
@@ -288,10 +191,7 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        useCanvas().drawOval(
-            buildRectF(x, y, width, height),
-            paintFromCache(color),
-        )
+        useCanvas().fillEllipse(x, y, width, height, color)
     }
 
     /**
@@ -309,6 +209,6 @@ actual open class QRCodeGraphics actual constructor(
      */
     open fun drawImage(img: Bitmap, x: Int, y: Int) {
         changed = true
-        useCanvas().drawBitmap(img, x.toFloat(), y.toFloat(), null)
+        useCanvas().drawBitmap(img, x, y)
     }
 }

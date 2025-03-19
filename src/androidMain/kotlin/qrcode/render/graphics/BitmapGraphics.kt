@@ -1,30 +1,48 @@
 package qrcode.render.graphics
 
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Paint.Style
+import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
 import android.graphics.RectF
-import qrcode.render.AndroidGraphics
+import qrcode.render.AndroidDrawingInterface
+import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
 /**
- * An [AndroidGraphics] that uses a [Canvas] (here referred to as "Classic Canvas") to draw into a [Bitmap].
+ * An [AndroidDrawingInterface] that uses a [Canvas] (here referred to as "Classic Canvas") to draw into a [Bitmap].
  *
- * For a modern Canvas, see [Xpto] which uses an Android Compose Canvas.
+ * For a modern Canvas, see [DrawScopeGraphics] which uses Jetpack Compose.
  */
 open class BitmapGraphics(
     val width: Int,
     val height: Int,
-) : AndroidGraphics<Bitmap>(0, 0, width, height) {
-    private var image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888)
-    private var canvas: Canvas = Canvas(image)
+    val image: Bitmap = Bitmap.createBitmap(width, height, ARGB_8888),
+) : AndroidDrawingInterface {
+    val canvas: Canvas = Canvas(image)
 
-    override fun reset() {
-        image = Bitmap.createBitmap(width, height, ARGB_8888)
-        canvas = Canvas(image)
+    /** Cache of [Paint] objects being used. Just to try and use the least amount of CPU/memory possible. */
+    private val paintCache = mutableMapOf<Int, Paint>()
+
+    /**
+     * Keeps a simple color cache. The default style is [FILL].
+     */
+    protected fun paintFromCache(color: Int, paintStyle: Style = FILL, thickness: Double = 0.0): Paint {
+        return paintCache.getOrPut(color) {
+            Paint().apply { setColor(color) }
+        }.apply {
+            if (style != paintStyle) {
+                style = paintStyle
+            }
+            this.strokeWidth = thickness.toFloat()
+        }
     }
 
     override fun drawLine(
@@ -134,9 +152,32 @@ open class BitmapGraphics(
     override fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
         if (rawData != null && rawData.isNotEmpty()) { // NOSONAR
             val imgBitmap = BitmapFactory.decodeByteArray(rawData, 0, rawData.size)
-            canvas.drawBitmap(imgBitmap, x.toFloat(), y.toFloat(), null)
+            drawBitmap(imgBitmap, x, y)
         }
     }
 
-    override fun getGraphics(): Bitmap = image
+    override fun drawBitmap(img: Bitmap, x: Int, y: Int) {
+        canvas.drawBitmap(img, x.toFloat(), y.toFloat(), null)
+    }
+
+    override fun nativeImage() = image
+
+    override fun getBytes(format: String, quality: Int): ByteArray {
+        val compressFormat = toCompressFormat(format)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        image.compress(compressFormat, quality.coerceIn(0, 100), byteArrayOutputStream)
+
+        return byteArrayOutputStream.toByteArray()
+    }
+
+    /**
+     * Tries to convert a [String] into a [CompressFormat] returning [PNG] if it fails to do so.
+     */
+    private fun toCompressFormat(format: String) =
+        try {
+            CompressFormat.valueOf(format.uppercase())
+        } catch (_: Throwable) {
+            PNG
+        }
 }
