@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import qrcode.color.Colors
-import qrcode.render.AndroidDrawingInterface
 
 class DrawScopeGraphics(
     val drawScope: DrawScope, val width: Int, val height: Int,

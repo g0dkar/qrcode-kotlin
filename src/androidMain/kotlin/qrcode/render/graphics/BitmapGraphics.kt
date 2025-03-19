@@ -12,7 +12,6 @@ import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.graphics.Rect
 import android.graphics.RectF
-import qrcode.render.AndroidDrawingInterface
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 

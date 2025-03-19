@@ -7,6 +7,7 @@ import android.graphics.Bitmap.CompressFormat.PNG
 import android.graphics.BitmapFactory
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import qrcode.render.extensions.drawQRCode
+import qrcode.render.graphics.AndroidDrawingInterface
 import qrcode.render.graphics.BitmapGraphics
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
@@ -21,12 +22,12 @@ actual open class QRCodeGraphics actual constructor(
     }
 
     /**
-     * Which [AndroidDrawingInterface] will handle the actual drawing. By default, a [android.graphics.Bitmap] and
+     * Which [qrcode.render.graphics.AndroidDrawingInterface] will handle the actual drawing. By default, a [android.graphics.Bitmap] and
      * [android.graphics.Canvas] will be used for compatibility reasons.
      *
      * If you're in a modern Android app using Jetpack Compose, please see the [drawQRCode] extension function.
      */
-    lateinit var drawingInterface: AndroidDrawingInterface
+    var drawingInterface: AndroidDrawingInterface? = null
 
     /** Whether any drawing operations were done or not. */
     private var changed: Boolean = false
@@ -45,11 +46,11 @@ actual open class QRCodeGraphics actual constructor(
      * Make sure we can use the [drawingInterface]. Never mind the name.
      */
     private fun useCanvas(): AndroidDrawingInterface {
-        if (!this::drawingInterface.isInitialized) {
+        if (drawingInterface == null) {
             drawingInterface = BitmapGraphics(width, height)
         }
 
-        return drawingInterface
+        return drawingInterface!!
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
@@ -85,7 +86,7 @@ actual open class QRCodeGraphics actual constructor(
      * @see availableFormats
      */
     open fun writeImage(destination: OutputStream, format: String = "PNG", quality: Int = 100) {
-        val byteArray = drawingInterface.getBytes(format, quality)
+        val byteArray = drawingInterface?.getBytes(format, quality) ?: byteArrayOf()
         destination.write(byteArray)
     }
 
@@ -99,7 +100,7 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun availableFormats(): Array<String> = AVAILABLE_FORMATS
 
     /** Returns the [Bitmap] or [DrawScope] (if Jetpack Compose is available) object being worked upon. */
-    actual open fun nativeImage(): Any = drawingInterface.nativeImage()
+    actual open fun nativeImage(): Any = drawingInterface?.nativeImage() ?: throw NotImplementedError("Native image not supported")
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {

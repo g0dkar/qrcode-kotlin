@@ -85,7 +85,7 @@ kotlin {
     // This is in place just because my main development machine is NOT a macOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
     val currentPlatform = System.getProperty("os.name")
-    if (currentPlatform.lowercase() == "mac os x") {
+    if (currentPlatform.lowercase() == "mac_os x") {
         listOf(
             iosX64(),
             iosArm64(),

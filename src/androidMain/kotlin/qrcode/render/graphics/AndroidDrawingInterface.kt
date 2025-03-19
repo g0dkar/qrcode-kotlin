@@ -1,4 +1,4 @@
-package qrcode.render
+package qrcode.render.graphics
 
 import android.graphics.Bitmap
 
