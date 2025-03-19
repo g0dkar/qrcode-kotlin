@@ -55,7 +55,13 @@ class DrawScopeGraphics(
         color: Int,
         thickness: Double,
     ) {
-        val (topLeft, size) = offsetSize(x, y, width, height)
+        val halfThickness = (thickness / 2.0).toInt()
+        val (topLeft, size) = offsetSize(
+            x + halfThickness,
+            y + halfThickness,
+            width - halfThickness * 2,
+            height - halfThickness * 2,
+        )
 
         drawScope.drawRect(
             color = composeColor(color),
@@ -89,7 +95,13 @@ class DrawScopeGraphics(
         color: Int,
         thickness: Double,
     ) {
-        val (topLeft, size) = offsetSize(x, y, width, height)
+        val halfThickness = (thickness / 2.0).toInt()
+        val (topLeft, size) = offsetSize(
+            x + halfThickness,
+            y + halfThickness,
+            width - halfThickness * 2,
+            height - halfThickness * 2,
+        )
 
         drawScope.drawRoundRect(
             color = composeColor(color),
@@ -109,12 +121,13 @@ class DrawScopeGraphics(
         color: Int,
     ) {
         val (topLeft, size) = offsetSize(x, y, width, height)
+        val cornerRadius = CornerRadius(borderRadius.toFloat(), borderRadius.toFloat())
 
         drawScope.drawRoundRect(
             color = composeColor(color),
             topLeft = topLeft,
             size = size,
-            cornerRadius = CornerRadius(borderRadius.toFloat(), borderRadius.toFloat()),
+            cornerRadius = cornerRadius,
             style = Fill,
         )
     }
@@ -127,7 +140,13 @@ class DrawScopeGraphics(
         color: Int,
         thickness: Double,
     ) {
-        val (topLeft, size) = offsetSize(x, y, width, height)
+        val halfThickness = (thickness / 2.0).toInt()
+        val (topLeft, size) = offsetSize(
+            x + halfThickness,
+            y + halfThickness,
+            width - halfThickness * 2,
+            height - halfThickness * 2,
+        )
 
         drawScope.drawOval(
             color = composeColor(color),

@@ -36,7 +36,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var color: Int = Colors.BLACK
     private var endColor: Int? = null
     private var vertical: Boolean = true
-    private var background: Int = Colors.WHITE
+    private var background: Int = Colors.TRANSPARENT
     private var innerSpace: Int = innerSpace()
     private var radiusInPixels: Int = RoundSquaresShapeFunction.defaultRadius(squareSize)
     private var drawLogoAction: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
