@@ -2,6 +2,7 @@ package qrcode.raw
 
 import qrcode.QRCode
 import qrcode.color.Colors
+import qrcode.exception.InsufficientInformationDensityException
 import qrcode.internals.BitBuffer
 import qrcode.internals.Polynomial
 import qrcode.internals.QR8BitByte
@@ -24,6 +25,8 @@ import qrcode.internals.RSBlock
 import qrcode.raw.QRCodeDataType.DEFAULT
 import qrcode.raw.QRCodeDataType.NUMBERS
 import qrcode.raw.QRCodeDataType.UPPER_ALPHA_NUM
+import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
+import qrcode.raw.QRCodeProcessor.Companion.infoDensityForDataAndECL
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
 import kotlin.js.ExperimentalJsExport
@@ -92,13 +95,20 @@ class QRCodeProcessor @JvmOverloads constructor(
         const val DEFAULT_MARGIN = 0
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
+        const val MAXIMUM_INFO_DENSITY = 40
 
         /**
-         * Calculates a suitable value for the [dataType] field for you.
+         * Infer what is the least amount of the [QRCode.informationDensity] parameter to fit the specified [data]
+         * at the given [errorCorrectionLevel].
+         *
+         * If it cannot determine the value, the maximum value for it will be returned: `40`.
+         *
+         * @see QRCode.informationDensity
+         * @see MAXIMUM_INFO_DENSITY
          */
         @JvmStatic
         @JvmOverloads
-        fun typeForDataAndECL(
+        fun infoDensityForDataAndECL(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
             dataType: QRCodeDataType = QRUtil.getDataType(data),
@@ -116,7 +126,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 }
             }
 
-            return 40
+            return MAXIMUM_INFO_DENSITY
         }
     }
 
@@ -129,7 +139,7 @@ class QRCodeProcessor @JvmOverloads constructor(
     @JsName("computeImageSizeFromRawData")
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
+        margin: Int = DEFAULT_MARGIN,
         rawData: QRCodeRawData = encode(),
     ): Int = computeImageSize(cellSize, margin, rawData.size)
 
@@ -180,8 +190,6 @@ class QRCodeProcessor @JvmOverloads constructor(
 
     /**
      * Renders a QR Code image based on its [computed data][encode].
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
@@ -302,20 +310,20 @@ class QRCodeProcessor @JvmOverloads constructor(
      * If you just want to render (create) a QR Code image, you are probably looking for the [renderShaded] method.
      *
      * @param type `type` value for the QRCode computation. Between 0 and 40. Read more about it [here][ErrorCorrectionLevel].
-     * Defaults to an [automatically calculated value][typeForDataAndECL] based on [data] and the [errorCorrectionLevel].
+     * Defaults to an [automatically calculated value][infoDensityForDataAndECL] based on [data] and the [errorCorrectionLevel].
      * @param maskPattern Mask Pattern to apply to the final QR Code. Basically changes how the QR Code looks at the end.
      * Read more about it [here][MaskPattern]. Defaults to [MaskPattern.PATTERN000].
      *
      * @return The byte matrix of the encoded QRCode.
      *
-     * @see typeForDataAndECL
+     * @see infoDensityForDataAndECL
      * @see ErrorCorrectionLevel
      * @see MaskPattern
      * @see renderShaded
      */
     @JvmOverloads
     fun encode(
-        type: Int = typeForDataAndECL(data, errorCorrectionLevel),
+        type: Int = infoDensityForDataAndECL(data, errorCorrectionLevel),
         maskPattern: MaskPattern = MaskPattern.PATTERN000,
     ): QRCodeRawData {
         val moduleCount = type * 4 + 17
@@ -356,7 +364,8 @@ class QRCodeProcessor @JvmOverloads constructor(
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
-            throw IllegalArgumentException("Code length overflow (${buffer.lengthInBits} > $totalDataCount)")
+            val errorMessage = "Insufficient Information Density Parameter: $type [neededBits=${buffer.lengthInBits}, maximumBitsForDensityLevel=$totalDataCount] - Try increasing the Information Density parameter value or use 0 (zero) to automatically compute the least amount needed to fit the QRCode data being encoded."
+            throw InsufficientInformationDensityException(errorMessage)
         }
 
         if (buffer.lengthInBits + 4 <= totalDataCount) {

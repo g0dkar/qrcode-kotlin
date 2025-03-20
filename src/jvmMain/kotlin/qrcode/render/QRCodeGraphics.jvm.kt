@@ -21,15 +21,41 @@ actual open class QRCodeGraphics actual constructor(
     private lateinit var image: BufferedImage
     private val colorCache = HashMap<Int, Color>()
     private var changed: Boolean = false
+    private var customImage = false
+    private var customImageOffsetX: Int = 0
+    private var customImageOffsetY: Int = 0
 
+    /**
+     * Use a custom, user-defined [BufferedImage] instead of the internal, default one.
+     *
+     * After calling this method, all drawing operations will be offset by [offsetX], [offsetY] as to make the QRCode
+     * look like it was drawn at that position within the image.
+     */
+    fun useCustomBufferedImage(bufferedImage: BufferedImage, offsetX: Int = 0, offsetY: Int = 0): QRCodeGraphics {
+        customImage = true
+        image = bufferedImage
+        customImageOffsetX = offsetX
+        customImageOffsetY = offsetY
+
+        return this
+    }
+
+    /**
+     * Creates a [BufferedImage] if needed. Does nothing if [customImage] is `true`.
+     */
     protected open fun createImage(force: Boolean = false): BufferedImage {
-        if (force || !this::image.isInitialized) {
+        if (!customImage && (force || !this::image.isInitialized)) {
             image = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+            customImageOffsetX = 0
+            customImageOffsetY = 0
         }
 
         return image
     }
 
+    /**
+     * Create instances of [Graphics2D] so that drawing operations can be done.
+     */
     protected open fun createGraphics(): Graphics2D = createImage().createGraphics()
 
     /**
@@ -114,25 +140,37 @@ actual open class QRCodeGraphics actual constructor(
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        draw(color, thickness) { it.drawLine(x1, y1, x2, y2) }
+        draw(color, thickness) {
+            it.drawLine(
+                x1 + customImageOffsetX,
+                y1 + customImageOffsetY,
+                x2 + customImageOffsetX,
+                y2 + customImageOffsetY,
+            )
+        }
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color, thickness) {
             val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
-            it.drawRect(x + halfThickness, y + halfThickness, width - halfThickness * 2, height - halfThickness * 2)
+            it.drawRect(
+                x + halfThickness + customImageOffsetX,
+                y + halfThickness + customImageOffsetY,
+                width - halfThickness * 2,
+                height - halfThickness * 2,
+            )
         }
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        draw(color) { it.fillRect(x, y, width, height) }
+        draw(color) { it.fillRect(x + customImageOffsetX, y + customImageOffsetY, width, height) }
     }
 
     /** Fill the whole area of this canvas with the specified [color]. */
     actual open fun fill(color: Int) {
-        fillRect(0, 0, width, height, color)
+        fillRect(0 + customImageOffsetX, 0 + customImageOffsetY, width, height, color)
     }
 
     /**
@@ -168,8 +206,8 @@ actual open class QRCodeGraphics actual constructor(
         draw(color, thickness) {
             val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
             it.drawRoundRect(
-                x + halfThickness,
-                y + halfThickness,
+                x + halfThickness + customImageOffsetX,
+                y + halfThickness + customImageOffsetY,
                 width - halfThickness * 2,
                 height - halfThickness * 2,
                 borderRadius,
@@ -200,7 +238,16 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual open fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, borderRadius: Int, color: Int) {
-        draw(color) { it.fillRoundRect(x, y, width, height, borderRadius, borderRadius) }
+        draw(color) {
+            it.fillRoundRect(
+                x + customImageOffsetX,
+                y + customImageOffsetY,
+                width,
+                height,
+                borderRadius,
+                borderRadius,
+            )
+        }
     }
 
     /**
@@ -211,8 +258,8 @@ actual open class QRCodeGraphics actual constructor(
             val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
             // The docs say the dimensions are width+1 and height+1... why? because f.u.
             it.drawOval(
-                x + halfThickness,
-                y + halfThickness,
+                x + halfThickness + customImageOffsetX,
+                y + halfThickness + customImageOffsetY,
                 width - 1 - halfThickness * 2,
                 height - 1 - halfThickness * 2,
             )
@@ -225,7 +272,7 @@ actual open class QRCodeGraphics actual constructor(
      */
     actual open fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
         draw(color) {
-            it.fillOval(x, y, width, height)
+            it.fillOval(x + customImageOffsetX, y + customImageOffsetY, width, height)
         }
     }
 
@@ -233,10 +280,10 @@ actual open class QRCodeGraphics actual constructor(
      * Reads the specified image from [rawData] and draws it at `(x,y)`
      */
     actual open fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
-        if (rawData != null && rawData.isNotEmpty()) {
+        if (rawData != null && rawData.isNotEmpty()) { // NOSONAR
             draw(0) {
                 ByteArrayInputStream(rawData).use { inStream ->
-                    drawImage(ImageIO.read(inStream), x, y)
+                    drawImage(ImageIO.read(inStream), x + customImageOffsetX, y + customImageOffsetY)
                 }
             }
         }
@@ -245,7 +292,7 @@ actual open class QRCodeGraphics actual constructor(
     open fun drawImage(image: BufferedImage?, x: Int, y: Int) {
         if (image != null) {
             draw(0) {
-                it.drawImage(image, x, y, null)
+                it.drawImage(image, x + customImageOffsetX, y + customImageOffsetY, null)
             }
         }
     }

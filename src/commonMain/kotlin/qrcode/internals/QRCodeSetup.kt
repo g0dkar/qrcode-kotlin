@@ -147,8 +147,8 @@ internal object QRCodeSetup {
                     dark = false,
                     row = row - 1,
                     col = col - 1,
-                    rowSize = 5,
-                    colSize = 5,
+                    rowSize = 6,
+                    colSize = 6,
                     squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
                     moduleSize = modules.size
                 )

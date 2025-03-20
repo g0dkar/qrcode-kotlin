@@ -15,7 +15,7 @@ import kotlin.js.JsExport
 @OptIn(ExperimentalJsExport::class)
 open class DefaultColorFunction(
     private val foreground: Int = Colors.BLACK,
-    private val background: Int = Colors.WHITE,
+    private val background: Int = Colors.TRANSPARENT,
 ) : QRCodeColorFunction {
     override fun fg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = foreground
 

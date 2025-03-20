@@ -14,6 +14,11 @@ import kotlin.js.JsExport
 @OptIn(ExperimentalJsExport::class)
 interface QRCodeShapeFunction {
     /**
+     * Called when the expected square size was changed.
+     */
+    fun resize(newSquareSize: Int)
+
+    /**
      * Called before rendering starts, to set up something if needed
      */
     fun beforeRender(qrCode: QRCode, qrCodeGraphics: QRCodeGraphics) {

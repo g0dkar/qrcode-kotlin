@@ -1,6 +1,7 @@
 import qrcode.QRCode
 import qrcode.color.Colors
 import qrcode.color.Colors.css
+import qrcode.raw.ErrorCorrectionLevel
 import java.awt.Color
 import java.awt.MultipleGradientPaint.CycleMethod.NO_CYCLE
 import java.awt.RadialGradientPaint
@@ -17,6 +18,8 @@ fun main() {
         .withColor(Colors.rgba(255, 255, 255, 180))
         .withBackgroundColor(Colors.TRANSPARENT)
         .withLogo(logoBytes, 150, 150)
+        .withInformationDensity(6)
+        .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH)
         .build("https://qrcodekotlin.com")
 
     // Before drawing the QRCode, draw our gradient as the background
