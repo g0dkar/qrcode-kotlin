@@ -81,8 +81,8 @@ open class DefaultShapeFunction(
 
                 // Draw outer square
                 drawRect(
-                    startX + squareSize + innerSpacing,
-                    startY + squareSize + innerSpacing,
+                    startX + innerSpacing,
+                    startY + innerSpacing,
                     size - innerSpacing * 2,
                     size - innerSpacing * 2,
                     fg,
@@ -92,8 +92,8 @@ open class DefaultShapeFunction(
 
                 // Draw inner square
                 fillRect(
-                    startX + squareSize + squareSize * 2,
-                    startY + squareSize + squareSize * 2,
+                    startX + squareSize * 2,
+                    startY + squareSize * 2,
                     size - squareSize * 4,
                     size - squareSize * 4,
                     fg,

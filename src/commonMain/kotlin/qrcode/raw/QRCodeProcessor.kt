@@ -139,7 +139,7 @@ class QRCodeProcessor @JvmOverloads constructor(
     @JsName("computeImageSizeFromRawData")
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = 0,
+        margin: Int = DEFAULT_MARGIN,
         rawData: QRCodeRawData = encode(),
     ): Int = computeImageSize(cellSize, margin, rawData.size)
 
@@ -190,8 +190,6 @@ class QRCodeProcessor @JvmOverloads constructor(
 
     /**
      * Renders a QR Code image based on its [computed data][encode].
-     *
-     * _Tip: for the "traditional look-and-feel" QR Code, set [margin] equal to [cellSize]._
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
      * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.

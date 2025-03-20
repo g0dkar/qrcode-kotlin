@@ -17,6 +17,7 @@ import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
+import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_MARGIN
 import qrcode.raw.QRCodeRawData
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
@@ -144,10 +145,10 @@ class QRCode @JvmOverloads constructor(
     var graphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(computedSize)
         private set
 
-    private fun draw(xOffset: Int, yOffset: Int, rawData: QRCodeRawData, canvas: QRCodeGraphics): QRCodeGraphics =
+    private fun draw(xOffset: Int, yOffset: Int, rawData: QRCodeRawData, canvas: QRCodeGraphics, margin: Int = squareSize): QRCodeGraphics =
         qrCodeProcessor.renderShaded(
             cellSize = squareSize,
-            margin = squareSize,
+            margin = margin,
             rawData = rawData,
             qrCodeGraphics = canvas,
         ) { x, y, currentSquare, _ ->
@@ -156,8 +157,8 @@ class QRCode @JvmOverloads constructor(
             if (!actualSquare.rendered) {
                 when (currentSquare.squareInfo.type) {
                     POSITION_PROBE, POSITION_ADJUST -> shapeFn.renderControlSquare(
-                        xOffset,
-                        yOffset,
+                        xOffset + margin,
+                        yOffset + margin,
                         colorFn,
                         actualSquare,
                         canvas,
@@ -174,9 +175,9 @@ class QRCode @JvmOverloads constructor(
     /**
      * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
      */
-    fun fitIntoArea(width: Int, height: Int): QRCode {
+    fun fitIntoArea(width: Int, height: Int, margin: Int = DEFAULT_MARGIN): QRCode {
         val reference = min(width, height)
-        squareSize = floor(reference / (rawData.size + 2.0)).toInt()
+        squareSize = floor((reference - margin) / rawData.size.toDouble()).toInt()
         shapeFn.resize(squareSize)
         computedSize = qrCodeProcessor.computeImageSize(squareSize, squareSize, rawData)
         graphics = graphicsFactory.newGraphicsSquare(squareSize)
@@ -186,11 +187,11 @@ class QRCode @JvmOverloads constructor(
 
     /** Executes all the drawing of the QRCode and returns the [QRCodeGraphics] of the complete QRCode. */
     @JvmOverloads
-    fun render(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0): QRCodeGraphics {
+    fun render(qrCodeGraphics: QRCodeGraphics = graphics, xOffset: Int = 0, yOffset: Int = 0, margin: Int = DEFAULT_MARGIN): QRCodeGraphics {
         colorFn.beforeRender(this, qrCodeGraphics)
         shapeFn.beforeRender(this, qrCodeGraphics)
         doBefore(qrCodeGraphics, xOffset, yOffset)
-        return draw(xOffset, yOffset, rawData, qrCodeGraphics).also { doAfter(it, xOffset, yOffset) }
+        return draw(xOffset, yOffset, rawData, qrCodeGraphics, margin).also { doAfter(it, xOffset, yOffset) }
     }
 
     /** Calls [render] and then returns the bytes of a [format] (default = PNG) render of the QRCode. */

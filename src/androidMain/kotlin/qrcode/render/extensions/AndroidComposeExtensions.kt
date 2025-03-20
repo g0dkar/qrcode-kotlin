@@ -39,13 +39,17 @@ import qrcode.render.graphics.DrawScopeGraphics
  *
  * Original code: https://github.com/g0dkar/qrcode-kotlin/issues/141#issuecomment-2722041216
  *
+ * @param qrCode The [QRCode] that will be drawn into the [DrawScope].
+ * @param offsetTopLeft The [Offset] of the top-left corner where the QRCode will be drawn. Defaults to [Offset.Zero].
+ * @param sizeToFitInto The area in which to fit the QRCode. Defaults to the `size` of the [DrawScope].
+ *
  */
 fun DrawScope.drawQRCode(
     qrCode: QRCode,
     offsetTopLeft: Offset = Offset.Zero,
-    size: Size = this.size,
+    sizeToFitInto: Size = this.size,
 ) {
-    qrCode.fitIntoArea(size.width.toInt(), size.height.toInt())
+    qrCode.fitIntoArea(sizeToFitInto.width.toInt(), sizeToFitInto.height.toInt())
 
     val qrCodeGraphics = qrCode.graphics
     val previousDrawingInterface = qrCodeGraphics.drawingInterface
