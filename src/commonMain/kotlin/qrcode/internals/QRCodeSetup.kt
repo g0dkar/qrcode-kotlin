@@ -196,7 +196,6 @@ internal object QRCodeSetup {
         }
 
         for (c in 8 until moduleCount - 8) {
-            println("[timing] c = $c")
             if (modules[6][c] != null) {
                 continue
             }
