@@ -13,6 +13,7 @@ import qrcode.color.DefaultColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.internals.QRCodeSquareType.TIMING_PATTERN
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
@@ -152,7 +153,10 @@ class QRCode @JvmOverloads constructor(
             rawData = rawData,
             qrCodeGraphics = canvas,
         ) { x, y, currentSquare, _ ->
-            val actualSquare = currentSquare.parent ?: currentSquare
+            val actualSquare = when (currentSquare.squareInfo.type) {
+                TIMING_PATTERN -> currentSquare
+                else -> currentSquare.parent ?: currentSquare
+            }
 
             if (!actualSquare.rendered) {
                 when (currentSquare.squareInfo.type) {
