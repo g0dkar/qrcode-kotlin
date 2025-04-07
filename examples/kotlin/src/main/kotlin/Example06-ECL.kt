@@ -66,11 +66,11 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example06-ecl-low.png").use { it.write(eclLowPngData) }
-    FileOutputStream("examples/kotlin/example06-ecl-medium.png").use { it.write(eclMediumPngData) }
-    FileOutputStream("examples/kotlin/example06-ecl-high.png").use { it.write(eclHighPngData) }
-    FileOutputStream("examples/kotlin/example06-ecl-very-high.png").use { it.write(eclVeryHighPngData) }
-    FileOutputStream("examples/kotlin/example06-ecl-default.png").use { it.write(eclDefaultPngData) }
-    FileOutputStream("examples/kotlin/example06-ecl-default-high.png").use { it.write(eclDefaultLowPngData) }
-    FileOutputStream("examples/kotlin/example06-dense.png").use { it.write(densePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-low.png").use { it.write(eclLowPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-medium.png").use { it.write(eclMediumPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-high.png").use { it.write(eclHighPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-very-high.png").use { it.write(eclVeryHighPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-default.png").use { it.write(eclDefaultPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-ecl-default-high.png").use { it.write(eclDefaultLowPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example06-dense.png").use { it.write(densePngData) }
 }

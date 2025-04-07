@@ -12,9 +12,11 @@ fun main() {
     // Get the Kotlin Logo
     val logoBytes = ClassLoader.getSystemResourceAsStream("kotlin-logo.png")?.readBytes() ?: ByteArray(0)
 
+    val squareSize = 13
+
     // Let's build a transparent QRCode with Kotlin's logo and a lightly transparent white as the color
     val qrCode = QRCode.ofCircles()
-        .withSize(13)
+        .withSize(squareSize)
         .withColor(Colors.rgba(255, 255, 255, 180))
         .withBackgroundColor(Colors.TRANSPARENT)
         .withLogo(logoBytes, 150, 150)
@@ -29,7 +31,7 @@ fun main() {
     }
 
     // And render the QRCode on top of the Gradient :)
-    val qrCodeLogoPngData = qrCode.renderToBytes()
+    val qrCodeLogoPngData = qrCode.renderToBytes(margin = squareSize)
 
     // Now to create the Banner...
     // We reset all the rendering done so far
@@ -46,7 +48,7 @@ fun main() {
     }
 
     // Draw the QRCode on our banner canvas
-    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
+    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2, margin = squareSize)
 
     // Get the bytes to save it to a file :)
     val pngData = banner.getBytes()
@@ -58,7 +60,7 @@ fun main() {
 }
 
 private fun kotlinGradient(width: Int): RadialGradientPaint {
-    val gradientCenter = Point2D.Float(-0.0f, width.toFloat())
+    val gradientCenter = Point2D.Float(0.0f, width.toFloat())
     // Distances and colors taken from the official Kotlin website
     val dist = floatArrayOf(0.0f, 0.1758f, 0.5031f, 0.9703f)
     val colors = arrayOf(Color(css("#ef4857")), Color(css("#de4970")), Color(css("#b44db0")), Color(css("#7f52ff")))

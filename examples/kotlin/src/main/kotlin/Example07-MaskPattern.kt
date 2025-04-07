@@ -24,5 +24,5 @@ private fun qrcodeForMaskPattern(number: String, maskPattern: MaskPattern) {
         .build(qrCodeData)
     val maskPatternPngData = maskPatternQRCode.renderToBytes()
 
-    FileOutputStream("examples/kotlin/example07-mask-pattern-$number.png").use { it.write(maskPatternPngData) }
+    FileOutputStream("examples/kotlin/examples-results/example07-mask-pattern-$number.png").use { it.write(maskPatternPngData) }
 }

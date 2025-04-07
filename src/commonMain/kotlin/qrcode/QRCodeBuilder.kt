@@ -304,13 +304,6 @@ class QRCodeBuilder @JvmOverloads constructor(
             )
         }
 
-    private val shapeFunction: QRCodeShapeFunction
-        get() = customShapeFunction ?: when (shape) {
-            SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
-            CIRCLE -> CircleShapeFunction(squareSize, innerSpace = innerSpace)
-            ROUNDED_SQUARE -> RoundSquaresShapeFunction(squareSize, radiusInPixels, innerSpace = innerSpace)
-        }
-
     /**
      * Builds a [QRCode] instance ready to use.
      *
@@ -325,7 +318,11 @@ class QRCodeBuilder @JvmOverloads constructor(
             data,
             squareSize,
             colorFunction,
-            shapeFunction,
+            customShapeFunction ?: when (shape) {
+                SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
+                CIRCLE -> CircleShapeFunction(squareSize, innerSpace = innerSpace)
+                ROUNDED_SQUARE -> RoundSquaresShapeFunction(squareSize, radiusInPixels, innerSpace = innerSpace)
+            },
             graphicsFactory,
             errorCorrectionLevel,
             when (informationDensity) {

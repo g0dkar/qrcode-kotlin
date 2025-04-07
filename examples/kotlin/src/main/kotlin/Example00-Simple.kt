@@ -6,5 +6,5 @@ fun main() {
         .build("https://qrcodekotlin.com")
     val simplePngData = simpleQRCode.renderToBytes()
 
-    FileOutputStream("examples/kotlin/example00-simple.png").use { it.write(simplePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example00-simple.png").use { it.write(simplePngData) }
 }

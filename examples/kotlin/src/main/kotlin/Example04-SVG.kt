@@ -28,7 +28,7 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example04-squares.svg").use { it.write(squarePngData) }
-    FileOutputStream("examples/kotlin/example04-circles.svg").use { it.write(circlePngData) }
-    FileOutputStream("examples/kotlin/example04-rounded-squares.svg").use { it.write(roundedSquarePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example04-squares.svg").use { it.write(squarePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example04-circles.svg").use { it.write(circlePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example04-rounded-squares.svg").use { it.write(roundedSquarePngData) }
 }

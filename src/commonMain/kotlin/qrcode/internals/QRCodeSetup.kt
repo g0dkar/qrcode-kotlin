@@ -170,16 +170,6 @@ internal object QRCodeSetup {
     }
 
     fun setupTimingPattern(moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
-        val parentTimingQuare = QRCodeSquare(
-            dark = false,
-            row = 8,
-            col = 6,
-            rowSize = moduleCount - 8,
-            colSize = moduleCount - 8,
-            squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
-            moduleSize = modules.size,
-        )
-
         for (r in 8 until moduleCount - 8) {
             if (modules[r][6] != null) {
                 continue
@@ -191,7 +181,7 @@ internal object QRCodeSetup {
                 col = 6,
                 squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size,
-                parent = parentTimingQuare,
+                parent = null,
             )
         }
 
@@ -206,7 +196,7 @@ internal object QRCodeSetup {
                 col = c,
                 squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size,
-                parent = parentTimingQuare,
+                parent = null,
             )
         }
     }

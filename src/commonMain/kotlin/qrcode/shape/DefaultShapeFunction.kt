@@ -21,7 +21,7 @@ open class DefaultShapeFunction(
     val innerSpace: Int = 1,
 ) : QRCodeShapeFunction {
     private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
-    var squareSize: Int = DEFAULT_CELL_SIZE
+    var squareSize: Int = squareSize
         set(value) {
             resize(value)
         }
@@ -66,15 +66,16 @@ open class DefaultShapeFunction(
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     ) {
-        val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
-        val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
-        val size = squareSize * square.rowSize
-        val startX = xOffset + square.absoluteX(squareSize)
-        val startY = yOffset + square.absoluteY(squareSize)
+        val actualSquare = square.parent ?: square
+        val bg = colorFn.bg(actualSquare.row, actualSquare.col, qrCode, canvas)
+        val fg = colorFn.fg(actualSquare.row, actualSquare.col, qrCode, canvas)
+        val size = squareSize * actualSquare.rowSize
+        val startX = xOffset + actualSquare.absoluteX(squareSize)
+        val startY = yOffset + actualSquare.absoluteY(squareSize)
 
-        when (square.squareInfo.type) {
+        when (actualSquare.squareInfo.type) {
             POSITION_PROBE -> {
-                val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
+                val margin = colorFn.margin(actualSquare.row, actualSquare.col, qrCode, canvas)
 
                 // Fill the area of the whole square
                 canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, margin)

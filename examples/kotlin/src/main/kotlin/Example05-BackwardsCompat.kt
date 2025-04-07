@@ -12,5 +12,5 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    ImageIO.write(defaultRenderPngData, "PNG", FileOutputStream("examples/kotlin/example05-defaults.png"))
+    ImageIO.write(defaultRenderPngData, "PNG", FileOutputStream("examples/kotlin/examples-results/example05-defaults.png"))
 }
