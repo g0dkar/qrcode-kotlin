@@ -106,6 +106,8 @@ open class DefaultShapeFunction(
                 // Always a 5x5 square at (x, y)
                 canvas.fillRect(startX, startY, size, size, bg)
 
+                println("[draw control square] startX=$startX, startY=$startY, squareSize=$squareSize")
+
                 // 1st line
                 drawSquaresLine(startX, startY, 5, 1, fg, canvas)
 

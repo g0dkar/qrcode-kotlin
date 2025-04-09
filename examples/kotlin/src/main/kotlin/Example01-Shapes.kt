@@ -1,4 +1,5 @@
 import qrcode.QRCode
+import qrcode.color.Colors
 import qrcode.raw.QRCodeProcessor
 import qrcode.render.QRCodeGraphics
 import qrcode.shape.DefaultShapeFunction
@@ -89,7 +90,9 @@ class JVMTriangleShapeFunction(
             triangle.addPoint(bottomRightX, bottomRightY)
             triangle.addPoint(topCenterX, topCenterY)
 
-            it.paint = Color(color)
+            val (r, g, b, a) = Colors.getRGBA(color)
+
+            it.paint = Color(r, g, b, a)
 
             it.fill(triangle)
         }
