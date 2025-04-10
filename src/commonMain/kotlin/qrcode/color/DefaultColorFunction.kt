@@ -18,8 +18,5 @@ open class DefaultColorFunction(
     private val background: Int = Colors.TRANSPARENT,
 ) : QRCodeColorFunction {
     override fun fg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = foreground
-
     override fun bg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = background
-
-    override fun margin(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = background
 }

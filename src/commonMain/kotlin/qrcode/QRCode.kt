@@ -159,10 +159,7 @@ class QRCode @JvmOverloads constructor(
      *
      */
     var canvasSize: Int =
-        when (canvasSize > DEFAULT_QRCODE_SIZE) {
-            true -> canvasSize
-            else -> qrCodeProcessor.computeImageSize(squareSize, rawData)
-        }
+        if (canvasSize > DEFAULT_QRCODE_SIZE) canvasSize else qrCodeProcessor.computeImageSize(squareSize, rawData)
         private set
 
     /** Size of the canvas where the QRCode will be drawn into. */
@@ -215,8 +212,12 @@ class QRCode @JvmOverloads constructor(
     /**
      * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
      */
-    fun resize(size: Int): QRCode =
-        fitIntoArea(size, size)
+    fun resize(size: Int): QRCode {
+        canvasSize = size
+        graphics = graphicsFactory.newGraphicsSquare(canvasSize)
+
+        return this
+    }
 
     /**
      * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
@@ -226,7 +227,7 @@ class QRCode @JvmOverloads constructor(
         squareSize = floor(reference / rawData.size.toDouble()).toInt()
         shapeFn.resize(squareSize)
         canvasSize = reference
-        graphics = graphicsFactory.newGraphicsSquare(squareSize)
+        graphics = graphicsFactory.newGraphicsSquare(canvasSize)
 
         return this
     }
@@ -235,11 +236,15 @@ class QRCode @JvmOverloads constructor(
     @JvmOverloads
     fun render(
         qrCodeGraphics: QRCodeGraphics = graphics,
-        xOffset: Int = 0,
-        yOffset: Int = 0,
+        xOffset: Int = this.xOffset,
+        yOffset: Int = this.yOffset,
     ): QRCodeGraphics {
         colorFn.beforeRender(this, qrCodeGraphics)
         shapeFn.beforeRender(this, qrCodeGraphics)
+
+        // Fill the whole area with the Background Color.
+        graphics.fill(colorFn.bg(0, 0, this, graphics))
+
         doBefore(qrCodeGraphics, xOffset, yOffset)
         return draw(xOffset, yOffset, rawData, qrCodeGraphics)
             .also { doAfter(it, xOffset, yOffset) }
@@ -249,8 +254,8 @@ class QRCode @JvmOverloads constructor(
     @JvmOverloads
     fun renderToBytes(
         qrCodeGraphics: QRCodeGraphics = graphics,
-        xOffset: Int = 0,
-        yOffset: Int = 0,
+        xOffset: Int = this.xOffset,
+        yOffset: Int = this.yOffset,
         format: String = "PNG",
     ): ByteArray {
         return render(qrCodeGraphics, xOffset, yOffset).getBytes(format)

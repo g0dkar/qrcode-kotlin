@@ -22,16 +22,17 @@ fun main() {
         .withLogo(logoBytes, 150, 150)
         .withInformationDensity(6)
         .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH)
+        .withMargin(squareSize)
         .build("https://qrcodekotlin.com")
 
     // Before drawing the QRCode, draw our gradient as the background
     qrCode.graphics.directDraw {
-        it.paint = kotlinGradient(qrCode.computedSize)
-        it.fillRect(0, 0, qrCode.computedSize, qrCode.computedSize)
+        it.paint = kotlinGradient(qrCode.canvasSize)
+        it.fillRect(0, 0, qrCode.canvasSize, qrCode.canvasSize)
     }
 
     // And render the QRCode on top of the Gradient :)
-    val qrCodeLogoPngData = qrCode.renderToBytes(xOffset = squareSize, yOffset = squareSize)
+    val qrCodeLogoPngData = qrCode.renderToBytes()
 
     // Now to create the Banner...
     // We reset all the rendering done so far
@@ -48,7 +49,7 @@ fun main() {
     }
 
     // Draw the QRCode on our banner canvas
-    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
+    qrCode.render(banner, (w - qrCode.canvasSize) / 2 + squareSize, (h - qrCode.canvasSize) / 2 + squareSize)
 
     // Get the bytes to save it to a file :)
     val pngData = banner.getBytes()

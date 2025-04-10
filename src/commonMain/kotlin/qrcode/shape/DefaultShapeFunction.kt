@@ -3,7 +3,6 @@ package qrcode.shape
 import qrcode.QRCode
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
-import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
@@ -40,22 +39,16 @@ open class DefaultShapeFunction(
     ) {
         val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
+        val color = if (square.dark) fg else bg
 
-        if (square.squareInfo.type == MARGIN) {
-            val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
-            canvas.fill(margin)
-        } else {
-            val color = if (square.dark) fg else bg
-
-            fillRect(
-                x + innerSpacing,
-                y + innerSpacing,
-                squareSize - innerSpacing * 2,
-                squareSize - innerSpacing * 2,
-                color,
-                canvas,
-            )
-        }
+        fillRect(
+            x + innerSpacing,
+            y + innerSpacing,
+            squareSize - innerSpacing * 2,
+            squareSize - innerSpacing * 2,
+            color,
+            canvas,
+        )
     }
 
     override fun renderControlSquare(
@@ -75,10 +68,8 @@ open class DefaultShapeFunction(
 
         when (actualSquare.squareInfo.type) {
             POSITION_PROBE -> {
-                val margin = colorFn.margin(actualSquare.row, actualSquare.col, qrCode, canvas)
-
                 // Fill the area with the whole square
-                canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, margin)
+                canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, bg)
 
                 // Draw outer square
                 drawRect(

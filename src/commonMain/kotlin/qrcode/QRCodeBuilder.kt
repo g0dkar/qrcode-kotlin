@@ -50,6 +50,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var canvasSize: Int = QRCode.DEFAULT_QRCODE_SIZE
     private var xOffset: Int = 0
     private var yOffset: Int = 0
+    private var margin: Int = 0
 
     private fun innerSpace() =
         when (shape) {
@@ -151,8 +152,8 @@ class QRCodeBuilder @JvmOverloads constructor(
 
                     rawData.forEach { row ->
                         row.forEach { cell ->
-                            val cellX = cell.absoluteX(squareSize) + squareSize
-                            val cellY = cell.absoluteY(squareSize) + squareSize
+                            val cellX = cell.absoluteX(squareSize)
+                            val cellY = cell.absoluteY(squareSize)
 
                             cell.rendered = !QRMath.rectsIntersect(
                                 logoX,
@@ -320,6 +321,16 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
+    /**
+     * Adds extra space around the QRCode.
+     *
+     * @param margin How many extra pixels to add around the QRCode
+     */
+    fun withMargin(margin: Int): QRCodeBuilder {
+        this.margin = margin
+        return this
+    }
+
     private val beforeFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
         get() = { canvas, xOffset, yOffset ->
             drawLogoBeforeAction(canvas, xOffset, yOffset)
@@ -356,8 +367,8 @@ class QRCodeBuilder @JvmOverloads constructor(
             data = data,
             squareSize = squareSize,
             canvasSize = canvasSize,
-            xOffset = xOffset,
-            yOffset = yOffset,
+            xOffset = xOffset + margin,
+            yOffset = yOffset + margin,
             colorFn = colorFunction,
             shapeFn = customShapeFunction ?: when (shape) {
                 SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
@@ -373,5 +384,10 @@ class QRCodeBuilder @JvmOverloads constructor(
             maskPattern = maskPattern,
             doBefore = beforeFn,
             doAfter = afterFn,
-        )
+        ).apply {
+            if (margin > 0) {
+                println("resizing canvasSize=$canvasSize, margin=$margin, size=${canvasSize + margin * 2}")
+                resize(canvasSize + margin * 2)
+            }
+        }
 }
