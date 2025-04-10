@@ -386,7 +386,6 @@ class QRCodeBuilder @JvmOverloads constructor(
             doAfter = afterFn,
         ).apply {
             if (margin > 0) {
-                println("resizing canvasSize=$canvasSize, margin=$margin, size=${canvasSize + margin * 2}")
                 resize(canvasSize + margin * 2)
             }
         }
