@@ -16,8 +16,6 @@ import qrcode.internals.QRCodeSetup.setupTopRightPositionProbePattern
 import qrcode.internals.QRCodeSetup.setupTypeInfo
 import qrcode.internals.QRCodeSetup.setupTypeNumber
 import qrcode.internals.QRCodeSquare
-import qrcode.internals.QRCodeSquareInfo
-import qrcode.internals.QRCodeSquareType
 import qrcode.internals.QRData
 import qrcode.internals.QRNumber
 import qrcode.internals.QRUtil
@@ -92,7 +90,6 @@ class QRCodeProcessor @JvmOverloads constructor(
 
     companion object {
         const val DEFAULT_CELL_SIZE = 25
-        const val DEFAULT_MARGIN = 0
         private const val PAD0 = 0xEC
         private const val PAD1 = 0x11
         const val MAXIMUM_INFO_DENSITY = 40
@@ -131,7 +128,7 @@ class QRCodeProcessor @JvmOverloads constructor(
     }
 
     /**
-     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
+     * Compute the final size of the image of this QRCode based on the given a `cellSize`.
      *
      * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
      * image will be 100x100 pixels.
@@ -139,31 +136,27 @@ class QRCodeProcessor @JvmOverloads constructor(
     @JsName("computeImageSizeFromRawData")
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
         rawData: QRCodeRawData = encode(),
-    ): Int = computeImageSize(cellSize, margin, rawData.size)
+    ): Int = computeImageSize(cellSize, rawData.size)
 
     /**
-     * Compute the final size of the image of this QRCode based on the given `cellSize` and `margin`.
+     * Compute the final size of the image of this QRCode based on the given a `cellSize`.
      *
      * This means this QRCode will be `<size> x <size>` pixels. For example, if this method returns 100, the resulting
      * image will be 100x100 pixels.
      */
     fun computeImageSize(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
         size: Int,
-    ): Int = size * cellSize + margin * 2
+    ): Int = size * cellSize
 
     /**
      * Renders a QR Code image based on its [computed data][encode]. This function exists to ease the interop with
      * Java :)
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
-     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      *
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
@@ -174,30 +167,24 @@ class QRCodeProcessor @JvmOverloads constructor(
      */
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
         brightColor: Int = Colors.WHITE,
         darkColor: Int = Colors.BLACK,
-        marginColor: Int = Colors.WHITE,
     ) =
         render(
             cellSize = cellSize,
-            margin = margin,
             rawData = encode(),
             brightColor = brightColor,
             darkColor = darkColor,
-            marginColor = marginColor,
         )
 
     /**
      * Renders a QR Code image based on its [computed data][encode].
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
      * @param qrCodeGraphics The [QRCodeGraphics] where the QRCode will be painted into.
      * @param brightColor Color to be used for the "bright" parts of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      * @param darkColor Color to be used for the "dark" parts of the QR Code. In RGBA space. Defaults to [black][Colors.BLACK].
-     * @param marginColor Color to be used for the "margin" part of the QR Code. In RGBA space. Defaults to [white][Colors.WHITE].
      *
      * @return A [QRCodeGraphics] with the QR Code rendered on it. It can then be saved or manipulated as desired.
      *
@@ -210,33 +197,20 @@ class QRCodeProcessor @JvmOverloads constructor(
     @JsName("renderComputed")
     fun render(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
         rawData: QRCodeRawData = encode(),
-        qrCodeGraphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(
-            computeImageSize(
-                cellSize,
-                margin,
-                rawData,
-            ),
-        ),
+        qrCodeGraphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(computeImageSize(cellSize, rawData)),
         brightColor: Int = Colors.WHITE,
         darkColor: Int = Colors.BLACK,
-        marginColor: Int = Colors.WHITE,
     ) =
         renderShaded(
             cellSize,
-            margin,
             rawData,
             qrCodeGraphics,
         ) { x, y, cellData, graphics ->
-            if (cellData.squareInfo.type != QRCodeSquareType.MARGIN) {
-                if (cellData.dark) {
-                    graphics.fillRect(x, y, cellSize, cellSize, darkColor)
-                } else {
-                    graphics.fillRect(x, y, cellSize, cellSize, brightColor)
-                }
+            if (cellData.dark) {
+                graphics.fillRect(x, y, cellSize, cellSize, darkColor)
             } else {
-                graphics.fillRect(x, y, margin, margin, marginColor)
+                graphics.fillRect(x, y, cellSize, cellSize, brightColor)
             }
         }
 
@@ -250,7 +224,6 @@ class QRCodeProcessor @JvmOverloads constructor(
      * _Tip: for better looking QR Codes, try using [QRCode] instead ;)_
      *
      * @param cellSize The size **in pixels** of each square (cell) in the QR Code. Defaults to `25`.
-     * @param margin Amount of space **in pixels** to add as a margin around the rendered QR Code. Defaults to `0`.
      * @param rawData The data matrix of the QR Code. Defaults to [this.encode()][encode].
      * @param qrCodeGraphics The [QRCodeGraphics] where the QRCode will be painted into.
      * @param renderer Lambda that draws a single QRCode square. It receives as parameters the `(x, y)` of the cell,
@@ -269,33 +242,14 @@ class QRCodeProcessor @JvmOverloads constructor(
     @JvmOverloads
     fun renderShaded(
         cellSize: Int = DEFAULT_CELL_SIZE,
-        margin: Int = DEFAULT_MARGIN,
         rawData: QRCodeRawData = encode(),
-        qrCodeGraphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(
-            computeImageSize(
-                cellSize,
-                margin,
-                rawData,
-            ),
-        ),
+        qrCodeGraphics: QRCodeGraphics = graphicsFactory.newGraphicsSquare(computeImageSize(cellSize, rawData)),
         renderer: (Int, Int, QRCodeSquare, QRCodeGraphics) -> Unit,
     ): QRCodeGraphics {
-        if (margin > 0) {
-            val marginSquare = QRCodeSquare(
-                dark = false,
-                row = 0,
-                col = 0,
-                moduleSize = rawData.size,
-                squareInfo = QRCodeSquareInfo.margin(),
-            )
-
-            renderer(marginSquare.absoluteX(margin), marginSquare.absoluteY(margin), marginSquare, qrCodeGraphics)
-        }
-
         rawData.forEach { rowData ->
             rowData.forEach { cell ->
                 if (!cell.rendered) {
-                    renderer(cell.absoluteX(cellSize) + margin, cell.absoluteY(cellSize) + margin, cell, qrCodeGraphics)
+                    renderer(cell.absoluteX(cellSize), cell.absoluteY(cellSize), cell, qrCodeGraphics)
                     cell.rendered = true
                 }
             }
@@ -364,7 +318,8 @@ class QRCodeProcessor @JvmOverloads constructor(
         val totalDataCount = rsBlocks.sumOf { it.dataCount } * 8
 
         if (buffer.lengthInBits > totalDataCount) {
-            val errorMessage = "Insufficient Information Density Parameter: $type [neededBits=${buffer.lengthInBits}, maximumBitsForDensityLevel=$totalDataCount] - Try increasing the Information Density parameter value or use 0 (zero) to automatically compute the least amount needed to fit the QRCode data being encoded."
+            val errorMessage =
+                "Insufficient Information Density Parameter: $type [neededBits=${buffer.lengthInBits}, maximumBitsForDensityLevel=$totalDataCount] - Try increasing the Information Density parameter value or use 0 (zero) to automatically compute the least amount needed to fit the QRCode data being encoded."
             throw InsufficientInformationDensityException(errorMessage)
         }
 

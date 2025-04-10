@@ -77,7 +77,7 @@ open class DefaultShapeFunction(
             POSITION_PROBE -> {
                 val margin = colorFn.margin(actualSquare.row, actualSquare.col, qrCode, canvas)
 
-                // Fill the area of the whole square
+                // Fill the area with the whole square
                 canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, margin)
 
                 // Draw outer square
@@ -105,8 +105,6 @@ open class DefaultShapeFunction(
             else -> {
                 // Always a 5x5 square at (x, y)
                 canvas.fillRect(startX, startY, size, size, bg)
-
-                println("[draw control square] startX=$startX, startY=$startY, squareSize=$squareSize")
 
                 // 1st line
                 drawSquaresLine(startX, startY, 5, 1, fg, canvas)

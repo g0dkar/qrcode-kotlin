@@ -31,7 +31,7 @@ fun main() {
     }
 
     // And render the QRCode on top of the Gradient :)
-    val qrCodeLogoPngData = qrCode.renderToBytes(margin = squareSize)
+    val qrCodeLogoPngData = qrCode.renderToBytes(xOffset = squareSize, yOffset = squareSize)
 
     // Now to create the Banner...
     // We reset all the rendering done so far
@@ -48,7 +48,7 @@ fun main() {
     }
 
     // Draw the QRCode on our banner canvas
-    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2, margin = squareSize)
+    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
 
     // Get the bytes to save it to a file :)
     val pngData = banner.getBytes()

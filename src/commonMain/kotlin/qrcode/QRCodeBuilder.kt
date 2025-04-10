@@ -47,6 +47,9 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW
     private var informationDensity: Int = 0
     private var maskPattern: MaskPattern = MaskPattern.PATTERN000
+    private var canvasSize: Int = QRCode.DEFAULT_QRCODE_SIZE
+    private var xOffset: Int = 0
+    private var yOffset: Int = 0
 
     private fun innerSpace() =
         when (shape) {
@@ -143,8 +146,8 @@ class QRCodeBuilder @JvmOverloads constructor(
         if (logo != null) {
             if (clearLogoArea) {
                 drawLogoBeforeAction = { _, _, _ ->
-                    val logoX = (computedSize - width) / 2
-                    val logoY = (computedSize - height) / 2
+                    val logoX = (canvasSize - width) / 2
+                    val logoY = (canvasSize - height) / 2
 
                     rawData.forEach { row ->
                         row.forEach { cell ->
@@ -169,8 +172,8 @@ class QRCodeBuilder @JvmOverloads constructor(
             }
 
             drawLogoAction = { canvas, xOffset, yOffset ->
-                val logoX = xOffset + (computedSize - width) / 2
-                val logoY = yOffset + (computedSize - height) / 2
+                val logoX = xOffset + (canvasSize - width) / 2
+                val logoY = yOffset + (canvasSize - height) / 2
 
                 canvas.drawImage(logo, logoX, logoY)
             }
@@ -282,6 +285,41 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
+    /**
+     * Size, in pixels, of the canvas the QRCode will be drawn into.
+     * The resulting image will be a square of [size] by [size].
+     *
+     * If this value is `<= 0` than the size will be computed from the data.
+     *
+     * Defaults to `0` (meaning the code will compute it from the data to be encoded)
+     *
+     * @param size Size, in pixels, of the canvas where to draw the QRCode. Defaults to `0` meaning it'll be computed from the data to be encoded.
+     */
+    fun withCanvasSize(size: Int): QRCodeBuilder {
+        this.canvasSize = size
+        return this
+    }
+
+    /**
+     * Offset drawing the QRCode on the X-axis (horizontal) by this many pixels.
+     *
+     * @param xOffset X-axis offset
+     */
+    fun withXOffset(xOffset: Int): QRCodeBuilder {
+        this.xOffset = xOffset
+        return this
+    }
+
+    /**
+     * Offset drawing the QRCode on the Y-axis (vertical) by this many pixels.
+     *
+     * @param yOffset Y-axis offset
+     */
+    fun withYOffset(yOffset: Int): QRCodeBuilder {
+        this.yOffset = yOffset
+        return this
+    }
+
     private val beforeFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
         get() = { canvas, xOffset, yOffset ->
             drawLogoBeforeAction(canvas, xOffset, yOffset)
@@ -315,22 +353,25 @@ class QRCodeBuilder @JvmOverloads constructor(
      */
     fun build(data: String) =
         QRCode(
-            data,
-            squareSize,
-            colorFunction,
-            customShapeFunction ?: when (shape) {
+            data = data,
+            squareSize = squareSize,
+            canvasSize = canvasSize,
+            xOffset = xOffset,
+            yOffset = yOffset,
+            colorFn = colorFunction,
+            shapeFn = customShapeFunction ?: when (shape) {
                 SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
                 CIRCLE -> CircleShapeFunction(squareSize, innerSpace = innerSpace)
                 ROUNDED_SQUARE -> RoundSquaresShapeFunction(squareSize, radiusInPixels, innerSpace = innerSpace)
             },
-            graphicsFactory,
-            errorCorrectionLevel,
-            when (informationDensity) {
+            graphicsFactory = graphicsFactory,
+            errorCorrectionLevel = errorCorrectionLevel,
+            informationDensity = when (informationDensity) {
                 0 -> QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel)
                 else -> informationDensity
             },
-            maskPattern,
-            beforeFn,
-            afterFn,
+            maskPattern = maskPattern,
+            doBefore = beforeFn,
+            doAfter = afterFn,
         )
 }

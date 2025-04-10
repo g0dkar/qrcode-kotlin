@@ -145,8 +145,8 @@ internal object QRCodeSetup {
 
                 val squareData = QRCodeSquare(
                     dark = false,
-                    row = row - 1,
-                    col = col - 1,
+                    row = row - 2,
+                    col = col - 2,
                     rowSize = 6,
                     colSize = 6,
                     squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
