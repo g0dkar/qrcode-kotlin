@@ -49,7 +49,10 @@ fun DrawScope.drawQRCode(
     offsetTopLeft: Offset = Offset.Zero,
     sizeToFitInto: Size = this.size,
 ) {
-    qrCode.fitIntoArea(sizeToFitInto.width.toInt(), sizeToFitInto.height.toInt())
+    val width = sizeToFitInto.width.toInt()
+    val height = sizeToFitInto.height.toInt()
+
+    qrCode.fitIntoArea(width, height)
 
     val qrCodeGraphics = qrCode.graphics
     val previousDrawingInterface = qrCodeGraphics.drawingInterface

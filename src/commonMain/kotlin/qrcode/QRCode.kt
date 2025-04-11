@@ -275,4 +275,9 @@ class QRCode @JvmOverloads constructor(
         }
         graphics.reset()
     }
+
+    override fun toString(): String =
+        "QRCode(data=$data, squareSize=$squareSize, canvasSize=$canvasSize, xOffset=$xOffset, yOffset=$yOffset" +
+            ", errorCorrectionLevel=$errorCorrectionLevel, informationDensity=$informationDensity" +
+            ", maskPattern=$maskPattern)"
 }

@@ -21,12 +21,13 @@ open class DefaultShapeFunction(
 ) : QRCodeShapeFunction {
     private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
     var squareSize: Int = squareSize
-        set(value) {
-            resize(value)
-        }
+        private set
 
     override fun resize(newSquareSize: Int) {
-        innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+        val sizeRatio: Double = newSquareSize / squareSize.toDouble()
+
+        squareSize = newSquareSize
+        innerSpacing = (innerSpace * sizeRatio).toInt().coerceIn(0..(newSquareSize / 2))
     }
 
     override fun renderSquare(
