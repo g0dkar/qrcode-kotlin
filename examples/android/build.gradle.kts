@@ -41,7 +41,7 @@ dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2025.02.00")
     implementation(composeBom)
 
-    implementation("io.github.g0dkar:qrcode-kotlin:4.4.0")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.4.1")
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
