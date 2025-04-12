@@ -30,8 +30,8 @@ public class Example03_SVG { // NOSONAR
 
         // -----------------------
         // JVM-only code (saves the SVG to a file)
-        Util.saveFile("examples/java/example03-squares.svg", squarePngData);
-        Util.saveFile("examples/java/example03-circles.svg", circlePngData);
-        Util.saveFile("examples/java/example03-rounded-squares.svg", roundedSquarePngData);
+        Util.saveFile("examples/java/examples-results/example03-squares.svg", squarePngData);
+        Util.saveFile("examples/java/examples-results/example03-circles.svg", circlePngData);
+        Util.saveFile("examples/java/examples-results/example03-rounded-squares.svg", roundedSquarePngData);
     }
 }

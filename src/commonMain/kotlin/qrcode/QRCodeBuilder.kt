@@ -11,7 +11,9 @@ import qrcode.color.LinearGradientColorFunction
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRMath
 import qrcode.raw.ErrorCorrectionLevel
+import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
+import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
 import qrcode.shape.CircleShapeFunction
@@ -34,7 +36,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var color: Int = Colors.BLACK
     private var endColor: Int? = null
     private var vertical: Boolean = true
-    private var background: Int = Colors.WHITE
+    private var background: Int = Colors.TRANSPARENT
     private var innerSpace: Int = innerSpace()
     private var radiusInPixels: Int = RoundSquaresShapeFunction.defaultRadius(squareSize)
     private var drawLogoAction: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
@@ -42,9 +44,13 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var userDoAfter: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var userDoBefore: QRCode.(QRCodeGraphics, Int, Int) -> Unit = EMPTY_FN
     private var graphicsFactory: QRCodeGraphicsFactory = QRCodeGraphicsFactory()
-    private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.VERY_HIGH
-    private var typeNum: Int = 6
-    private var forceInformationDensity: Boolean = false
+    private var errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.LOW
+    private var informationDensity: Int = 0
+    private var maskPattern: MaskPattern = MaskPattern.PATTERN000
+    private var canvasSize: Int = QRCode.DEFAULT_QRCODE_SIZE
+    private var xOffset: Int = 0
+    private var yOffset: Int = 0
+    private var margin: Int = 0
 
     private fun innerSpace() =
         when (shape) {
@@ -141,13 +147,13 @@ class QRCodeBuilder @JvmOverloads constructor(
         if (logo != null) {
             if (clearLogoArea) {
                 drawLogoBeforeAction = { _, _, _ ->
-                    val logoX = (computedSize - width) / 2
-                    val logoY = (computedSize - height) / 2
+                    val logoX = (canvasSize - width) / 2
+                    val logoY = (canvasSize - height) / 2
 
                     rawData.forEach { row ->
                         row.forEach { cell ->
-                            val cellX = cell.absoluteX(squareSize) + squareSize
-                            val cellY = cell.absoluteY(squareSize) + squareSize
+                            val cellX = cell.absoluteX(squareSize)
+                            val cellY = cell.absoluteY(squareSize)
 
                             cell.rendered = !QRMath.rectsIntersect(
                                 logoX,
@@ -167,8 +173,8 @@ class QRCodeBuilder @JvmOverloads constructor(
             }
 
             drawLogoAction = { canvas, xOffset, yOffset ->
-                val logoX = xOffset + (computedSize - width) / 2
-                val logoY = yOffset + (computedSize - height) / 2
+                val logoX = xOffset + (canvasSize - width) / 2
+                val logoY = yOffset + (canvasSize - height) / 2
 
                 canvas.drawImage(logo, logoX, logoY)
             }
@@ -189,7 +195,15 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
-    /** Use a custom [QRCodeGraphicsFactory] instead of the default. */
+    /**
+     * Use a custom [QRCodeGraphicsFactory] instead of the default. Use this to have a way to better control how and
+     * where the QRCode drawing will occur.
+     *
+     * The currently available implementations on this library are:
+     *
+     * - **Android:**`qrcode.render.AndroidQRCodeGraphicsFactory`
+     * - **JVM:** `qrcode.render.JvmQRCodeGraphicsFactory`
+     */
     fun withGraphicsFactory(factory: QRCodeGraphicsFactory): QRCodeBuilder {
         graphicsFactory = factory
         return this
@@ -226,7 +240,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The level of error correction to apply to the QR Code. Defaults to [ErrorCorrectionLevel.VERY_HIGH].
+     * The level of error correction to apply to the QR Code. Defaults to [ErrorCorrectionLevel.LOW].
      *
      * In short, this configures how much data loss we can tolerate. Higher error correction = Readable QR Codes even
      * with large parts hidden/crumpled/deformed.
@@ -239,39 +253,81 @@ class QRCodeBuilder @JvmOverloads constructor(
     }
 
     /**
-     * The level of "information density" this QRCode will maintain. **Defaults to 6.**
+     * The level of "information density" this QRCode will support.
      *
-     * This is complex to explain, but basically the lower this value the fewer squares the QR Code _**might**_ have.
+     * **Defaults to `0`. Meaning the minimum possible value will be computed and used.**
      *
-     * This is simply a way to make sure QR Codes for very few characters are readable :)
+     * Must be a value between `1` and `40`. **If this value is `0` (zero), the minimum possible value for it will be
+     * computed and used instead.**
      *
-     * **IMPORTANT:** Setting this also sets `forceInformationDensity` to `true`! By default, the code will compute a
-     * value automatically given the data to be encoded and the Error Correction Level. We take that if you are setting
-     * this manually, you probably know what you're doing.
+     * This is complex to explain, but basically the lower this value the fewer squares the QRCode have. The catch is:
+     * the fewer squares the QRCode have, the harder it'll be to read damaged/obstructed versions of it.
      *
      * In short:
      *
-     * - Lots of data: You can keep this as close to 1 as possible. Be aware that the QRCode might be a bit hard to
-     *                 read if this is too low.
-     * - Smaller data: Try to keep this a big higher, just in case.
+     * - Ease of reading: Bump it as high as you want. Up to `6` is enough for a LOT of cases, even with logos.
+     * - Smaller size: Go with the computed value =)
      *
-     * @see forceInformationDensity
+     * @see QRCodeProcessor.infoDensityForDataAndECL
+     *
      */
-    fun withInformationDensity(minTypeNum: Int): QRCodeBuilder {
-        this.typeNum = minTypeNum
-        return forceInformationDensity(true)
+    fun withInformationDensity(informationDensity: Int): QRCodeBuilder {
+        this.informationDensity = informationDensity.coerceIn(0..MAXIMUM_INFO_DENSITY)
+        return this
     }
 
     /**
-     * Force the QRCode to use the value of Information Density specified. **Defaults to false.**
+     * Which [MaskPattern] to apply on the QRCode. Mostly for aesthetics. Defaults to [MaskPattern.PATTERN000].
      *
-     * **IMPORTANT:** Calling [withInformationDensity] will also set this to `true`!
-     *
-     * If this parameter is `false`, the `informationDensity` will be computed automatically given the data being
-     * encoded and the Error Correction Level.
+     * @see MaskPattern
      */
-    fun forceInformationDensity(forceInformationDensity: Boolean): QRCodeBuilder {
-        this.forceInformationDensity = forceInformationDensity
+    fun withMaskPattern(maskPattern: MaskPattern): QRCodeBuilder {
+        this.maskPattern = maskPattern
+        return this
+    }
+
+    /**
+     * Size, in pixels, of the canvas the QRCode will be drawn into.
+     * The resulting image will be a square of [size] by [size].
+     *
+     * If this value is `<= 0` than the size will be computed from the data.
+     *
+     * Defaults to `0` (meaning the code will compute it from the data to be encoded)
+     *
+     * @param size Size, in pixels, of the canvas where to draw the QRCode. Defaults to `0` meaning it'll be computed from the data to be encoded.
+     */
+    fun withCanvasSize(size: Int): QRCodeBuilder {
+        this.canvasSize = size
+        return this
+    }
+
+    /**
+     * Offset drawing the QRCode on the X-axis (horizontal) by this many pixels.
+     *
+     * @param xOffset X-axis offset
+     */
+    fun withXOffset(xOffset: Int): QRCodeBuilder {
+        this.xOffset = xOffset
+        return this
+    }
+
+    /**
+     * Offset drawing the QRCode on the Y-axis (vertical) by this many pixels.
+     *
+     * @param yOffset Y-axis offset
+     */
+    fun withYOffset(yOffset: Int): QRCodeBuilder {
+        this.yOffset = yOffset
+        return this
+    }
+
+    /**
+     * Adds extra space around the QRCode.
+     *
+     * @param margin How many extra pixels to add around the QRCode
+     */
+    fun withMargin(margin: Int): QRCodeBuilder {
+        this.margin = margin
         return this
     }
 
@@ -297,30 +353,40 @@ class QRCodeBuilder @JvmOverloads constructor(
             )
         }
 
-    private val shapeFunction: QRCodeShapeFunction
-        get() = customShapeFunction ?: when (shape) {
-            SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
-            CIRCLE -> CircleShapeFunction(squareSize, innerSpace = innerSpace)
-            ROUNDED_SQUARE -> RoundSquaresShapeFunction(squareSize, radiusInPixels, innerSpace = innerSpace)
-        }
-
     /**
      * Builds a [QRCode] instance ready to use.
+     *
+     * **Important:** if you want to use your own drawing instrument (for example an Android `Canvas` or a JVM
+     * `BufferedImage`) call `freshlyBuiltQrCode.graphics
      *
      * @see QRCode.renderToBytes
      * @see QRCode.render
      */
     fun build(data: String) =
         QRCode(
-            data,
-            squareSize,
-            colorFunction,
-            shapeFunction,
-            graphicsFactory,
-            errorCorrectionLevel,
-            typeNum,
-            forceInformationDensity,
-            beforeFn,
-            afterFn,
-        )
+            data = data,
+            squareSize = squareSize,
+            canvasSize = canvasSize,
+            xOffset = xOffset + margin,
+            yOffset = yOffset + margin,
+            colorFn = colorFunction,
+            shapeFn = customShapeFunction ?: when (shape) {
+                SQUARE, CUSTOM -> DefaultShapeFunction(squareSize, innerSpace = innerSpace)
+                CIRCLE -> CircleShapeFunction(squareSize, innerSpace = innerSpace)
+                ROUNDED_SQUARE -> RoundSquaresShapeFunction(squareSize, radiusInPixels, innerSpace = innerSpace)
+            },
+            graphicsFactory = graphicsFactory,
+            errorCorrectionLevel = errorCorrectionLevel,
+            informationDensity = when (informationDensity) {
+                0 -> QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel)
+                else -> informationDensity
+            },
+            maskPattern = maskPattern,
+            doBefore = beforeFn,
+            doAfter = afterFn,
+        ).apply {
+            if (margin > 0) {
+                resize(canvasSize + margin * 2)
+            }
+        }
 }

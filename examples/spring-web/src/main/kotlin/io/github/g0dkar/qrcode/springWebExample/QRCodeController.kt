@@ -26,8 +26,7 @@ class QRCodeController(
      * @param shape Shape of each element of the QRCode. Default: `square`. See [QRCodeShapesEnum].
      * @param spacing How many pixels between each cell. Default: 1 for `square`, 5% of the radius for the others.
      * @param ecl Error Correction Level. Default: `medium`. See [ErrorCorrectionLevel].
-     * @param informationDensity **GET param: `id`** - Information Density. Higher values means you can encode more data. Default: minimum of 6, actual value is computed from data + ecl.
-     * @param forceInformationDensity **GET param: `fid`** - Force the use of the Information Density parameter. Default: `false`, meaning that the `id` parameter will be used as the minimum information density level.
+     * @param informationDensity **GET param: `id`** - Information Density. Higher values means you can encode more data. Default: 0 (meaning the actual value is computed from data + ecl by the library itself).
      * @param fileName File name to use for the downloaded file (applicable only for Web Browsers). Default: `qrcode` (which means the file will be called `qrcode.png`)
      */
     @GetMapping("/qrcode", produces = [IMAGE_PNG_VALUE])
@@ -35,9 +34,8 @@ class QRCodeController(
         @RequestParam(required = true) data: String,
         @RequestParam(required = false, defaultValue = "SQUARE") shape: String,
         @RequestParam(required = false) spacing: Int?,
-        @RequestParam(required = false, defaultValue = "MEDIUM") ecl: String,
-        @RequestParam(name = "id", required = false, defaultValue = "6") informationDensity: Int,
-        @RequestParam(name = "fid", required = false, defaultValue = "false") forceInformationDensity: Boolean,
+        @RequestParam(required = false, defaultValue = "LOW") ecl: String,
+        @RequestParam(required = false, defaultValue = "0") informationDensity: Int,
         @RequestParam(required = false, defaultValue = "qrcode") fileName: String,
     ): ResponseEntity<ByteArrayResource> {
         val shapeEnum = try {
@@ -48,11 +46,11 @@ class QRCodeController(
         val eclEnum = try {
             ErrorCorrectionLevel.valueOf(ecl.uppercase())
         } catch (_: Exception) {
-            ErrorCorrectionLevel.MEDIUM
+            ErrorCorrectionLevel.LOW
         }
 
         val pngData =
-            qrCodeService.qrCode(data, spacing, shapeEnum, eclEnum, informationDensity, forceInformationDensity)
+            qrCodeService.qrCode(data, spacing, shapeEnum, eclEnum, informationDensity)
         val resource = ByteArrayResource(pngData, IMAGE_PNG_VALUE)
 
         return ResponseEntity.ok()

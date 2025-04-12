@@ -6,7 +6,6 @@ import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
 import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeRegion.UNKNOWN
 import qrcode.internals.QRCodeSquareType.DEFAULT
-import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.raw.QRCodeProcessor
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
@@ -86,11 +85,7 @@ data class QRCodeSquare(
 data class QRCodeSquareInfo(
     val type: QRCodeSquareType,
     val region: QRCodeRegion,
-) {
-    companion object {
-        internal fun margin() = QRCodeSquareInfo(MARGIN, QRCodeRegion.MARGIN)
-    }
-}
+)
 
 /**
  * The types available for squares in a QRCode.
@@ -111,9 +106,6 @@ enum class QRCodeSquareType {
 
     /** Anything special. Just a square. */
     DEFAULT,
-
-    /** Used to point out that this is part of the margin. */
-    MARGIN
 }
 
 /**

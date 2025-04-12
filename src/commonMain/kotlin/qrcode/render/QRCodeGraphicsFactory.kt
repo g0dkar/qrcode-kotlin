@@ -1,5 +1,6 @@
 package qrcode.render
 
+import qrcode.QRCode
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
