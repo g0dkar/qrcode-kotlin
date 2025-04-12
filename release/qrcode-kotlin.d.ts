@@ -1,23 +1,40 @@
 type Nullable<T> = T | null | undefined
 export declare namespace qrcode {
     class QRCode {
-        constructor(data: string, squareSize?: number, colorFn?: qrcode.color.QRCodeColorFunction, shapeFn?: qrcode.shape.QRCodeShapeFunction, graphicsFactory?: qrcode.render.QRCodeGraphicsFactory, errorCorrectionLevel?: qrcode.raw.ErrorCorrectionLevel, minTypeNum?: number, forceMinTypeNum?: boolean, doBefore?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void, doAfter?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void);
+        constructor(data: string, squareSize?: number, canvasSize?: number, xOffset?: number, yOffset?: number, colorFn?: qrcode.color.QRCodeColorFunction, shapeFn?: qrcode.shape.QRCodeShapeFunction, graphicsFactory?: qrcode.render.QRCodeGraphicsFactory, errorCorrectionLevel?: qrcode.raw.ErrorCorrectionLevel, informationDensity?: number, maskPattern?: qrcode.raw.MaskPattern, doBefore?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void, doAfter?: (p0: qrcode.QRCode, p1: qrcode.render.QRCodeGraphics, p2: number, p3: number) => void);
         get data(): string;
-        get squareSize(): number;
+        get xOffset(): number;
+        get yOffset(): number;
         get colorFn(): qrcode.color.QRCodeColorFunction;
         get shapeFn(): qrcode.shape.QRCodeShapeFunction;
         get graphicsFactory(): qrcode.render.QRCodeGraphicsFactory;
         set graphicsFactory(value: qrcode.render.QRCodeGraphicsFactory);
+        get errorCorrectionLevel(): qrcode.raw.ErrorCorrectionLevel;
+        get informationDensity(): number;
+        get maskPattern(): qrcode.raw.MaskPattern;
+        get squareSize(): number;
+        set squareSize(value: number);
         get qrCodeProcessor(): qrcode.raw.QRCodeProcessor;
+        /** @deprecated Please use informationDensity instead. */
         get typeNum(): number;
         get rawData(): Array<Array<qrcode.internals.QRCodeSquare>>;
+        get canvasSize(): number;
+        set canvasSize(value: number);
+        /** @deprecated Please use canvasSize instead. */
         get computedSize(): number;
         get graphics(): qrcode.render.QRCodeGraphics;
+        set graphics(value: qrcode.render.QRCodeGraphics);
+        resize(size: number): qrcode.QRCode;
+        fitIntoArea(width: number, height: number): qrcode.QRCode;
         render(qrCodeGraphics?: qrcode.render.QRCodeGraphics, xOffset?: number, yOffset?: number): qrcode.render.QRCodeGraphics;
-        renderToBytes(format?: string): Int8Array;
+        renderToBytes(qrCodeGraphics?: qrcode.render.QRCodeGraphics, xOffset?: number, yOffset?: number, format?: string): Int8Array;
         reset(): void;
+        toString(): string;
         static get Companion(): {
             get DEFAULT_SQUARE_SIZE(): number;
+            get DEFAULT_QRCODE_SIZE(): number;
+            get DEFAULT_X_OFFSET(): number;
+            get DEFAULT_Y_OFFSET(): number;
             ofSquares(): qrcode.QRCodeBuilder;
             ofCircles(): qrcode.QRCodeBuilder;
             ofRoundedSquares(): qrcode.QRCodeBuilder;
@@ -42,8 +59,12 @@ export declare namespace qrcode {
         withCustomColorFunction(colorFn: Nullable<qrcode.color.QRCodeColorFunction>): qrcode.QRCodeBuilder;
         withCustomShapeFunction(shapeFn: Nullable<qrcode.shape.QRCodeShapeFunction>): qrcode.QRCodeBuilder;
         withErrorCorrectionLevel(ecl: qrcode.raw.ErrorCorrectionLevel): qrcode.QRCodeBuilder;
-        withInformationDensity(minTypeNum: number): qrcode.QRCodeBuilder;
-        forceInformationDensity(forceInformationDensity: boolean): qrcode.QRCodeBuilder;
+        withInformationDensity(informationDensity: number): qrcode.QRCodeBuilder;
+        withMaskPattern(maskPattern: qrcode.raw.MaskPattern): qrcode.QRCodeBuilder;
+        withCanvasSize(size: number): qrcode.QRCodeBuilder;
+        withXOffset(xOffset: number): qrcode.QRCodeBuilder;
+        withYOffset(yOffset: number): qrcode.QRCodeBuilder;
+        withMargin(margin: number): qrcode.QRCodeBuilder;
         build(data: string): qrcode.QRCode;
     }
 }
@@ -210,7 +231,6 @@ export declare namespace qrcode.color {
         constructor(foreground?: number, background?: number);
         fg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         bg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
-        margin(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         colorFn(square: qrcode.internals.QRCodeSquare, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         beforeRender(qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): void;
         readonly __doNotUseOrImplementIt: qrcode.color.QRCodeColorFunction["__doNotUseOrImplementIt"];
@@ -226,7 +246,6 @@ export declare namespace qrcode.color {
         set vertical(value: boolean);
         fg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         bg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
-        margin(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         colorFn(square: qrcode.internals.QRCodeSquare, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         beforeRender(qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): void;
         readonly __doNotUseOrImplementIt: qrcode.color.QRCodeColorFunction["__doNotUseOrImplementIt"];
@@ -238,7 +257,6 @@ export declare namespace qrcode.color {
         beforeRender(qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): void;
         fg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         bg(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
-        margin(row: number, col: number, qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): number;
         readonly __doNotUseOrImplementIt: {
             readonly "qrcode.color.QRCodeColorFunction": unique symbol;
         };
@@ -273,8 +291,6 @@ export declare namespace qrcode.internals {
         toString(): string;
         hashCode(): number;
         equals(other: Nullable<any>): boolean;
-        static get Companion(): {
-        };
     }
     abstract class QRCodeSquareType {
         private constructor();
@@ -294,14 +310,10 @@ export declare namespace qrcode.internals {
             get name(): "DEFAULT";
             get ordinal(): 3;
         };
-        static get MARGIN(): qrcode.internals.QRCodeSquareType & {
-            get name(): "MARGIN";
-            get ordinal(): 4;
-        };
+        get name(): "POSITION_PROBE" | "POSITION_ADJUST" | "TIMING_PATTERN" | "DEFAULT";
+        get ordinal(): 0 | 1 | 2 | 3;
         static values(): Array<qrcode.internals.QRCodeSquareType>;
         static valueOf(value: string): qrcode.internals.QRCodeSquareType;
-        get name(): "POSITION_PROBE" | "POSITION_ADJUST" | "TIMING_PATTERN" | "DEFAULT" | "MARGIN";
-        get ordinal(): 0 | 1 | 2 | 3 | 4;
     }
     abstract class QRCodeRegion {
         private constructor();
@@ -349,17 +361,15 @@ export declare namespace qrcode.internals {
             get name(): "UNKNOWN";
             get ordinal(): 10;
         };
-        static values(): Array<qrcode.internals.QRCodeRegion>;
-        static valueOf(value: string): qrcode.internals.QRCodeRegion;
         get name(): "TOP_LEFT_CORNER" | "TOP_RIGHT_CORNER" | "TOP_MID" | "LEFT_MID" | "RIGHT_MID" | "CENTER" | "BOTTOM_LEFT_CORNER" | "BOTTOM_RIGHT_CORNER" | "BOTTOM_MID" | "MARGIN" | "UNKNOWN";
         get ordinal(): 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+        static values(): Array<qrcode.internals.QRCodeRegion>;
+        static valueOf(value: string): qrcode.internals.QRCodeRegion;
     }
 }
 export declare namespace qrcode.raw {
     abstract class ErrorCorrectionLevel {
         private constructor();
-        get value(): number;
-        get maxTypeNum(): number;
         static get LOW(): qrcode.raw.ErrorCorrectionLevel & {
             get name(): "LOW";
             get ordinal(): 0;
@@ -376,10 +386,12 @@ export declare namespace qrcode.raw {
             get name(): "VERY_HIGH";
             get ordinal(): 3;
         };
-        static values(): Array<qrcode.raw.ErrorCorrectionLevel>;
-        static valueOf(value: string): qrcode.raw.ErrorCorrectionLevel;
         get name(): "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
         get ordinal(): 0 | 1 | 2 | 3;
+        get value(): number;
+        get maxTypeNum(): number;
+        static values(): Array<qrcode.raw.ErrorCorrectionLevel>;
+        static valueOf(value: string): qrcode.raw.ErrorCorrectionLevel;
     }
     abstract class MaskPattern {
         private constructor();
@@ -415,14 +427,13 @@ export declare namespace qrcode.raw {
             get name(): "PATTERN111";
             get ordinal(): 7;
         };
-        static values(): Array<qrcode.raw.MaskPattern>;
-        static valueOf(value: string): qrcode.raw.MaskPattern;
         get name(): "PATTERN000" | "PATTERN001" | "PATTERN010" | "PATTERN011" | "PATTERN100" | "PATTERN101" | "PATTERN110" | "PATTERN111";
         get ordinal(): 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+        static values(): Array<qrcode.raw.MaskPattern>;
+        static valueOf(value: string): qrcode.raw.MaskPattern;
     }
     abstract class QRCodeDataType {
         private constructor();
-        get value(): number;
         static get NUMBERS(): qrcode.raw.QRCodeDataType & {
             get name(): "NUMBERS";
             get ordinal(): 0;
@@ -435,27 +446,28 @@ export declare namespace qrcode.raw {
             get name(): "DEFAULT";
             get ordinal(): 2;
         };
-        static values(): Array<qrcode.raw.QRCodeDataType>;
-        static valueOf(value: string): qrcode.raw.QRCodeDataType;
         get name(): "NUMBERS" | "UPPER_ALPHA_NUM" | "DEFAULT";
         get ordinal(): 0 | 1 | 2;
+        get value(): number;
+        static values(): Array<qrcode.raw.QRCodeDataType>;
+        static valueOf(value: string): qrcode.raw.QRCodeDataType;
     }
 }
 export declare namespace qrcode.raw {
     class QRCodeProcessor {
         constructor(data: string, errorCorrectionLevel?: qrcode.raw.ErrorCorrectionLevel, dataType?: qrcode.raw.QRCodeDataType, graphicsFactory?: qrcode.render.QRCodeGraphicsFactory);
         get graphicsFactory(): qrcode.render.QRCodeGraphicsFactory;
-        computeImageSizeFromRawData(cellSize?: number, margin?: number, rawData?: Array<Array<qrcode.internals.QRCodeSquare>>): number;
-        computeImageSize(cellSize: number | undefined, margin: number | undefined, size: number): number;
-        render(cellSize?: number, margin?: number, brightColor?: number, darkColor?: number, marginColor?: number): qrcode.render.QRCodeGraphics;
-        renderComputed(cellSize?: number, margin?: number, rawData?: Array<Array<qrcode.internals.QRCodeSquare>>, qrCodeGraphics?: qrcode.render.QRCodeGraphics, brightColor?: number, darkColor?: number, marginColor?: number): qrcode.render.QRCodeGraphics;
-        renderShaded(cellSize: number | undefined, margin: number | undefined, rawData: Array<Array<qrcode.internals.QRCodeSquare>> | undefined, qrCodeGraphics: qrcode.render.QRCodeGraphics | undefined, renderer: (p0: number, p1: number, p2: qrcode.internals.QRCodeSquare, p3: qrcode.render.QRCodeGraphics) => void): qrcode.render.QRCodeGraphics;
+        computeImageSizeFromRawData(cellSize?: number, rawData?: Array<Array<qrcode.internals.QRCodeSquare>>): number;
+        computeImageSize(cellSize: number | undefined, size: number): number;
+        render(cellSize?: number, brightColor?: number, darkColor?: number): qrcode.render.QRCodeGraphics;
+        renderComputed(cellSize?: number, rawData?: Array<Array<qrcode.internals.QRCodeSquare>>, qrCodeGraphics?: qrcode.render.QRCodeGraphics, brightColor?: number, darkColor?: number): qrcode.render.QRCodeGraphics;
+        renderShaded(cellSize: number | undefined, rawData: Array<Array<qrcode.internals.QRCodeSquare>> | undefined, qrCodeGraphics: qrcode.render.QRCodeGraphics | undefined, renderer: (p0: number, p1: number, p2: qrcode.internals.QRCodeSquare, p3: qrcode.render.QRCodeGraphics) => void): qrcode.render.QRCodeGraphics;
         encode(type?: number, maskPattern?: qrcode.raw.MaskPattern): Array<Array<qrcode.internals.QRCodeSquare>>;
         toString(): string;
         static get Companion(): {
             get DEFAULT_CELL_SIZE(): number;
-            get DEFAULT_MARGIN(): number;
-            typeForDataAndECL(data: string, errorCorrectionLevel: qrcode.raw.ErrorCorrectionLevel, dataType?: qrcode.raw.QRCodeDataType): number;
+            get MAXIMUM_INFO_DENSITY(): number;
+            infoDensityForDataAndECL(data: string, errorCorrectionLevel: qrcode.raw.ErrorCorrectionLevel, dataType?: qrcode.raw.QRCodeDataType): number;
         };
     }
 }
@@ -467,6 +479,7 @@ export declare namespace qrcode.render {
     }
 }
 export declare namespace qrcode.shape {
+    /* @ts-ignore: https://github.com/microsoft/TypeScript/issues/4628 */
     class CircleShapeFunction extends qrcode.shape.RoundSquaresShapeFunction {
         constructor(squareSize?: number, innerSpace?: number);
         beforeRender(qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): void;
@@ -479,7 +492,10 @@ export declare namespace qrcode.shape {
 export declare namespace qrcode.shape {
     class DefaultShapeFunction implements qrcode.shape.QRCodeShapeFunction {
         constructor(squareSize?: number, innerSpace?: number);
+        get innerSpace(): number;
         get squareSize(): number;
+        set squareSize(value: number);
+        resize(newSquareSize: number): void;
         renderSquare(x: number, y: number, colorFn: qrcode.color.QRCodeColorFunction, square: qrcode.internals.QRCodeSquare, canvas: qrcode.render.QRCodeGraphics, qrCode: qrcode.QRCode): void;
         renderControlSquare(xOffset: number, yOffset: number, colorFn: qrcode.color.QRCodeColorFunction, square: qrcode.internals.QRCodeSquare, canvas: qrcode.render.QRCodeGraphics, qrCode: qrcode.QRCode): void;
         fillRect(x: number, y: number, width: number, height: number, color: number, canvas: qrcode.render.QRCodeGraphics): void;
@@ -490,6 +506,7 @@ export declare namespace qrcode.shape {
 }
 export declare namespace qrcode.shape {
     interface QRCodeShapeFunction {
+        resize(newSquareSize: number): void;
         beforeRender(qrCode: qrcode.QRCode, qrCodeGraphics: qrcode.render.QRCodeGraphics): void;
         renderSquare(x: number, y: number, colorFn: qrcode.color.QRCodeColorFunction, square: qrcode.internals.QRCodeSquare, canvas: qrcode.render.QRCodeGraphics, qrCode: qrcode.QRCode): void;
         renderControlSquare(xOffset: number, yOffset: number, colorFn: qrcode.color.QRCodeColorFunction, square: qrcode.internals.QRCodeSquare, canvas: qrcode.render.QRCodeGraphics, qrCode: qrcode.QRCode): void;
@@ -499,6 +516,7 @@ export declare namespace qrcode.shape {
     }
 }
 export declare namespace qrcode.shape {
+    /* @ts-ignore: https://github.com/microsoft/TypeScript/issues/4628 */
     class RoundSquaresShapeFunction extends qrcode.shape.DefaultShapeFunction {
         constructor(squareSize?: number, radius?: number, innerSpace?: number);
         fillRect(x: number, y: number, width: number, height: number, color: number, canvas: qrcode.render.QRCodeGraphics): void;
