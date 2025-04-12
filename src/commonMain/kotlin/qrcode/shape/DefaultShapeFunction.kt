@@ -3,7 +3,6 @@ package qrcode.shape
 import qrcode.QRCode
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
-import qrcode.internals.QRCodeSquareType.MARGIN
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
@@ -16,8 +15,20 @@ import kotlin.js.JsExport
 @JsExport
 @OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
-open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSpace: Int = 1) : QRCodeShapeFunction {
-    private val innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+open class DefaultShapeFunction(
+    squareSize: Int = DEFAULT_CELL_SIZE,
+    val innerSpace: Int = 1,
+) : QRCodeShapeFunction {
+    private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+    var squareSize: Int = squareSize
+        private set
+
+    override fun resize(newSquareSize: Int) {
+        val sizeRatio: Double = newSquareSize / squareSize.toDouble()
+
+        squareSize = newSquareSize
+        innerSpacing = (innerSpace * sizeRatio).toInt().coerceIn(0..(newSquareSize / 2))
+    }
 
     override fun renderSquare(
         x: Int,
@@ -29,22 +40,16 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
     ) {
         val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
         val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
+        val color = if (square.dark) fg else bg
 
-        if (square.squareInfo.type == MARGIN) {
-            val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
-            canvas.fill(margin)
-        } else {
-            val color = if (square.dark) fg else bg
-
-            fillRect(
-                x + innerSpacing,
-                y + innerSpacing,
-                squareSize - innerSpacing * 2,
-                squareSize - innerSpacing * 2,
-                color,
-                canvas,
-            )
-        }
+        fillRect(
+            x + innerSpacing,
+            y + innerSpacing,
+            squareSize - innerSpacing * 2,
+            squareSize - innerSpacing * 2,
+            color,
+            canvas,
+        )
     }
 
     override fun renderControlSquare(
@@ -55,23 +60,22 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
         canvas: QRCodeGraphics,
         qrCode: QRCode,
     ) {
-        val bg = colorFn.bg(square.row, square.col, qrCode, canvas)
-        val fg = colorFn.fg(square.row, square.col, qrCode, canvas)
-        val size = squareSize * square.rowSize
-        val startX = xOffset + square.absoluteX(squareSize)
-        val startY = yOffset + square.absoluteY(squareSize)
+        val actualSquare = square.parent ?: square
+        val bg = colorFn.bg(actualSquare.row, actualSquare.col, qrCode, canvas)
+        val fg = colorFn.fg(actualSquare.row, actualSquare.col, qrCode, canvas)
+        val size = squareSize * actualSquare.rowSize
+        val startX = xOffset + actualSquare.absoluteX(squareSize)
+        val startY = yOffset + actualSquare.absoluteY(squareSize)
 
-        when (square.squareInfo.type) {
+        when (actualSquare.squareInfo.type) {
             POSITION_PROBE -> {
-                val margin = colorFn.margin(square.row, square.col, qrCode, canvas)
-
-                // Fill the area of the whole square
-                canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, margin)
+                // Fill the area with the whole square
+                canvas.fillRect(startX, startY, size + squareSize * 2, size + squareSize * 2, bg)
 
                 // Draw outer square
                 drawRect(
-                    startX + squareSize + innerSpacing,
-                    startY + squareSize + innerSpacing,
+                    startX + innerSpacing,
+                    startY + innerSpacing,
                     size - innerSpacing * 2,
                     size - innerSpacing * 2,
                     fg,
@@ -81,8 +85,8 @@ open class DefaultShapeFunction(val squareSize: Int = DEFAULT_CELL_SIZE, innerSp
 
                 // Draw inner square
                 fillRect(
-                    startX + squareSize + squareSize * 2,
-                    startY + squareSize + squareSize * 2,
+                    startX + squareSize * 2,
+                    startY + squareSize * 2,
                     size - squareSize * 4,
                     size - squareSize * 4,
                     fg,

@@ -39,6 +39,4 @@ class LinearGradientColorFunction @JvmOverloads constructor(
     }
 
     override fun bg(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = backgroundColor
-
-    override fun margin(row: Int, col: Int, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int = backgroundColor
 }
