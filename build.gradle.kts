@@ -140,6 +140,12 @@ kotlin {
             }
         }
 
+        androidTarget {
+            dependencies {
+                compileOnly(libs.androidx.compose.ui)
+            }
+        }
+
         wasmJsMain {
             dependencies {
                 implementation(libs.kotlinx.browser)
@@ -252,12 +258,6 @@ val dokkaCopyToFolder by tasks.registering(Copy::class) {
 
     from(layout.buildDirectory.dir("javadoc/html"))
     into(layout.projectDirectory.dir("docs/dokka"))
-}
-
-tasks {
-    dokkaGenerate {
-        finalizedBy(dokkaCopyToFolder)
-    }
 }
 
 /* **************** */

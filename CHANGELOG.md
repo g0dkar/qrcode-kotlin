@@ -6,7 +6,39 @@
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-## 4.3.0 - Latest
+# 4.4.1 - Latest
+
+> I'm trying to keep a better CHANGELOG from now on ^^
+
+## 🔧 Fixed
+- **Fixed an issue with rendering the Timing Pattern.** I have known it for a while, but now I finally figured what was the issue and fixed it.
+
+## ♻️ Changed
+- Changed default ECL from `VERY_HIGH` to `LOW` as to stay closer to what other tools seems to use as a default
+- Computing the `informationDensity` value now always goes for the **least possible value** _(down from a minimum of 6 set by `QRCodeBuilder`)_
+- Better documentation of methods - this is an ongoing initiative!
+
+## ✨ New
+- New `InsufficientInformationDensityException`: instead of an `IllegalArgumentException`, this new exception is thrown with a more helpful message
+- Added `drawQRCode()` extension function to a Android Compose `DrawScope` to draw QRCodes into modern Android.
+    - Idea/request from Issue #141 by @dgmltn (Thanks!)
+- Added examples demonstrating what the ECL does (same data, different ECLs)
+- Added examples demonstrating what a Mask Pattern does (same data, different masks)
+- Added example with Spring Boot
+- Moved example QRCode files to a folder within each language examples, just to reduce clutter :)
+
+## 🚫 Removed
+- `forceInformationDensity` was removed. Now the **QRCodeBuilder** class uses `infoDensity = 0` (default value) as a trigger to compute it automatically since it needs to be `>= 1`
+    - Default value calling `QRCode()` directly is still 6 as to keep a bit of backwards compatibility 😅
+
+## 👀 Internal
+- Renamed "typeNum" to "informationDensity"
+- Updated dokka and KMP
+- Fixed dokka always triggering building the whole `docs/dokka/` folder (that is only for GH Pages)
+
+--------------------
+
+## 4.3.0
 
 - Fixed an issue with `4.2.1` and iOS/macOS targets (thanks [Manuel149Br](https://github.com/Manuel149Br)!)
 - Added options to fine tune the Information Density parameter:
@@ -22,12 +54,16 @@
       will be thrown.**
 - Moved `QRCodeShapesEnum` to be its own `enum` instead of being an inner element of `QRCodeBuilder`.
 
+--------------------
+
 ## 4.2.1
 
 - Fixed issue with the Error Correction being ignored (thanks [slaha](https://github.com/slaha)!)
 - Updated libs versions
 - **Only for project devs:** fixed the pipeline issues with running tests for PRs.
 - **Investigating:** Issues with very large payloads being encoded
+
+--------------------
 
 ## 4.1.0
 
@@ -38,10 +74,14 @@
         - In theory, it can go down to `1` but all API Versions below 7 are considered deprecated.
     - Reduced the Java compilation target to `11` (down from `17`)
 
+--------------------
+
 ## 4.0.7
 
 - A bunch of improvements and optimizations (minor changes from the rework)
 - MAJOR thanks to [ruicanas](https://github.com/ruicanas) for fixing and improving the iOS implementation!
+
+--------------------
 
 ## 4.0.0
 
@@ -50,6 +90,8 @@
 - Changed the base package of the classes from `io.github.g0dkar.qrcode` to `qrcode`
     - This was done to better support JavaScript
       ß- And because I don't really see much use in those Java-ish package names 😅
+
+--------------------
 
 ## 3.3.0
 

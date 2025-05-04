@@ -1,4 +1,5 @@
 import qrcode.QRCode
+import qrcode.color.Colors
 import qrcode.raw.QRCodeProcessor
 import qrcode.render.QRCodeGraphics
 import qrcode.shape.DefaultShapeFunction
@@ -39,11 +40,11 @@ fun main() {
 
     // -----------------------
     // JVM-only code (saves the PNG Bytes to a file)
-    FileOutputStream("examples/kotlin/example01-squares.png").use { it.write(squarePngData) }
-    FileOutputStream("examples/kotlin/example01-circles.png").use { it.write(circlePngData) }
-    FileOutputStream("examples/kotlin/example01-rounded-squares.png").use { it.write(roundedSquarePngData) }
-    FileOutputStream("examples/kotlin/example01-custom.png").use { it.write(customShapePngData) }
-    FileOutputStream("examples/kotlin/example01-custom-jvm.png").use { it.write(customShapePngDataJVM) }
+    FileOutputStream("examples/kotlin/examples-results/example01-squares.png").use { it.write(squarePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example01-circles.png").use { it.write(circlePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example01-rounded-squares.png").use { it.write(roundedSquarePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example01-custom.png").use { it.write(customShapePngData) }
+    FileOutputStream("examples/kotlin/examples-results/example01-custom-jvm.png").use { it.write(customShapePngDataJVM) }
 }
 
 class TriangleShapeFunction(
@@ -89,7 +90,9 @@ class JVMTriangleShapeFunction(
             triangle.addPoint(bottomRightX, bottomRightY)
             triangle.addPoint(topCenterX, topCenterY)
 
-            it.paint = Color(color)
+            val (r, g, b, a) = Colors.getRGBA(color)
+
+            it.paint = Color(r, g, b, a)
 
             it.fill(triangle)
         }

@@ -1,6 +1,7 @@
 import qrcode.QRCode
 import qrcode.color.Colors
 import qrcode.color.Colors.css
+import qrcode.raw.ErrorCorrectionLevel
 import java.awt.Color
 import java.awt.MultipleGradientPaint.CycleMethod.NO_CYCLE
 import java.awt.RadialGradientPaint
@@ -11,18 +12,23 @@ fun main() {
     // Get the Kotlin Logo
     val logoBytes = ClassLoader.getSystemResourceAsStream("kotlin-logo.png")?.readBytes() ?: ByteArray(0)
 
+    val squareSize = 13
+
     // Let's build a transparent QRCode with Kotlin's logo and a lightly transparent white as the color
     val qrCode = QRCode.ofCircles()
-        .withSize(13)
+        .withSize(squareSize)
         .withColor(Colors.rgba(255, 255, 255, 180))
         .withBackgroundColor(Colors.TRANSPARENT)
         .withLogo(logoBytes, 150, 150)
+        .withInformationDensity(6)
+        .withErrorCorrectionLevel(ErrorCorrectionLevel.VERY_HIGH)
+        .withMargin(squareSize)
         .build("https://qrcodekotlin.com")
 
     // Before drawing the QRCode, draw our gradient as the background
     qrCode.graphics.directDraw {
-        it.paint = kotlinGradient(qrCode.computedSize)
-        it.fillRect(0, 0, qrCode.computedSize, qrCode.computedSize)
+        it.paint = kotlinGradient(qrCode.canvasSize)
+        it.fillRect(0, 0, qrCode.canvasSize, qrCode.canvasSize)
     }
 
     // And render the QRCode on top of the Gradient :)
@@ -43,7 +49,7 @@ fun main() {
     }
 
     // Draw the QRCode on our banner canvas
-    qrCode.render(banner, (w - qrCode.computedSize) / 2, (h - qrCode.computedSize) / 2)
+    qrCode.render(banner, (w - qrCode.canvasSize) / 2 + squareSize, (h - qrCode.canvasSize) / 2 + squareSize)
 
     // Get the bytes to save it to a file :)
     val pngData = banner.getBytes()
@@ -55,7 +61,7 @@ fun main() {
 }
 
 private fun kotlinGradient(width: Int): RadialGradientPaint {
-    val gradientCenter = Point2D.Float(-0.0f, width.toFloat())
+    val gradientCenter = Point2D.Float(0.0f, width.toFloat())
     // Distances and colors taken from the official Kotlin website
     val dist = floatArrayOf(0.0f, 0.1758f, 0.5031f, 0.9703f)
     val colors = arrayOf(Color(css("#ef4857")), Color(css("#de4970")), Color(css("#b44db0")), Color(css("#7f52ff")))

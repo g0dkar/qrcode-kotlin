@@ -38,9 +38,9 @@ public class Example02_Colors { // NOSONAR
 
         // -----------------------
         // JVM-only code (saves the PNG Bytes to a file)
-        Util.saveFile("examples/java/example02-color.png", colorPngData);
-        Util.saveFile("examples/java/example02-dark-mode.png", darkModePngData);
-        Util.saveFile("examples/java/example02-gradient.png", gradientPngData);
-        Util.saveFile("examples/java/example02-transparent.png", transparentPngData);
+        Util.saveFile("examples/java/examples-results/example02-color.png", colorPngData);
+        Util.saveFile("examples/java/examples-results/example02-dark-mode.png", darkModePngData);
+        Util.saveFile("examples/java/examples-results/example02-gradient.png", gradientPngData);
+        Util.saveFile("examples/java/examples-results/example02-transparent.png", transparentPngData);
     }
 }

@@ -26,7 +26,9 @@ public class JVMTriangleShapeFunction extends DefaultShapeFunction {
             triangle.addPoint(bottomRightX, bottomRightY);
             triangle.addPoint(topCenterX, topCenterY);
 
-            it.setPaint(new Color(color));
+            int[] rgba = qrcode.color.Colors.getRGBA(color);
+
+            it.setPaint(new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
 
             it.fill(triangle);
         });

@@ -40,10 +40,10 @@ public class Example01_Shapes { // NOSONAR
 
         // -----------------------
         // JVM-only code (saves the PNG Bytes to a file)
-        Util.saveFile("examples/java/example01-squares.png", squarePngData);
-        Util.saveFile("examples/java/example01-circles.png", circlePngData);
-        Util.saveFile("examples/java/example01-rounded-squares.png", roundedSquarePngData);
-        Util.saveFile("examples/java/example01-custom.png", customShapePngData);
-        Util.saveFile("examples/java/example01-custom-jvm.png", customShapePngDataJVM);
+        Util.saveFile("examples/java/examples-results/example01-squares.png", squarePngData);
+        Util.saveFile("examples/java/examples-results/example01-circles.png", circlePngData);
+        Util.saveFile("examples/java/examples-results/example01-rounded-squares.png", roundedSquarePngData);
+        Util.saveFile("examples/java/examples-results/example01-custom.png", customShapePngData);
+        Util.saveFile("examples/java/examples-results/example01-custom-jvm.png", customShapePngDataJVM);
     }
 }

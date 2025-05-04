@@ -1,16 +1,17 @@
 [versions]
-kotlin = "2.1.10"
+kotlin = "2.1.20"
 dokka = "2.0.0"
-kotest = "5.9.1"
+kotest = "6.0.0.M3"
 mavenNexus = "2.0.0"
-androidPlugin = "8.7.3"
+androidPlugin = "8.9.2"
 npmPublish = "3.5.3"
-core-ktx = "1.15.0"
+core-ktx = "1.16.0"
 appcompat = "1.7.0"
 material = "1.12.0"
 constraintlayout = "2.2.1"
-navigation-fragment-ktx = "2.8.8"
-navigation-ui-ktx = "2.8.8"
+navigation-fragment-ktx = "2.8.9"
+navigation-ui-ktx = "2.8.9"
+androidx-compose = "1.8.0"
 kotlinx-browser = "0.3"
 
 [libraries]
@@ -24,6 +25,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidx-compose" }
 kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser-wasm-js", version.ref = "kotlinx-browser" }
 
 [plugins]
@@ -35,3 +37,4 @@ nexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "mavenNexu
 npmPublish = { id = "dev.petuska.npm.publish", version.ref = "npmPublish" }
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

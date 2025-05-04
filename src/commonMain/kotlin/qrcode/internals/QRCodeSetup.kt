@@ -32,21 +32,21 @@ internal object QRCodeSetup {
 
     fun setupTopLeftPositionProbePattern(
         modules: Array<Array<QRCodeSquare?>>,
-        probeSize: Int = DEFAULT_PROBE_SIZE
+        probeSize: Int = DEFAULT_PROBE_SIZE,
     ) {
         setupPositionProbePattern(0, 0, modules, probeSize)
     }
 
     fun setupTopRightPositionProbePattern(
         modules: Array<Array<QRCodeSquare?>>,
-        probeSize: Int = DEFAULT_PROBE_SIZE
+        probeSize: Int = DEFAULT_PROBE_SIZE,
     ) {
         setupPositionProbePattern(modules.size - probeSize, 0, modules, probeSize)
     }
 
     fun setupBottomLeftPositionProbePattern(
         modules: Array<Array<QRCodeSquare?>>,
-        probeSize: Int = DEFAULT_PROBE_SIZE
+        probeSize: Int = DEFAULT_PROBE_SIZE,
     ) {
         setupPositionProbePattern(0, modules.size - probeSize, modules, probeSize)
     }
@@ -55,7 +55,7 @@ internal object QRCodeSetup {
         rowOffset: Int,
         colOffset: Int,
         modules: Array<Array<QRCodeSquare?>>,
-        probeSize: Int = DEFAULT_PROBE_SIZE
+        probeSize: Int = DEFAULT_PROBE_SIZE,
     ) {
         val modulesSize = modules.size
 
@@ -66,7 +66,7 @@ internal object QRCodeSetup {
             rowSize = probeSize,
             colSize = probeSize,
             squareInfo = QRCodeSquareInfo(POSITION_PROBE, UNKNOWN),
-            moduleSize = modulesSize
+            moduleSize = modulesSize,
         )
 
         for (row in -1..probeSize) {
@@ -87,7 +87,7 @@ internal object QRCodeSetup {
                     col = col + colOffset,
                     squareInfo = QRCodeSquareInfo(POSITION_PROBE, region),
                     moduleSize = modulesSize,
-                    parent = squareData
+                    parent = squareData,
                 )
             }
         }
@@ -145,12 +145,12 @@ internal object QRCodeSetup {
 
                 val squareData = QRCodeSquare(
                     dark = false,
-                    row = row - 1,
-                    col = col - 1,
-                    rowSize = 5,
-                    colSize = 5,
+                    row = row - 2,
+                    col = col - 2,
+                    rowSize = 6,
+                    colSize = 6,
                     squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
-                    moduleSize = modules.size
+                    moduleSize = modules.size,
                 )
 
                 for (r in -2..2) {
@@ -161,7 +161,7 @@ internal object QRCodeSetup {
                             col = col + c,
                             squareInfo = QRCodeSquareInfo(POSITION_ADJUST, UNKNOWN),
                             moduleSize = modules.size,
-                            parent = squareData
+                            parent = squareData,
                         )
                     }
                 }
@@ -170,16 +170,6 @@ internal object QRCodeSetup {
     }
 
     fun setupTimingPattern(moduleCount: Int, modules: Array<Array<QRCodeSquare?>>) {
-        val squareData = QRCodeSquare(
-            dark = false,
-            row = 8,
-            col = 6,
-            rowSize = moduleCount - 8,
-            colSize = moduleCount - 8,
-            squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
-            moduleSize = modules.size
-        )
-
         for (r in 8 until moduleCount - 8) {
             if (modules[r][6] != null) {
                 continue
@@ -191,7 +181,7 @@ internal object QRCodeSetup {
                 col = 6,
                 squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size,
-                parent = squareData
+                parent = null,
             )
         }
 
@@ -206,7 +196,7 @@ internal object QRCodeSetup {
                 col = c,
                 squareInfo = QRCodeSquareInfo(TIMING_PATTERN, UNKNOWN),
                 moduleSize = modules.size,
-                parent = squareData
+                parent = null,
             )
         }
     }
@@ -215,7 +205,7 @@ internal object QRCodeSetup {
         errorCorrectionLevel: ErrorCorrectionLevel,
         maskPattern: MaskPattern,
         moduleCount: Int,
-        modules: Array<Array<QRCodeSquare?>>
+        modules: Array<Array<QRCodeSquare?>>,
     ) {
         val data = errorCorrectionLevel.value shl 3 or maskPattern.ordinal
         val bits = QRUtil.getBCHTypeInfo(data)
@@ -265,7 +255,7 @@ internal object QRCodeSetup {
         data: IntArray,
         maskPattern: MaskPattern,
         moduleCount: Int,
-        modules: Array<Array<QRCodeSquare?>>
+        modules: Array<Array<QRCodeSquare?>>,
     ) {
         var inc = -1
         var bitIndex = 7
@@ -314,7 +304,13 @@ internal object QRCodeSetup {
         }
     }
 
-    private fun set(row: Int, col: Int, value: Boolean, modules: Array<Array<QRCodeSquare?>>, parent: QRCodeSquare? = null) {
+    private fun set(
+        row: Int,
+        col: Int,
+        value: Boolean,
+        modules: Array<Array<QRCodeSquare?>>,
+        parent: QRCodeSquare? = null,
+    ) {
         val qrCodeSquare = modules[row][col]
 
         if (qrCodeSquare != null) {
@@ -325,7 +321,7 @@ internal object QRCodeSetup {
                 row = row,
                 col = col,
                 moduleSize = modules.size,
-                parent = parent
+                parent = parent,
             )
         }
     }
