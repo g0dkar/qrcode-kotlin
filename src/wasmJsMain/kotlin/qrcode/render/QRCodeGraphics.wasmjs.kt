@@ -236,7 +236,7 @@ actual open class QRCodeGraphics actual constructor(
     actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
         if (rawData != null && rawData.isNotEmpty()) {
             draw(0) {
-                val imageDataArray = rawData.toInt8Array().unsafeCast<JsArray<JsNumber>>()
+                val imageDataArray: JsArray<JsNumber> = rawData.toInt8Array().unsafeCast()
                 val imageData = ImageData(Uint8ClampedArray(imageDataArray), width)
                 putImageData(imageData, x.toDouble(), y.toDouble())
             }
