@@ -5,7 +5,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.PRODUCTION
 import java.time.LocalDateTime
 
@@ -65,14 +64,6 @@ kotlin {
     }
 
     js {
-//        val main by compilations.getting {
-//            compileTaskProvider.configure {
-//                compilerOptions {
-//                    sourceMap = true
-//                }
-//            }
-//        }
-
         browser {
             commonWebpackConfig {
                 mode = PRODUCTION
