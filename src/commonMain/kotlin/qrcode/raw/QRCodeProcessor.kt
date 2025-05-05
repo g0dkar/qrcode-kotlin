@@ -27,8 +27,6 @@ import qrcode.raw.QRCodeProcessor.Companion.MAXIMUM_INFO_DENSITY
 import qrcode.raw.QRCodeProcessor.Companion.infoDensityForDataAndECL
 import qrcode.render.QRCodeGraphics
 import qrcode.render.QRCodeGraphicsFactory
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
@@ -73,8 +71,6 @@ import kotlin.jvm.JvmStatic
  * @see ErrorCorrectionLevel
  * @see QRUtil.getDataType
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCodeProcessor @JvmOverloads constructor(
     private val data: String,

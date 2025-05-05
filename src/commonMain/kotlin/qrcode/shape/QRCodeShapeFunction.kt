@@ -4,14 +4,10 @@ import qrcode.QRCode
 import qrcode.color.QRCodeColorFunction
 import qrcode.internals.QRCodeSquare
 import qrcode.render.QRCodeGraphics
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  * Function to render (draw) a single square.
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 interface QRCodeShapeFunction {
     /**
      * Called when the expected square size was changed.

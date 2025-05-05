@@ -2,9 +2,6 @@ package qrcode.raw
 
 import qrcode.raw.ErrorCorrectionLevel.HIGH
 import qrcode.raw.ErrorCorrectionLevel.VERY_HIGH
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-import kotlin.jvm.JvmStatic
 
 /**
  * The level of Error Correction to apply to the QR Code image. The Higher the Error Correction, the lower quality
@@ -28,8 +25,6 @@ import kotlin.jvm.JvmStatic
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
     LOW(1, 21),
     MEDIUM(0, 25),
@@ -45,8 +40,6 @@ enum class ErrorCorrectionLevel(val value: Int, val maxTypeNum: Int) {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 enum class MaskPattern {
     /** This is the default pattern (no pattern is applied) */
     PATTERN000,
@@ -67,8 +60,6 @@ enum class MaskPattern {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 enum class QRCodeDataType(val value: Int) {
     /** Strictly numerical data. Like huge integers. These can be way bigger than [Long.MAX_VALUE]. */
     NUMBERS(1 shl 0),

@@ -25,8 +25,6 @@ import qrcode.shape.CircleShapeFunction
 import qrcode.shape.DefaultShapeFunction
 import qrcode.shape.QRCodeShapeFunction
 import qrcode.shape.RoundSquaresShapeFunction
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.math.floor
@@ -53,8 +51,6 @@ import kotlin.math.min
  * @author Rafael Lins - g0dkar
  *
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
     /** Data that will be encoded. */

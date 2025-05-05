@@ -2,8 +2,6 @@ package qrcode.shape
 
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToInt
 
@@ -12,8 +10,6 @@ import kotlin.math.roundToInt
  *
  * By default, the value is set to `squareSize / 4`
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 open class RoundSquaresShapeFunction @JvmOverloads constructor(
     squareSize: Int = DEFAULT_CELL_SIZE,

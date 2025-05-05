@@ -16,16 +16,12 @@ import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.internals.QRCodeSquareType.TIMING_PATTERN
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  * Object with helper methods and constants to setup stuff into the QRCode such as Position Probes and Timing Probes.
  *
  * @author Rafael Lins - g0dkar
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate")
 internal object QRCodeSetup {
     private const val DEFAULT_PROBE_SIZE = 7

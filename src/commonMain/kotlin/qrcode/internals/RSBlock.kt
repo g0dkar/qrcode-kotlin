@@ -1,8 +1,6 @@
 package qrcode.internals
 
 import qrcode.raw.ErrorCorrectionLevel
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/RSBlock.java)
@@ -10,8 +8,6 @@ import kotlin.js.JsExport
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
     companion object {

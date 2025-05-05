@@ -20,12 +20,8 @@ import qrcode.shape.CircleShapeFunction
 import qrcode.shape.DefaultShapeFunction
 import qrcode.shape.QRCodeShapeFunction
 import qrcode.shape.RoundSquaresShapeFunction
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 class QRCodeBuilder @JvmOverloads constructor(
     private var shape: QRCodeShapesEnum,
     private var customShapeFunction: QRCodeShapeFunction? = null,

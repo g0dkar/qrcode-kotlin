@@ -1,7 +1,5 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.js.JsName
 
 /**
@@ -10,8 +8,6 @@ import kotlin.js.JsName
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 internal class BitBuffer {
     var buffer: IntArray
         private set
