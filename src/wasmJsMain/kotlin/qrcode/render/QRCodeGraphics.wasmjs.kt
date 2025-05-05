@@ -1,9 +1,7 @@
 package qrcode.render
 
 import kotlinx.browser.document
-import org.khronos.webgl.Int32Array
 import org.khronos.webgl.Uint8ClampedArray
-import org.khronos.webgl.set
 import org.khronos.webgl.toInt8Array
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
@@ -238,7 +236,8 @@ actual open class QRCodeGraphics actual constructor(
     actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
         if (rawData != null && rawData.isNotEmpty()) {
             draw(0) {
-                val imageData = ImageData(rawData.toInt8Array(), width)
+                val imageDataArray = rawData.toInt8Array().unsafeCast<JsArray<JsNumber>>()
+                val imageData = ImageData(Uint8ClampedArray(imageDataArray), width)
                 putImageData(imageData, x.toDouble(), y.toDouble())
             }
         }
