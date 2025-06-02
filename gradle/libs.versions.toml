@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.1.21"
 dokka = "2.0.0"
-kotest = "6.0.0.M3"
+kotest = "6.0.0.M4"
 mavenNexus = "2.0.0"
 androidPlugin = "8.10.1"
 npmPublish = "3.5.3"
