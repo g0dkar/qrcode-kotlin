@@ -10,7 +10,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 constraintlayout = "2.2.1"
 navigation-fragment-ktx = "2.9.0"
-navigation-ui-ktx = "2.8.9"
+navigation-ui-ktx = "2.9.0"
 androidx-compose = "1.8.2"
 
 [libraries]
