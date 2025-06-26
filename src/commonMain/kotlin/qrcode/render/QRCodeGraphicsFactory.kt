@@ -1,8 +1,6 @@
 package qrcode.render
 
 import qrcode.QRCode
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  * A class used by [QRCode] to build instances of [QRCodeGraphics].
@@ -13,8 +11,6 @@ import kotlin.js.JsExport
  *
  * @author Rafael Lins - g0dkar
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 open class QRCodeGraphicsFactory {
     /**

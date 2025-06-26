@@ -4,8 +4,6 @@ import qrcode.raw.QRCodeDataType
 import qrcode.raw.QRCodeDataType.DEFAULT
 import qrcode.raw.QRCodeDataType.NUMBERS
 import qrcode.raw.QRCodeDataType.UPPER_ALPHA_NUM
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRData.java)
@@ -13,8 +11,6 @@ import kotlin.js.JsExport
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
     abstract fun length(): Int
@@ -56,8 +52,6 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
     private val dataBytes = data.encodeToByteArray()
@@ -78,8 +72,6 @@ internal class QR8BitByte(data: String) : QRData(DEFAULT, data) {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
     override fun write(buffer: BitBuffer) {
@@ -123,8 +115,6 @@ internal class QRAlphaNum(data: String) : QRData(UPPER_ALPHA_NUM, data) {
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal class QRNumber(data: String) : QRData(NUMBERS, data) {
     override fun write(buffer: BitBuffer) {

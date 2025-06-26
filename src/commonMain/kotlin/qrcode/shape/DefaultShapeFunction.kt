@@ -6,14 +6,10 @@ import qrcode.internals.QRCodeSquare
 import qrcode.internals.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.QRCodeProcessor.Companion.DEFAULT_CELL_SIZE
 import qrcode.render.QRCodeGraphics
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 
 /**
  *
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 open class DefaultShapeFunction(
     squareSize: Int = DEFAULT_CELL_SIZE,

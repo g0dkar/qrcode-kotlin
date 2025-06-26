@@ -2,13 +2,9 @@ package qrcode.color
 
 import qrcode.QRCode
 import qrcode.render.QRCodeGraphics
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToInt
 
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate")
 class LinearGradientColorFunction @JvmOverloads constructor(
     val startForegroundColor: Int,
