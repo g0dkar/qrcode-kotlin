@@ -8,6 +8,6 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.g0dkar:qrcode-kotlin:4.4.1")
+    implementation("io.github.g0dkar:qrcode-kotlin:4.5.0")
     implementation("org.jfree:org.jfree.svg:5.0.5")
 }

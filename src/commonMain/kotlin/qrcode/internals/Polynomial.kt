@@ -1,7 +1,5 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import qrcode.internals.QRMath.gexp
 import qrcode.internals.QRMath.glog
 
@@ -11,8 +9,6 @@ import qrcode.internals.QRMath.glog
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("NON_EXPORTABLE_TYPE")
 internal class Polynomial(num: IntArray, shift: Int = 0) {
     val data: IntArray

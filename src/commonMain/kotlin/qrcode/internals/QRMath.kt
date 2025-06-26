@@ -1,16 +1,11 @@
 package qrcode.internals
 
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
-
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/QRMath.java)
  *
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 internal object QRMath {
     private val EXP_TABLE = IntArray(256)
     private val LOG_TABLE = IntArray(256)

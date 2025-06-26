@@ -6,7 +6,13 @@
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-# 4.4.1 - Latest
+# 4.5.0 - Latest
+
+## ✨ New
+- Added (experimental) support for WASM targets (requested via Issues #140 and #167)
+    - Please do let us know if you run into any issues with it <3
+
+# 4.4.1
 
 > I'm trying to keep a better CHANGELOG from now on ^^
 

@@ -39,14 +39,14 @@ Por favor, sinta-se livre para compartilhar se e como você utiliza este projeto
 ## Instalação
 
 A biblioteca está disponível através
-da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.4.1/qrcode-kotlin) e
+da [Maven Central](https://search.maven.org/artifact/io.github.g0dkar/qrcode-kotlin/4.5.0/qrcode-kotlin) e
 do [NPM JS](https://www.npmjs.com/package/qrcode-kotlin), portanto basta adicioná-la a seu projeto como qualquer outra:
 
 **Gradle:**
 
 ```groovy
 // Use esse tanto para Android quanto para a JVM
-implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
+implementation("io.github.g0dkar:qrcode-kotlin:4.5.0")
 ```
 
 **Maven - JVM:**
@@ -55,7 +55,7 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-jvm</artifactId>
-    <version>4.2.1</version>
+    <version>4.5.0</version>
 </dependency>
 ```
 
@@ -65,14 +65,14 @@ implementation("io.github.g0dkar:qrcode-kotlin:4.2.1")
 <dependency>
     <groupId>io.github.g0dkar</groupId>
     <artifactId>qrcode-kotlin-android</artifactId>
-    <version>4.2.1</version>
+    <version>4.5.0</version>
 </dependency>
 ```
 
 **NodeJS:**
 
 ```shell
-npm install qrcode-kotlin@4.2.1
+npm install qrcode-kotlin@4.5.0
 ```
 
 **Browser:**
