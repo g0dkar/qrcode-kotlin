@@ -22,7 +22,7 @@ jobs:
       - name: Give execute permission to ./gradlew
         run: chmod +x ./gradlew
       - name: Run Dokka Update
-        run: "./gradlew dokkaGenerate"
+        run: "./gradlew dokkaGenerate dokkaCopyToFolder"
       - name: Commit Changes
         uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9
         with:

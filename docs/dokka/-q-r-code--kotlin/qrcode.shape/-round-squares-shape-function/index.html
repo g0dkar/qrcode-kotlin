@@ -46,7 +46,7 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-4.3.0        </div>
+4.5.0        </div>
         <div class="navigation-controls">
         <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector common-like" data-active=""
@@ -108,7 +108,7 @@
   <div class="breadcrumbs"><a href="../../../index.html">QRCode-Kotlin</a><span class="delimiter">/</span><a href="../index.html">qrcode.shape</a><span class="delimiter">/</span><span class="current">RoundSquaresShapeFunction</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Round</span><wbr></wbr><span>Squares</span><wbr></wbr><span>Shape</span><wbr></wbr><span><span>Function</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">RoundSquaresShapeFunction</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>squareSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_CELL_SIZE<span class="token punctuation">, </span></span><span class="parameter ">radius<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>defaultRadius(squareSize)<span class="token punctuation">, </span></span><span class="parameter ">innerSpace<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>defaultInnerSpace(squareSize)</span></span><span class="token punctuation">)</span> : <a href="../-default-shape-function/index.html">DefaultShapeFunction</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/g0dkar/qrcode-kotlin/tree/main/src/commonMain/kotlin/qrcode/shape/RoundSquaresShapeFunction.kt#L18">source</a>)</span></span></div><p class="paragraph">Creates &quot;rounded squares&quot; as the shapes on the QRCode.</p><p class="paragraph">By default, the value is set to <code class="lang-kotlin">squareSize / 4</code></p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-circle-shape-function/index.html">CircleShapeFunction</a></div></span></div><div></div></div></div></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">RoundSquaresShapeFunction</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">squareSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>DEFAULT_CELL_SIZE<span class="token punctuation">, </span></span><span class="parameter ">radius<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>defaultRadius(squareSize)<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>innerSpace<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>defaultInnerSpace(squareSize)</span></span><span class="token punctuation">)</span> : <a href="../-default-shape-function/index.html">DefaultShapeFunction</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/g0dkar/qrcode-kotlin/tree/main/src/commonMain/kotlin/qrcode/shape/RoundSquaresShapeFunction.kt#L14">source</a>)</span></span></div><p class="paragraph">Creates &quot;rounded squares&quot; as the shapes on the QRCode.</p><p class="paragraph">By default, the value is set to <code class="lang-kotlin">squareSize / 4</code></p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-circle-shape-function/index.html">CircleShapeFunction</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
@@ -153,7 +153,22 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="">Properties</h2>
-        <div class="table"><a data-name="529791798%2FProperties%2F1558683979" anchor-label="squareSize" id="529791798%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+        <div class="table"><a data-name="145760740%2FProperties%2F1558683979" anchor-label="innerSpace" id="145760740%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-default-shape-function/inner-space.html"><span>inner</span><wbr></wbr><span><span>Space</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="145760740%2FProperties%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-default-shape-function/inner-space.html">innerSpace</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="529791798%2FProperties%2F1558683979" anchor-label="squareSize" id="529791798%2FProperties%2F1558683979" data-filterable-set=":/commonMain"></a>
           <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
@@ -163,7 +178,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-default-shape-function/square-size.html">squareSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="../-default-shape-function/square-size.html">squareSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
                 </div>
               </div>
             </div>
@@ -243,6 +258,21 @@
               <div>
                 <div class="title">
                   <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../-default-shape-function/render-square.html"><span class="token function">renderSquare</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">x<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">y<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">colorFn<span class="token operator">: </span><a href="../../qrcode.color/-q-r-code-color-function/index.html">QRCodeColorFunction</a><span class="token punctuation">, </span></span><span class="parameter ">square<span class="token operator">: </span><a href="../../qrcode.internals/-q-r-code-square/index.html">QRCodeSquare</a><span class="token punctuation">, </span></span><span class="parameter ">canvas<span class="token operator">: </span><a href="../../qrcode.render/-q-r-code-graphics/index.html">QRCodeGraphics</a><span class="token punctuation">, </span></span><span class="parameter ">qrCode<span class="token operator">: </span><a href="../../qrcode/-q-r-code/index.html">QRCode</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Renders a single square.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1606769890%2FFunctions%2F1558683979" anchor-label="resize" id="-1606769890%2FFunctions%2F1558683979" data-filterable-set=":/commonMain"></a>
+          <div class="table-row" data-filterable-current=":/commonMain" data-filterable-set=":/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-default-shape-function/resize.html"><span><span>resize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1606769890%2FFunctions%2F1558683979"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="../-default-shape-function/resize.html"><span class="token function">resize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">newSquareSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when the expected square size was changed.</p></div></div></div>
                 </div>
               </div>
             </div>

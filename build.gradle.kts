@@ -29,7 +29,7 @@ plugins {
     signing
     `maven-publish`
     alias(libs.plugins.nexus)
-    alias(libs.plugins.npmPublish)
+//    alias(libs.plugins.npmPublish)
 
     // Docs Plugins
     alias(libs.plugins.dokka)
@@ -245,6 +245,7 @@ val dokkaJar by tasks.registering(Jar::class) {
 }
 
 val dokkaCopyToFolder by tasks.registering(Copy::class) {
+    dependsOn(tasks.dokkaGenerate)
     doFirst { layout.projectDirectory.dir("docs/dokka").asFile.deleteRecursively() }
 
     from(layout.buildDirectory.dir("javadoc/html"))
@@ -336,13 +337,13 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
     mustRunAfter(signingTasks)
 }
 
-npmPublish {
-    readme.set(rootDir.resolve("README.md"))
-
-    registries {
-        register("npmjs") {
-            uri.set(uri("https://registry.npmjs.org"))
-            authToken.set(npmAccessKey)
-        }
-    }
-}
+//npmPublish {
+//    readme.set(rootDir.resolve("README.md"))
+//
+//    registries {
+//        register("npmjs") {
+//            uri.set(uri("https://registry.npmjs.org"))
+//            authToken.set(npmAccessKey)
+//        }
+//    }
+//}
