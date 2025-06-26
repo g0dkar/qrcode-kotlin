@@ -3,8 +3,6 @@ package qrcode.color
 import qrcode.color.Colors.css
 import qrcode.color.Colors.getRGBA
 import qrcode.color.Colors.withAlpha
-import kotlin.js.ExperimentalJsExport
-import kotlin.js.JsExport
 import kotlin.jvm.JvmStatic
 
 /**
@@ -18,8 +16,6 @@ import kotlin.jvm.JvmStatic
  * @see getRGBA
  * @see withAlpha
  */
-@JsExport
-@OptIn(ExperimentalJsExport::class)
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
