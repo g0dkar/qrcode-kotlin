@@ -245,6 +245,7 @@ val dokkaJar by tasks.registering(Jar::class) {
 }
 
 val dokkaCopyToFolder by tasks.registering(Copy::class) {
+    dependsOn(tasks.dokkaGenerate)
     doFirst { layout.projectDirectory.dir("docs/dokka").asFile.deleteRecursively() }
 
     from(layout.buildDirectory.dir("javadoc/html"))
