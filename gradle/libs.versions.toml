@@ -1,6 +1,6 @@
 [versions]
 annotation = "1.9.1"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 dokka = "2.0.0"
 kotest = "6.0.0.M3"
 lifecycleLivedataKtx = "2.9.1"
