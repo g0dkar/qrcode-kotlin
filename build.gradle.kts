@@ -140,6 +140,7 @@ kotlin {
         wasmJsMain {
             dependencies {
                 implementation(libs.kotlinx.browser)
+                compileOnly(libs.jetbrains.compose.ui)
             }
         }
     }

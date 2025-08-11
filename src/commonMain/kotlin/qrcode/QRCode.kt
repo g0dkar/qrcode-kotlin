@@ -150,13 +150,24 @@ class QRCode @JvmOverloads constructor(
 
     /**
      * Size of the canvas where the QRCode will be drawn into (the final image will be a square of `canvasSize` by `canvasSize`)
-     *
-     *
-     *
-     */
+    */
     var canvasSize: Int =
         if (canvasSize > DEFAULT_QRCODE_SIZE) canvasSize else qrCodeProcessor.computeImageSize(squareSize, rawData)
         private set
+
+    /**
+     * Width of the canvas where the QRCode will be drawn into
+     *
+     * @see canvasSize
+     */
+    val width: Int = this.canvasSize
+
+    /**
+     * Height of the canvas where the QRCode will be drawn into
+     *
+     * @see canvasSize
+     */
+    val height: Int = this.canvasSize
 
     /** Size of the canvas where the QRCode will be drawn into. */
     @Deprecated("Please use canvasSize instead.")

@@ -1,21 +1,21 @@
 [versions]
 annotation = "1.9.1"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 dokka = "2.0.0"
 kotest = "6.0.0.M3"
-lifecycleLivedataKtx = "2.9.1"
-lifecycleViewmodelKtx = "2.9.1"
+lifecycleLivedataKtx = "2.9.2"
+lifecycleViewmodelKtx = "2.9.2"
 mavenNexus = "2.0.0"
-androidPlugin = "8.10.1"
+androidPlugin = "8.11.1"
 npmPublish = "3.5.3"
 core-ktx = "1.16.0"
-appcompat = "1.7.0"
+appcompat = "1.7.1"
 material = "1.12.0"
 constraintlayout = "2.2.1"
-navigation-fragment-ktx = "2.9.0"
-navigation-ui-ktx = "2.9.0"
-androidx-compose = "1.8.2"
-kotlinx-browser = "0.3"
+navigation-fragment-ktx = "2.9.3"
+navigation-ui-ktx = "2.9.3"
+jetbrains-compose = "1.8.2"
+kotlinx-browser = "0.4"
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
@@ -32,7 +32,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
-androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidx-compose" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "jetbrains-compose" }
+jetbrains-compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "jetbrains-compose" }
 kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 
 [plugins]

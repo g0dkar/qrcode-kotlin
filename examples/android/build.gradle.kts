@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "io.github.g0dkar.qrcode"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "io.github.g0dkar.qrcodeKotlin"
@@ -29,7 +29,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
     }
     buildFeatures {
         viewBinding = true
