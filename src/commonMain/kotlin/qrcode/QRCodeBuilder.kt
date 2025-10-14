@@ -47,6 +47,7 @@ class QRCodeBuilder @JvmOverloads constructor(
     private var xOffset: Int = 0
     private var yOffset: Int = 0
     private var margin: Int = 0
+    private var maxAutoInformationDensity: Int = MAXIMUM_INFO_DENSITY
 
     private fun innerSpace() =
         when (shape) {
@@ -327,6 +328,16 @@ class QRCodeBuilder @JvmOverloads constructor(
         return this
     }
 
+    /**
+     * Sets a value for the Maximum Information Density if automatically calculated.
+     *
+     * @param margin How many extra pixels to add around the QRCode
+     */
+    fun withMaxAutoInformationDensity(maxAutoInformationDensity: Int): QRCodeBuilder {
+        this.maxAutoInformationDensity = maxAutoInformationDensity
+        return this
+    }
+
     private val beforeFn: QRCode.(QRCodeGraphics, Int, Int) -> Unit
         get() = { canvas, xOffset, yOffset ->
             drawLogoBeforeAction(canvas, xOffset, yOffset)
@@ -374,7 +385,7 @@ class QRCodeBuilder @JvmOverloads constructor(
             graphicsFactory = graphicsFactory,
             errorCorrectionLevel = errorCorrectionLevel,
             informationDensity = when (informationDensity) {
-                0 -> QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel)
+                0 -> QRCodeProcessor.infoDensityForDataAndECL(data, errorCorrectionLevel, maxInfoDensity = maxAutoInformationDensity)
                 else -> informationDensity
             },
             maskPattern = maskPattern,
