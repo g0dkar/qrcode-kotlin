@@ -13,12 +13,13 @@ import kotlin.math.max
 fun main() {
     // ----------------------------------
 
-    val firstQRCode = QRCode.ofSquares().build("First Example")
-    val firstQRCodeCanvas = firstQRCode.render().nativeImage() as BufferedImage
-    val firstQRCodeWidth = firstQRCodeCanvas.width
-    firstQRCodeCanvas.height
-    val captionTextGraphics2d = firstQRCodeCanvas.createGraphics()
-    val (captionTextWidth, captionTextHeight) = fitText(firstQRCode.data, firstQRCodeWidth, captionTextGraphics2d)
+    val qrCodeText = "First Example"
+    val qrCode = QRCode.ofSquares().build(qrCodeText)
+    val qrCodeCanvas = qrCode.render().nativeImage() as BufferedImage
+    val qrCodeWidth = qrCodeCanvas.width
+    val qrCodeHeight = qrCodeCanvas.height
+    val captionTextGraphics2d = qrCodeCanvas.createGraphics()
+    val (captionTextWidth, captionTextHeight) = fitText(qrCode.data, qrCodeWidth, captionTextGraphics2d)
 
     val canvasCaption = BufferedImage(
         max(qrCodeWidth, captionTextWidth),
@@ -29,32 +30,6 @@ fun main() {
             drawImage(qrCodeCanvas, 0, 0, null)
 
             font = captionTextGraphics2d.font
-            paint = Color.BLACK
-            background = Color.BLACK
-            setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
-            drawString(qrCodeText, qrCodeWidth / 2 - captionTextWidth / 2, qrCodeHeight + captionTextHeight / 2 + fontMetrics.ascent)
-        }
-    }
-
-    // ----------------------------------
-
-    val customFontTextGraphics2d = qrCodeCanvas.createGraphics()
-        .apply { font = loadFont("MozillaHeadline-Regular.ttf") }
-    val (customFontTextWidth, customFontTextHeight) = fitText(
-        qrCodeText,
-        qrCodeWidth,
-        customFontTextGraphics2d,
-    )
-
-    BufferedImage(
-        max(qrCodeWidth, customFontTextWidth),
-        qrCodeHeight + customFontTextHeight * 2,
-        BufferedImage.TYPE_INT_ARGB,
-    ).also {
-        it.createGraphics().apply {
-            drawImage(qrCodeCanvas, 0, 0, null)
-
-            font = customFontTextGraphics2d.font
             paint = Color.BLACK
             background = Color.BLACK
             setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
@@ -87,8 +62,6 @@ fun main() {
             drawString(qrCodeText, qrCodeWidth / 2 - captionTextWidth / 2, qrCodeHeight + captionTextHeight / 2 + fontMetrics.ascent)
         }
     }
-
-    // ----------------------------------
 
     FileOutputStream("examples/kotlin/examples-results/example08-caption.png").use {
         ImageIO.write(
