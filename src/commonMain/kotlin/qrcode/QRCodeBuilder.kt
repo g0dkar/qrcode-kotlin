@@ -393,7 +393,7 @@ class QRCodeBuilder @JvmOverloads constructor(
             doAfter = afterFn,
         ).apply {
             if (margin > 0) {
-                resize(canvasSize + margin * 2)
+                resize(canvasSize + margin * 2, resizeCanvasOnly = false)
             }
         }
 }
