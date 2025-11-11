@@ -6,6 +6,15 @@ import qrcode.QRCode.Companion.EMPTY_FN
 import qrcode.QRCode.Companion.ofCircles
 import qrcode.QRCode.Companion.ofRoundedSquares
 import qrcode.QRCode.Companion.ofSquares
+import qrcode.QRCodeAlignment.BOTTOM_CENTER
+import qrcode.QRCodeAlignment.BOTTOM_LEFT
+import qrcode.QRCodeAlignment.BOTTOM_RIGHT
+import qrcode.QRCodeAlignment.MIDDLE_CENTER
+import qrcode.QRCodeAlignment.MIDDLE_LEFT
+import qrcode.QRCodeAlignment.MIDDLE_RIGHT
+import qrcode.QRCodeAlignment.TOP_CENTER
+import qrcode.QRCodeAlignment.TOP_LEFT
+import qrcode.QRCodeAlignment.TOP_RIGHT
 import qrcode.QRCodeShapesEnum.CIRCLE
 import qrcode.QRCodeShapesEnum.CUSTOM
 import qrcode.QRCodeShapesEnum.ROUNDED_SQUARE
@@ -60,9 +69,9 @@ class QRCode @JvmOverloads constructor(
     /** Size in pixels of the whole QR Code canvas - Defaults to [DEFAULT_QRCODE_SIZE] (0 = compute size automatically) */
     canvasSize: Int = DEFAULT_QRCODE_SIZE,
     /** Offset drawing the QRCode by this amount on the X axis (horizontal) - Defaults to `0` (zero) */
-    val xOffset: Int = DEFAULT_X_OFFSET,
+    var xOffset: Int = DEFAULT_X_OFFSET,
     /** Offset drawing the QRCode by this amount on the Y axis (vertical) - Defaults to `0` (zero) */
-    val yOffset: Int = DEFAULT_Y_OFFSET,
+    var yOffset: Int = DEFAULT_Y_OFFSET,
     /** Function that will handle color processing (which color is "light" and which is "dark") - Defaults to [DefaultColorFunction]. */
     val colorFn: QRCodeColorFunction = DefaultColorFunction(),
     /** Function that will handle drawing the shapes of each square - Defaults to [DefaultShapeFunction] with `innerSpace = 0`. */
@@ -133,6 +142,9 @@ class QRCode @JvmOverloads constructor(
             QRCodeBuilder(CUSTOM, customShapeFunction)
     }
 
+    private var internalYOffset: Int = 0
+    private var internalXOffset: Int = 0
+
     var squareSize: Int = squareSize
         private set
 
@@ -150,13 +162,24 @@ class QRCode @JvmOverloads constructor(
 
     /**
      * Size of the canvas where the QRCode will be drawn into (the final image will be a square of `canvasSize` by `canvasSize`)
-     *
-     *
-     *
      */
     var canvasSize: Int =
         if (canvasSize > DEFAULT_QRCODE_SIZE) canvasSize else qrCodeProcessor.computeImageSize(squareSize, rawData)
         private set
+
+    /**
+     * Width of the canvas where the QRCode will be drawn into
+     *
+     * @see canvasSize
+     */
+    val width: Int = this.canvasSize
+
+    /**
+     * Height of the canvas where the QRCode will be drawn into
+     *
+     * @see canvasSize
+     */
+    val height: Int = this.canvasSize
 
     /** Size of the canvas where the QRCode will be drawn into. */
     @Deprecated("Please use canvasSize instead.")
@@ -183,8 +206,8 @@ class QRCode @JvmOverloads constructor(
             if (!actualSquare.rendered) {
                 when (currentSquare.squareInfo.type) {
                     POSITION_PROBE, POSITION_ADJUST -> shapeFn.renderControlSquare(
-                        xOffset,
-                        yOffset,
+                        xOffset + internalXOffset,
+                        yOffset + internalYOffset,
                         colorFn,
                         actualSquare,
                         canvas,
@@ -192,8 +215,8 @@ class QRCode @JvmOverloads constructor(
                     )
 
                     else -> shapeFn.renderSquare(
-                        xOffset + x,
-                        yOffset + y,
+                        xOffset + internalXOffset + x,
+                        yOffset + internalYOffset + y,
                         colorFn,
                         currentSquare,
                         canvas,
@@ -205,25 +228,130 @@ class QRCode @JvmOverloads constructor(
             }
         }
 
-    /**
-     * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
-     */
+    @Deprecated("Please use resizeCanvas or fitIntoArea instead.")
     fun resize(size: Int): QRCode {
-        canvasSize = size
-        graphics = graphicsFactory.newGraphicsSquare(canvasSize)
-
-        return this
+        return resizeCanvas(
+            width = size,
+            height = size,
+            resizeCanvasOnly = true,
+            qrCodeAlignmentAfterResize = MIDDLE_CENTER,
+        )
     }
 
     /**
-     * Computes a [squareSize] to make sure the QRCode can fit into an area of width by height pixels
+     * Resizes _**the Canvas**_ where the QRCode will be drawn.
+     *
+     * By default, it resizes the Canvas to a square of [width] by [width] size.
+     *
+     * If the [height] parameter is specified, resizes the canvas to [width] by [height].
+     *
+     * Optionally also resize the QRCode as well, making it as big as possible while
+     * fitting into the new Canvas Size **(default is `true`, resizing only the canvas)**.
+     *
+     * Calling this function with [resizeCanvasOnly] = `false` is the same as calling [fitIntoArea].
+     *
+     * Lastly, [qrCodeAlignmentAfterResize] decides where the QRCode will be placed on the resized canvas.
+     * Defaults to [MIDDLE_CENTER] (aka "centered").
+     *
+     * You probably want to use [fitIntoArea] instead.
+     *
+     * > _Context on why have both: Sometimes you want to resize only the canvas so you'll draw something else
+     * > there before drawing the QRCode. This isn't the most common use-case. The most common one is resizing
+     * > the QRCode so it fits into a given area, thus the [fitIntoArea]. Because of the naming confusion and
+     * > bad documentation (my bad, sorry!) this function was expanded into what it is today (v4.6.0)_
+     *
+     * @param width Width, in pixels, of the canvas
+     * @param height Height, in pixels, of the canvas (default: same as [width], making it a square)
+     * @param resizeCanvasOnly If `true` resize ONLY the canvas, leaving the QRCode size intact (default: `true`)
+     * @param qrCodeAlignmentAfterResize Where will the QRCode be placed after resizing? (default: [MIDDLE_CENTER])
+     *
+     * @see fitIntoArea You likely want this one ;)
      */
-    fun fitIntoArea(width: Int, height: Int): QRCode {
+    fun resizeCanvas(
+        width: Int,
+        height: Int = width,
+        resizeCanvasOnly: Boolean = true,
+        qrCodeAlignmentAfterResize: QRCodeAlignment = MIDDLE_CENTER,
+    ): QRCode =
+        if (resizeCanvasOnly) {
+            canvasSize = min(width, height)
+            graphics = graphicsFactory.newGraphics(width, height)
+            alignQRCode(width, height, qrCodeAlignmentAfterResize)
+        } else {
+            fitIntoArea(width, height, qrCodeAlignmentAfterResize)
+        }
+
+    /**
+     * Resizes the Canvas **AND** the QRCode accordingly.
+     *
+     * The QRCode will be resized as best as possible to fit into the new Canvas.
+     *
+     * After resizing, the QRCode might have to be realigned. The realignment can
+     * be customized via the optional [qrCodeAlignmentAfterFit] parameter.
+     *
+     * By default, the QRCode will be drawn at the middle-center (aka "centered")
+     * of the Canvas.
+     */
+    @JvmOverloads
+    fun fitIntoArea(width: Int, height: Int, qrCodeAlignmentAfterFit: QRCodeAlignment = MIDDLE_CENTER): QRCode {
         val reference = min(width, height)
         squareSize = floor(reference / rawData.size.toDouble()).toInt()
         shapeFn.resize(squareSize)
         canvasSize = reference
-        graphics = graphicsFactory.newGraphicsSquare(canvasSize)
+        graphics = graphicsFactory.newGraphics(width, height)
+
+        return alignQRCode(width, height, qrCodeAlignmentAfterFit)
+    }
+
+    private fun alignQRCode(width: Int, height: Int, qrCodeAlignment: QRCodeAlignment = MIDDLE_CENTER): QRCode {
+        val qrcodeSize = squareSize * rawData.size
+
+        when (qrCodeAlignment) {
+            TOP_LEFT -> {
+                internalXOffset = 0
+                internalYOffset = 0
+            }
+
+            TOP_RIGHT -> {
+                internalXOffset = width - qrcodeSize
+                internalYOffset = 0
+            }
+
+            TOP_CENTER -> {
+                internalXOffset = ((width / 2.0) - (qrcodeSize / 2.0)).toInt()
+                internalYOffset = 0
+            }
+
+            MIDDLE_LEFT -> {
+                internalXOffset = 0
+                internalYOffset = ((height / 2.0) - (qrcodeSize / 2.0)).toInt()
+            }
+
+            MIDDLE_RIGHT -> {
+                internalXOffset = width - qrcodeSize
+                internalYOffset = ((height / 2.0) - (qrcodeSize / 2.0)).toInt()
+            }
+
+            MIDDLE_CENTER -> {
+                internalXOffset = ((width / 2.0) - (qrcodeSize / 2.0)).toInt()
+                internalYOffset = ((height / 2.0) - (qrcodeSize / 2.0)).toInt()
+            }
+
+            BOTTOM_LEFT -> {
+                internalXOffset = 0
+                internalYOffset = height - qrcodeSize
+            }
+
+            BOTTOM_RIGHT -> {
+                internalXOffset = width - qrcodeSize
+                internalYOffset = height - qrcodeSize
+            }
+
+            BOTTOM_CENTER -> {
+                internalXOffset = ((width / 2.0) - (qrcodeSize / 2.0)).toInt()
+                internalYOffset = height - qrcodeSize
+            }
+        }
 
         return this
     }

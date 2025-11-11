@@ -1,58 +1,20 @@
 package qrcode.render
 
-import kotlinx.browser.document
-import org.khronos.webgl.Uint8ClampedArray
-import org.khronos.webgl.toInt8Array
-import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
-import org.w3c.dom.ImageData
 import org.w3c.files.Blob
+import qrcode.render.graphics.HTMLCanvasGraphics
+import qrcode.render.graphics.WasmJsDrawingInterface
 
 @Suppress("MemberVisibilityCanBePrivate")
+@OptIn(ExperimentalWasmJsInterop::class)
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
     val height: Int,
 ) {
-    companion object {
-        private const val CANVAS_UNSUPPORTED = "Canvas seems to not be supported :("
-        private const val FULL_CIRCLE = 3.141592653589793 * 2.0 // 2 * PI = Full circle
-    }
+    var drawingInterface: WasmJsDrawingInterface? = null
 
-    private val canvas: HTMLCanvasElement
+    /** Whether any drawing operations were done or not. */
     private var changed: Boolean = false
-
-    init {
-        val canvas = tryGet { document.createElement("canvas") as HTMLCanvasElement }
-
-        canvas.width = width
-        canvas.height = height
-
-        this.canvas = canvas
-    }
-
-    private fun rgba(color: Int): String {
-        val r = (color shr 16) and 0xFF
-        val g = (color shr 8) and 0xFF
-        val b = (color shr 0) and 0xFF
-        val a = ((color shr 24) and 0xFF) / 255.0
-        return "rgba($r,$g,$b,$a)"
-    }
-
-    private fun draw(color: Int, action: CanvasRenderingContext2D.() -> Unit) {
-        changed = true
-
-        val context = tryGet { canvas.getContext("2d") as CanvasRenderingContext2D }
-
-        val colorString = rgba(color)
-        context.fillStyle = colorString.toJsString()
-        context.strokeStyle = colorString.toJsString()
-
-        val lineWidth = context.lineWidth
-
-        action(context)
-
-        context.lineWidth = lineWidth
-    }
 
     /** Returns `true` if **any** drawing was performed */
     actual open fun changed() = changed
@@ -61,8 +23,18 @@ actual open class QRCodeGraphics actual constructor(
     actual fun reset() {
         if (changed) {
             changed = false
-            draw(0) { clearRect(0.0, 0.0, width.toDouble(), height.toDouble()) }
         }
+    }
+
+    /**
+     * Make sure we can use the [drawingInterface]. Never mind the name.
+     */
+    private fun useCanvas(): WasmJsDrawingInterface {
+        if (drawingInterface == null) {
+            drawingInterface = HTMLCanvasGraphics(width, height)
+        }
+
+        return drawingInterface!!
     }
 
     /** Return the dimensions of this Graphics object as a pair of `width, height` */
@@ -71,14 +43,27 @@ actual open class QRCodeGraphics actual constructor(
     /**
      * Returns a Data URL to this can be shown in an `<img/>` tag.
      */
-    open fun toDataURL(format: String = "png"): String = canvas.toDataURL(format)
+    open fun toDataURL(format: String = "png"): String =
+        nativeImage().let {
+            when (it) {
+                is HTMLCanvasElement -> it.toDataURL(format)
+                else -> throw Error("Unsupported operation")
+            }
+        }
 
     /**
      * Direct access to the `.toBlob()` function of the underlying canvas.
      *
      * Syntactic sugar for `nativeImage().toBlob(callback)`.
      */
-    open fun toBlob(callback: (Blob?) -> Unit): Unit = canvas.toBlob(callback)
+    open fun toBlob(callback: (Blob?) -> Unit) {
+        nativeImage().let {
+            when (it) {
+                is HTMLCanvasElement -> it.toBlob(callback)
+                else -> throw Error("Unsupported operation")
+            }
+        }
+    }
 
     /** Returns this image as a [ByteArray] encoded as PNG. */
     actual open fun getBytes(): ByteArray = getBytes("png")
@@ -86,7 +71,7 @@ actual open class QRCodeGraphics actual constructor(
     /** Returns this image as a [ByteArray] encoded as the specified format (e.g. `PNG`, `JPG`, `BMP`, ...). */
     @JsName("getBytesForFormat")
     actual open fun getBytes(format: String): ByteArray =
-        canvas.toDataURL(format).encodeToByteArray()
+        useCanvas().getBytes(format)
 
     /** Returns the available formats to be passed as parameters to [getBytes].
      *
@@ -95,35 +80,22 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun availableFormats(): Array<String> = arrayOf("png")
 
     /** Returns the native image object this QRCodeGraphics is working upon. */
-    actual open fun nativeImage(): Any = canvas
+    actual open fun nativeImage(): Any =
+        drawingInterface?.nativeImage() ?: throw NotImplementedError("Native image not supported")
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {
-        draw(color) {
-            moveTo(x1.toDouble(), y1.toDouble())
-            lineTo(x2.toDouble(), y2.toDouble())
-        }
+        useCanvas().drawLine(x1, y1, x2, y2, color, thickness)
     }
 
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        draw(color) {
-            lineWidth = thickness
-            val halfThickness = thickness / 2.0
-            strokeRect(
-                x.toDouble() + halfThickness,
-                y.toDouble() + halfThickness,
-                width.toDouble() - thickness,
-                height.toDouble() - thickness,
-            )
-        }
+        useCanvas().drawRect(x, y, width, height, color, thickness)
     }
 
     /** Fills the rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun fillRect(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        draw(color) {
-            fillRect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
-        }
+        useCanvas().fillRect(x, y, width, height, color)
     }
 
     /** Fill the whole area of this canvas with the specified [color]. */
@@ -161,7 +133,7 @@ actual open class QRCodeGraphics actual constructor(
         color: Int,
         thickness: Double,
     ) {
-        drawRect(x, y, width, height, color, 1.0)
+        useCanvas().drawRoundRect(x, y, width, height, borderRadius, color, thickness)
     }
 
     /**
@@ -193,22 +165,14 @@ actual open class QRCodeGraphics actual constructor(
         borderRadius: Int,
         color: Int,
     ) {
-        fillRect(x, y, width, height, color)
+        useCanvas().fillRoundRect(x, y, width, height, borderRadius, color)
     }
 
     /**
      * Draw the edges of an ellipse (aka "a circle") which occupies the area `(x,y,width,height)`
      */
     actual fun drawEllipse(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
-        draw(color) {
-            val radiusX = width.toDouble() / 2.0
-            val radiusY = height.toDouble() / 2.0
-
-            lineWidth = thickness
-            beginPath()
-            ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
-            stroke()
-        }
+        useCanvas().drawEllipse(x, y, width, height, color, thickness)
     }
 
     /**
@@ -216,14 +180,7 @@ actual open class QRCodeGraphics actual constructor(
      *
      */
     actual fun fillEllipse(x: Int, y: Int, width: Int, height: Int, color: Int) {
-        draw(color) {
-            val radiusX = width.toDouble() / 2.0
-            val radiusY = height.toDouble() / 2.0
-
-            beginPath()
-            ellipse(radiusX + x.toDouble(), radiusY + y.toDouble(), radiusX, radiusY, 0.0, 0.0, FULL_CIRCLE, false)
-            fill()
-        }
+        useCanvas().fillEllipse(x, y, width, height, color)
     }
 
     /**
@@ -234,19 +191,6 @@ actual open class QRCodeGraphics actual constructor(
      */
     @JsName("drawImageFromBytes")
     actual fun drawImage(rawData: ByteArray?, x: Int, y: Int) {
-        if (rawData != null && rawData.isNotEmpty()) {
-            draw(0) {
-                val imageDataArray: JsArray<JsNumber> = rawData.toInt8Array().unsafeCast()
-                val imageData = ImageData(Uint8ClampedArray(imageDataArray), width)
-                putImageData(imageData, x.toDouble(), y.toDouble())
-            }
-        }
+        useCanvas().drawImage(rawData, x, y)
     }
-
-    private fun <T> tryGet(what: () -> T): T =
-        try {
-            what()
-        } catch (t: Throwable) {
-            throw Error(CANVAS_UNSUPPORTED, cause = t)
-        }
 }

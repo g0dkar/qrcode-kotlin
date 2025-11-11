@@ -79,21 +79,21 @@ kotlin {
         }
     }
 
-    wasmJs {
-        browser {
-            commonWebpackConfig {
-                mode = PRODUCTION
-                sourceMaps = true
-            }
-
-            testTask {
-                enabled = false
-            }
-
-            binaries.library()
-            generateTypeScriptDefinitions()
-        }
-    }
+//    wasmJs {
+//        browser {
+//            commonWebpackConfig {
+//                mode = PRODUCTION
+//                sourceMaps = true
+//            }
+//
+//            testTask {
+//                enabled = false
+//            }
+//
+//            binaries.library()
+//            generateTypeScriptDefinitions()
+//        }
+//    }
 
     // This is in place just because my main development machine is NOT a macOS :)
     // iOS Family of targets... since you can't just "ios()" anymore.
@@ -131,17 +131,18 @@ kotlin {
             }
         }
 
-        androidTarget {
+        androidMain {
             dependencies {
-                compileOnly(libs.androidx.compose.ui)
+                api(libs.androidx.compose.ui)
             }
         }
 
-        wasmJsMain {
-            dependencies {
-                implementation(libs.kotlinx.browser)
-            }
-        }
+//        wasmJsMain {
+//            dependencies {
+//                implementation(libs.kotlinx.browser)
+//                api(libs.jetbrains.compose.ui)
+//            }
+//        }
     }
 }
 

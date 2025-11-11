@@ -100,7 +100,8 @@ actual open class QRCodeGraphics actual constructor(
     actual open fun availableFormats(): Array<String> = AVAILABLE_FORMATS
 
     /** Returns the [Bitmap] or [DrawScope] (if Jetpack Compose is available) object being worked upon. */
-    actual open fun nativeImage(): Any = drawingInterface?.nativeImage() ?: throw NotImplementedError("Native image not supported")
+    actual open fun nativeImage(): Any =
+        drawingInterface?.nativeImage() ?: throw NotImplementedError("Native image not supported")
 
     /** Draw a straight line from point `(x1,y1)` to `(x2,y2)`. */
     actual open fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int, color: Int, thickness: Double) {

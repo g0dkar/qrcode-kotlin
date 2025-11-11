@@ -15,7 +15,7 @@ open class DefaultShapeFunction(
     squareSize: Int = DEFAULT_CELL_SIZE,
     val innerSpace: Int = 1,
 ) : QRCodeShapeFunction {
-    private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2))
+    private var innerSpacing = innerSpace.coerceIn(0..(squareSize / 2)).takeIf { it < squareSize } ?: 0
     var squareSize: Int = squareSize
         private set
 
@@ -23,7 +23,7 @@ open class DefaultShapeFunction(
         val sizeRatio: Double = newSquareSize / squareSize.toDouble()
 
         squareSize = newSquareSize
-        innerSpacing = (innerSpace * sizeRatio).toInt().coerceIn(0..(newSquareSize / 2))
+        innerSpacing = (innerSpace * sizeRatio).toInt().coerceIn(0..(newSquareSize / 2)).takeIf { it < squareSize } ?: 0
     }
 
     override fun renderSquare(

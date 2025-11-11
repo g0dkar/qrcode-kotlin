@@ -3,9 +3,12 @@ package qrcode.render.extensions
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 import qrcode.QRCode
+import qrcode.render.QRCodeGraphics
 import qrcode.render.graphics.DrawScopeGraphics
 
 /**
@@ -66,3 +69,22 @@ fun DrawScope.drawQRCode(
 
     qrCodeGraphics.drawingInterface = previousDrawingInterface
 }
+
+/**
+ * Extension function to generate a QRCode as a Compose [ImageBitmap].
+ *
+ * Code largely "inspired" (read: copied) from [this](https://github.com/g0dkar/qrcode-kotlin/issues/187#issuecomment-3119959105) comment by `bxkr`
+ *
+ * All credits to [@bxkr](https://github.com/bxkr) - thanks!
+ */
+fun QRCode.renderToPNGImageBitmap(
+    qrCodeGraphics: QRCodeGraphics = graphics,
+    xOffset: Int = this.xOffset,
+    yOffset: Int = this.yOffset,
+    format: String = "PNG",
+): ImageBitmap =
+    render(qrCodeGraphics, xOffset, yOffset)
+        .toDataURL(format)
+        .substringAfter("data:image/png;base64,")
+        .encodeToByteArray()
+        .decodeToImageBitmap()

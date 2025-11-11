@@ -105,6 +105,7 @@ class QRCodeProcessor @JvmOverloads constructor(
             data: String,
             errorCorrectionLevel: ErrorCorrectionLevel,
             dataType: QRCodeDataType = QRUtil.getDataType(data),
+            maxInfoDensity: Int = MAXIMUM_INFO_DENSITY,
         ): Int {
             val qrCodeData = when (dataType) {
                 NUMBERS -> QRNumber(data)
@@ -119,7 +120,7 @@ class QRCodeProcessor @JvmOverloads constructor(
                 }
             }
 
-            return MAXIMUM_INFO_DENSITY
+            return maxInfoDensity
         }
     }
 
