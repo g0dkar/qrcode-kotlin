@@ -24,7 +24,6 @@
             android:name=".NewQRCodeActivity" />
         <activity
             android:exported="true"
-            android:label="@string/app_name"
             android:name=".QRCodeListActivity"
             android:theme="@style/Theme.QRCodeKotlinExampleApp.NoActionBar">
             <intent-filter>
