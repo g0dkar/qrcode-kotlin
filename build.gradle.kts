@@ -133,14 +133,14 @@ kotlin {
 
         androidTarget {
             dependencies {
-                compileOnly(libs.androidx.compose.ui)
+                api(libs.androidx.compose.ui)
             }
         }
 
         wasmJsMain {
             dependencies {
                 implementation(libs.kotlinx.browser)
-                compileOnly(libs.jetbrains.compose.ui)
+                api(libs.jetbrains.compose.ui)
             }
         }
     }

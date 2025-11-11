@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
+import java.math.BigDecimal
+import java.math.RoundingMode.FLOOR
 import java.util.function.Consumer
 import javax.imageio.ImageIO
 import kotlin.math.roundToInt
@@ -68,12 +70,15 @@ actual open class QRCodeGraphics actual constructor(
         val jdkColor = colorCache.computeIfAbsent(color) { Color(color, true) }
 
         if (strokeThickness != null && strokeThickness > 0) {
-            graphics.stroke = BasicStroke(strokeThickness.toFloat(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+            graphics.stroke = BasicStroke(strokeThickness.toFloat())
         }
         graphics.color = jdkColor
         graphics.background = jdkColor
         graphics.paint = jdkColor
-        graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
+
+        if (width >= 100) {
+            graphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON)
+        }
 
         action(graphics)
 
@@ -153,13 +158,23 @@ actual open class QRCodeGraphics actual constructor(
     /** Draw the edges of a rectangle starting at point `(x,y)` and having `width` by `height`. */
     actual open fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double) {
         draw(color, thickness) {
-            val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
-            it.drawRect(
-                x + halfThickness + customImageOffsetX,
-                y + halfThickness + customImageOffsetY,
-                width - halfThickness * 2,
-                height - halfThickness * 2,
-            )
+            if (width >= 100) {
+                val halfThickness = roundDown(thickness / 2.0)
+
+                it.drawRect(
+                    x + halfThickness + customImageOffsetX,
+                    y + halfThickness + customImageOffsetY,
+                    width - halfThickness * 2,
+                    height - halfThickness * 2,
+                )
+            } else {
+                it.drawRect(
+                    x + customImageOffsetX,
+                    y + customImageOffsetY,
+                    width,
+                    height,
+                )
+            }
         }
     }
 
@@ -204,7 +219,7 @@ actual open class QRCodeGraphics actual constructor(
         thickness: Double,
     ) {
         draw(color, thickness) {
-            val halfThickness = (thickness / 2.0).roundToInt().coerceAtLeast(0)
+            val halfThickness = roundDown(thickness / 2.0)
             it.drawRoundRect(
                 x + halfThickness + customImageOffsetX,
                 y + halfThickness + customImageOffsetY,
@@ -305,4 +320,7 @@ actual open class QRCodeGraphics actual constructor(
             action.accept(it)
         }
     }
+
+    private fun roundDown(value: Double): Int =
+        BigDecimal.valueOf(value).setScale(0, FLOOR).toInt().coerceAtLeast(0)
 }
