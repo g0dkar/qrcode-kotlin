@@ -6,9 +6,29 @@
 > Mostly notable changes from version to version. Some stuff might go undocumented. If you find something that you think
 > should be documented, please open an [issue](https://github.com/g0dkar/qrcode-kotlin/issues) :)
 
-# 4.5.0 - Latest
+# 4.6.0 - Latest
 
 ## ✨ New
+
+- Added a `resizeCanvas()` function to `QRCode` to make it possible to resize only the Canvas.
+- You can now have canvas sizes that are NOT squares (e.g.: a `1024x768` canvas)
+    - By default, they'll be squares. But you can `resizeCanvas()` (or most likely `fitIntoArea()`) with different
+      `width` and `height` parameters.
+- A new example (Example 09) showing this new behaviour.
+
+## ♻️ Changed
+
+- After resizing the canvas (either via `resizeCanvas()` or `fitIntoArea()`) the QRCode will be realigned inside the new
+  canvas. **Default is to stay centered.**
+
+## 🔧 Fixed
+
+- _DEVELOPMENT STILL IN PROGRESS_
+
+# 4.5.0
+
+## ✨ New
+
 - Added (experimental) support for WASM targets (requested via Issues #140 and #167)
     - Please do let us know if you run into any issues with it <3
 
@@ -17,15 +37,21 @@
 > I'm trying to keep a better CHANGELOG from now on ^^
 
 ## 🔧 Fixed
-- **Fixed an issue with rendering the Timing Pattern.** I have known it for a while, but now I finally figured what was the issue and fixed it.
+
+- **Fixed an issue with rendering the Timing Pattern.** I have known it for a while, but now I finally figured what was
+  the issue and fixed it.
 
 ## ♻️ Changed
+
 - Changed default ECL from `VERY_HIGH` to `LOW` as to stay closer to what other tools seems to use as a default
-- Computing the `informationDensity` value now always goes for the **least possible value** _(down from a minimum of 6 set by `QRCodeBuilder`)_
+- Computing the `informationDensity` value now always goes for the **least possible value** _(down from a minimum of 6
+  set by `QRCodeBuilder`)_
 - Better documentation of methods - this is an ongoing initiative!
 
 ## ✨ New
-- New `InsufficientInformationDensityException`: instead of an `IllegalArgumentException`, this new exception is thrown with a more helpful message
+
+- New `InsufficientInformationDensityException`: instead of an `IllegalArgumentException`, this new exception is thrown
+  with a more helpful message
 - Added `drawQRCode()` extension function to a Android Compose `DrawScope` to draw QRCodes into modern Android.
     - Idea/request from Issue #141 by @dgmltn (Thanks!)
 - Added examples demonstrating what the ECL does (same data, different ECLs)
@@ -34,10 +60,13 @@
 - Moved example QRCode files to a folder within each language examples, just to reduce clutter :)
 
 ## 🚫 Removed
-- `forceInformationDensity` was removed. Now the **QRCodeBuilder** class uses `infoDensity = 0` (default value) as a trigger to compute it automatically since it needs to be `>= 1`
+
+- `forceInformationDensity` was removed. Now the **QRCodeBuilder** class uses `infoDensity = 0` (default value) as a
+  trigger to compute it automatically since it needs to be `>= 1`
     - Default value calling `QRCode()` directly is still 6 as to keep a bit of backwards compatibility 😅
 
 ## 👀 Internal
+
 - Renamed "typeNum" to "informationDensity"
 - Updated dokka and KMP
 - Fixed dokka always triggering building the whole `docs/dokka/` folder (that is only for GH Pages)
