@@ -171,7 +171,7 @@ internal data class RSBlock(val totalCount: Int, val dataCount: Int) {
             intArrayOf(19, 148, 118, 6, 149, 119),
             intArrayOf(18, 75, 47, 31, 76, 48),
             intArrayOf(34, 54, 24, 34, 55, 25),
-            intArrayOf(20, 45, 15, 61, 46, 16)
+            intArrayOf(20, 45, 15, 61, 46, 16),
         )
 
         fun getRSBlocks(typeNumber: Int, errorCorrectionLevel: ErrorCorrectionLevel): Array<RSBlock> =

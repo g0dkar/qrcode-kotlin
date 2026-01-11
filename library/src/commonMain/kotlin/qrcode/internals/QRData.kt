@@ -26,6 +26,7 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
                     DEFAULT -> 8
                 }
             }
+
             in 1..26 -> {
                 when (dataType) {
                     NUMBERS -> 12
@@ -33,6 +34,7 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
                     DEFAULT -> 16
                 }
             }
+
             in 1..40 -> {
                 when (dataType) {
                     NUMBERS -> 14
@@ -40,6 +42,7 @@ internal abstract class QRData(val dataType: QRCodeDataType, val data: String) {
                     DEFAULT -> 16
                 }
             }
+
             else -> {
                 throw IllegalArgumentException("'type' must be greater than 0 and cannot be greater than 40: $type")
             }

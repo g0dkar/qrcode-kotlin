@@ -12,7 +12,7 @@ import org.w3c.files.Blob
 @Suppress("MemberVisibilityCanBePrivate")
 actual open class QRCodeGraphics actual constructor(
     val width: Int,
-    val height: Int
+    val height: Int,
 ) {
     companion object {
         private const val CANVAS_UNSUPPORTED = "Canvas seems to not be supported :("
@@ -111,7 +111,12 @@ actual open class QRCodeGraphics actual constructor(
         draw(color) {
             lineWidth = thickness
             val halfThickness = thickness / 2.0
-            strokeRect(x.toDouble() + halfThickness, y.toDouble() + halfThickness, width.toDouble() - thickness, height.toDouble() - thickness)
+            strokeRect(
+                x.toDouble() + halfThickness,
+                y.toDouble() + halfThickness,
+                width.toDouble() - thickness,
+                height.toDouble() - thickness,
+            )
         }
     }
 
@@ -155,7 +160,7 @@ actual open class QRCodeGraphics actual constructor(
         height: Int,
         borderRadius: Int,
         color: Int,
-        thickness: Double
+        thickness: Double,
     ) {
         drawRect(x, y, width, height, color, 1.0)
     }
@@ -187,7 +192,7 @@ actual open class QRCodeGraphics actual constructor(
         width: Int,
         height: Int,
         borderRadius: Int,
-        color: Int
+        color: Int,
     ) {
         fillRect(x, y, width, height, color)
     }

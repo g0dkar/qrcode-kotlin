@@ -14,7 +14,7 @@ import kotlin.math.roundToInt
 open class RoundSquaresShapeFunction @JvmOverloads constructor(
     squareSize: Int = DEFAULT_CELL_SIZE,
     private val radius: Int = defaultRadius(squareSize),
-    innerSpace: Int = defaultInnerSpace(squareSize)
+    innerSpace: Int = defaultInnerSpace(squareSize),
 ) : DefaultShapeFunction(squareSize, innerSpace) {
     companion object {
         fun defaultRadius(squareSize: Int) = (squareSize / 1.75).roundToInt()
@@ -25,7 +25,15 @@ open class RoundSquaresShapeFunction @JvmOverloads constructor(
         canvas.fillRoundRect(x, y, width, height, radius, color)
     }
 
-    override fun drawRect(x: Int, y: Int, width: Int, height: Int, color: Int, thickness: Double, canvas: QRCodeGraphics) {
+    override fun drawRect(
+        x: Int,
+        y: Int,
+        width: Int,
+        height: Int,
+        color: Int,
+        thickness: Double,
+        canvas: QRCodeGraphics,
+    ) {
         canvas.drawRoundRect(x, y, width, height, radius, color, thickness)
     }
 }

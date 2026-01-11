@@ -13,7 +13,7 @@ import kotlin.math.roundToInt
  */
 open class CircleShapeFunction @JvmOverloads constructor(
     squareSize: Int = DEFAULT_CELL_SIZE,
-    innerSpace: Int = defaultInnerSpace(squareSize)
+    innerSpace: Int = defaultInnerSpace(squareSize),
 ) : RoundSquaresShapeFunction(squareSize, radius = squareSize, innerSpace) {
     companion object {
         // To avoid an error on the TypeScript side of things

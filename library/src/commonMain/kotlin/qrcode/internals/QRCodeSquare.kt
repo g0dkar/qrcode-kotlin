@@ -1,9 +1,5 @@
 package qrcode.internals
 
-import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
-import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
-import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
-import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
 import qrcode.internals.QRCodeRegion.UNKNOWN
 import qrcode.internals.QRCodeSquareType.DEFAULT
 import qrcode.raw.QRCodeProcessor

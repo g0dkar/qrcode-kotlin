@@ -1,8 +1,5 @@
 package qrcode.raw
 
-import qrcode.raw.ErrorCorrectionLevel.HIGH
-import qrcode.raw.ErrorCorrectionLevel.VERY_HIGH
-
 /**
  * The level of Error Correction to apply to the QR Code image. The Higher the Error Correction, the lower quality
  * **print** the QRCode can be (think of "wow, even with the paper a bit crumpled, it still read the QR Code!" - that
