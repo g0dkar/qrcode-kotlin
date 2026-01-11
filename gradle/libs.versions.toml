@@ -1,47 +1,24 @@
 [versions]
-annotation = "1.9.1"
-kotlin = "2.1.21"
-dokka = "2.0.0"
-kotest = "6.0.0.M3"
-lifecycleLivedataKtx = "2.9.1"
-lifecycleViewmodelKtx = "2.9.1"
-mavenNexus = "2.0.0"
-androidPlugin = "8.10.1"
-npmPublish = "3.5.3"
-core-ktx = "1.16.0"
-appcompat = "1.7.0"
-material = "1.12.0"
-constraintlayout = "2.2.1"
-navigation-fragment-ktx = "2.9.0"
-navigation-ui-ktx = "2.9.0"
-androidx-compose = "1.8.2"
-kotlinx-browser = "0.3"
+kotlin = "2.3.0"
+pluginAgp = "8.13.2"
+pluginDokka = "2.1.0"
+pluginMavenPublish = "0.35.0"
+pluginNpmPublish = "3.5.3"
+android-minSdk = "7"
+android-compileSdk = "36"
+kotest = "6.0.7"
+androidx-compose = "1.10.0"
+kotlinx-browser = "0.5.0"
 
 [libraries]
-androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
-androidx-foundation = { module = "androidx.compose.foundation:foundation" }
-androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
-androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
-kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-ui-ktx" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidx-compose" }
 kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 
 [plugins]
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "pluginAgp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
-android-library = { id = "com.android.library", version.ref = "androidPlugin" }
-nexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "mavenNexus" }
-npmPublish = { id = "dev.petuska.npm.publish", version.ref = "npmPublish" }
-android-application = { id = "com.android.application", version.ref = "androidPlugin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "pluginDokka" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "pluginMavenPublish" }
+npmPublish = { id = "dev.petuska.npm.publish", version.ref = "pluginNpmPublish" }
