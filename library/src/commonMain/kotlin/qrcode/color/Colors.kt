@@ -16,12 +16,11 @@ import kotlin.jvm.JvmStatic
  * @see getRGBA
  * @see withAlpha
  */
-@Suppress("MemberVisibilityCanBePrivate", "unused")
 object Colors {
     /** Very simple function to turn "#cc0000" into a color. */
     @JvmStatic
     fun css(str: String): Int =
-        str.substring(1..6).toInt(16) or 0xFF000000.toInt()
+        (str.substring(1..6).toLong(16) or 0xFF000000).toInt()
 
     /** Builds an RGBA color value from its numerical components. All values must be between `0..255`. */
     @JvmStatic

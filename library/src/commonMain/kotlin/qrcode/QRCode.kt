@@ -51,7 +51,7 @@ import kotlin.math.min
  * @author Rafael Lins - g0dkar
  *
  */
-@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
+//@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCode @JvmOverloads constructor(
     /** Data that will be encoded. */
     val data: String,

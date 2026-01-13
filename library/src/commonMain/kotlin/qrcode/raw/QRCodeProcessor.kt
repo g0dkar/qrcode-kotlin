@@ -71,7 +71,7 @@ import kotlin.jvm.JvmStatic
  * @see ErrorCorrectionLevel
  * @see QRUtil.getDataType
  */
-@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
+//@Suppress("NON_EXPORTABLE_TYPE", "MemberVisibilityCanBePrivate")
 class QRCodeProcessor @JvmOverloads constructor(
     private val data: String,
     private val errorCorrectionLevel: ErrorCorrectionLevel = ErrorCorrectionLevel.MEDIUM,

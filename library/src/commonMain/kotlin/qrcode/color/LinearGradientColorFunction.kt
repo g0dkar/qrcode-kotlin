@@ -5,7 +5,7 @@ import qrcode.render.QRCodeGraphics
 import kotlin.jvm.JvmOverloads
 import kotlin.math.roundToInt
 
-@Suppress("MemberVisibilityCanBePrivate")
+//@Suppress("MemberVisibilityCanBePrivate")
 class LinearGradientColorFunction @JvmOverloads constructor(
     val startForegroundColor: Int,
     val endForegroundColor: Int,

@@ -16,7 +16,7 @@ interface QRCodeColorFunction {
         }
 
     /**
-     * Called before rendering starts, to setup something if needed
+     * Called before rendering starts, to set up something if needed
      */
     fun beforeRender(qrCode: QRCode, qrCodeGraphics: QRCodeGraphics) {
         // Do nothing
