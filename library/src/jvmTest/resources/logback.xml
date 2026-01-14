@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="logback-spring-defaults.xml"/>
+    <include resource="logback-spring-console-appender.xml"/>
+
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.JsonEncoder">
+            <withFormattedMessage>true</withFormattedMessage>
+            <withMessage>false</withMessage>
+            <withArguments>false</withArguments>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="${LOG_FORMAT:-CONSOLE}"/>
+    </root>
+</configuration>

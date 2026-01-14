@@ -1,0 +1,103 @@
+package org.springframework.boot.logging
+
+/**
+ * Manually rewritten in Kotlin from the same package/Class on Spring Boot v3.5.5, original Javadoc kept below:
+ *
+ * Logging system properties that can later be used by log configuration files.
+ *
+ * @author Phillip Webb
+ * @since 3.2.0
+ */
+enum class LoggingSystemProperty(
+    val environmentVariableName: String,
+    val applicationPropertyName: String? = null,
+    val includePropertyName: String? = null,
+) {
+    /**
+     * Logging system property for the application name that should be logged.
+     */
+    APPLICATION_NAME("APPLICATION_NAME", "spring.application.name", "logging.include-application-name"),
+
+    /**
+     * Logging system property for the application group that should be logged.
+     * @since 3.4.0
+     */
+    APPLICATION_GROUP("APPLICATION_GROUP", "spring.application.group", "logging.include-application-group"),
+
+    /**
+     * Logging system property for the process ID.
+     */
+    PID("PID"),
+
+    /**
+     * Logging system property for the log file.
+     */
+    LOG_FILE("LOG_FILE"),
+
+    /**
+     * Logging system property for the log path.
+     */
+    LOG_PATH("LOG_PATH"),
+
+    /**
+     * Logging system property for the console log charset.
+     */
+    CONSOLE_CHARSET("CONSOLE_LOG_CHARSET", "logging.charset.console"),
+
+    /**
+     * Logging system property for the file log charset.
+     */
+    FILE_CHARSET("FILE_LOG_CHARSET", "logging.charset.file"),
+
+    /**
+     * Logging system property for the console log.
+     */
+    CONSOLE_THRESHOLD("CONSOLE_LOG_THRESHOLD", "logging.threshold.console"),
+
+    /**
+     * Logging system property for the file log.
+     */
+    FILE_THRESHOLD("FILE_LOG_THRESHOLD", "logging.threshold.file"),
+
+    /**
+     * Logging system property for the exception conversion word.
+     */
+    EXCEPTION_CONVERSION_WORD("LOG_EXCEPTION_CONVERSION_WORD", "logging.exception-conversion-word"),
+
+    /**
+     * Logging system property for the console log pattern.
+     */
+    CONSOLE_PATTERN("CONSOLE_LOG_PATTERN", "logging.pattern.console"),
+
+    /**
+     * Logging system property for the file log pattern.
+     */
+    FILE_PATTERN("FILE_LOG_PATTERN", "logging.pattern.file"),
+
+    /**
+     * Logging system property for the console structured logging format.
+     * @since 3.4.0
+     */
+    CONSOLE_STRUCTURED_FORMAT("CONSOLE_LOG_STRUCTURED_FORMAT", "logging.structured.format.console"),
+
+    /**
+     * Logging system property for the file structured logging format.
+     * @since 3.4.0
+     */
+    FILE_STRUCTURED_FORMAT("FILE_LOG_STRUCTURED_FORMAT", "logging.structured.format.file"),
+
+    /**
+     * Logging system property for the log level pattern.
+     */
+    LEVEL_PATTERN("LOG_LEVEL_PATTERN", "logging.pattern.level"),
+
+    /**
+     * Logging system property for the date-format pattern.
+     */
+    DATEFORMAT_PATTERN("LOG_DATEFORMAT_PATTERN", "logging.pattern.dateformat"),
+
+    /**
+     * Logging system property for the correlation pattern.
+     */
+    CORRELATION_PATTERN("LOG_CORRELATION_PATTERN", "logging.pattern.correlation")
+}

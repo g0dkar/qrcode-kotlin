@@ -90,13 +90,20 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            // Dependencies
         }
 
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.kotest.assertions.core)
             implementation(libs.kotest.framework.engine)
+
+            // Logging
+            implementation(libs.kotlin.logging)
+        }
+
+        jvmTest.dependencies {
+            implementation(libs.logback)
         }
 
         androidMain.dependencies {

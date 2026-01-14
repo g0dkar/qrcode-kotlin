@@ -9,12 +9,16 @@ android-compileSdk = "36"
 kotest = "6.0.7"
 androidx-compose = "1.10.0"
 kotlinx-browser = "0.5.0"
+kotlin-logging = "7.0.14"
+logback = "1.5.24"
 
 [libraries]
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidx-compose" }
 kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
+kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 [plugins]
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "pluginAgp" }
