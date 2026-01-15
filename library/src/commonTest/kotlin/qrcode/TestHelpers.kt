@@ -39,10 +39,20 @@ inline fun <reified T : Throwable> assertThrows(action: () -> Unit): T {
  */
 fun currentTimeMillis(): Long = Clock.System.now().toEpochMilliseconds()
 
-fun random() = Random(currentTimeMillis())
+/**
+ * Returns a [Random] instance with the given seed (default: current millisecond)
+ *
+ * @see currentTimeMillis
+ */
+fun random(seed: Long = currentTimeMillis()) = Random(seed)
 
-fun randomHexDigits(digits: Int) =
-    random().let { rnd ->
+/**
+ * Returns a String of [digits] hexadecimal digits. Default [seed] is the current millisecond.
+ *
+ * @see currentTimeMillis
+ */
+fun randomHexDigits(digits: Int, seed: Long = currentTimeMillis()) =
+    random(seed).let { rnd ->
         List(digits) {
             rnd.nextInt(16).toString(16)
         }
