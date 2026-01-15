@@ -62,5 +62,5 @@ class ColorsTest {
         result shouldBe expectedColor
     }
 
-    fun Int.hexDigit() = toString(16).padStart(2, '0')
+    private fun Int.hexDigit() = toString(16).padStart(2, '0')
 }
