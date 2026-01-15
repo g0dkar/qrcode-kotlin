@@ -53,7 +53,7 @@ class ColorsTest {
         val expectedColor: Int = colorString.toLong(16).toInt()
 
         logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB, $testA)..." }
-        logger.info { "Expected Color: 0x$colorString" }
+        logger.info { "Expected Color: 0x$colorString (int value = $expectedColor)" }
 
         // WHEN
         val result = assertDoesNotThrow { Colors.rgba(r = testR, g = testG, b = testB, a = testA) }
