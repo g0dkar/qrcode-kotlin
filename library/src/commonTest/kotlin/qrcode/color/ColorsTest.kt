@@ -31,11 +31,11 @@ class ColorsTest {
         // GIVEN
         val r = random() // NOTE: Always reuse the same random number generator on a given test
         val (testR, testG, testB) = List(3) { r.nextInt(0, 0x100) }
-        val colorString = "${testR.toString(16)}${testG.toString(16)}${testB.toString(16)}"
-        val expectedColor: Int = "FF$colorString".toLong(16).toInt()
+        val colorString = "${testR.hexDigit()}${testG.hexDigit()}${testB.hexDigit()}"
+        val expectedColor: Int = "ff$colorString".toLong(16).toInt()
 
         logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB)..." }
-        logger.info { "Expected Color: 0x$colorString" }
+        logger.info { "Expected Color: 0xff$colorString (int value = $expectedColor)" }
 
         // WHEN
         val result = assertDoesNotThrow { Colors.rgba(r = testR, g = testG, b = testB) }
@@ -49,7 +49,7 @@ class ColorsTest {
         // GIVEN
         val r = random() // NOTE: Always reuse the same random number generator on a given test
         val (testR, testG, testB, testA) = List(4) { r.nextInt(0, 0x100) }
-        val colorString = "${testA.toString(16)}${testR.toString(16)}${testG.toString(16)}${testB.toString(16)}"
+        val colorString = "${testA.hexDigit()}${testR.hexDigit()}${testG.hexDigit()}${testB.hexDigit()}"
         val expectedColor: Int = colorString.toLong(16).toInt()
 
         logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB, $testA)..." }
@@ -61,4 +61,6 @@ class ColorsTest {
         // THEN
         result shouldBe expectedColor
     }
+
+    fun Int.hexDigit() = toString(16).padStart(2, '0')
 }
