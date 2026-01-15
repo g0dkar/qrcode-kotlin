@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import qrcode.assertDoesNotThrow
 import qrcode.random
 import qrcode.randomHexDigits
+import qrcode.toColorHex
 import kotlin.test.Test
 
 class ColorsTest {
@@ -17,12 +18,13 @@ class ColorsTest {
         val testColor = "#$randomColor"
         val expectedColor: Int = (randomColor.toLong(16) + 0xFF_000000).toInt() // 0xFF (alpha) + <same-as-css-color>
 
-        logger.info { "Testing CSS Color Value: $testColor..." }
+        logger.info { "Testing CSS Color Value: $testColor - Expected: ${expectedColor.toColorHex()} (int value = $expectedColor)" }
 
         // WHEN
         val result = assertDoesNotThrow { Colors.css(testColor) }
 
         // THEN
+        logger.info { "Result: $result (${result.toColorHex()})" }
         result shouldBe expectedColor
     }
 
@@ -34,13 +36,13 @@ class ColorsTest {
         val colorString = "${testR.hexDigit()}${testG.hexDigit()}${testB.hexDigit()}"
         val expectedColor: Int = "ff$colorString".toLong(16).toInt()
 
-        logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB)..." }
-        logger.info { "Expected Color: 0xff$colorString (int value = $expectedColor)" }
+        logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB) - Expected: 0xff$colorString (int value = $expectedColor)" }
 
         // WHEN
         val result = assertDoesNotThrow { Colors.rgba(r = testR, g = testG, b = testB) }
 
         // THEN
+        logger.info { "Result: $result (${result.toColorHex()})" }
         result shouldBe expectedColor
     }
 
@@ -52,13 +54,13 @@ class ColorsTest {
         val colorString = "${testA.hexDigit()}${testR.hexDigit()}${testG.hexDigit()}${testB.hexDigit()}"
         val expectedColor: Int = colorString.toLong(16).toInt()
 
-        logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB, $testA)..." }
-        logger.info { "Expected Color: 0x$colorString (int value = $expectedColor)" }
+        logger.info { "Testing RGBA Color Value: rgba($testR, $testG, $testB, $testA) - Expected: 0x$colorString (int value = $expectedColor)" }
 
         // WHEN
         val result = assertDoesNotThrow { Colors.rgba(r = testR, g = testG, b = testB, a = testA) }
 
         // THEN
+        logger.info { "Result: $result (${result.toColorHex()})" }
         result shouldBe expectedColor
     }
 

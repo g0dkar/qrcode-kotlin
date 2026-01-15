@@ -5,8 +5,8 @@ import qrcode.internals.QRCodeSquare
 import qrcode.render.QRCodeGraphics
 
 /**
- * A function that selects a color for a give square. The default implementation chooses between [fg], [bg] and [margin]
- * given what should be rendered.
+ * A function that selects a color for a given square. The default implementation chooses between [fg] and [bg]
+ * given what should be rendered: [fg] for [QRCodeSquare.dark] squares, [bg] otherwise.
  */
 interface QRCodeColorFunction {
     fun colorFn(square: QRCodeSquare, qrCode: QRCode, qrCodeGraphics: QRCodeGraphics): Int =

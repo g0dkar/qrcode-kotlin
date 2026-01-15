@@ -57,3 +57,17 @@ fun randomHexDigits(digits: Int, seed: Long = currentTimeMillis()) =
             rnd.nextInt(16).toString(16)
         }
     }.joinToString("")
+
+/**
+ * Randomly returns one of the parameters passed to the function.
+ */
+fun <T> randomOneOf(vararg options: T): T =
+    options[Random.nextInt(0, options.size)]
+
+/**
+ * Generates a random [Int] (defaults to "from 0 to [Int.MAX_VALUE]")
+ */
+fun randomInt(from: Int = 0, until: Int = Int.MAX_VALUE, seed: Long = currentTimeMillis()) =
+    random(seed).nextInt(from, until)
+
+fun Int.toColorHex() = "0x${(0xFFFFFFFF and toLong()).toString(16).padStart(8, '0')}"
