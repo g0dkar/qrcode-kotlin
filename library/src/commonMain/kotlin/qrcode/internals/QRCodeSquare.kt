@@ -1,7 +1,9 @@
 package qrcode.internals
 
-import qrcode.internals.QRCodeRegion.UNKNOWN
-import qrcode.internals.QRCodeSquareType.DEFAULT
+import qrcode.internals.square.QRCodeRegion.UNKNOWN
+import qrcode.internals.square.QRCodeSquareInfo
+import qrcode.internals.square.QRCodeSquareType
+import qrcode.internals.square.QRCodeSquareType.DEFAULT
 import qrcode.raw.QRCodeProcessor
 import kotlin.jvm.JvmOverloads
 
@@ -63,66 +65,4 @@ data class QRCodeSquare(
         result = 31 * result + colSize
         return result
     }
-}
-
-/**
- * Returns information on the square itself. It has the [type] of square and its [region] within its relative type.
- *
- * For example, if `type = POSITION_PROBE` then [region] will represent where within the Position Probe this square
- * is positioned. A [region] of [QRCodeRegion.TOP_LEFT_CORNER] for example represents the top left corner of the
- * position probe this particular square is part of (a QRCode have 3 position probes).
- */
-data class QRCodeSquareInfo(
-    val type: QRCodeSquareType,
-    val region: QRCodeRegion,
-)
-
-/**
- * The types available for squares in a QRCode.
- *
- * @author Rafael Lins - g0dkar
- */
-enum class QRCodeSquareType {
-    /** Part of a position probe: one of those big squares at the extremities of the QRCode. */
-    POSITION_PROBE,
-
-    /** Part of a position adjustment pattern: just like a position probe, but much smaller. */
-    POSITION_ADJUST,
-
-    /** Part of the timing pattern. Make it a square like any other :) */
-    TIMING_PATTERN,
-
-    /** Anything special. Just a square. */
-    DEFAULT,
-}
-
-/**
- * Represents which part/region of a given square type a particular, single square is.
- *
- * For example, a position probe is visually composed of multiple squares that form a bigger one.
- *
- * For example, this is what a position probe normally looks like (squares spaced for ease of understanding):
- *
- * ```
- * A■■■■B
- * ■ ■■ ■
- * ■ ■■ ■
- * C■■■■D
- * ```
- *
- * The positions marked with `A`, `B`, `C` and `D` would be regions [TOP_LEFT_CORNER], [TOP_RIGHT_CORNER],
- * [BOTTOM_LEFT_CORNER] and [BOTTOM_RIGHT_CORNER] respectively.
- */
-enum class QRCodeRegion {
-    TOP_LEFT_CORNER,
-    TOP_RIGHT_CORNER,
-    TOP_MID,
-    LEFT_MID,
-    RIGHT_MID,
-    CENTER,
-    BOTTOM_LEFT_CORNER,
-    BOTTOM_RIGHT_CORNER,
-    BOTTOM_MID,
-    MARGIN,
-    UNKNOWN
 }

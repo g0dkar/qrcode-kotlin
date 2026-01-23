@@ -1,19 +1,20 @@
 package qrcode.internals
 
-import qrcode.internals.QRCodeRegion.BOTTOM_LEFT_CORNER
-import qrcode.internals.QRCodeRegion.BOTTOM_MID
-import qrcode.internals.QRCodeRegion.BOTTOM_RIGHT_CORNER
-import qrcode.internals.QRCodeRegion.CENTER
-import qrcode.internals.QRCodeRegion.LEFT_MID
-import qrcode.internals.QRCodeRegion.MARGIN
-import qrcode.internals.QRCodeRegion.RIGHT_MID
-import qrcode.internals.QRCodeRegion.TOP_LEFT_CORNER
-import qrcode.internals.QRCodeRegion.TOP_MID
-import qrcode.internals.QRCodeRegion.TOP_RIGHT_CORNER
-import qrcode.internals.QRCodeRegion.UNKNOWN
-import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
-import qrcode.internals.QRCodeSquareType.POSITION_PROBE
-import qrcode.internals.QRCodeSquareType.TIMING_PATTERN
+import qrcode.internals.square.QRCodeRegion.BOTTOM_LEFT_CORNER
+import qrcode.internals.square.QRCodeRegion.BOTTOM_MID
+import qrcode.internals.square.QRCodeRegion.BOTTOM_RIGHT_CORNER
+import qrcode.internals.square.QRCodeRegion.CENTER
+import qrcode.internals.square.QRCodeRegion.LEFT_MID
+import qrcode.internals.square.QRCodeRegion.MARGIN
+import qrcode.internals.square.QRCodeRegion.RIGHT_MID
+import qrcode.internals.square.QRCodeRegion.TOP_LEFT_CORNER
+import qrcode.internals.square.QRCodeRegion.TOP_MID
+import qrcode.internals.square.QRCodeRegion.TOP_RIGHT_CORNER
+import qrcode.internals.square.QRCodeRegion.UNKNOWN
+import qrcode.internals.square.QRCodeSquareInfo
+import qrcode.internals.square.QRCodeSquareType.POSITION_ADJUST
+import qrcode.internals.square.QRCodeSquareType.POSITION_PROBE
+import qrcode.internals.square.QRCodeSquareType.TIMING_PATTERN
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
 
@@ -22,7 +23,6 @@ import qrcode.raw.MaskPattern
  *
  * @author Rafael Lins - g0dkar
  */
-@Suppress("MemberVisibilityCanBePrivate")
 internal object QRCodeSetup {
     private const val DEFAULT_PROBE_SIZE = 7
 
@@ -289,7 +289,7 @@ internal object QRCodeSetup {
                 }
 
                 row += inc
-                if (row < 0 || moduleCount <= row) {
+                if (row !in 0..<moduleCount) {
                     row -= inc
                     inc = -inc
                     break
