@@ -12,8 +12,8 @@ import qrcode.QRCodeShapesEnum.ROUNDED_SQUARE
 import qrcode.QRCodeShapesEnum.SQUARE
 import qrcode.color.DefaultColorFunction
 import qrcode.color.QRCodeColorFunction
-import qrcode.internals.QRCodeSquareType.POSITION_ADJUST
-import qrcode.internals.QRCodeSquareType.POSITION_PROBE
+import qrcode.internals.square.QRCodeSquareType.POSITION_ADJUST
+import qrcode.internals.square.QRCodeSquareType.POSITION_PROBE
 import qrcode.raw.ErrorCorrectionLevel
 import qrcode.raw.MaskPattern
 import qrcode.raw.QRCodeProcessor
