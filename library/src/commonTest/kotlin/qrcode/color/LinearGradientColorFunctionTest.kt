@@ -83,7 +83,7 @@ class LinearGradientColorFunctionTest {
     @Test
     fun `GIVEN pct out of bounds - lower WHEN gradientColor is called THEN exception is thrown`() {
         // GIVEN
-        val testPercentage = 0.0 - random().nextDouble(from = 0.1, until = 2.0)
+        val testPercentage = 0.0 - random().nextDouble(from = 0.001, until = 2.0)
 
         logger.info { "Testing gradient percentage: pct=$testPercentage, expected: IllegalArgumentException" }
 
