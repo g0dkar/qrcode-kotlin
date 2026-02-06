@@ -71,9 +71,9 @@ class BitBufferTest {
     }
 
     @Test
-    fun `GIVEN huge string of bits WHEN put THEN buffer has expected value`() {
+    fun `GIVEN huge string of bits WHEN put THEN buffer has grown to accommodate value as expected value`() {
         // GIVEN
-        val testBits = "110000001111111111101110".repeat(20) // 0xC0FFEE
+        val testBits = "110000001111111111101110".repeat(20) // 0xC0FFEE repeated 20x
 
         logger.info { "Testing put() with data=$testBits..." }
 

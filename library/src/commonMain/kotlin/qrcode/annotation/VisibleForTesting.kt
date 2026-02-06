@@ -11,5 +11,6 @@ package qrcode.annotation
     AnnotationTarget.FUNCTION,
     AnnotationTarget.TYPE,
     AnnotationTarget.TYPEALIAS,
+    AnnotationTarget.FIELD,
 )
 annotation class VisibleForTesting

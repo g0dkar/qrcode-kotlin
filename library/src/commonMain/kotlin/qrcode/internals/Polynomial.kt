@@ -6,6 +6,12 @@ import qrcode.internals.QRMath.glog
 /**
  * Rewritten in Kotlin from the [original (GitHub)](https://github.com/kazuhikoarase/qrcode-generator/blob/master/java/src/main/java/com/d_project/qrcode/Polynomial.java)
  *
+ * Rough explanation: this represents one of those "2x^2 + 5x + 8" equations we used a lot back in school. This example equation
+ * can be represented by `Polynomial(2, 5, 8)`. The [shift] parameter adds elements to the Polynomial. So to represent "8x^2 + 0x + 0"
+ * we can simply Polynomial(8, 2). And the 0s at start are ignored... because "0x^2 + 0x + 5" might as well be only 5 :)
+ *
+ * This is used a lot to compute a bunch of stuff on the QRCode algorithm. It is complex and math is not my forte haha.
+ *
  * @author Rafael Lins - g0dkar
  * @author Kazuhiko Arase - kazuhikoarase
  */
@@ -15,7 +21,7 @@ internal class Polynomial(num: IntArray, shift: Int = 0) {
 
     init {
         val offset = num.indexOfFirst { it != 0 }.coerceAtLeast(0)
-        this.data = IntArray(num.size - offset + shift) { 0 }
+        this.data = IntArray(num.size - offset + shift)
         arraycopy(num, offset, this.data, 0, num.size - offset)
     }
 
@@ -30,7 +36,7 @@ internal class Polynomial(num: IntArray, shift: Int = 0) {
     fun len(): Int = data.size
 
     fun multiply(other: Polynomial): Polynomial =
-        IntArray(len() + other.len() - 1) { 0 }
+        IntArray(len() + other.len() - 1)
             .let {
                 for (i in 0 until len()) {
                     for (j in 0 until other.len()) {
