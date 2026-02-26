@@ -17,7 +17,7 @@ import kotlin.jvm.JvmStatic
  * @see withAlpha
  */
 object Colors {
-    /** Very simple function to turn "#cc0000" into a color. */
+    /** Function to turn a CSS Color String (like "#cc0000") into a color value. */
     @JvmStatic
     fun css(str: String): Int =
         (str.substring(1..6).toLong(16) or 0xFF000000).toInt()
